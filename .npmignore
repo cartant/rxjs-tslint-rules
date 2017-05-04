@@ -1,0 +1,6 @@
+/build
+/node_modules
+/scripts
+/source
+/temp
+/ts*.json

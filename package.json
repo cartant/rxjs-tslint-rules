@@ -1,0 +1,47 @@
+{
+  "author": "Nicholas Jamieson <nicholas@cartant.com>",
+  "bugs": {
+    "url": "https://github.com/cartant/rxjs-tslint-rules/issues"
+  },
+  "dependencies": {},
+  "description": "TSLint rules for RxJS",
+  "devDependencies": {
+    "@types/chai": "^3.5.1",
+    "@types/mocha": "^2.2.41",
+    "@types/node": "^7.0.13",
+    "chai": "^3.5.0",
+    "mocha": "^3.2.0",
+    "tslint": "^5.1.0",
+    "typescript": "^2.3.2"
+  },
+  "homepage": "https://github.com/cartant/rxjs-tslint-rules",
+  "keywords": [
+    "lint",
+    "rules",
+    "rxjs",
+    "tslint"
+  ],
+  "license": "MIT",
+  "main": "./index.js",
+  "name": "rxjs-tslint-rules",
+  "optionalDependencies": {},
+  "peerDependencies": {
+    "tslint": "^5.0.0"
+  },
+  "private": true,
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/cartant/rxjs-tslint-rules.git"
+  },
+  "scripts": {
+    "dist": "npm run dist:build",
+    "dist:build": "npm run dist:clean && tsc -p tsconfig-dist.json",
+    "dist:clean": "rimraf dist",
+    "lint": "tslint --project tsconfig.json --type-check source/**/*.ts",
+    "prepublish": "npm run test && npm run dist",
+    "test": "npm run lint && npm run test:build && mocha build/fixtures-spec.js",
+    "test:build": "npm run test:clean && tsc -p tsconfig.json",
+    "test:clean": "rimraf build"
+  },
+  "version": "0.0.0"
+}

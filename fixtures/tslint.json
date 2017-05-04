@@ -1,0 +1,10 @@
+{
+  "defaultSeverity": "error",
+  "jsRules": {},
+  "rules": {
+    "rxjs-add": { "severity": "error" },
+    "rxjs-no-unused-add": { "severity": "error" },
+    "rxjs-prefer-add": { "severity": "error" }
+  },
+  "rulesDirectory": "../build/rules"
+}
