@@ -221,12 +221,12 @@ function couldBeObservableType(type: ts.Type): boolean {
     }
 
     const baseTypes = type.getBaseTypes();
-    return !!baseTypes && baseTypes.some(couldBeObservableType);
+    return Boolean(baseTypes) && baseTypes.some(couldBeObservableType);
 }
 
 function isObservableType(type: ts.Type): boolean {
 
-    return type.symbol.name === "Observable";
+    return Boolean(type.symbol) && type.symbol.name === "Observable";
 }
 
 function isReferenceType(type: ts.Type): type is ts.TypeReference {
