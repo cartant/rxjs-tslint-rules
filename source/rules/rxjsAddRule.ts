@@ -12,7 +12,7 @@ import { AddWalker } from "../support/add-walker";
 
 export class Rule extends Lint.Rules.TypedRule {
 
-    public static FAILURE_STRING = "RxJS add missing";
+    public static FAILURE_STRING = "RxJS add import is missing";
 
     public applyWithProgram(sourceFile: ts.SourceFile, program: ts.Program): Lint.RuleFailure[] {
 

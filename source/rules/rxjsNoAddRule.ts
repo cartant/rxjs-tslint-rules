@@ -10,7 +10,7 @@ import * as ts from "typescript";
 
 export class Rule extends Lint.Rules.AbstractRule {
 
-    public static FAILURE_STRING = "RxJS add is forbidden";
+    public static FAILURE_STRING = "RxJS add import is forbidden";
 
     public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
         return this.applyWithWalker(new Walker(sourceFile, this.getOptions()));
