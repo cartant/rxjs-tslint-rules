@@ -34,6 +34,16 @@ describe("fixtures", function (): void {
         });
     });
 
+    describe("custom-source", () => {
+
+        it("should effect no errors", () => {
+
+            const result = lint("custom-source");
+
+            expect(result).to.have.property("errorCount", 0);
+        });
+    });
+
     describe("import-all", () => {
 
         it("should effect 'rxjs-prefer-add' errors", () => {

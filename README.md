@@ -8,7 +8,7 @@
 
 ### What is it?
 
-`rxjs-tslint-rules` is small set of TSLint rules to help manage projects that use `rxjs/add/...` style imports.
+`rxjs-tslint-rules` is small set of TSLint rules to help manage projects that use `rxjs/add/...` imports.
 
 ### Why might I need it?
 
@@ -20,7 +20,7 @@ import from "rxjs/add/observable/of";
 import from "rxjs/add/operator/map";
 ```
 
-TypeScript will see the merged declarations in all modules, making it difficult to find `rxjs/add/...` style imports that are missing from modules in which patched observables and operators are used.
+TypeScript will see the merged declarations in all modules, making it difficult to find `rxjs/add/...` imports that are missing from modules in which patched observables and operators are used.
 
 This can cause problems, as whether or not `Observable` is patched then depends upon the order in which the modules are executed.
 

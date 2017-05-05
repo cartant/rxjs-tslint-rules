@@ -154,12 +154,15 @@ export class AddWalker extends Lint.ProgramAwareRuleWalker {
                 const name = propertyAccessExpression.name.getText();
                 const typeChecker = this.getTypeChecker();
                 const type = typeChecker.getTypeAtLocation(propertyAccessExpression.expression);
-                const text = typeChecker.typeToString(type);
 
-                if ((text === "typeof Observable") && (knownObservables.indexOf(name) !== -1)) {
-                    this.add( this.usedObservables, name, propertyAccessExpression.name);
-                } else if (/^Observable</.test(text) && (knownOperators.indexOf(name) !== -1)) {
-                    this.add(this.usedOperators, name, propertyAccessExpression.name);
+                if (isReferenceType(type)) {
+                    if (couldBeObservableType(type.target) && (knownOperators.indexOf(name) !== -1)) {
+                        this.add(this.usedOperators, name, propertyAccessExpression.name);
+                    }
+                } else {
+                    if (couldBeObservableType(type) && (knownObservables.indexOf(name) !== -1)) {
+                        this.add(this.usedObservables, name, propertyAccessExpression.name);
+                    }
                 }
             }
         });
@@ -205,4 +208,34 @@ export class AddWalker extends Lint.ProgramAwareRuleWalker {
         }
         nodes.push(node);
     }
+}
+
+function couldBeObservableType(type: ts.Type): boolean {
+
+    if (isObservableType(type)) {
+        return true;
+    }
+
+    if (isUnionType(type)) {
+        return type.types.some(couldBeObservableType);
+    }
+
+    const baseTypes = type.getBaseTypes();
+    return !!baseTypes && baseTypes.some(couldBeObservableType);
+}
+
+function isObservableType(type: ts.Type): boolean {
+
+    return type.symbol.name === "Observable";
+}
+
+function isReferenceType(type: ts.Type): type is ts.TypeReference {
+
+    return Lint.isTypeFlagSet(type, ts.TypeFlags.Object) &&
+        Lint.isObjectFlagSet(type as ts.ObjectType, ts.ObjectFlags.Reference);
+}
+
+function isUnionType(type: ts.Type): type is ts.UnionType {
+
+    return Lint.isTypeFlagSet(type, ts.TypeFlags.Union);
 }
