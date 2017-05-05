@@ -56,6 +56,17 @@ describe("fixtures", function (): void {
         });
     });
 
+    describe("no-add", () => {
+
+        it("should effect 'rxjs-no-add' errors", () => {
+
+            const result = lint("no-add", "tslint.json");
+
+            expect(result).to.have.property("errorCount", 1);
+            expect(result.failures[0]).to.have.property("ruleName", "rxjs-no-add");
+        });
+    });
+
     describe("no-errors", () => {
 
         it("should effect no errors", () => {
@@ -123,14 +134,19 @@ describe("fixtures", function (): void {
         });
     });
 
-    function lint(dir: string): LintResult {
+    function lint(dir: string, configFileName?: string): LintResult {
 
             const fileName = `./fixtures/${dir}/fixture.ts`;
             const content = fs.readFileSync(fileName, "utf8");
             const program = Linter.createProgram(`./fixtures/${dir}/tsconfig.json`);
             const linter = new Linter({ fix: false }, program);
 
-            const configuration = Configuration.findConfiguration("./fixtures/tslint.json", fileName).results;
+            const configuration = Configuration.findConfiguration(
+                configFileName ?
+                    `./fixtures/${dir}/${configFileName}` :
+                    `./fixtures/tslint.json`,
+                fileName
+            ).results;
             linter.lint(fileName, content, configuration);
             return linter.getResult();
     }

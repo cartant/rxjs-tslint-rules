@@ -51,5 +51,6 @@ The package includes the following rules:
 | Rule | Description |
 | --- | --- |
 | `rxjs-add` | Enforces the importation of patched observables or operators used in the module. |
+| `rxjs-no-add` | Disallows the importation of patched observables and operators. |
 | `rxjs-no-unused-add` | Disallows the importation of patched observables or operators that are not used in the module. |
 | `rxjs-prefer-add` | Disallows the importation of `rxjs` or `rxjs/Rx`. |
