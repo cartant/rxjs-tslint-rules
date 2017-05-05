@@ -30,7 +30,7 @@ The rules in this package can be used to highlight missing - or unused - imports
 
 Install the package using NPM:
 
-    npm install rxjs-tslint-rules --save
+    npm install rxjs-tslint-rules --save-dev
 
 Update your `tslint.json` file to extend this package:
 
