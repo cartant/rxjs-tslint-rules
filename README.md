@@ -54,3 +54,15 @@ The package includes the following rules:
 | `rxjs-no-add` | Disallows the importation of patched observables and operators. |
 | `rxjs-no-unused-add` | Disallows the importation of patched observables or operators that are not used in the module. |
 | `rxjs-prefer-add` | Disallows the importation of `rxjs` or `rxjs/Rx`. |
+
+## Gotchas
+
+### `Observable.create`
+
+`Observable.create` is [declared as a `Function`](https://github.com/ReactiveX/rxjs/blob/5.3.1/src/Observable.ts#L46-L58), which means that its return type is `any`. This results in an observable that's not seen by the rules, as they use TypeScript's [TypeChecker](https://github.com/Microsoft/TypeScript/wiki/Using-the-Compiler-API#using-the-type-checker) to determine whether or not a call involves an observable.
+
+The rule implementations include no special handling for this case, so if spurious errors are effected due to `Observable.create`, explicit typing can resolve them. For example:
+
+```ts
+const ob: Observable<number> = Observable.create((observer: Observer<number>) => { ...
+```
