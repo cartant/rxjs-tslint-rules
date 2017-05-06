@@ -112,6 +112,17 @@ describe("fixtures", function (): void {
         });
     });
 
+    describe("observable-create", () => {
+
+        it("should effect an error unless explicit typing is used", () => {
+
+            const result = lint("observable-create");
+
+            expect(result).to.have.property("errorCount", 1);
+            expect(result.failures[0]).to.have.property("ruleName", "rxjs-no-unused-add");
+        });
+    });
+
     describe("unused-observable", () => {
 
         it("should effect 'rxjs-no-unused-add' errors", () => {
