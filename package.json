@@ -40,7 +40,7 @@
     "dist:build": "npm run dist:clean && tsc -p tsconfig-dist.json",
     "dist:clean": "rimraf dist",
     "lint": "tslint --project tsconfig.json --type-check source/**/*.ts",
-    "prepublish": "npm run test && npm run dist",
+    "prepublishOnly": "npm run test && npm run dist",
     "test": "npm run lint && npm run test:build && mocha build/fixtures-spec.js",
     "test:build": "npm run test:clean && tsc -p tsconfig.json",
     "test:clean": "rimraf build"
