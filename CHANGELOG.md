@@ -5,7 +5,7 @@
 
 * **gotcha:** Document `Observable.create` gotcha ([4be98ab](https://github.com/cartant/rxjs-tslint-rules/commit/4be98ab))
 
-### Text
+### Test
 
 * **no-unused-add:** Add `Observable.create` fixture ([56a8af0](https://github.com/cartant/rxjs-tslint-rules/commit/56a8af0))
 
