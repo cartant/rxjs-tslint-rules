@@ -212,6 +212,10 @@ export class AddWalker extends Lint.ProgramAwareRuleWalker {
 
 function couldBeObservableType(type: ts.Type): boolean {
 
+    if (isReferenceType(type)) {
+        type = type.target;
+    }
+
     if (isObservableType(type)) {
         return true;
     }
