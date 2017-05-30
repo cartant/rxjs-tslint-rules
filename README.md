@@ -46,14 +46,38 @@ Update your `tslint.json` file to extend this package:
 }
 ```
 
+### Rules
+
 The package includes the following rules:
 
-| Rule | Description |
-| --- | --- |
-| `rxjs-add` | Enforces the importation of patched observables or operators used in the module. |
-| `rxjs-no-add` | Disallows the importation of patched observables and operators. |
-| `rxjs-no-unused-add` | Disallows the importation of patched observables or operators that are not used in the module. |
-| `rxjs-prefer-add` | Disallows the importation of `rxjs` or `rxjs/Rx`. |
+| Rule | Description | Options |
+| --- | --- | --- |
+| `rxjs-add` | Enforces the importation of patched observables and operators used in the module. | See below |
+| `rxjs-no-add` | Disallows the importation of patched observables and operators. | None |
+| `rxjs-no-unused-add` | Disallows the importation of patched observables or operators that are not used in the module. | None |
+| `rxjs-prefer-add` | Disallows the importation of `rxjs` or `rxjs/Rx`. | None |
+
+### Options
+
+The `rxjs-add` rule takes an optional object with the property `file`. This is the path of the module - relative to the `tsconfig.json` - that imports the patched observables and operators.
+
+For example:
+
+```json
+"rules": {
+  "rxjs-add": {
+    "options": [{
+      "file": "./source/rxjs-imports.ts"
+    }],
+    "severity": "error"
+}
+```
+
+Specifying the `file` option allows all of the patched observables and operators to be kept in a central location. Said module should be imported before other modules that use patched observables and operators. The importation of said module is not enforced; the rule only ensures that it imports observables and operators that are used in other modules.
+
+Note that there is no `file` option for the `rxjs-no-unused-add` rule, so that rule should not be used in conjunction with the `rxjs-add` rule - if the `file` option is specified for the latter.
+
+If the `file` option is not specified, patched observables and operators must be imported in the modules in which they are used.
 
 ## Gotchas
 
