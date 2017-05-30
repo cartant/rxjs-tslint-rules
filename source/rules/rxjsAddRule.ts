@@ -14,6 +14,24 @@ import { UsedWalker } from "../support/used-walker";
 
 export class Rule extends Lint.Rules.TypedRule {
 
+    public static metadata: Lint.IRuleMetadata = {
+        description: "Enforces the importation of patched observables and operators used in the module.",
+        options: {
+            properties: {
+                file: { type: "string" }
+            },
+            type: "object"
+        },
+        optionsDescription: Lint.Utils.dedent`
+            An optional object with the property \`file\`.
+            This the path of the module - relative to the \`tsconfig.json\` - that imports the patched observables and operators.
+            If not specified, patched observables and operators must be imported in the modules in which they are used.`,
+        requiresTypeInfo: true,
+        ruleName: "rxjs-add",
+        type: "functionality",
+        typescriptOnly: true
+    };
+
     public static FAILURE_STRING = "RxJS add import is missing";
 
     public applyWithProgram(sourceFile: ts.SourceFile, program: ts.Program): Lint.RuleFailure[] {

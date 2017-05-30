@@ -10,6 +10,16 @@ import * as ts from "typescript";
 
 export class Rule extends Lint.Rules.AbstractRule {
 
+    public static metadata: Lint.IRuleMetadata = {
+        description: "Disallows the importation of `rxjs` or `rxjs/Rx`.",
+        options: null,
+        optionsDescription: "Not configurable.",
+        requiresTypeInfo: false,
+        ruleName: "rxjs-prefer-add",
+        type: "style",
+        typescriptOnly: false
+    };
+
     public static FAILURE_STRING = "RxJS add import is preferred";
 
     public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {

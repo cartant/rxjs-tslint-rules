@@ -12,6 +12,16 @@ import { UsedWalker } from "../support/used-walker";
 
 export class Rule extends Lint.Rules.TypedRule {
 
+    public static metadata: Lint.IRuleMetadata = {
+        description: "Disallows the importation of patched observables or operators that are not used in the module.",
+        options: null,
+        optionsDescription: "Not configurable.",
+        requiresTypeInfo: true,
+        ruleName: "rxjs-no-unused-add",
+        type: "maintainability",
+        typescriptOnly: true
+    };
+
     public static FAILURE_STRING = "RxJS add import is unused";
 
     public applyWithProgram(sourceFile: ts.SourceFile, program: ts.Program): Lint.RuleFailure[] {
