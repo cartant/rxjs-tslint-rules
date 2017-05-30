@@ -11,8 +11,8 @@ import { knownObservables, knownOperators } from "./knowns";
 
 export class UsedWalker extends AddedWalker {
 
-    protected usedObservables: { [key: string]: ts.Node[] } = {};
-    protected usedOperators: { [key: string]: ts.Node[] } = {};
+    public usedObservables: { [key: string]: ts.Node[] } = {};
+    public usedOperators: { [key: string]: ts.Node[] } = {};
 
     protected visitCallExpression(node: ts.CallExpression): void {
 

@@ -77,6 +77,16 @@ describe("fixtures", function (): void {
         });
     });
 
+    describe("no-errors-with-file", () => {
+
+        it("should effect no errors", () => {
+
+            const result = lint("no-errors-with-file", "tslint.json");
+
+            expect(result).to.have.property("errorCount", 0);
+        });
+    });
+
     describe("no-observable", () => {
 
         it("should effect 'rxjs-add' errors", () => {
@@ -96,11 +106,46 @@ describe("fixtures", function (): void {
         });
     });
 
+    describe("no-observable-with-file", () => {
+
+        it("should effect 'rxjs-add' errors", () => {
+
+            const result = lint("no-observable-with-file", "tslint.json");
+
+            expect(result).to.have.property("errorCount", 9);
+            expect(result.failures[0]).to.have.property("ruleName", "rxjs-add");
+            expect(result.failures[1]).to.have.property("ruleName", "rxjs-add");
+            expect(result.failures[2]).to.have.property("ruleName", "rxjs-add");
+            expect(result.failures[3]).to.have.property("ruleName", "rxjs-add");
+            expect(result.failures[4]).to.have.property("ruleName", "rxjs-add");
+            expect(result.failures[5]).to.have.property("ruleName", "rxjs-add");
+            expect(result.failures[6]).to.have.property("ruleName", "rxjs-add");
+            expect(result.failures[7]).to.have.property("ruleName", "rxjs-add");
+            expect(result.failures[8]).to.have.property("ruleName", "rxjs-add");
+        });
+    });
+
     describe("no-operator", () => {
 
         it("should effect 'rxjs-add' errors", () => {
 
             const result = lint("no-operator");
+
+            expect(result).to.have.property("errorCount", 6);
+            expect(result.failures[0]).to.have.property("ruleName", "rxjs-add");
+            expect(result.failures[1]).to.have.property("ruleName", "rxjs-add");
+            expect(result.failures[2]).to.have.property("ruleName", "rxjs-add");
+            expect(result.failures[3]).to.have.property("ruleName", "rxjs-add");
+            expect(result.failures[4]).to.have.property("ruleName", "rxjs-add");
+            expect(result.failures[5]).to.have.property("ruleName", "rxjs-add");
+        });
+    });
+
+    describe("no-operator-with-file", () => {
+
+        it("should effect 'rxjs-add' errors", () => {
+
+            const result = lint("no-operator-with-file", "tslint.json");
 
             expect(result).to.have.property("errorCount", 6);
             expect(result.failures[0]).to.have.property("ruleName", "rxjs-add");

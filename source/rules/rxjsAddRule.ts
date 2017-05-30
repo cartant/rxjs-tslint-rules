@@ -6,8 +6,10 @@
 /*tslint:disable:no-use-before-declare*/
 
 import * as Lint from "tslint";
+import * as path from "path";
 import * as ts from "typescript";
 
+import { AddedWalker } from "../support/added-walker";
 import { UsedWalker } from "../support/used-walker";
 
 export class Rule extends Lint.Rules.TypedRule {
@@ -24,24 +26,81 @@ class Walker extends UsedWalker {
 
     protected onSourceFileEnd(): void {
 
+        let { addedObservables, addedOperators }  = this;
+        let failure = Rule.FAILURE_STRING;
+
+        const [options] = this.getOptions();
+        if (options && options.file) {
+            const walker = this.walkFile(options.file);
+            addedObservables = walker.addedObservables;
+            addedOperators = walker.addedOperators;
+            failure = `${Rule.FAILURE_STRING} from ${options.file}`;
+        }
+
         Object.keys(this.usedObservables).forEach((key) => {
 
-            if (!this.addedObservables[key]) {
+            if (!addedObservables[key]) {
                 this.usedObservables[key].forEach((node) => this.addFailureAtNode(
                     node,
-                    `${Rule.FAILURE_STRING}: ${key}`
+                    `${failure}: ${key}`
                 ));
             }
         });
 
         Object.keys(this.usedOperators).forEach((key) => {
 
-            if (!this.addedOperators[key]) {
+            if (!addedOperators[key]) {
                 this.usedOperators[key].forEach((node) => this.addFailureAtNode(
                     node,
-                    `${Rule.FAILURE_STRING}: ${key}`
+                    `${failure}: ${key}`
                 ));
             }
         });
+    }
+
+    private findSourceFile(file: string): ts.SourceFile {
+
+        const program = this.getProgram();
+        const rootFiles = program.getRootFileNames();
+
+        for (let i = 0, length = rootFiles.length; i < length; ++i) {
+            const configFile = ts.findConfigFile(
+                this.normalizeFile(path.dirname(rootFiles[i])),
+                ts.sys.fileExists
+            );
+            if (configFile) {
+                const resolvedFile = this.normalizeFile(
+                    path.resolve(path.dirname(configFile), file)
+                );
+                const sourceFile = program.getSourceFileByPath(resolvedFile as any);
+                if (sourceFile) {
+                    return sourceFile;
+                } else {
+                    break;
+                }
+            }
+        }
+
+        throw new Error(`Cannot find ${file}`);
+    }
+
+    private normalizeFile(file: string): string {
+
+        const normalized = ts["normalizeSlashes"](file);
+        return ts.sys.useCaseSensitiveFileNames ? normalized : normalized.toLowerCase();
+    }
+
+    private walkFile(file: string): AddedWalker {
+
+        const sourceFile = this.findSourceFile(file);
+        const fileWalker = new AddedWalker(sourceFile, {
+            disabledIntervals: [],
+            ruleArguments: [],
+            ruleName: this.getRuleName(),
+            ruleSeverity: "error"
+        }, this.getProgram());
+
+        fileWalker.walk(sourceFile);
+        return fileWalker;
     }
 }

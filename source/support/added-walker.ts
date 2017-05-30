@@ -9,8 +9,8 @@ import * as ts from "typescript";
 
 export class AddedWalker extends Lint.ProgramAwareRuleWalker {
 
-    protected addedObservables: { [key: string]: ts.Node[] } = {};
-    protected addedOperators: { [key: string]: ts.Node[] } = {};
+    public addedObservables: { [key: string]: ts.Node[] } = {};
+    public addedOperators: { [key: string]: ts.Node[] } = {};
 
     protected add(
         map: { [key: string]: ts.Node[] },
