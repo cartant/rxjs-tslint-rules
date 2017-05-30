@@ -8,7 +8,7 @@
 import * as Lint from "tslint";
 import * as ts from "typescript";
 
-import { AddWalker } from "../support/add-walker";
+import { UsedWalker } from "../support/used-walker";
 
 export class Rule extends Lint.Rules.TypedRule {
 
@@ -20,7 +20,7 @@ export class Rule extends Lint.Rules.TypedRule {
     }
 }
 
-class Walker extends AddWalker {
+class Walker extends UsedWalker {
 
     protected onSourceFileEnd(): void {
 

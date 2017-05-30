@@ -6,16 +6,13 @@
 
 import * as Lint from "tslint";
 import * as ts from "typescript";
+import { AddedWalker } from "./added-walker";
 import { knownObservables, knownOperators } from "./knowns";
 
-export class AddWalker extends Lint.ProgramAwareRuleWalker {
+export class UsedWalker extends AddedWalker {
 
-    protected addedObservables: { [key: string]: ts.Node[] } = {};
-    protected addedOperators: { [key: string]: ts.Node[] } = {};
     protected usedObservables: { [key: string]: ts.Node[] } = {};
     protected usedOperators: { [key: string]: ts.Node[] } = {};
-
-    protected onSourceFileEnd(): void {}
 
     protected visitCallExpression(node: ts.CallExpression): void {
 
@@ -41,45 +38,6 @@ export class AddWalker extends Lint.ProgramAwareRuleWalker {
         });
 
         super.visitCallExpression(node);
-    }
-
-    protected visitImportDeclaration(node: ts.ImportDeclaration): void {
-
-        const moduleSpecifier = node.moduleSpecifier.getText();
-
-        let match = moduleSpecifier.match(/["']rxjs\/add\/observable\/(\w+)["']/);
-        if (match) {
-            this.add(this.addedObservables, match[1], node);
-        } else {
-            match = moduleSpecifier.match(/["']rxjs\/add\/operator\/(\w+)["']/);
-            if (match) {
-                this.add(this.addedOperators, match[1], node);
-            }
-        }
-
-        super.visitImportDeclaration(node);
-    }
-
-    protected visitNode(node: ts.Node): void {
-
-        super.visitNode(node);
-
-        if (node.kind === ts.SyntaxKind.SourceFile) {
-            this.onSourceFileEnd();
-        }
-    }
-
-    private add(
-        map: { [key: string]: ts.Node[] },
-        key: string,
-        node: ts.Node
-    ): void {
-
-        let nodes = map[key];
-        if (nodes === undefined) {
-            map[key] = nodes = [];
-        }
-        nodes.push(node);
     }
 }
 
