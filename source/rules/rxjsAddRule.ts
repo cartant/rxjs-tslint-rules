@@ -24,6 +24,8 @@ export class Rule extends Lint.Rules.TypedRule {
 
 class Walker extends UsedWalker {
 
+    private static fileWalkerCache = new Map<ts.Program, AddedWalker>();
+
     protected onSourceFileEnd(): void {
 
         let { addedObservables, addedOperators }  = this;
@@ -31,6 +33,7 @@ class Walker extends UsedWalker {
 
         const [options] = this.getOptions();
         if (options && options.file) {
+
             const walker = this.walkFile(options.file);
             addedObservables = walker.addedObservables;
             addedOperators = walker.addedOperators;
@@ -92,15 +95,21 @@ class Walker extends UsedWalker {
 
     private walkFile(file: string): AddedWalker {
 
-        const sourceFile = this.findSourceFile(file);
-        const fileWalker = new AddedWalker(sourceFile, {
-            disabledIntervals: [],
-            ruleArguments: [],
-            ruleName: this.getRuleName(),
-            ruleSeverity: "error"
-        }, this.getProgram());
+        const program = this.getProgram();
+        let fileWalker = Walker.fileWalkerCache.get(program);
+        if (!fileWalker) {
 
-        fileWalker.walk(sourceFile);
+            const sourceFile = this.findSourceFile(file);
+            fileWalker = new AddedWalker(sourceFile, {
+                disabledIntervals: [],
+                ruleArguments: [],
+                ruleName: this.getRuleName(),
+                ruleSeverity: "error"
+            }, program);
+
+            fileWalker.walk(sourceFile);
+            Walker.fileWalkerCache.set(program, fileWalker);
+        }
         return fileWalker;
     }
 }
