@@ -1,7 +1,14 @@
+<a name="1.1.0"></a>
+## [1.1.0](https://github.com/cartant/rxjs-tslint-rules/compare/v1.0.5...v1.1.0) (2017-05-30)
+
+### Features
+
+* **rxjs-add:** Add the file option ([3743ccd](https://github.com/cartant/rxjs-tslint-rules/commit/3743ccd))
+
 <a name="1.0.5"></a>
 ## [1.0.5](https://github.com/cartant/rxjs-tslint-rules/compare/v1.0.4...v1.0.5) (2017-05-26)
 
-### Fix
+### Bug Fixes
 
 * **base types:** Account for reference types in base types ([f9eb8a2](https://github.com/cartant/rxjs-tslint-rules/commit/f9eb8a2))
 
@@ -14,12 +21,12 @@
 
 ### Test
 
-* **no-unused-add:** Add `Observable.create` fixture ([56a8af0](https://github.com/cartant/rxjs-tslint-rules/commit/56a8af0))
+* **rxjs-no-unused-add:** Add `Observable.create` fixture ([56a8af0](https://github.com/cartant/rxjs-tslint-rules/commit/56a8af0))
 
 <a name="1.0.3"></a>
 ## [1.0.3](https://github.com/cartant/rxjs-tslint-rules/compare/v1.0.2...v1.0.3) (2017-05-05)
 
-### Fix
+### Bug Fixes
 
 * **messages:** Clarify failure messages ([03d8ae8](https://github.com/cartant/rxjs-tslint-rules/commit/03d8ae8))
 
