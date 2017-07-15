@@ -1,3 +1,10 @@
+<a name="1.2.0"></a>
+## [1.2.0](https://github.com/cartant/rxjs-tslint-rules/compare/v1.1.0...v1.2.0) (2017-07-15)
+
+### Features
+
+* **rxjs-no-subject-unsubscribe:** Add the rule ([acc1885](https://github.com/cartant/rxjs-tslint-rules/commit/acc1885))
+
 <a name="1.1.0"></a>
 ## [1.1.0](https://github.com/cartant/rxjs-tslint-rules/compare/v1.0.5...v1.1.0) (2017-05-30)
 
