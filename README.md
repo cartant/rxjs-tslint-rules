@@ -8,7 +8,7 @@
 
 ### What is it?
 
-`rxjs-tslint-rules` is small set of TSLint rules to help manage projects that use `rxjs/add/...` imports.
+`rxjs-tslint-rules` is small set of TSLint rules to help manage projects that use `rxjs/add/...` imports and to highlight other potential problems.
 
 ### Why might I need it?
 
@@ -24,7 +24,7 @@ TypeScript will see the merged declarations in all modules, making it difficult 
 
 This can cause problems, as whether or not `Observable` is patched then depends upon the order in which the modules are executed.
 
-The rules in this package can be used to highlight missing - or unused - imports.
+The rules in this package can be used to highlight missing - or unused - imports and other potential problems with RxJS.
 
 ## Install
 
@@ -54,6 +54,7 @@ The package includes the following rules:
 | --- | --- | --- |
 | `rxjs-add` | Enforces the importation of patched observables and operators used in the module. | See below |
 | `rxjs-no-add` | Disallows the importation of patched observables and operators. | None |
+| `rxjs-no-subject-unsubscribe` | Disallows the calling of `unsubscribe` directly upon `Subject` instances. For an explanation of why this can be a problem, see [this](https://stackoverflow.com/a/45112125/6680611) Stack Overflow answer. | None |
 | `rxjs-no-unused-add` | Disallows the importation of patched observables or operators that are not used in the module. | None |
 | `rxjs-prefer-add` | Disallows the importation of `rxjs` or `rxjs/Rx`. | None |
 
