@@ -45,5 +45,5 @@
     "test:build": "npm run test:clean && tsc -p tsconfig.json",
     "test:clean": "rimraf build"
   },
-  "version": "1.1.0"
+  "version": "1.2.0"
 }
