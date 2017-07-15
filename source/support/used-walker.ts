@@ -8,6 +8,7 @@ import * as Lint from "tslint";
 import * as ts from "typescript";
 import { AddedWalker } from "./added-walker";
 import { knownObservables, knownOperators } from "./knowns";
+import { couldBeType, isReferenceType } from "./util";
 
 export class UsedWalker extends AddedWalker {
 
@@ -26,11 +27,11 @@ export class UsedWalker extends AddedWalker {
                 const type = typeChecker.getTypeAtLocation(propertyAccessExpression.expression);
 
                 if (isReferenceType(type)) {
-                    if (knownOperators[name] && couldBeObservableType(type.target)) {
+                    if (knownOperators[name] && couldBeType(type.target, "Observable")) {
                         this.add(this.usedOperators, name, propertyAccessExpression.name);
                     }
                 } else {
-                    if (knownObservables[name] && couldBeObservableType(type)) {
+                    if (knownObservables[name] && couldBeType(type, "Observable")) {
                         this.add(this.usedObservables, name, propertyAccessExpression.name);
                     }
                 }
@@ -39,38 +40,4 @@ export class UsedWalker extends AddedWalker {
 
         super.visitCallExpression(node);
     }
-}
-
-function couldBeObservableType(type: ts.Type): boolean {
-
-    if (isReferenceType(type)) {
-        type = type.target;
-    }
-
-    if (isObservableType(type)) {
-        return true;
-    }
-
-    if (isUnionType(type)) {
-        return type.types.some(couldBeObservableType);
-    }
-
-    const baseTypes = type.getBaseTypes();
-    return Boolean(baseTypes) && baseTypes.some(couldBeObservableType);
-}
-
-function isObservableType(type: ts.Type): boolean {
-
-    return Boolean(type.symbol) && type.symbol.name === "Observable";
-}
-
-function isReferenceType(type: ts.Type): type is ts.TypeReference {
-
-    return Lint.isTypeFlagSet(type, ts.TypeFlags.Object) &&
-        Lint.isObjectFlagSet(type as ts.ObjectType, ts.ObjectFlags.Reference);
-}
-
-function isUnionType(type: ts.Type): type is ts.UnionType {
-
-    return Lint.isTypeFlagSet(type, ts.TypeFlags.Union);
 }
