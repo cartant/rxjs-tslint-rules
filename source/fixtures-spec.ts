@@ -159,6 +159,17 @@ describe("fixtures", function (): void {
             });
         });
 
+        describe("no-patched", () => {
+
+            it("should effect an 'rxjs-no-patched' error", () => {
+
+                const result = lint("no-patched", "tslint.json");
+
+                expect(result).to.have.property("errorCount", 1);
+                expect(result.failures[0]).to.have.property("ruleName", "rxjs-no-patched");
+            });
+        });
+
         describe("observable-create", () => {
 
             it("should effect an error unless explicit typing is used", () => {

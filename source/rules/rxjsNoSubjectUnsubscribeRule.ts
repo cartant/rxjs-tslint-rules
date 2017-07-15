@@ -7,6 +7,7 @@
 
 import * as Lint from "tslint";
 import * as ts from "typescript";
+
 import { couldBeType, isReferenceType } from "../support/util";
 
 export class Rule extends Lint.Rules.TypedRule {
