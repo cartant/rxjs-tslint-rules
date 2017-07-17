@@ -46,15 +46,15 @@ describe("fixtures", function (): void {
             });
         });
 
-        describe("import-all", () => {
+        describe("import-wholesale", () => {
 
-            it("should effect 'rxjs-prefer-add' errors", () => {
+            it("should effect 'rxjs-no-wholesale' errors", () => {
 
-                const result = lint("import-all");
+                const result = lint("import-wholesale");
 
                 expect(result).to.have.property("errorCount", 2);
-                expect(result.failures[0]).to.have.property("ruleName", "rxjs-prefer-add");
-                expect(result.failures[1]).to.have.property("ruleName", "rxjs-prefer-add");
+                expect(result.failures[0]).to.have.property("ruleName", "rxjs-no-wholesale");
+                expect(result.failures[1]).to.have.property("ruleName", "rxjs-no-wholesale");
             });
         });
 

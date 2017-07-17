@@ -8,35 +8,12 @@
 import * as Lint from "tslint";
 import * as ts from "typescript";
 
-export class Rule extends Lint.Rules.AbstractRule {
+import { Rule as NoWholesaleRule } from "./rxjsNoWholesaleRule";
 
-    public static metadata: Lint.IRuleMetadata = {
-        description: "Disallows the importation of `rxjs` or `rxjs/Rx`.",
-        options: null,
-        optionsDescription: "Not configurable.",
-        requiresTypeInfo: false,
-        ruleName: "rxjs-prefer-add",
-        type: "style",
-        typescriptOnly: false
-    };
+export class Rule extends NoWholesaleRule {
 
-    public static FAILURE_STRING = "RxJS add import is preferred";
-
-    public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
-        return this.applyWithWalker(new Walker(sourceFile, this.getOptions()));
-    }
-}
-
-class Walker extends Lint.RuleWalker {
-
-    public visitImportDeclaration(node: ts.ImportDeclaration): void {
-
-        const moduleSpecifier = node.moduleSpecifier.getText();
-
-        if (/^['"]rxjs(\/Rx)?['"]/.test(moduleSpecifier)) {
-            this.addFailureAtNode(node, Rule.FAILURE_STRING);
-        }
-
-        super.visitImportDeclaration(node);
-    }
+    public static metadata: Lint.IRuleMetadata = Object.assign({}, NoWholesaleRule.metadata, {
+        deprecationMessage: "rxjs-prefer-add has been renamed to rxjs-no-wholesale.",
+        ruleName: "rxjs-prefer-add"
+    });
 }
