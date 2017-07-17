@@ -1,3 +1,10 @@
+<a name="1.4.0"></a>
+## [1.4.0](https://github.com/cartant/rxjs-tslint-rules/compare/v1.3.0...v1.4.0) (2017-07-17)
+
+### Features
+
+* **rxjs-no-wholesale:** Deprecate and replace `rxjs-prefer-add` with `rxjs-no-wholesale` (which makes more sense when used in conjunction with `rxjs-no-add`) ([e6648e5](https://github.com/cartant/rxjs-tslint-rules/commit/e6648e5))
+
 <a name="1.3.0"></a>
 ## [1.3.0](https://github.com/cartant/rxjs-tslint-rules/compare/v1.2.0...v1.3.0) (2017-07-15)
 
