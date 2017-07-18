@@ -54,6 +54,7 @@ The package includes the following rules:
 | --- | --- | --- |
 | `rxjs-add` | Enforces the importation of patched observables and operators used in the module. | See below |
 | `rxjs-no-add` | Disallows the importation of patched observables and operators. | None |
+| `rxjs-no-do` | I do without `do` operators. [Do you not?](https://youtu.be/spG-Yj0zEyc) | None |
 | `rxjs-no-patched` | Disallows the calling of patched methods. Operators must be imported and called explicitly - not via the `Observable` prototype. | None |
 | `rxjs-no-subject-unsubscribe` | Disallows the calling of `unsubscribe` directly upon `Subject` instances. For an explanation of why this can be a problem, see [this](https://stackoverflow.com/a/45112125/6680611) Stack Overflow answer. | None |
 | `rxjs-no-unused-add` | Disallows the importation of patched observables or operators that are not used in the module. | None |

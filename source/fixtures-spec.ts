@@ -90,6 +90,17 @@ describe("fixtures", function (): void {
             });
         });
 
+        describe("no-do", () => {
+
+            it("should effect 'rxjs-no-do' errors", () => {
+
+                const result = lint("no-do", "tslint.json");
+
+                expect(result).to.have.property("errorCount", 1);
+                expect(result.failures[0]).to.have.property("ruleName", "rxjs-no-do");
+            });
+        });
+
         describe("no-errors", () => {
 
             it("should effect no errors", () => {
