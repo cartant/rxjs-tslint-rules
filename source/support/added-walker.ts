@@ -11,8 +11,9 @@ export class AddedWalker extends Lint.ProgramAwareRuleWalker {
 
     public addedObservables: { [key: string]: ts.Node[] } = {};
     public addedOperators: { [key: string]: ts.Node[] } = {};
+    public sourceFilePath: string;
 
-    protected add(
+    static add(
         map: { [key: string]: ts.Node[] },
         key: string,
         node: ts.Node
@@ -33,11 +34,11 @@ export class AddedWalker extends Lint.ProgramAwareRuleWalker {
 
         let match = moduleSpecifier.match(/["']rxjs\/add\/observable\/(\w+)["']/);
         if (match) {
-            this.add(this.addedObservables, match[1], node);
+            AddedWalker.add(this.addedObservables, match[1], node);
         } else {
             match = moduleSpecifier.match(/["']rxjs\/add\/operator\/(\w+)["']/);
             if (match) {
-                this.add(this.addedOperators, match[1], node);
+                AddedWalker.add(this.addedOperators, match[1], node);
             }
         }
 
@@ -49,6 +50,7 @@ export class AddedWalker extends Lint.ProgramAwareRuleWalker {
         super.visitNode(node);
 
         if (node.kind === ts.SyntaxKind.SourceFile) {
+            this.sourceFilePath = node["path"];
             this.onSourceFileEnd();
         }
     }

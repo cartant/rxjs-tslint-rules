@@ -46,6 +46,27 @@ describe("fixtures", function (): void {
             });
         });
 
+        describe("elsewhere-with-file", () => {
+
+            it("should effect an 'rxjs-add' error", () => {
+
+                const result = lint("elsewhere-with-file", "tslint.json");
+
+                expect(result).to.have.property("errorCount", 1);
+                expect(result.failures[0]).to.have.property("ruleName", "rxjs-add");
+            });
+        });
+
+        describe("elsewhere-with-file-allowed", () => {
+
+            it("should not effect an 'rxjs-add' error", () => {
+
+                const result = lint("elsewhere-with-file-allowed", "tslint.json");
+
+                expect(result).to.have.property("errorCount", 0);
+            });
+        });
+
         describe("import-wholesale", () => {
 
             it("should effect 'rxjs-no-wholesale' errors", () => {
@@ -192,6 +213,27 @@ describe("fixtures", function (): void {
             });
         });
 
+        describe("unused-observable-with-file", () => {
+
+            it("should effect an 'rxjs-add' error", () => {
+
+                const result = lint("unused-observable-with-file", "tslint.json", "adds.ts");
+
+                expect(result).to.have.property("errorCount", 1);
+                expect(result.failures[0]).to.have.property("ruleName", "rxjs-add");
+            });
+        });
+
+        describe("unused-observable-with-file-allowed", () => {
+
+            it("should not effect an 'rxjs-add' error", () => {
+
+                const result = lint("unused-observable-with-file-allowed", "tslint.json", "adds.ts");
+
+                expect(result).to.have.property("errorCount", 0);
+            });
+        });
+
         describe("unused-operator", () => {
 
             it("should effect 'rxjs-no-unused-add' errors", () => {
@@ -200,6 +242,27 @@ describe("fixtures", function (): void {
 
                 expect(result).to.have.property("errorCount", 1);
                 expect(result.failures[0]).to.have.property("ruleName", "rxjs-no-unused-add");
+            });
+        });
+
+        describe("unused-operator-with-file", () => {
+
+            it("should effect an 'rxjs-add' error", () => {
+
+                const result = lint("unused-operator-with-file", "tslint.json", "adds.ts");
+
+                expect(result).to.have.property("errorCount", 1);
+                expect(result.failures[0]).to.have.property("ruleName", "rxjs-add");
+            });
+        });
+
+        describe("unused-operator-with-file-allowed", () => {
+
+            it("should not effect an 'rxjs-add' error", () => {
+
+                const result = lint("unused-operator-with-file-allowed", "tslint.json", "adds.ts");
+
+                expect(result).to.have.property("errorCount", 0);
             });
         });
     });
@@ -239,9 +302,9 @@ describe("fixtures", function (): void {
         });
     });
 
-    function lint(dir: string, configFileName?: string): LintResult {
+    function lint(dir: string, configFileName?: string, fixtureFileName?: string): LintResult {
 
-            const fileName = `./fixtures/${dir}/fixture.ts`;
+            const fileName = `./fixtures/${dir}/${fixtureFileName || "fixture.ts"}`;
             const content = fs.readFileSync(fileName, "utf8");
             const program = Linter.createProgram(`./fixtures/${dir}/tsconfig.json`);
             const linter = new Linter({ fix: false }, program);

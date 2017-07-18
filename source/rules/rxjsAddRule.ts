@@ -18,6 +18,8 @@ export class Rule extends Lint.Rules.TypedRule {
         description: "Enforces the importation of patched observables and operators used in the module.",
         options: {
             properties: {
+                allowElsewhere: { type: "boolean" },
+                allowUnused: { type: "boolean" },
                 file: { type: "string" }
             },
             type: "object"
@@ -25,6 +27,9 @@ export class Rule extends Lint.Rules.TypedRule {
         optionsDescription: Lint.Utils.dedent`
             An optional object with the property \`file\`.
             This the path of the module - relative to the \`tsconfig.json\` - that imports the patched observables and operators.
+            If \`file\` is specified, the \`allowElsewhere\` and \`allowUnused\` options can be used to configure whether or not
+            patched imports are allowed in other files and whether or not unused patched imports are allowed.
+            Both \`allowElsewhere\` and \`allowUnused\` default to \`false\`.
             If not specified, patched observables and operators must be imported in the modules in which they are used.`,
         requiresTypeInfo: true,
         ruleName: "rxjs-add",
@@ -56,6 +61,81 @@ class Walker extends UsedWalker {
             addedObservables = walker.addedObservables;
             addedOperators = walker.addedOperators;
             failure = `${Rule.FAILURE_STRING} from ${options.file}`;
+
+            if (this.normalizeFile(this.sourceFilePath) === this.normalizeFile(walker.sourceFilePath)) {
+
+                if (!options.allowUnused) {
+
+                    const program = this.getProgram();
+                    const sourceFiles = program.getSourceFiles();
+
+                    const usedObservables: { [key: string]: ts.Node[] } = {};
+                    const usedOperators: { [key: string]: ts.Node[] } = {};
+
+                    for (let i = 0, length = sourceFiles.length; i < length; ++i) {
+
+                        const sourceFile = sourceFiles[i];
+                        const sourceFileWalker = new UsedWalker(sourceFile, {
+                            disabledIntervals: [],
+                            ruleArguments: [],
+                            ruleName: this.getRuleName(),
+                            ruleSeverity: "error"
+                        }, program);
+                        sourceFileWalker.walk(sourceFile);
+
+                        Object.keys(sourceFileWalker.usedObservables).forEach((key) => {
+                            sourceFileWalker.usedObservables[key].forEach((node) => {
+                                UsedWalker.add(usedObservables, key, node);
+                            });
+                        });
+
+                        Object.keys(sourceFileWalker.usedOperators).forEach((key) => {
+                            sourceFileWalker.usedOperators[key].forEach((node) => {
+                                UsedWalker.add(usedOperators, key, node);
+                            });
+                        });
+                    }
+
+                    Object.keys(addedObservables).forEach((key) => {
+
+                        if (!usedObservables[key]) {
+                            addedObservables[key].forEach((node) => this.addFailureAtNode(
+                                node,
+                                `Unused patched observable in ${options.file}: ${key}`
+                            ));
+                        }
+                    });
+
+                    Object.keys(addedOperators).forEach((key) => {
+
+                        if (!usedOperators[key]) {
+                            addedOperators[key].forEach((node) => this.addFailureAtNode(
+                                node,
+                                `Unused patched operator in ${options.file}: ${key}`
+                            ));
+                        }
+                    });
+                }
+
+            } else {
+
+                if (!options.allowElsewhere) {
+
+                    Object.keys(this.addedObservables).forEach((key) => {
+                        this.addedObservables[key].forEach((node) => this.addFailureAtNode(
+                            node,
+                            `Patched observables are forbidden outside of ${options.file}: ${key}`
+                        ));
+                    });
+
+                    Object.keys(this.addedOperators).forEach((key) => {
+                        this.addedOperators[key].forEach((node) => this.addFailureAtNode(
+                            node,
+                            `Patched operators are forbidden outside of ${options.file}: ${key}`
+                        ));
+                    });
+                }
+            }
         }
 
         Object.keys(this.usedObservables).forEach((key) => {
@@ -85,6 +165,7 @@ class Walker extends UsedWalker {
         const rootFiles = program.getRootFileNames();
 
         for (let i = 0, length = rootFiles.length; i < length; ++i) {
+
             const configFile = ts.findConfigFile(
                 this.normalizeFile(path.dirname(rootFiles[i])),
                 ts.sys.fileExists

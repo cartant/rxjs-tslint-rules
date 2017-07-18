@@ -69,6 +69,8 @@ For example:
 "rules": {
   "rxjs-add": {
     "options": [{
+      "allowElsewhere": false,
+      "allowUnused": false,
       "file": "./source/rxjs-imports.ts"
     }],
     "severity": "error"
@@ -77,7 +79,9 @@ For example:
 
 Specifying the `file` option allows all of the patched observables and operators to be kept in a central location. Said module should be imported before other modules that use patched observables and operators. The importation of said module is not enforced; the rule only ensures that it imports observables and operators that are used in other modules.
 
-Note that there is no `file` option for the `rxjs-no-unused-add` rule, so that rule should not be used in conjunction with the `rxjs-add` rule - if the `file` option is specified for the latter.
+If `file` is specified, the `allowElsewhere` and `allowUnused` options can be used to configure whether or not patched imports are allowed in other files and whether or not unused patched imports are allowed. Both `allowElsewhere` and `allowUnused` default to `false`.
+
+Note that there is no `file` option for the `rxjs-no-unused-add` rule, so that rule should not be used in conjunction with the `rxjs-add` rule - if the `file` option is specified for the latter. Use the `rxjs-add` rule's `allowUnused` option instead.
 
 If the `file` option is not specified, patched observables and operators must be imported in the modules in which they are used.
 

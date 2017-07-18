@@ -28,11 +28,11 @@ export class UsedWalker extends AddedWalker {
 
                 if (isReferenceType(type)) {
                     if (knownOperators[name] && couldBeType(type.target, "Observable")) {
-                        this.add(this.usedOperators, name, propertyAccessExpression.name);
+                        UsedWalker.add(this.usedOperators, name, propertyAccessExpression.name);
                     }
                 } else {
                     if (knownObservables[name] && couldBeType(type, "Observable")) {
-                        this.add(this.usedObservables, name, propertyAccessExpression.name);
+                        UsedWalker.add(this.usedObservables, name, propertyAccessExpression.name);
                     }
                 }
             }
