@@ -75,25 +75,28 @@ class Walker extends UsedWalker {
                     for (let i = 0, length = sourceFiles.length; i < length; ++i) {
 
                         const sourceFile = sourceFiles[i];
-                        const sourceFileWalker = new UsedWalker(sourceFile, {
-                            disabledIntervals: [],
-                            ruleArguments: [],
-                            ruleName: this.getRuleName(),
-                            ruleSeverity: "error"
-                        }, program);
-                        sourceFileWalker.walk(sourceFile);
+                        if (!sourceFile["isDeclarationFile"]) {
 
-                        Object.keys(sourceFileWalker.usedObservables).forEach((key) => {
-                            sourceFileWalker.usedObservables[key].forEach((node) => {
-                                UsedWalker.add(usedObservables, key, node);
-                            });
-                        });
+                            const sourceFileWalker = new UsedWalker(sourceFile, {
+                                disabledIntervals: [],
+                                ruleArguments: [],
+                                ruleName: this.getRuleName(),
+                                ruleSeverity: "error"
+                            }, program);
+                            sourceFileWalker.walk(sourceFile);
 
-                        Object.keys(sourceFileWalker.usedOperators).forEach((key) => {
-                            sourceFileWalker.usedOperators[key].forEach((node) => {
-                                UsedWalker.add(usedOperators, key, node);
+                            Object.keys(sourceFileWalker.usedObservables).forEach((key) => {
+                                sourceFileWalker.usedObservables[key].forEach((node) => {
+                                    UsedWalker.add(usedObservables, key, node);
+                                });
                             });
-                        });
+
+                            Object.keys(sourceFileWalker.usedOperators).forEach((key) => {
+                                sourceFileWalker.usedOperators[key].forEach((node) => {
+                                    UsedWalker.add(usedOperators, key, node);
+                                });
+                            });
+                        }
                     }
 
                     Object.keys(addedObservables).forEach((key) => {
