@@ -1,3 +1,14 @@
+<a name="2.0.0"></a>
+## [2.0.0](https://github.com/cartant/rxjs-tslint-rules/compare/v1.4.0...v2.0.0) (2017-07-18)
+
+### Features
+
+* **rxjs-add options:** Add `allowElsewhere` and `allowUnused` options for the `rxjs-add` rule ([98a65f4](https://github.com/cartant/rxjs-tslint-rules/commit/98a65f4))
+
+### Breaking Changes
+
+* The `allowElsewhere` and `allowUnused` options for the `rxjs-add` rule default to `false`, so configurations that specified the `file` option for `rxjs-add` might see errors effected if patched observables or operators are imported outside of the file, or if there are unused imports. For behaviour identical to the previous version, configure both options as `true`.
+
 <a name="1.4.0"></a>
 ## [1.4.0](https://github.com/cartant/rxjs-tslint-rules/compare/v1.3.0...v1.4.0) (2017-07-17)
 
