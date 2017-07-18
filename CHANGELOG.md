@@ -1,3 +1,10 @@
+<a name="2.1.0"></a>
+## [2.1.0](https://github.com/cartant/rxjs-tslint-rules/compare/v2.0.0...v2.1.0) (2017-07-18)
+
+### Features
+
+* **rxjs-no-do:** Add `rxjs-no-do` rule ([1d7b352](https://github.com/cartant/rxjs-tslint-rules/commit/1d7b352))
+
 <a name="2.0.0"></a>
 ## [2.0.0](https://github.com/cartant/rxjs-tslint-rules/compare/v1.4.0...v2.0.0) (2017-07-18)
 
