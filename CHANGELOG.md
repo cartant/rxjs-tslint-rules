@@ -1,7 +1,7 @@
 <a name="2.1.2"></a>
 ## [2.1.2](https://github.com/cartant/rxjs-tslint-rules/compare/v2.1.0...v2.1.2) (2017-07-19)
 
-### Features
+### Non-breaking Changes
 
 * **rxjs-add:** Skip `.d.ts` files when looking for unused imports with the `file` option ([ba18815](https://github.com/cartant/rxjs-tslint-rules/commit/ba18815))
 
