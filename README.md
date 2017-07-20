@@ -10,7 +10,7 @@
 
 `rxjs-tslint-rules` is small set of TSLint rules to help manage projects that use `rxjs/add/...` imports and to highlight other potential problems.
 
-### Why might I need it?
+### Why might you need it?
 
 When using imports that patch `Observable`:
 
