@@ -75,6 +75,7 @@ For example:
       "file": "./source/rxjs-imports.ts"
     }],
     "severity": "error"
+  }
 }
 ```
 
