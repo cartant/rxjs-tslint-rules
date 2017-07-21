@@ -1,3 +1,10 @@
+<a name="2.1.3"></a>
+## [2.1.3](https://github.com/cartant/rxjs-tslint-rules/compare/v2.1.2...v2.1.3) (2017-07-21)
+
+### Documentation
+
+* Trivial documentation changes.
+
 <a name="2.1.2"></a>
 ## [2.1.2](https://github.com/cartant/rxjs-tslint-rules/compare/v2.1.0...v2.1.2) (2017-07-19)
 
