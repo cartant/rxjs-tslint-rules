@@ -102,3 +102,5 @@ const ob: Observable<number> = Observable.create((observer: Observer<number>) =>
 ## More
 
 There are some examples of policies that can be implemented using particular rule combinations in: [Managing RxJS Imports with TSLint](https://medium.com/@cartant/managing-rxjs-imports-with-tslint-828cdc66b5ee).
+
+[Christian Liebel](https://github.com/chliebel) has written about his approach to importing RxJS in his blog post: [Angular & TypeScript: How to Import RxJS Correctly?](https://christianliebel.com/2017/07/import-rxjs-correctly/).
