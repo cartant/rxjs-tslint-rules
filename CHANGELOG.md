@@ -1,3 +1,10 @@
+<a name="2.1.4"></a>
+## [2.1.4](https://github.com/cartant/rxjs-tslint-rules/compare/v2.1.3...v2.1.4) (2017-08-23)
+
+### Non-breaking Changes
+
+* **rxjs-add:** Improve error message relating to central imports file not being found ([5b12ee6](https://github.com/cartant/rxjs-tslint-rules/commit/5b12ee6))
+
 <a name="2.1.3"></a>
 ## [2.1.3](https://github.com/cartant/rxjs-tslint-rules/compare/v2.1.2...v2.1.3) (2017-07-21)
 
