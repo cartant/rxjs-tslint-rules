@@ -164,6 +164,7 @@ class Walker extends UsedWalker {
 
     private findSourceFile(file: string): ts.SourceFile {
 
+        let message = "Cannot find 'tsconfig.json'";
         const program = this.getProgram();
         const rootFiles = program.getRootFileNames();
 
@@ -181,12 +182,13 @@ class Walker extends UsedWalker {
                 if (sourceFile) {
                     return sourceFile;
                 } else {
+                    message = `Cannot find '${resolvedFile}' in the compiled program. Has it been imported?`;
                     break;
                 }
             }
         }
 
-        throw new Error(`Cannot find ${file}`);
+        throw new Error(message);
     }
 
     private normalizeFile(file: string): string {
