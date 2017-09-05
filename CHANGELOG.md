@@ -1,3 +1,10 @@
+<a name="2.1.5"></a>
+## [2.1.5](https://github.com/cartant/rxjs-tslint-rules/compare/v2.1.4...v2.1.5) (2017-09-05)
+
+### Bug Fixes
+
+* **knowns:** Add missing observables and operators ([051b8a0](https://github.com/cartant/rxjs-tslint-rules/commit/051b8a0))
+
 <a name="2.1.4"></a>
 ## [2.1.4](https://github.com/cartant/rxjs-tslint-rules/compare/v2.1.3...v2.1.4) (2017-08-23)
 
