@@ -6,6 +6,8 @@
 [![devDependency Status](https://img.shields.io/david/dev/cartant/rxjs-tslint-rules.svg)](https://david-dm.org/cartant/rxjs-tslint-rules#info=devDependencies)
 [![peerDependency Status](https://img.shields.io/david/peer/cartant/rxjs-tslint-rules.svg)](https://david-dm.org/cartant/rxjs-tslint-rules#info=peerDependencies)
 
+<a href="https://app.codesponsor.io/link/jZB4ja6SvwGUN4ibgYVgUVYV/cartant/rxjs-tslint-rules" rel="nofollow"><img src="https://app.codesponsor.io/embed/jZB4ja6SvwGUN4ibgYVgUVYV/cartant/rxjs-tslint-rules.svg" style="width: 888px; height: 68px;" alt="Sponsor" /></a>
+
 ### What is it?
 
 `rxjs-tslint-rules` is small set of TSLint rules to help manage projects that use `rxjs/add/...` imports and to highlight other potential problems.
