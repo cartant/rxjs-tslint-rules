@@ -27,11 +27,11 @@ export class UsedWalker extends AddedWalker {
                 const type = typeChecker.getTypeAtLocation(propertyAccessExpression.expression);
 
                 if (isReferenceType(type)) {
-                    if (knownOperators[name] && couldBeType(type.target, "Observable")) {
+                    if (knownOperators.hasOwnProperty(name) && couldBeType(type.target, "Observable")) {
                         UsedWalker.add(this.usedOperators, name, propertyAccessExpression.name);
                     }
                 } else {
-                    if (knownObservables[name] && couldBeType(type, "Observable")) {
+                    if (knownObservables.hasOwnProperty(name) && couldBeType(type, "Observable")) {
                         UsedWalker.add(this.usedObservables, name, propertyAccessExpression.name);
                     }
                 }
