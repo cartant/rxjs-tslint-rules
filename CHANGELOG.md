@@ -1,3 +1,10 @@
+<a name="2.1.6"></a>
+## [2.1.6](https://github.com/cartant/rxjs-tslint-rules/compare/v2.1.5...v2.1.6) (2017-09-06)
+
+### Bug Fixes
+
+* **knowns:** Use `hasOwnProperty` when checking known observables and operators ([88e4ef7](https://github.com/cartant/rxjs-tslint-rules/commit/88e4ef7))
+
 <a name="2.1.5"></a>
 ## [2.1.5](https://github.com/cartant/rxjs-tslint-rules/compare/v2.1.4...v2.1.5) (2017-09-05)
 
