@@ -6,8 +6,6 @@
 [![devDependency Status](https://img.shields.io/david/dev/cartant/rxjs-tslint-rules.svg)](https://david-dm.org/cartant/rxjs-tslint-rules#info=devDependencies)
 [![peerDependency Status](https://img.shields.io/david/peer/cartant/rxjs-tslint-rules.svg)](https://david-dm.org/cartant/rxjs-tslint-rules#info=peerDependencies)
 
-<a href="https://app.codesponsor.io/link/jZB4ja6SvwGUN4ibgYVgUVYV/cartant/rxjs-tslint-rules" rel="nofollow"><img src="https://app.codesponsor.io/embed/jZB4ja6SvwGUN4ibgYVgUVYV/cartant/rxjs-tslint-rules.svg" style="width: 888px; height: 68px;" alt="Sponsor" /></a>
-
 ### What is it?
 
 `rxjs-tslint-rules` is small set of TSLint rules to help manage projects that use `rxjs/add/...` imports and to highlight other potential problems.
@@ -106,3 +104,5 @@ const ob: Observable<number> = Observable.create((observer: Observer<number>) =>
 There are some examples of policies that can be implemented using particular rule combinations in: [Managing RxJS Imports with TSLint](https://medium.com/@cartant/managing-rxjs-imports-with-tslint-828cdc66b5ee).
 
 [Christian Liebel](https://github.com/chliebel) has written about his approach to importing RxJS in his blog post: [Angular & TypeScript: How to Import RxJS Correctly?](https://christianliebel.com/2017/07/import-rxjs-correctly/)
+
+<a href="https://app.codesponsor.io/link/jZB4ja6SvwGUN4ibgYVgUVYV/cartant/rxjs-tslint-rules" rel="nofollow"><img src="https://app.codesponsor.io/embed/jZB4ja6SvwGUN4ibgYVgUVYV/cartant/rxjs-tslint-rules.svg" style="width: 888px; height: 68px;" alt="Sponsor" /></a>
