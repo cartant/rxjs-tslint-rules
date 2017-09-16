@@ -108,7 +108,7 @@ If you are using the `file` option of the `rxjs-add` rule to ensure patched obse
           }
         }
 
-* If the central file is, say, `src/rxjs.imports.ts`, add that file to the `"files"` in `src/tsconfig.spec.json`:
+* And, for the test linting, I'd recommend adding the central file to the TypeScript configuration. If the central file is, say, `src/rxjs.imports.ts`, add that file to the `"files"` in `src/tsconfig.spec.json`:
 
         "files": [
           "rxjs.imports.ts",
