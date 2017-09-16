@@ -1,3 +1,10 @@
+<a name="2.1.7"></a>
+## [2.1.7](https://github.com/cartant/rxjs-tslint-rules/compare/v2.1.6...v2.1.7) (2017-09-16)
+
+### Documentation
+
+* Add notes on gotchas with `@angular/cli`.
+
 <a name="2.1.6"></a>
 ## [2.1.6](https://github.com/cartant/rxjs-tslint-rules/compare/v2.1.5...v2.1.6) (2017-09-06)
 
