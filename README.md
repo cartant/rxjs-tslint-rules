@@ -89,6 +89,34 @@ If the `file` option is not specified, patched observables and operators must be
 
 ## Gotchas
 
+### `@angular/cli`
+
+Angular's CLI runs TSLint three times:
+
+* first, with application files from `src/` (using `src/tsconfig.app.json`);
+* then with the test files from `src/` (using `src/tsconfig.spec.json`);
+* and, finally, with files from `e2e/` (using `e2e/tsconfig.e2e.json`).
+
+If you are using the `file` option of the `rxjs-add` rule to ensure patched observables and operators are kept in a central location, there are some configuration changes that you should make:
+
+* I'd recommend switching off `rxjs-add` for the `e2e` linting, as the central file isn't necessary or appropriate. The simplest way to do this is to create an `e2e/tslint.json` file with the following content:
+
+        {
+          "extends": ["../tslint.json"],
+          "rules": {
+            "rxjs-add": { "severity": "off" }
+          }
+        }
+
+* If the central file is, say, `src/rxjs.imports.ts`, add that file to the `"files"` in `src/tsconfig.spec.json`:
+
+        "files": [
+          "rxjs.imports.ts",
+          "test.ts"
+        ]
+
+With these changes, the rule should play nice with the CLI's running of TSLint. If you are using `"allowUnused": false` and receive errors about unused operators, you should make sure that files in which those operators are used are imported into at least one test. (The rule will walk **all files** included in the TypeScript program - not just the specs - so if an unused error is effected, the file using the unsed operator is not present in the program and needs to be imported into a test.)
+
 ### `Observable.create`
 
 `Observable.create` is [declared as a `Function`](https://github.com/ReactiveX/rxjs/blob/5.3.1/src/Observable.ts#L46-L58), which means that its return type is `any`. This results in an observable that's not seen by the rules, as they use TypeScript's [TypeChecker](https://github.com/Microsoft/TypeScript/wiki/Using-the-Compiler-API#using-the-type-checker) to determine whether or not a call involves an observable.
