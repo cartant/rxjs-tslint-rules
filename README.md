@@ -115,7 +115,7 @@ If you are using the `file` option of the `rxjs-add` rule to ensure patched obse
           "test.ts"
         ]
 
-With these changes, the rule should play nice with the CLI's running of TSLint. If you are using `"allowUnused": false` and receive errors about unused operators, you should make sure that files in which those operators are used are imported into at least one test. (The rule will walk **all files** included in the TypeScript program - not just the specs - so if an unused error is effected, the file using the unsed operator is not present in the program and needs to be imported into a test.)
+With these changes, the rule should play nice with the CLI's running of TSLint. If you are using `"allowUnused": false` and receive errors about unused operators, you should make sure that files in which those operators are used are imported into at least one test. (The rule will walk **all files** included in the TypeScript program - not just the specs - so if an unused error is effected, the file using the unused operator is not present in the program and needs to be imported into a test.)
 
 ### `Observable.create`
 
