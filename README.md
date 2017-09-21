@@ -5,6 +5,7 @@
 [![dependency status](https://img.shields.io/david/cartant/rxjs-tslint-rules.svg)](https://david-dm.org/cartant/rxjs-tslint-rules)
 [![devDependency Status](https://img.shields.io/david/dev/cartant/rxjs-tslint-rules.svg)](https://david-dm.org/cartant/rxjs-tslint-rules#info=devDependencies)
 [![peerDependency Status](https://img.shields.io/david/peer/cartant/rxjs-tslint-rules.svg)](https://david-dm.org/cartant/rxjs-tslint-rules#info=peerDependencies)
+[![Greenkeeper badge](https://badges.greenkeeper.io/cartant/rxjs-tslint-rules.svg)](https://greenkeeper.io/)
 
 ### What is it?
 
