@@ -1,3 +1,14 @@
+<a name="3.0.0"></a>
+## [3.0.0](https://github.com/cartant/rxjs-tslint-rules/compare/v2.1.7...v3.0.0) (2017-09-23)
+
+### Breaking Changes
+
+* The list of known observables and operators is now compiled by reading the file names from disk. That means that RxJS is now a required peer dependency. It's unlikely that this will be a breaking change for most projects, as I'd expect RxJS to already be present in projects that are using these rules.
+
+### Features
+
+* **rxjs-no-operator:** Add a rule to forbid the importation of [non-'lettable' operators](https://github.com/ReactiveX/rxjs/blob/master/doc/lettable-operators.md). ([392f995](https://github.com/cartant/rxjs-tslint-rules/commit/392f995))
+
 <a name="2.1.7"></a>
 ## [2.1.7](https://github.com/cartant/rxjs-tslint-rules/compare/v2.1.6...v2.1.7) (2017-09-16)
 
