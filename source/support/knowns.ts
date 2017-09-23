@@ -13,8 +13,8 @@ function read(dir: string): { [key: string]: boolean } {
     const entry = resolve.sync("rxjs");
     const names = fs.readdirSync(path.join(path.dirname(entry), dir));
     return names
-        .filter((name) => /^[a-z]\w+\.d\.ts$/.test(name))
-        .map((name) => name.replace(/\.d\.ts$/, ""))
+        .filter((name) => /^[a-z]\w+\.js$/.test(name))
+        .map((name) => name.replace(/\.js/, ""))
         .reduce((acc, name) => ({ ...acc, [name]: true }), {});
 }
 
