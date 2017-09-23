@@ -1,3 +1,10 @@
+<a name="3.0.1"></a>
+## [3.0.1](https://github.com/cartant/rxjs-tslint-rules/compare/v3.0.0...v3.0.1) (2017-09-23)
+
+### Bug Fixes
+
+* **knowns:** Support 5.5.0-beta.0. ([cdcad3a](https://github.com/cartant/rxjs-tslint-rules/commit/cdcad3a))
+
 <a name="3.0.0"></a>
 ## [3.0.0](https://github.com/cartant/rxjs-tslint-rules/compare/v2.1.7...v3.0.0) (2017-09-23)
 
