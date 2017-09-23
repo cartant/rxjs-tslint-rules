@@ -18,7 +18,7 @@ export class Rule extends Lint.Rules.TypedRule {
         optionsDescription: "Not configurable.",
         requiresTypeInfo: true,
         ruleName: "rxjs-no-do",
-        type: "style",
+        type: "functionality",
         typescriptOnly: true
     };
 

@@ -11,16 +11,16 @@ import * as ts from "typescript";
 export class Rule extends Lint.Rules.AbstractRule {
 
     public static metadata: Lint.IRuleMetadata = {
-        description: "Disallows the importation of patched observables and operators.",
+        description: "Disallows importation from the 'operator' directory.",
         options: null,
         optionsDescription: "Not configurable.",
         requiresTypeInfo: false,
-        ruleName: "rxjs-no-add",
+        ruleName: "rxjs-no-operator",
         type: "functionality",
         typescriptOnly: false
     };
 
-    public static FAILURE_STRING = "RxJS add import is forbidden";
+    public static FAILURE_STRING = "RxJS importation from the 'operator' directory is forbidden";
 
     public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
         return this.applyWithWalker(new Walker(sourceFile, this.getOptions()));
@@ -33,7 +33,7 @@ class Walker extends Lint.RuleWalker {
 
         const moduleSpecifier = node.moduleSpecifier.getText();
 
-        if (/^['"]rxjs\/add\//.test(moduleSpecifier)) {
+        if (/^['"]rxjs\/operator\//.test(moduleSpecifier)) {
             this.addFailureAtNode(node, Rule.FAILURE_STRING);
         }
 

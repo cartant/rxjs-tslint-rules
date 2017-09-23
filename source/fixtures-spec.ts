@@ -175,6 +175,17 @@ describe("fixtures", function (): void {
             });
         });
 
+        describe("no-operator-import", () => {
+
+            it("should effect 'rxjs-no-operator' errors", () => {
+
+                const result = lint("no-operator-import", "tslint.json");
+
+                expect(result).to.have.property("errorCount", 1);
+                expect(result.failures[0]).to.have.property("ruleName", "rxjs-no-operator");
+            });
+        });
+
         describe("no-operator-with-file", () => {
 
             it("should effect 'rxjs-add' errors", () => {

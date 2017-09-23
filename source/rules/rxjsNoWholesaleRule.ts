@@ -16,7 +16,7 @@ export class Rule extends Lint.Rules.AbstractRule {
         optionsDescription: "Not configurable.",
         requiresTypeInfo: false,
         ruleName: "rxjs-no-wholesale",
-        type: "style",
+        type: "functionality",
         typescriptOnly: false
     };
 
