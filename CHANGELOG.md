@@ -1,3 +1,10 @@
+<a name="3.0.2"></a>
+## [3.0.2](https://github.com/cartant/rxjs-tslint-rules/compare/v3.0.1...v3.0.2) (2017-10-06)
+
+### Bug Fixes
+
+* **knowns:** Support 5.5.0-beta.5's move of `toPromise` to `Observable.prototype`. ([8641a1b](https://github.com/cartant/rxjs-tslint-rules/commit/8641a1b))
+
 <a name="3.0.1"></a>
 ## [3.0.1](https://github.com/cartant/rxjs-tslint-rules/compare/v3.0.0...v3.0.1) (2017-09-23)
 
