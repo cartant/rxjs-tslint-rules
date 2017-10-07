@@ -1,3 +1,10 @@
+<a name="3.0.3"></a>
+## [3.0.3](https://github.com/cartant/rxjs-tslint-rules/compare/v3.0.2...v3.0.3) (2017-10-07)
+
+### Bug Fixes
+
+* **rxjs-no-unused-add:** Consider only known, added imports - as `toPromise` is moving to `Observable.prototype` and will have a no-op import. ([2489a13](https://github.com/cartant/rxjs-tslint-rules/commit/2489a13))
+
 <a name="3.0.2"></a>
 ## [3.0.2](https://github.com/cartant/rxjs-tslint-rules/compare/v3.0.1...v3.0.2) (2017-10-06)
 
