@@ -6,6 +6,7 @@
 
 import * as Lint from "tslint";
 import * as ts from "typescript";
+import { knownObservables, knownOperators } from "./knowns";
 
 export class AddedWalker extends Lint.ProgramAwareRuleWalker {
 
@@ -33,11 +34,11 @@ export class AddedWalker extends Lint.ProgramAwareRuleWalker {
         const moduleSpecifier = node.moduleSpecifier.getText();
 
         let match = moduleSpecifier.match(/["']rxjs\/add\/observable\/(\w+)["']/);
-        if (match) {
+        if (match && knownObservables[match[1]]) {
             AddedWalker.add(this.addedObservables, match[1], node);
         } else {
             match = moduleSpecifier.match(/["']rxjs\/add\/operator\/(\w+)["']/);
-            if (match) {
+            if (match && knownOperators[match[1]]) {
                 AddedWalker.add(this.addedOperators, match[1], node);
             }
         }
