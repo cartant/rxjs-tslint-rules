@@ -1,0 +1,8 @@
+{
+  "extends": [
+      "../tslint.json"
+  ],
+  "rules": {
+    "rxjs-add": { "severity": "off" }
+  }
+}
