@@ -119,6 +119,8 @@ If you are using the `file` option of the `rxjs-add` rule to ensure patched obse
 
 With these changes, the rule should play nice with the CLI's running of TSLint. If you are using `"allowUnused": false` and receive errors about unused operators, you should make sure that files in which those operators are used are imported into at least one test. (The rule will walk **all files** included in the TypeScript program - not just the specs - so if an unused error is effected, the file using the unused operator is not present in the program and needs to be imported into a test.)
 
+If you experience difficulties in configuring the rules with an `@angular/cli`-generated application, there is an example in this repo of a working configuration. To see the configuration changes that were made to a vanilla CLI application, have a look at [this commit](https://github.com/cartant/rxjs-tslint-rules/commit/73872cc381765d2fcc9fc22cb686128b76dfd6fb).
+
 ### `Observable.create`
 
 `Observable.create` is [declared as a `Function`](https://github.com/ReactiveX/rxjs/blob/5.3.1/src/Observable.ts#L46-L58), which means that its return type is `any`. This results in an observable that's not seen by the rules, as they use TypeScript's [TypeChecker](https://github.com/Microsoft/TypeScript/wiki/Using-the-Compiler-API#using-the-type-checker) to determine whether or not a call involves an observable.
