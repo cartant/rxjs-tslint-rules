@@ -1,3 +1,10 @@
+<a name="3.1.0"></a>
+## [3.1.0](https://github.com/cartant/rxjs-tslint-rules/compare/v3.0.4...v3.1.0) (2017-11-11)
+
+### Features
+
+* **rxjs-no-create:** Add a rule to forbid the calling of `Observable.create`. ([f025106](https://github.com/cartant/rxjs-tslint-rules/commit/f025106))
+
 <a name="3.0.4"></a>
 ## [3.0.4](https://github.com/cartant/rxjs-tslint-rules/compare/v3.0.3...v3.0.4) (2017-11-01)
 
