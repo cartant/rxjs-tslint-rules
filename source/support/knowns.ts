@@ -32,3 +32,5 @@ function read(dir: string): { [key: string]: boolean } {
 
 export const knownObservables = read("add/observable");
 export const knownOperators = read("add/operator");
+export const knownPrototypeMethods = { pipe: true, toPromise: true };
+export const knownStaticMethods = { create: true };

@@ -64,6 +64,7 @@ The package includes the following rules:
 | --- | --- | --- |
 | `rxjs-add` | Enforces the importation of patched observables and operators used in the module. | See below |
 | `rxjs-no-add` | Disallows the importation of patched observables and operators. | None |
+| `rxjs-no-create` | Disallows the calling of `Observable.create`. | None |
 | `rxjs-no-do` | I do without `do` operators. [Do you not?](https://youtu.be/spG-Yj0zEyc) | None |
 | `rxjs-no-operator` | Disallows importation from the `operator` directory. Useful if you prefer ['lettable' operators](https://github.com/ReactiveX/rxjs/blob/master/doc/lettable-operators.md) - which are located in the `operators` directory. | None |
 | `rxjs-no-patched` | Disallows the calling of patched methods. Operators must be imported and called explicitly - not via the `Observable` prototype. | None |
