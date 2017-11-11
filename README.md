@@ -126,6 +126,10 @@ If you are using the `file` option of the `rxjs-add` rule to ensure patched obse
           "test.ts"
         ]
 
+    Alternatively, you can import `rxjs.imports.ts` directly into `tests.ts`, like this:
+
+        import "./rxjs.imports";
+
 With these changes, the rule should play nice with the CLI's running of TSLint. If you are using `"allowUnused": false` and receive errors about unused operators, you should make sure that files in which those operators are used are imported into at least one test. (The rule will walk **all files** included in the TypeScript program - not just the specs - so if an unused error is effected, the file using the unused operator is not present in the program and needs to be imported into a test.)
 
 If you experience difficulties in configuring the rules with an `@angular/cli`-generated application, there is an example in this repo of a working configuration. To see the configuration changes that were made to a vanilla CLI application, have a look at [this commit](https://github.com/cartant/rxjs-tslint-rules/commit/73872cc381765d2fcc9fc22cb686128b76dfd6fb).
