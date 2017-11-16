@@ -53,5 +53,5 @@
     "test:build": "yarn run test:clean && tsc -p tsconfig.json",
     "test:clean": "rimraf build"
   },
-  "version": "3.1.0"
+  "version": "3.1.1"
 }
