@@ -1,3 +1,10 @@
+<a name="3.1.1"></a>
+## [3.1.1](https://github.com/cartant/rxjs-tslint-rules/compare/v3.1.0...v3.1.1) (2017-11-17)
+
+### Bug Fixes
+
+* Add `tslib` as a dependency; it was used, but was missing from the `package.json`.
+
 <a name="3.1.0"></a>
 ## [3.1.0](https://github.com/cartant/rxjs-tslint-rules/compare/v3.0.4...v3.1.0) (2017-11-11)
 
