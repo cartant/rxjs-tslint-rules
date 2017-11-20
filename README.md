@@ -144,5 +144,3 @@ The rule implementations include no special handling for this case, so if spurio
 ```ts
 const ob: Observable<number> = Observable.create((observer: Observer<number>) => { ...
 ```
-
-<a href="https://app.codesponsor.io/link/jZB4ja6SvwGUN4ibgYVgUVYV/cartant/rxjs-tslint-rules" rel="nofollow"><img src="https://app.codesponsor.io/embed/jZB4ja6SvwGUN4ibgYVgUVYV/cartant/rxjs-tslint-rules.svg" style="width: 888px; height: 68px;" alt="Sponsor" /></a>

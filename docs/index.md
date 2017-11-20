@@ -41,8 +41,6 @@ Note that there is no `file` option for the `rxjs-no-unused-add` rule, so that r
 
 If the `file` option is not specified, patched observables and operators must be imported in the modules in which they are used.
 
-<a href="https://app.codesponsor.io/link/jZB4ja6SvwGUN4ibgYVgUVYV/cartant/rxjs-tslint-rules" rel="nofollow"><img src="https://app.codesponsor.io/embed/jZB4ja6SvwGUN4ibgYVgUVYV/cartant/rxjs-tslint-rules.svg" style="width: 888px; height: 68px;" alt="Sponsor" /></a>
-
 <script>
     (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
     (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
