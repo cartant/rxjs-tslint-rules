@@ -1,3 +1,10 @@
+<a name="3.1.2"></a>
+## [3.1.2](https://github.com/cartant/rxjs-tslint-rules/compare/v3.1.1...v3.1.2) (2017-11-23)
+
+### Bug Fixes
+
+* Don't throw an error if `rxjs` cannot be found in `node_modules` - it's possible a common rule set might be used with a project that does not depend upon RxJS. ([17a5e61](https://github.com/cartant/rxjs-tslint-rules/commit/17a5e61))
+
 <a name="3.1.1"></a>
 ## [3.1.1](https://github.com/cartant/rxjs-tslint-rules/compare/v3.1.0...v3.1.1) (2017-11-17)
 
