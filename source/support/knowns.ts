@@ -11,7 +11,15 @@ import * as semver from "semver";
 
 function read(dir: string): { [key: string]: boolean } {
 
-    const entry = resolve.sync("rxjs");
+    let entry;
+    try {
+        entry = resolve.sync("rxjs");
+    } catch (error) {
+        /*tslint:disable-next-line:no-console*/
+        console.warn("Cannot find rxjs in node_modules; some rxjs-tslint-rules will be ineffectual.");
+        return {};
+    }
+
     const dist = path.dirname(entry);
 
     // In RxJS 5.5.0-beta.5, toPromise was moved into the prototype.
