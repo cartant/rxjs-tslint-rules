@@ -100,6 +100,48 @@ describe("fixtures", function (): void {
             });
         });
 
+        describe("no-add-allow-all-observables", () => {
+
+            it("should not effect an 'rxjs-no-add' error", () => {
+
+                const result = lint("no-add-allow-all-observables", "tslint.json");
+
+                expect(result).to.have.property("errorCount", 0);
+            });
+        });
+
+        describe("no-add-allow-all-operators", () => {
+
+            it("should not effect an 'rxjs-no-add' error", () => {
+
+                const result = lint("no-add-allow-all-observables", "tslint.json");
+
+                expect(result).to.have.property("errorCount", 0);
+            });
+        });
+
+        describe("no-add-allow-some-observables", () => {
+
+            it("should not effect an 'rxjs-no-add' error for allowed observable", () => {
+
+                const result = lint("no-add-allow-some-observables", "tslint.json");
+
+                expect(result).to.have.property("errorCount", 1);
+                expect(result.failures[0]).to.have.property("ruleName", "rxjs-no-add");
+            });
+        });
+
+        describe("no-add-allow-some-operators", () => {
+
+            it("should not effect an 'rxjs-no-add' error for allowed operator", () => {
+
+                const result = lint("no-add-allow-some-operators", "tslint.json");
+
+                expect(result).to.have.property("errorCount", 1);
+                expect(result.failures[0]).to.have.property("ruleName", "rxjs-no-add");
+            });
+        });
+
         describe("no-create", () => {
 
             it("should effect 'rxjs-no-create' errors", () => {
@@ -256,7 +298,7 @@ describe("fixtures", function (): void {
 
         describe("no-patched-allow-some-observables", () => {
 
-            it("should not effect an 'rxjs-no-patched' error", () => {
+            it("should not effect an 'rxjs-no-patched' error for allowed observable", () => {
 
                 const result = lint("no-patched-allow-some-observables", "tslint.json");
 
@@ -267,7 +309,7 @@ describe("fixtures", function (): void {
 
         describe("no-patched-allow-some-operators", () => {
 
-            it("should not effect an 'rxjs-no-patched' error", () => {
+            it("should not effect an 'rxjs-no-patched' error for allowed operator", () => {
 
                 const result = lint("no-patched-allow-some-operators", "tslint.json");
 

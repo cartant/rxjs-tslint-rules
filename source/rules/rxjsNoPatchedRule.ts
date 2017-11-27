@@ -35,7 +35,7 @@ export class Rule extends Lint.Rules.TypedRule {
         optionsDescription: Lint.Utils.dedent`
             An optional object with the optional properties \`allowObservables\` and \`allowOperators\`.
             The properties can be specifed as booleans (they default to \`false\`) or as arrays containing
-            the names of the observables or opertators that are allowed.`,
+            the names of the observables or operators that are allowed.`,
         requiresTypeInfo: true,
         ruleName: "rxjs-no-patched",
         type: "functionality",
@@ -62,14 +62,14 @@ class Walker extends UsedWalker {
         const [options] = this.getOptions();
         if (options) {
             if (options.hasOwnProperty("allowObservables")) {
-                if (options.allowObservables.length) {
+                if (typeof options.allowObservables.length === "number") {
                     allowedObservables = options.allowObservables;
                 } else {
                     allowAllObservables = Boolean(options.allowObservables);
                 }
             }
             if (options.hasOwnProperty("allowOperators")) {
-                if (options.allowOperators.length) {
+                if (typeof options.allowOperators.length === "number") {
                     allowedOperators = options.allowOperators;
                 } else {
                     allowAllOperators = Boolean(options.allowOperators);

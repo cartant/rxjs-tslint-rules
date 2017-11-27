@@ -63,7 +63,7 @@ The package includes the following rules:
 | Rule | Description | Options |
 | --- | --- | --- |
 | `rxjs-add` | Enforces the importation of patched observables and operators used in the module. | See below |
-| `rxjs-no-add` | Disallows the importation of patched observables and operators. | None |
+| `rxjs-no-add` | Disallows the importation of patched observables and operators. | See below |
 | `rxjs-no-create` | Disallows the calling of `Observable.create`. | None |
 | `rxjs-no-do` | I do without `do` operators. [Do you not?](https://youtu.be/spG-Yj0zEyc) | None |
 | `rxjs-no-operator` | Disallows importation from the `operator` directory. Useful if you prefer ['lettable' operators](https://github.com/ReactiveX/rxjs/blob/master/doc/lettable-operators.md) - which are located in the `operators` directory. | None |
@@ -101,9 +101,9 @@ Note that there is no `file` option for the `rxjs-no-unused-add` rule, so that r
 
 If the `file` option is not specified, patched observables and operators must be imported in the modules in which they are used.
 
-#### `rxjs-no-patched`
+#### `rxjs-no-add` and `rxjs-no-patched`
 
-The `rxjs-no-patched` rule takes an optional object with the optional properties `allowObservables` and `allowOperators`. The properties can be specified as booleans - to allow or disallow all observables or operators - or as arrays of strings - to allow or disallow a subset of observables or operators.
+The `rxjs-no-add` and `rxjs-no-patched` rules take an optional object with the optional properties `allowObservables` and `allowOperators`. The properties can be specified as booleans - to allow or disallow all observables or operators - or as arrays of strings - to allow or disallow a subset of observables or operators.
 
 For example:
 
