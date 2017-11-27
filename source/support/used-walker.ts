@@ -30,13 +30,15 @@ export class UsedWalker extends AddedWalker {
 
                 if (isReferenceType(type)) {
                     if (knownOperators.hasOwnProperty(name) && couldBeType(type.target, "Observable")) {
-                        UsedWalker.add(this.usedOperators, name, propertyAccessExpression.name);
+                        const actual = knownOperators[name];
+                        UsedWalker.add(this.usedOperators, actual, propertyAccessExpression.name);
                     } else if (knownPrototypeMethods.hasOwnProperty(name) && couldBeType(type.target, "Observable")) {
                         UsedWalker.add(this.usedPrototypeMethods, name, propertyAccessExpression.name);
                     }
                 } else {
                     if (knownObservables.hasOwnProperty(name) && couldBeType(type, "Observable")) {
-                        UsedWalker.add(this.usedObservables, name, propertyAccessExpression.name);
+                        const actual = knownObservables[name];
+                        UsedWalker.add(this.usedObservables, actual, propertyAccessExpression.name);
                     } else if (knownStaticMethods.hasOwnProperty(name) && couldBeType(type, "Observable")) {
                         UsedWalker.add(this.usedStaticMethods, name, propertyAccessExpression.name);
                     }

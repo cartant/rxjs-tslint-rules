@@ -67,6 +67,16 @@ describe("fixtures", function (): void {
             });
         });
 
+        describe("flat-map", () => {
+
+            it("should effect no errors", () => {
+
+                const result = lint("flat-map");
+
+                expect(result).to.have.property("errorCount", 0);
+            });
+        });
+
         describe("import-wholesale", () => {
 
             it("should effect 'rxjs-no-wholesale' errors", () => {
