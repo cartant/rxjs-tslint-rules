@@ -1,3 +1,10 @@
+<a name="3.2.1"></a>
+## [3.2.1](https://github.com/cartant/rxjs-tslint-rules/compare/v3.2.1...v3.2.1) (2017-11-27)
+
+### Documentation
+
+* Fix copy/paste errors in README.
+
 <a name="3.2.0"></a>
 ## [3.2.0](https://github.com/cartant/rxjs-tslint-rules/compare/v3.1.3...v3.2.0) (2017-11-27)
 
