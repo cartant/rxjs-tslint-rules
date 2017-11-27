@@ -67,12 +67,14 @@ The package includes the following rules:
 | `rxjs-no-create` | Disallows the calling of `Observable.create`. | None |
 | `rxjs-no-do` | I do without `do` operators. [Do you not?](https://youtu.be/spG-Yj0zEyc) | None |
 | `rxjs-no-operator` | Disallows importation from the `operator` directory. Useful if you prefer ['lettable' operators](https://github.com/ReactiveX/rxjs/blob/master/doc/lettable-operators.md) - which are located in the `operators` directory. | None |
-| `rxjs-no-patched` | Disallows the calling of patched methods. Methods must be imported and called explicitly - not via `Observable` or `Observable.prototype`. | None |
+| `rxjs-no-patched` | Disallows the calling of patched methods. Methods must be imported and called explicitly - not via `Observable` or `Observable.prototype`. | See below |
 | `rxjs-no-subject-unsubscribe` | Disallows the calling of `unsubscribe` directly upon `Subject` instances. For an explanation of why this can be a problem, see [this](https://stackoverflow.com/a/45112125/6680611) Stack Overflow answer. | None |
 | `rxjs-no-unused-add` | Disallows the importation of patched observables or operators that are not used in the module. | None |
 | `rxjs-no-wholesale` | Disallows the wholesale importation of `rxjs` or `rxjs/Rx`. | None |
 
 ### Options
+
+#### `rxjs-add`
 
 The `rxjs-add` rule takes an optional object with the property `file`. This is the path of the module - relative to the `tsconfig.json` - that imports the patched observables and operators.
 
@@ -98,6 +100,24 @@ If `file` is specified, the `allowElsewhere` and `allowUnused` options can be us
 Note that there is no `file` option for the `rxjs-no-unused-add` rule, so that rule should not be used in conjunction with the `rxjs-add` rule - if the `file` option is specified for the latter. Use the `rxjs-add` rule's `allowUnused` option instead.
 
 If the `file` option is not specified, patched observables and operators must be imported in the modules in which they are used.
+
+#### `rxjs-no-patched`
+
+The `rxjs-add` rule takes an optional object with the optional properties `allowObservables` and `allowOperators`. The properties can be specified as booleans - to allow or disallow all observables or operators - or as arrays of strings - to allow or disallow a subset of observables or operators.
+
+For example:
+
+```json
+"rules": {
+  "rxjs-add": {
+    "options": [{
+      "allowObservables": ["never", "throw"],
+      "allowOperators": false
+    }],
+    "severity": "error"
+  }
+}
+```
 
 ## Gotchas
 

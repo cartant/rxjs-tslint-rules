@@ -234,6 +234,48 @@ describe("fixtures", function (): void {
             });
         });
 
+        describe("no-patched-allow-all-observables", () => {
+
+            it("should not effect an 'rxjs-no-patched' error", () => {
+
+                const result = lint("no-patched-allow-all-observables", "tslint.json");
+
+                expect(result).to.have.property("errorCount", 0);
+            });
+        });
+
+        describe("no-patched-allow-all-operators", () => {
+
+            it("should not effect an 'rxjs-no-patched' error", () => {
+
+                const result = lint("no-patched-allow-all-operators", "tslint.json");
+
+                expect(result).to.have.property("errorCount", 0);
+            });
+        });
+
+        describe("no-patched-allow-some-observables", () => {
+
+            it("should not effect an 'rxjs-no-patched' error", () => {
+
+                const result = lint("no-patched-allow-some-observables", "tslint.json");
+
+                expect(result).to.have.property("errorCount", 1);
+                expect(result.failures[0]).to.have.property("ruleName", "rxjs-no-patched");
+            });
+        });
+
+        describe("no-patched-allow-some-operators", () => {
+
+            it("should not effect an 'rxjs-no-patched' error", () => {
+
+                const result = lint("no-patched-allow-some-operators", "tslint.json");
+
+                expect(result).to.have.property("errorCount", 1);
+                expect(result.failures[0]).to.have.property("ruleName", "rxjs-no-patched");
+            });
+        });
+
         describe("observable-create", () => {
 
             it("should effect an error unless explicit typing is used", () => {
