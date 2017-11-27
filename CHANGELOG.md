@@ -1,3 +1,10 @@
+<a name="3.1.3"></a>
+## [3.1.3](https://github.com/cartant/rxjs-tslint-rules/compare/v3.1.2...v3.1.3) (2017-11-27)
+
+### Bug Fixes
+
+* Support the `flatMap` alias for `mergeMap`. ([40169e8](https://github.com/cartant/rxjs-tslint-rules/commit/40169e8))
+
 <a name="3.1.2"></a>
 ## [3.1.2](https://github.com/cartant/rxjs-tslint-rules/compare/v3.1.1...v3.1.2) (2017-11-23)
 
