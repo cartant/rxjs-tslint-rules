@@ -103,13 +103,13 @@ If the `file` option is not specified, patched observables and operators must be
 
 #### `rxjs-no-patched`
 
-The `rxjs-add` rule takes an optional object with the optional properties `allowObservables` and `allowOperators`. The properties can be specified as booleans - to allow or disallow all observables or operators - or as arrays of strings - to allow or disallow a subset of observables or operators.
+The `rxjs-no-patched` rule takes an optional object with the optional properties `allowObservables` and `allowOperators`. The properties can be specified as booleans - to allow or disallow all observables or operators - or as arrays of strings - to allow or disallow a subset of observables or operators.
 
 For example:
 
 ```json
 "rules": {
-  "rxjs-add": {
+  "rxjs-no-patched": {
     "options": [{
       "allowObservables": ["never", "throw"],
       "allowOperators": false
