@@ -16,9 +16,9 @@
   version "8.5.2"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-8.5.2.tgz#83b8103fa9a2c2e83d78f701a9aa7c9539739aa5"
 
-"@types/resolve@^0.0.4":
-  version "0.0.4"
-  resolved "https://registry.yarnpkg.com/@types/resolve/-/resolve-0.0.4.tgz#9b586d65a947dea88c4bc24da0b905fe9520a0d5"
+"@types/resolve@^0.0.5":
+  version "0.0.5"
+  resolved "https://registry.yarnpkg.com/@types/resolve/-/resolve-0.0.5.tgz#1e326115f8b99b337201da699d4e9bfaa284d242"
   dependencies:
     "@types/node" "*"
 
