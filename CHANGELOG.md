@@ -1,3 +1,10 @@
+<a name="3.4.1"></a>
+## [3.4.1](https://github.com/cartant/rxjs-tslint-rules/compare/v3.4.0...v3.4.1) (2018-01-19)
+
+### Documentation
+
+* Trivial documentation changes.
+
 <a name="3.4.0"></a>
 ## [3.4.0](https://github.com/cartant/rxjs-tslint-rules/compare/v3.3.0...v3.4.0) (2018-01-19)
 
