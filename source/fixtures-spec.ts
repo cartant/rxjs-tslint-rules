@@ -205,6 +205,27 @@ describe("fixtures", function (): void {
             });
         });
 
+        describe("no-finnish-with-$", () => {
+
+            it("should effect 'rxjs-no-finnish' errors", () => {
+
+                const result = lint("no-finnish-with-$", "tslint.json");
+
+                expect(result).to.have.property("errorCount", 19);
+                result.failures.forEach(failure => expect(failure).to.have.property("ruleName", "rxjs-no-finnish"));
+            });
+        });
+
+        describe("no-finnish-without-$", () => {
+
+            it("should effect no errors", () => {
+
+                const result = lint("no-finnish-without-$", "tslint.json");
+
+                expect(result).to.have.property("errorCount", 0);
+            });
+        });
+
         describe("no-observable", () => {
 
             it("should effect 'rxjs-add' errors", () => {
