@@ -67,6 +67,27 @@ describe("fixtures", function (): void {
             });
         });
 
+        describe("finnish-with-$", () => {
+
+            it("should effect no errors", () => {
+
+                const result = lint("finnish-with-$", "tslint.json");
+
+                expect(result).to.have.property("errorCount", 0);
+            });
+        });
+
+        describe("finnish-without-$", () => {
+
+            it("should effect 'rxjs-finnish' errors", () => {
+
+                const result = lint("finnish-without-$", "tslint.json");
+
+                expect(result).to.have.property("errorCount", 19);
+                result.failures.forEach(failure => expect(failure).to.have.property("ruleName", "rxjs-finnish"));
+            });
+        });
+
         describe("flat-map", () => {
 
             it("should effect no errors", () => {
