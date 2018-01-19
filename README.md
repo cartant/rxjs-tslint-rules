@@ -13,8 +13,8 @@
 `rxjs-tslint-rules` is small set of TSLint rules to:
 
 * help manage projects that use `rxjs/add/...` imports;
-* to enforce or disallow [Finnish notation](https://medium.com/@benlesh/observables-and-finnish-notation-df8356ed1c9b); and
-* to highlight other potential problems (see the [rules](#rules) for details).
+* enforce or disallow [Finnish notation](https://medium.com/@benlesh/observables-and-finnish-notation-df8356ed1c9b); and
+* highlight other potential problems (see the [rules](#rules) for details).
 
 ### Why might you need it?
 
