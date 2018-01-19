@@ -72,8 +72,8 @@ The package includes the following rules:
 | `rxjs-add` | Enforces the importation of patched observables and operators used in the module. | See below |
 | `rxjs-finnish` | Enforces the use of [Finnish notation](https://medium.com/@benlesh/observables-and-finnish-notation-df8356ed1c9b). | None |
 | `rxjs-no-add` | Disallows the importation of patched observables and operators. | See below |
-| `rxjs-no-create` | Disallows the calling of `Observable.create`. | None |
-| `rxjs-no-do` | I do without `do` operators. [Do you not?](https://youtu.be/spG-Yj0zEyc) | None |
+| `rxjs-no-create` | Disallows the calling of `Observable.create`. Useful as a warning. | None |
+| `rxjs-no-do` | I do without `do` operators. [Do you not?](https://youtu.be/spG-Yj0zEyc) Well, `do` isn't always a code smell, but this rule can be useful as a warning. | None |
 | `rxjs-no-finnish` | Disallows the use of [Finnish notation](https://medium.com/@benlesh/observables-and-finnish-notation-df8356ed1c9b). | None |
 | `rxjs-no-operator` | Disallows importation from the `operator` directory. Useful if you prefer ['lettable' operators](https://github.com/ReactiveX/rxjs/blob/master/doc/lettable-operators.md) - which are located in the `operators` directory. | None |
 | `rxjs-no-patched` | Disallows the calling of patched methods. Methods must be imported and called explicitly - not via `Observable` or `Observable.prototype`. | See below |
