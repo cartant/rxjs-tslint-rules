@@ -14,7 +14,7 @@
 
 * help manage projects that use `rxjs/add/...` imports;
 * to enforce or disallow [Finnish notation](https://medium.com/@benlesh/observables-and-finnish-notation-df8356ed1c9b); and
-* to highlight other potential problems.
+* to highlight other potential problems (see the [rules](#rules) for details).
 
 ### Why might you need it?
 
@@ -60,6 +60,8 @@ Update your `tslint.json` file to extend this package:
   }
 }
 ```
+
+<a name="rules"></a>
 
 ### Rules
 
