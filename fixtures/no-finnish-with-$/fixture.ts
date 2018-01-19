@@ -7,7 +7,7 @@ const someObject = { someKey$: someObservable$ };
 const { someKey$ } = someObject;
 const { someKey$: someRenamedKey$ } = someObject;
 
-const someArray: Observable<any>[] = [someConst$];
+const someArray = [someObservable$];
 const [someElement$] = someArray;
 someArray.forEach(function (element$: Observable<any>): void {});
 someArray.forEach((element$: Observable<any>) => {});
