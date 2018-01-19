@@ -1,3 +1,10 @@
+<a name="3.4.2"></a>
+## [3.4.2](https://github.com/cartant/rxjs-tslint-rules/compare/v3.4.1...v3.4.2) (2018-01-19)
+
+### Fixes
+
+* Add `tsutils` to the `package.json`. ([e2873a9](https://github.com/cartant/rxjs-tslint-rules/commit/e2873a9))
+
 <a name="3.4.1"></a>
 ## [3.4.1](https://github.com/cartant/rxjs-tslint-rules/compare/v3.4.0...v3.4.1) (2018-01-19)
 
