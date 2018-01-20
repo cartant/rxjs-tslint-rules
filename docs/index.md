@@ -13,6 +13,7 @@ The package includes the following rules:
 | `rxjs-no-subject-unsubscribe` | Disallows the calling of `unsubscribe` directly upon `Subject` instances. For an explanation of why this can be a problem, see [this](https://stackoverflow.com/a/45112125/6680611) Stack Overflow answer. | None |
 | `rxjs-no-unused-add` | Disallows the importation of patched observables or operators that are not used in the module. | None |
 | `rxjs-no-wholesale` | Disallows the wholesale importation of `rxjs` or `rxjs/Rx`. | None |
+| `rxjs-no-ignored-error` | Disallows errors ignoring in Observable's .subscribe() calls. | None |
 
 ### Options
 

@@ -471,20 +471,50 @@ describe("fixtures", function (): void {
         });
     });
 
+    describe("subscription related rules", () => {
+        describe("subscription-without-error-handler", () => {
+            it("should effect an 'rxjs-no-ignored-error' error on Observable", () => {
+                const result = lint("subscription-without-error-handler", "tslint.json", "fixture-observable.ts");
+                expect(result).to.have.property("errorCount", 1);
+                expect(result.failures[0]).to.have.property("ruleName", "rxjs-no-ignored-error");
+            });
+        });
+        describe("subscription-without-error-handler", () => {
+            it("should effect an 'rxjs-no-ignored-error' error on Observable's ancestors", () => {
+                const result = lint("subscription-without-error-handler", "tslint.json", "fixture-subject.ts");
+                expect(result).to.have.property("errorCount", 1);
+                expect(result.failures[0]).to.have.property("ruleName", "rxjs-no-ignored-error");
+            });
+        });
+        describe("subscription-without-error-handler", () => {
+            it("should effect an 'rxjs-no-ignored-error' error even if first parameter is a funciton variable", () => {
+                const result = lint("subscription-without-error-handler", "tslint.json", "fixture-with-parameter.ts");
+                expect(result).to.have.property("errorCount", 1);
+                expect(result.failures[0]).to.have.property("ruleName", "rxjs-no-ignored-error");
+            });
+        });
+        describe("subscription-with-error-handler", () => {
+            it("should not produce errors", () => {
+                const result = lint("subscription-with-error-handler", "tslint.json");
+                expect(result).to.have.property("errorCount", 0);
+            });
+        });
+    });
+
     function lint(dir: string, configFileName?: string, fixtureFileName?: string): LintResult {
 
-            const fileName = `./fixtures/${dir}/${fixtureFileName || "fixture.ts"}`;
-            const content = fs.readFileSync(fileName, "utf8");
-            const program = Linter.createProgram(`./fixtures/${dir}/tsconfig.json`);
-            const linter = new Linter({ fix: false }, program);
+        const fileName = `./fixtures/${dir}/${fixtureFileName || "fixture.ts"}`;
+        const content = fs.readFileSync(fileName, "utf8");
+        const program = Linter.createProgram(`./fixtures/${dir}/tsconfig.json`);
+        const linter = new Linter({ fix: false }, program);
 
-            const configuration = Configuration.findConfiguration(
-                configFileName ?
-                    `./fixtures/${dir}/${configFileName}` :
-                    `./fixtures/tslint.json`,
-                fileName
-            ).results;
-            linter.lint(fileName, content, configuration);
-            return linter.getResult();
+        const configuration = Configuration.findConfiguration(
+            configFileName ?
+                `./fixtures/${dir}/${configFileName}` :
+                `./fixtures/tslint.json`,
+            fileName
+        ).results;
+        linter.lint(fileName, content, configuration);
+        return linter.getResult();
     }
 });
