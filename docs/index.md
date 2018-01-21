@@ -1,4 +1,8 @@
-`rxjs-tslint-rules` is small set of TSLint rules to help manage projects that use `rxjs/add/...` imports and to highlight other potential problems.
+`rxjs-tslint-rules` is small set of TSLint rules to:
+
+* help manage projects that use `rxjs/add/...` imports;
+* enforce or disallow [Finnish notation](https://medium.com/@benlesh/observables-and-finnish-notation-df8356ed1c9b); and
+* highlight other potential problems (see the rules for details).
 
 ### Rules
 
