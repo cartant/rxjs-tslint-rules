@@ -6,7 +6,7 @@
 
 ### Rules
 
-The package includes the following rules:
+The package includes the following rules (none of which are enabled by default):
 
 | Rule | Description | Options |
 | --- | --- | --- |
