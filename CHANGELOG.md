@@ -1,3 +1,10 @@
+<a name="3.5.0"></a>
+## [3.5.0](https://github.com/cartant/rxjs-tslint-rules/compare/v3.4.2...v3.5.0) (2018-01-22)
+
+### Features
+
+* Add `rxjs-no-ignored-error` rule. ([2f6c771](https://github.com/cartant/rxjs-tslint-rules/commit/2f6c771))
+
 <a name="3.4.2"></a>
 ## [3.4.2](https://github.com/cartant/rxjs-tslint-rules/compare/v3.4.1...v3.4.2) (2018-01-19)
 
