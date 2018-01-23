@@ -21,7 +21,7 @@ export class Rule extends Lint.Rules.TypedRule {
         typescriptOnly: true
     };
 
-    public static FAILURE_STRING = "RxJS do operator is forbidden";
+    public static FAILURE_STRING = "RxJS do/tap operator is forbidden";
 
     public applyWithProgram(sourceFile: ts.SourceFile, program: ts.Program): Lint.RuleFailure[] {
 
@@ -31,10 +31,34 @@ export class Rule extends Lint.Rules.TypedRule {
 
 class Walker extends UsedWalker {
 
+    public visitImportDeclaration(node: ts.ImportDeclaration): void {
+
+        const moduleSpecifier = node.moduleSpecifier.getText();
+
+        if (/^['"]rxjs\/operators?/.test(moduleSpecifier)) {
+            if (node.importClause.namedBindings.kind === ts.SyntaxKind.NamedImports) {
+                node.importClause.namedBindings.elements.forEach(binding => {
+                    this.validateName(binding.propertyName || binding.name);
+                });
+            }
+        } else if (/^['"]rxjs\/add\/operator\/do['"]/.test(moduleSpecifier)) {
+            this.addFailureAtNode(node, Rule.FAILURE_STRING);
+        }
+
+        super.visitImportDeclaration(node);
+    }
+
     protected onSourceFileEnd(): void {
 
         if (this.usedOperators["do"]) {
             this.usedOperators["do"].forEach((node) => this.addFailureAtNode(node, Rule.FAILURE_STRING));
+        }
+    }
+
+    private validateName(name: ts.Node): void {
+
+        if (/^(_do|tap)$/.test(name.getText())) {
+            this.addFailureAtNode(name, Rule.FAILURE_STRING);
         }
     }
 }

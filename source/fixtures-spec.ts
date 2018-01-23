@@ -179,8 +179,8 @@ describe("fixtures", function (): void {
 
                 const result = lint("no-do", "tslint.json");
 
-                expect(result).to.have.property("errorCount", 1);
-                expect(result.failures[0]).to.have.property("ruleName", "rxjs-no-do");
+                expect(result).to.have.property("errorCount", 4);
+                result.failures.forEach(failure => expect(failure).to.have.property("ruleName", "rxjs-no-do"));
             });
         });
 
@@ -356,6 +356,17 @@ describe("fixtures", function (): void {
 
                 expect(result).to.have.property("errorCount", 1);
                 expect(result.failures[0]).to.have.property("ruleName", "rxjs-no-patched");
+            });
+        });
+
+        describe("no-tap", () => {
+
+            it("should effect 'rxjs-no-tap' errors", () => {
+
+                const result = lint("no-tap", "tslint.json");
+
+                expect(result).to.have.property("errorCount", 2);
+                result.failures.forEach(failure => expect(failure).to.have.property("ruleName", "rxjs-no-tap"));
             });
         });
 
