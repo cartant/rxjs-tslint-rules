@@ -1,3 +1,10 @@
+<a name="3.6.0"></a>
+## [3.6.0](https://github.com/cartant/rxjs-tslint-rules/compare/v3.5.0...v3.6.0) (2018-01-24)
+
+### Features
+
+* Add `rxjs-no-tap` alias for `rxjs-no-do`. ([96babda](https://github.com/cartant/rxjs-tslint-rules/commit/96babda))
+
 <a name="3.5.0"></a>
 ## [3.5.0](https://github.com/cartant/rxjs-tslint-rules/compare/v3.4.2...v3.5.0) (2018-01-22)
 
