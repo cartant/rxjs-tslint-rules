@@ -13,7 +13,7 @@ import { InternalSymbolName } from "typescript";
 export class Rule extends Lint.Rules.TypedRule {
 
     public static metadata: Lint.IRuleMetadata = {
-        description: "Disallows the calling of subscribe without specifying a error handler.",
+        description: "Disallows the calling of subscribe without specifying an error handler.",
         options: null,
         optionsDescription: "Not configurable.",
         requiresTypeInfo: true,
