@@ -1,5 +1,6 @@
 # rxjs-tslint-rules
 
+[![GitHub License](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/cartant/rxjs-tslint-rules/blob/master/LICENSE)
 [![NPM version](https://img.shields.io/npm/v/rxjs-tslint-rules.svg)](https://www.npmjs.com/package/rxjs-tslint-rules)
 [![Downloads](http://img.shields.io/npm/dm/rxjs-tslint-rules.svg)](https://npmjs.org/package/rxjs-tslint-rules)
 [![Build status](https://img.shields.io/travis/cartant/rxjs-tslint-rules.svg)](http://travis-ci.org/cartant/rxjs-tslint-rules)
