@@ -22,7 +22,7 @@ export class Rule extends Lint.Rules.TypedRule {
         typescriptOnly: true
     };
 
-    public static FAILURE_STRING = "Calling subscribe without a second parameter is forbidden";
+    public static FAILURE_STRING = "Calling subscribe without an error handler is forbidden";
 
     public applyWithProgram(sourceFile: ts.SourceFile, program: ts.Program): Lint.RuleFailure[] {
 
