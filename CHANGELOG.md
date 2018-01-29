@@ -1,3 +1,10 @@
+<a name="3.7.1"></a>
+## [3.7.1](https://github.com/cartant/rxjs-tslint-rules/compare/v3.7.0...v3.7.1) (2018-01-29)
+
+### Fixes
+
+* Fixed the `rxjs-no-ignored-subscribe` tests to account for [this problem](https://github.com/cartant/rxjs-tslint-rules/issues/32). ([b78d76a](https://github.com/cartant/rxjs-tslint-rules/commit/b78d76a))
+
 <a name="3.7.0"></a>
 ## [3.7.0](https://github.com/cartant/rxjs-tslint-rules/compare/v3.6.0...v3.7.0) (2018-01-29)
 
