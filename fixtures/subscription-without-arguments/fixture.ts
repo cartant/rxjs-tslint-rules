@@ -1,4 +1,5 @@
-import { of } from "rxjs/Observable/of";
+import { Observable } from "rxjs/Observable";
+import "rxjs/add/observable/of";
 
-const observable = of([1, 2]);
+const observable = Observable.of([1, 2]);
 observable.subscribe();
