@@ -7,7 +7,7 @@
 import * as Lint from "tslint";
 import * as ts from "typescript";
 
-import { couldBeType, isReferenceType } from "../support/util";
+import { couldBeType } from "../support/util";
 import { InternalSymbolName } from "typescript";
 
 export class Rule extends Lint.Rules.TypedRule {
@@ -43,8 +43,7 @@ export class Walker extends Lint.ProgramAwareRuleWalker {
                 const type = typeChecker.getTypeAtLocation(propertyAccessExpression.expression);
 
                 if ((name === "subscribe") &&
-                    isReferenceType(type) &&
-                    couldBeType(type.target, "Observable") &&
+                    couldBeType(type, "Observable") &&
                     (node.arguments.length && this.nodeIsLikelyAFunction(node.arguments[0])) &&
                     node.arguments.length < 2
                 ) {

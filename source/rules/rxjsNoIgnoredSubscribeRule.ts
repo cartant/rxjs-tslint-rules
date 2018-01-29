@@ -7,7 +7,7 @@
 import * as Lint from "tslint";
 import * as ts from "typescript";
 
-import { couldBeType, isReferenceType } from "../support/util";
+import { couldBeType } from "../support/util";
 
 export class Rule extends Lint.Rules.TypedRule {
 
@@ -43,8 +43,7 @@ export class Walker extends Lint.ProgramAwareRuleWalker {
                 const type = typeChecker.getTypeAtLocation(propertyAccessExpression.expression);
 
                 if ((name === "subscribe") &&
-                    isReferenceType(type) &&
-                    couldBeType(type.target, "Observable") &&
+                    couldBeType(type, "Observable") &&
                     (node.arguments.length === 0)
                 ) {
                     this.addFailureAtNode(propertyAccessExpression.name, Rule.FAILURE_STRING);
