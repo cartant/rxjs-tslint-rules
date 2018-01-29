@@ -446,6 +446,17 @@ describe("fixtures", function (): void {
         });
     });
 
+    describe("issue-related fixtures", () => {
+
+        describe("issue-33", () => {
+
+            it("should not effect errors", () => {
+                const result = lint("issue-33", "tslint.json", "adds.ts");
+                expect(result).to.have.property("errorCount", 0);
+            });
+        });
+    });
+
     describe("subject-related rules", () => {
 
         describe("async-subject-with-unsubscribe", () => {
