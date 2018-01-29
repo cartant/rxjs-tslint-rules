@@ -1,3 +1,10 @@
+<a name="3.7.0"></a>
+## [3.7.0](https://github.com/cartant/rxjs-tslint-rules/compare/v3.6.0...v3.7.0) (2018-01-29)
+
+### Features
+
+* Add `rxjs-no-ignored-subscribe` rule. ([37dd346](https://github.com/cartant/rxjs-tslint-rules/commit/37dd346))
+
 <a name="3.6.0"></a>
 ## [3.6.0](https://github.com/cartant/rxjs-tslint-rules/compare/v3.5.0...v3.6.0) (2018-01-24)
 
