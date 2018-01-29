@@ -482,31 +482,56 @@ describe("fixtures", function (): void {
     });
 
     describe("subscription related rules", () => {
+
         describe("subscription-without-error-handler", () => {
+
             it("should effect an 'rxjs-no-ignored-error' error on Observable", () => {
                 const result = lint("subscription-without-error-handler", "tslint.json", "fixture-observable.ts");
                 expect(result).to.have.property("errorCount", 1);
                 expect(result.failures[0]).to.have.property("ruleName", "rxjs-no-ignored-error");
             });
         });
+
         describe("subscription-without-error-handler", () => {
+
             it("should effect an 'rxjs-no-ignored-error' error on Observable's ancestors", () => {
                 const result = lint("subscription-without-error-handler", "tslint.json", "fixture-subject.ts");
                 expect(result).to.have.property("errorCount", 1);
                 expect(result.failures[0]).to.have.property("ruleName", "rxjs-no-ignored-error");
             });
         });
+
         describe("subscription-without-error-handler", () => {
+
             it("should effect an 'rxjs-no-ignored-error' error even if first parameter is a funciton variable", () => {
                 const result = lint("subscription-without-error-handler", "tslint.json", "fixture-with-parameter.ts");
                 expect(result).to.have.property("errorCount", 1);
                 expect(result.failures[0]).to.have.property("ruleName", "rxjs-no-ignored-error");
             });
         });
+
         describe("subscription-with-error-handler", () => {
+
             it("should not produce errors", () => {
                 const result = lint("subscription-with-error-handler", "tslint.json");
                 expect(result).to.have.property("errorCount", 0);
+            });
+        });
+
+        describe("subscription-with-arguments", () => {
+
+            it("should not effect an error", () => {
+                const result = lint("subscription-with-arguments", "tslint.json");
+                expect(result).to.have.property("errorCount", 0);
+            });
+        });
+
+        describe("subscription-without-arguments", () => {
+
+            it("should effect an 'rxjs-no-ignored-subscribe' error", () => {
+                const result = lint("subscription-without-arguments", "tslint.json");
+                expect(result).to.have.property("errorCount", 1);
+                expect(result.failures[0]).to.have.property("ruleName", "rxjs-no-ignored-subscribe");
             });
         });
     });
