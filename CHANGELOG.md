@@ -1,3 +1,10 @@
+<a name="3.7.2"></a>
+## [3.7.2](https://github.com/cartant/rxjs-tslint-rules/compare/v3.7.1...v3.7.2) (2018-01-30)
+
+### Fixes
+
+* Fixed a bug with the object spread syntax and the `rxjs-finnish` and `rxjs-no-finnish` rules. ([6c6695b](https://github.com/cartant/rxjs-tslint-rules/commit/6c6695b))
+
 <a name="3.7.1"></a>
 ## [3.7.1](https://github.com/cartant/rxjs-tslint-rules/compare/v3.7.0...v3.7.1) (2018-01-29)
 
