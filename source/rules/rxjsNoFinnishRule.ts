@@ -64,7 +64,7 @@ class Walker extends Lint.ProgramAwareRuleWalker {
     protected visitObjectLiteralExpression(node: ts.ObjectLiteralExpression): void {
 
         node.properties.forEach(property => {
-            if (property.name.kind !== ts.SyntaxKind.ComputedPropertyName) {
+            if (property.name && (property.name.kind !== ts.SyntaxKind.ComputedPropertyName)) {
                 this.validateNode(property);
             }
         });

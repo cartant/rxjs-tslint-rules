@@ -4,8 +4,8 @@ import "rxjs/add/observable/of";
 const someObservable = Observable.of(0);
 
 const someEmptyObject = {};
-const someObject = { someKey: someObservable };
-const { ...someEmptyObject, someKey } = someObject;
+const someObject = { ...someEmptyObject, someKey: someObservable };
+const { someKey } = someObject;
 const { someKey: someRenamedKey } = someObject;
 
 const someArray = [someObservable];
