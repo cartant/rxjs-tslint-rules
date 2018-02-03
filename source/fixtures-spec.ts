@@ -459,11 +459,33 @@ describe("fixtures", function (): void {
 
     describe("subject-related rules", () => {
 
+        describe("async-subject-add-subscription", () => {
+
+            it("should effect an 'rxjs-no-subject-unsubscribe' error", () => {
+
+                const result = lint("async-subject-add-subscription", "tslint.json");
+
+                expect(result).to.have.property("errorCount", 1);
+                expect(result.failures[0]).to.have.property("ruleName", "rxjs-no-subject-unsubscribe");
+            });
+        });
+
         describe("async-subject-with-unsubscribe", () => {
 
             it("should effect an 'rxjs-no-subject-unsubscribe' error", () => {
 
                 const result = lint("async-subject-with-unsubscribe", "tslint.json");
+
+                expect(result).to.have.property("errorCount", 1);
+                expect(result.failures[0]).to.have.property("ruleName", "rxjs-no-subject-unsubscribe");
+            });
+        });
+
+        describe("subject-add-subscription", () => {
+
+            it("should effect an 'rxjs-no-subject-unsubscribe' error", () => {
+
+                const result = lint("subject-add-subscription", "tslint.json");
 
                 expect(result).to.have.property("errorCount", 1);
                 expect(result.failures[0]).to.have.property("ruleName", "rxjs-no-subject-unsubscribe");
