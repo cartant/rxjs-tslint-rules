@@ -44,6 +44,12 @@ export class Walker extends Lint.ProgramAwareRuleWalker {
 
                 if ((name === "unsubscribe") && isReferenceType(type) && couldBeType(type.target, "Subject")) {
                     this.addFailureAtNode(propertyAccessExpression.name, Rule.FAILURE_STRING);
+                } else if ((name === "add") && isReferenceType(type) && couldBeType(type.target, "Subscription")) {
+                    const [argument] = node.arguments;
+                    const argumentType = typeChecker.getTypeAtLocation(argument);
+                    if (couldBeType(argumentType, "Subject")) {
+                        this.addFailureAtNode(propertyAccessExpression.name, Rule.FAILURE_STRING);
+                    }
                 }
             }
         });
