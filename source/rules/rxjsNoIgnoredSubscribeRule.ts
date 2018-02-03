@@ -7,7 +7,7 @@
 import * as Lint from "tslint";
 import * as ts from "typescript";
 
-import { couldBeType } from "../support/util";
+import { couldBeType, isReferenceType } from "../support/util";
 
 export class Rule extends Lint.Rules.TypedRule {
 
@@ -43,6 +43,7 @@ export class Walker extends Lint.ProgramAwareRuleWalker {
                 const type = typeChecker.getTypeAtLocation(propertyAccessExpression.expression);
 
                 if ((name === "subscribe") &&
+                    isReferenceType(type) &&
                     couldBeType(type, "Observable") &&
                     (node.arguments.length === 0)
                 ) {
