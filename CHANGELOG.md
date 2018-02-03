@@ -1,3 +1,10 @@
+<a name="3.8.0"></a>
+## [3.8.0](https://github.com/cartant/rxjs-tslint-rules/compare/v3.7.2...v3.8.0) (2018-02-03)
+
+### Features
+
+* The `rxjs-no-subject-unsubscribe` rule now disallows the adding of a `Subject` to a `Subscription`. ([20b2927](https://github.com/cartant/rxjs-tslint-rules/commit/20b2927))
+
 <a name="3.7.2"></a>
 ## [3.7.2](https://github.com/cartant/rxjs-tslint-rules/compare/v3.7.1...v3.7.2) (2018-01-30)
 
