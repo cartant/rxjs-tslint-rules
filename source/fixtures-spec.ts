@@ -85,6 +85,14 @@ describe("fixtures", function (): void {
                 expect(result).to.have.property("errorCount", 19);
                 result.failures.forEach(failure => expect(failure).to.have.property("ruleName", "rxjs-finnish"));
             });
+
+            it("should support supressing errors with rule flags", () => {
+
+                const result = lint("finnish-without-$", "tslint.json", "fixture-with-flags.ts");
+
+                expect(result).to.have.property("errorCount", 1);
+                result.failures.forEach(failure => expect(failure).to.have.property("ruleName", "rxjs-finnish"));
+            });
         });
 
         describe("flat-map", () => {

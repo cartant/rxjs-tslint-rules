@@ -9,5 +9,5 @@
     "skipLibCheck": true,
     "target": "es5"
   },
-  "include": ["fixture.ts"]
+  "include": ["fixture.ts", "fixture-with-flags.ts"]
 }
