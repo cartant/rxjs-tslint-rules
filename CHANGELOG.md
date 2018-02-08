@@ -1,3 +1,10 @@
+<a name="3.9.0"></a>
+## [3.9.0](https://github.com/cartant/rxjs-tslint-rules/compare/v3.8.0...v3.9.0) (2018-02-08)
+
+### Features
+
+* Added the `rxjs-no-subject-value` rule to disallow accessing a `BehaviorSubject`'s `value` property. ([9c8f966](https://github.com/cartant/rxjs-tslint-rules/commit/9c8f966))
+
 <a name="3.8.0"></a>
 ## [3.8.0](https://github.com/cartant/rxjs-tslint-rules/compare/v3.7.2...v3.8.0) (2018-02-03)
 
