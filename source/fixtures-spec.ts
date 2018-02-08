@@ -489,6 +489,17 @@ describe("fixtures", function (): void {
             });
         });
 
+        describe("behavior-subject-value", () => {
+
+            it("should effect an 'rxjs-no-subject-value' error", () => {
+
+                const result = lint("behavior-subject-value", "tslint.json");
+
+                expect(result).to.have.property("errorCount", 2);
+                result.failures.forEach(failure => expect(failure).to.have.property("ruleName", "rxjs-no-subject-value"));
+            });
+        });
+
         describe("subject-add-subscription", () => {
 
             it("should effect an 'rxjs-no-subject-unsubscribe' error", () => {

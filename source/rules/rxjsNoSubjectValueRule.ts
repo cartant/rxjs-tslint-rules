@@ -12,16 +12,16 @@ import { couldBeType, isReferenceType } from "../support/util";
 export class Rule extends Lint.Rules.TypedRule {
 
     public static metadata: Lint.IRuleMetadata = {
-        description: "Disallows calling the unsubscribe method of a subject instance.",
+        description: "Disallows accessing the value property of a BehaviorSubject instance.",
         options: null,
         optionsDescription: "Not configurable.",
         requiresTypeInfo: true,
-        ruleName: "rxjs-no-subject-unsubscribe",
+        ruleName: "rxjs-no-subject-value",
         type: "functionality",
         typescriptOnly: true
     };
 
-    public static FAILURE_STRING = "Calling unsubscribe on a subject is forbidden";
+    public static FAILURE_STRING = "Accessing the value property of a BehaviorSubject is forbidden";
 
     public applyWithProgram(sourceFile: ts.SourceFile, program: ts.Program): Lint.RuleFailure[] {
 
@@ -42,14 +42,8 @@ export class Walker extends Lint.ProgramAwareRuleWalker {
                 const typeChecker = this.getTypeChecker();
                 const type = typeChecker.getTypeAtLocation(propertyAccessExpression.expression);
 
-                if ((name === "unsubscribe") && isReferenceType(type) && couldBeType(type.target, "Subject")) {
+                if (((name === "value") || (name === "getValue")) && isReferenceType(type) && couldBeType(type.target, "BehaviorSubject")) {
                     this.addFailureAtNode(propertyAccessExpression.name, Rule.FAILURE_STRING);
-                } else if ((name === "add") && isReferenceType(type) && couldBeType(type.target, "Subscription")) {
-                    const [argument] = node.arguments;
-                    const argumentType = typeChecker.getTypeAtLocation(argument);
-                    if (couldBeType(argumentType, "Subject")) {
-                        this.addFailureAtNode(propertyAccessExpression.name, Rule.FAILURE_STRING);
-                    }
                 }
             }
         });
