@@ -13,6 +13,18 @@ describe("fixtures", function (): void {
     /*tslint:disable-next-line:no-invalid-this*/
     this.timeout(5000);
 
+    describe.only("effect/epic-related rules", () => {
+
+        describe("no-unsafe-switchmap", () => {
+
+            it("should effect 'no-unsafe-switchmap' errors", () => {
+                const result = lint("no-unsafe-switchmap", "tslint.json");
+                expect(result).to.have.property("errorCount", 11);
+                expect(result.failures[0]).to.have.property("ruleName", "no-unsafe-switchmap");
+            });
+        });
+    });
+
     describe("import-related rules", () => {
 
         describe("custom-observable", () => {
@@ -544,7 +556,7 @@ describe("fixtures", function (): void {
         });
     });
 
-    describe("subscription related rules", () => {
+    describe("subscription-related rules", () => {
 
         describe("subscription-without-error-handler", () => {
 
