@@ -1,3 +1,10 @@
+<a name="3.10.0"></a>
+## [3.10.0](https://github.com/cartant/rxjs-tslint-rules/compare/v3.9.0...v3.10.0) (2018-02-16)
+
+### Features
+
+* Added the `rxjs-no-deep-operators` rule to disallow deep imports from `rxjs/operators`. Deep imports will not be available in RxJS v6 and deep imports from `rxjs/operators` can be avoided - in v5.5 - if a tree-shaking bundler is used. ([ada59c0](https://github.com/cartant/rxjs-tslint-rules/commit/ada59c0))
+
 <a name="3.9.0"></a>
 ## [3.9.0](https://github.com/cartant/rxjs-tslint-rules/compare/v3.8.0...v3.9.0) (2018-02-08)
 
