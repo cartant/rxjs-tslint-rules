@@ -74,11 +74,12 @@ The package includes the following rules (none of which are enabled by default):
 | `rxjs-finnish` | Enforces the use of [Finnish notation](https://medium.com/@benlesh/observables-and-finnish-notation-df8356ed1c9b). | None |
 | `rxjs-no-add` | Disallows the importation of patched observables and operators. | See below |
 | `rxjs-no-create` | Disallows the calling of `Observable.create`. Useful as a warning. | None |
+| `rxjs-no-deep-operators` | Disallows deep importation from 'rxjs/operators'. Deep imports won't be in available in RxJS v6. | None |
 | `rxjs-no-do` | I do without `do` operators. [Do you not?](https://youtu.be/spG-Yj0zEyc) Well, `do` isn't always a code smell, but this rule can be useful as a warning. | None |
 | `rxjs-no-finnish` | Disallows the use of [Finnish notation](https://medium.com/@benlesh/observables-and-finnish-notation-df8356ed1c9b). | None |
 | `rxjs-no-ignored-error` | Disallows the calling of `subscribe` without specifying an error handler. | None |
 | `rxjs-no-ignored-subscribe` | Disallows the calling of subscribe without specifying arguments. | None |
-| `rxjs-no-operator` | Disallows importation from the `operator` directory. Useful if you prefer ['lettable' operators](https://github.com/ReactiveX/rxjs/blob/master/doc/lettable-operators.md) - which are located in the `operators` directory. | None |
+| `rxjs-no-operator` | Disallows importation from 'rxjs/operator'. Useful if you prefer ['lettable' operators](https://github.com/ReactiveX/rxjs/blob/master/doc/lettable-operators.md) - which are located in the `operators` directory. | None |
 | `rxjs-no-patched` | Disallows the calling of patched methods. Methods must be imported and called explicitly - not via `Observable` or `Observable.prototype`. | See below |
 | `rxjs-no-subject-unsubscribe` | Disallows calling the `unsubscribe` method of a `Subject` instance. For an explanation of why this can be a problem, see [this](https://stackoverflow.com/a/45112125/6680611) Stack Overflow answer. | None |
 | `rxjs-no-subject-value` | Disallows accessing the `value` property of a `BehaviorSubject` instance. | None |

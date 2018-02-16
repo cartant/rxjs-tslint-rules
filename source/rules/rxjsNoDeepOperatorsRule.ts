@@ -10,16 +10,16 @@ import * as ts from "typescript";
 export class Rule extends Lint.Rules.AbstractRule {
 
     public static metadata: Lint.IRuleMetadata = {
-        description: "Disallows importation from 'rxjs/operator'.",
+        description: "Disallows deep importation from 'rxjs/operators'.",
         options: null,
         optionsDescription: "Not configurable.",
         requiresTypeInfo: false,
-        ruleName: "rxjs-no-operator",
+        ruleName: "rxjs-no-deep-operators",
         type: "functionality",
         typescriptOnly: false
     };
 
-    public static FAILURE_STRING = "Importation from 'rxjs/operator' is forbidden";
+    public static FAILURE_STRING = "Deep importation from 'rxjs/operators' is forbidden";
 
     public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
         return this.applyWithWalker(new Walker(sourceFile, this.getOptions()));
@@ -32,7 +32,7 @@ class Walker extends Lint.RuleWalker {
 
         const moduleSpecifier = node.moduleSpecifier.getText();
 
-        if (/^['"]rxjs\/operator\//.test(moduleSpecifier)) {
+        if (/^['"]rxjs\/operators\/\w+/.test(moduleSpecifier)) {
             this.addFailureAtNode(node, Rule.FAILURE_STRING);
         }
 

@@ -181,6 +181,17 @@ describe("fixtures", function (): void {
             });
         });
 
+        describe("no-deep-operators", () => {
+
+            it("should effect 'rxjs-no-deep-operators' errors", () => {
+
+                const result = lint("no-deep-operators", "tslint.json");
+
+                expect(result).to.have.property("errorCount", 1);
+                result.failures.forEach(failure => expect(failure).to.have.property("ruleName", "rxjs-no-deep-operators"));
+            });
+        });
+
         describe("no-do", () => {
 
             it("should effect 'rxjs-no-do' errors", () => {
