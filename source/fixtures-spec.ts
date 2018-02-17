@@ -20,7 +20,22 @@ describe("fixtures", function (): void {
             it("should effect 'no-unsafe-switchmap' errors", () => {
                 const result = lint("no-unsafe-switchmap", "tslint.json");
                 expect(result).to.have.property("errorCount", 11);
-                expect(result.failures[0]).to.have.property("ruleName", "rxjs-no-unsafe-switchmap");
+                result.failures.forEach(failure => expect(failure).to.have.property("ruleName", "rxjs-no-unsafe-switchmap"));
+            });
+        });
+
+        describe("no-unsafe-switchmap-foo", () => {
+
+            it("should effect 'no-unsafe-switchmap' errors for non-allowed actions", () => {
+                const result = lint("no-unsafe-switchmap-foo", "tslint-allow-foo.json");
+                expect(result).to.have.property("errorCount", 2);
+                result.failures.forEach(failure => expect(failure).to.have.property("ruleName", "rxjs-no-unsafe-switchmap"));
+            });
+
+            it("should effect 'no-unsafe-switchmap' errors for disallowed actions", () => {
+                const result = lint("no-unsafe-switchmap-foo", "tslint-disallow-foo.json");
+                expect(result).to.have.property("errorCount", 1);
+                result.failures.forEach(failure => expect(failure).to.have.property("ruleName", "rxjs-no-unsafe-switchmap"));
             });
         });
     });
