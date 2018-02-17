@@ -13,14 +13,14 @@ describe("fixtures", function (): void {
     /*tslint:disable-next-line:no-invalid-this*/
     this.timeout(5000);
 
-    describe.only("effect/epic-related rules", () => {
+    describe("effect/epic-related rules", () => {
 
         describe("no-unsafe-switchmap", () => {
 
             it("should effect 'no-unsafe-switchmap' errors", () => {
                 const result = lint("no-unsafe-switchmap", "tslint.json");
                 expect(result).to.have.property("errorCount", 11);
-                expect(result.failures[0]).to.have.property("ruleName", "no-unsafe-switchmap");
+                expect(result.failures[0]).to.have.property("ruleName", "rxjs-no-unsafe-switchmap");
             });
         });
     });

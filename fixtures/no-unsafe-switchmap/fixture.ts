@@ -15,6 +15,7 @@ function ofType<T>(type: string, ...moreTypes: string[]): (source: Observable<T>
     return source => source;
 }
 
+type Actions = Observable<any>;
 const actions = Observable.of({});
 const action$ = Observable.of({});
 const empty = Observable.empty() as Observable<never>;
@@ -32,15 +33,15 @@ const patchedMorePutEffect = actions.ofType("DO_SOMETHING", "PUT_SOMETHING").do(
 const pipedMoreGetEffect = actions.ofType("DO_SOMETHING", "GET_SOMETHING").pipe(tap(() => {}), switchMap(() => empty));
 const pipedMorePutEffect = actions.ofType("DO_SOMETHING", "PUT_SOMETHING").pipe(tap(() => {}), switchMap(() => empty));
 
-const patchedGetEpic = (action$) => action$.ofType("GET_SOMETHING").do(() => {}).switchMap(() => empty);
-const patchedPutEpic = (action$) => action$.ofType("PUT_SOMETHING").do(() => {}).switchMap(() => empty);
-const pipedGetEpic = (action$) => action$.ofType("GET_SOMETHING").pipe(tap(() => {}), switchMap(() => empty));
-const pipedPutEpic = (action$) => action$.ofType("PUT_SOMETHING").pipe(tap(() => {}), switchMap(() => empty));
+const patchedGetEpic = (action$: Actions) => action$.ofType("GET_SOMETHING").do(() => {}).switchMap(() => empty);
+const patchedPutEpic = (action$: Actions) => action$.ofType("PUT_SOMETHING").do(() => {}).switchMap(() => empty);
+const pipedGetEpic = (action$: Actions) => action$.ofType("GET_SOMETHING").pipe(tap(() => {}), switchMap(() => empty));
+const pipedPutEpic = (action$: Actions) => action$.ofType("PUT_SOMETHING").pipe(tap(() => {}), switchMap(() => empty));
 
-const patchedMoreGetEpic = (action$) => action$.ofType("DO_SOMETHING", "GET_SOMETHING").do(() => {}).switchMap(() => empty);
-const patchedMorePutEpic = (action$) => action$.ofType("DO_SOMETHING", "PUT_SOMETHING").do(() => {}).switchMap(() => empty);
-const pipedMoreGetEpic = (action$) => action$.ofType("DO_SOMETHING", "GET_SOMETHING").pipe(tap(() => {}), switchMap(() => empty));
-const pipedMorePutEpic = (action$) => action$.ofType("DO_SOMETHING", "PUT_SOMETHING").pipe(tap(() => {}), switchMap(() => empty));
+const patchedMoreGetEpic = (action$: Actions) => action$.ofType("DO_SOMETHING", "GET_SOMETHING").do(() => {}).switchMap(() => empty);
+const patchedMorePutEpic = (action$: Actions) => action$.ofType("DO_SOMETHING", "PUT_SOMETHING").do(() => {}).switchMap(() => empty);
+const pipedMoreGetEpic = (action$: Actions) => action$.ofType("DO_SOMETHING", "GET_SOMETHING").pipe(tap(() => {}), switchMap(() => empty));
+const pipedMorePutEpic = (action$: Actions) => action$.ofType("DO_SOMETHING", "PUT_SOMETHING").pipe(tap(() => {}), switchMap(() => empty));
 
 const patchedSymbolGetEffect = actions.ofType(GET_SOMETHING).do(() => {}).switchMap(() => empty);
 const patchedSymbolPutEffect = actions.ofType(PUT_SOMETHING).do(() => {}).switchMap(() => empty);
