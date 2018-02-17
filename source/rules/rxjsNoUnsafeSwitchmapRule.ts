@@ -53,6 +53,7 @@ class Walker extends Lint.ProgramAwareRuleWalker {
     public static ACTIONS_REGEXP = /action(s|\$)?/i;
     public static METHODS_REGEXP = /(ofType|pipe)/;
     public static DEFAULT_DISALLOW = [
+        "add",
         "create",
         "delete",
         "post",
