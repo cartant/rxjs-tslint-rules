@@ -29,7 +29,7 @@ export class Rule extends Lint.Rules.AbstractRule {
             type: "object"
         },
         optionsDescription: Lint.Utils.dedent`
-            An optional object with the optional properties \`allowObservables\` and \`allowOperators\`.
+            An optional object with optional \`allowObservables\` and \`allowOperators\` properties.
             The properties can be specifed as booleans (they default to \`false\`) or as arrays containing
             the names of the observables or operators that are allowed.`,
         requiresTypeInfo: false,

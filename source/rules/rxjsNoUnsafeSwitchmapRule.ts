@@ -33,7 +33,7 @@ export class Rule extends Lint.Rules.TypedRule {
             type: "object"
         },
         optionsDescription: Lint.Utils.dedent`
-            An optional object with the optional properties \`allow\` or \`disallow\`.
+            An optional object with optional \`allow\` and \`disallow\` properties.
             Either can be specified, but not both.
             The properties can be specifed as regular expression strings or as arrays containing
             the string fragments that are allowed or disallowed.`,
