@@ -70,9 +70,9 @@ The package includes the following rules (none of which are enabled by default):
 
 | Rule | Description | Options |
 | --- | --- | --- |
-| `rxjs-add` | Enforces the importation of patched observables and operators used in the module. | See below |
+| `rxjs-add` | Enforces the importation of patched observables and operators used in the module. | [See below](#rxjs-add) |
 | `rxjs-finnish` | Enforces the use of [Finnish notation](https://medium.com/@benlesh/observables-and-finnish-notation-df8356ed1c9b). | None |
-| `rxjs-no-add` | Disallows the importation of patched observables and operators. | See below |
+| `rxjs-no-add` | Disallows the importation of patched observables and operators. | [See below](#rxjs-no-add) |
 | `rxjs-no-create` | Disallows the calling of `Observable.create`. Useful as a warning. | None |
 | `rxjs-no-deep-operators` | Disallows deep importation from 'rxjs/operators'. Deep imports won't be in available in RxJS v6. | None |
 | `rxjs-no-do` | I do without `do` operators. [Do you not?](https://youtu.be/spG-Yj0zEyc) Well, `do` isn't always a code smell, but this rule can be useful as a warning. | None |
@@ -80,14 +80,17 @@ The package includes the following rules (none of which are enabled by default):
 | `rxjs-no-ignored-error` | Disallows the calling of `subscribe` without specifying an error handler. | None |
 | `rxjs-no-ignored-subscribe` | Disallows the calling of subscribe without specifying arguments. | None |
 | `rxjs-no-operator` | Disallows importation from 'rxjs/operator'. Useful if you prefer ['lettable' operators](https://github.com/ReactiveX/rxjs/blob/master/doc/lettable-operators.md) - which are located in the `operators` directory. | None |
-| `rxjs-no-patched` | Disallows the calling of patched methods. Methods must be imported and called explicitly - not via `Observable` or `Observable.prototype`. | See below |
+| `rxjs-no-patched` | Disallows the calling of patched methods. Methods must be imported and called explicitly - not via `Observable` or `Observable.prototype`. | [See below](#rxjs-no-add) |
 | `rxjs-no-subject-unsubscribe` | Disallows calling the `unsubscribe` method of a `Subject` instance. For an explanation of why this can be a problem, see [this](https://stackoverflow.com/a/45112125/6680611) Stack Overflow answer. | None |
 | `rxjs-no-subject-value` | Disallows accessing the `value` property of a `BehaviorSubject` instance. | None |
 | `rxjs-no-tap` | An alias for `rxjs-no-do`. | None |
+| `rxjs-no-unsafe-switchmap` | Disallows unsafe `switchMap` usage in [NgRx](https://github.com/ngrx/platform) effects and [`redux-observable`](https://github.com/redux-observable/redux-observable) epics. | [See below](#rxjs-no-unsafe-switchmap) |
 | `rxjs-no-unused-add` | Disallows the importation of patched observables or operators that are not used in the module. | None |
 | `rxjs-no-wholesale` | Disallows the wholesale importation of `rxjs` or `rxjs/Rx`. | None |
 
 ### Options
+
+<a name="rxjs-add"></a>
 
 #### `rxjs-add`
 
@@ -116,6 +119,8 @@ Note that there is no `file` option for the `rxjs-no-unused-add` rule, so that r
 
 If the `file` option is not specified, patched observables and operators must be imported in the modules in which they are used.
 
+<a name="rxjs-no-add"></a>
+
 #### `rxjs-no-add` and `rxjs-no-patched`
 
 The `rxjs-no-add` and `rxjs-no-patched` rules take an optional object with the optional properties `allowObservables` and `allowOperators`. The properties can be specified as booleans - to allow or disallow all observables or operators - or as arrays of strings - to allow or disallow a subset of observables or operators.
@@ -128,6 +133,29 @@ For example:
     "options": [{
       "allowObservables": ["never", "throw"],
       "allowOperators": false
+    }],
+    "severity": "error"
+  }
+}
+```
+
+<a name="rxjs-no-unsafe-switchmap"></a>
+
+#### `rxjs-no-unsafe-switchmap`
+
+The `rxjs-no-unsafe-switchmap` rule does its best to determine whether or not NgRx effects or `redux-observable` epics use the `switchMap` operator with actions for which it could be unsafe.
+
+For example, it would be unsafe to use `switchMap` in an effect or epic that deletes a resource. If the user were to instigate another delete action whilst one was pending, the pending action would be cancelled and the pending delete might or might not occur. Victor Savkin has mentioned such scenarios in [a tweet](https://mobile.twitter.com/victorsavkin/status/963486303118557185).
+
+The rule takes an optional object with optional properties `allow` or `disallow`. Either can be specified, but not both. The properties can be specifed as regular expression strings or as arrays containing the string fragments that are allowed or disallowed.
+
+For example, the following is equivalent to the rule's default configuration:
+
+```json
+"rules": {
+  "rxjs-no-unsafe-switchmap": {
+    "options": [{
+      "disallow": ["add", "create", "delete", "post", "put", "remove", "set", "update"]
     }],
     "severity": "error"
   }
