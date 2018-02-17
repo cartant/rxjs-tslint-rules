@@ -149,7 +149,13 @@ For example, it would be unsafe to use `switchMap` in an effect or epic that del
 
 The rule takes an optional object with optional properties `allow` or `disallow`. Either can be specified, but not both. The properties can be specifed as regular expression strings or as arrays containing the string fragments that are allowed or disallowed.
 
-For example, the following is equivalent to the rule's default configuration:
+If the `allow` option is specified, any actions that do not match the regular expression or do not contain one the specified fragments will effect an error if `switchMap` is used.
+
+If the `disallow` option is specified, any actions that do match the regular expression or do contain one the specified fragments will effect an error if `switchMap` is used.
+
+If no options are specifed, the rule will default to a set of fragments are are likely to be present in any actions for which `switchMap` is unsafe.
+
+The following options are equivalent to the rule's default configuration:
 
 ```json
 "rules": {
