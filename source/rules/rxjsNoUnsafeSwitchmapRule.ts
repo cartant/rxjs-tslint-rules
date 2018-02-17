@@ -7,6 +7,8 @@
 import * as Lint from "tslint";
 import * as ts from "typescript";
 import * as tsutils from "tsutils";
+import * as decamelize from "decamelize";
+
 import { couldBeType, isReferenceType } from "../support/util";
 
 export class Rule extends Lint.Rules.TypedRule {
@@ -48,7 +50,7 @@ export class Rule extends Lint.Rules.TypedRule {
     }
 }
 
-class Walker extends Lint.ProgramAwareRuleWalker {
+export class Walker extends Lint.ProgramAwareRuleWalker {
 
     public static ACTIONS_REGEXP = /action(s|\$)?/i;
     public static METHODS_REGEXP = /(ofType|pipe)/;
@@ -66,7 +68,7 @@ class Walker extends Lint.ProgramAwareRuleWalker {
     private allowRegExp: RegExp | null;
     private disallowRegExp: RegExp | null;
 
-    private static createRegExp(value: any): RegExp | null {
+    public static createRegExp(value: any): RegExp | null {
 
         if (!value || !value.length) {
             return null;
@@ -76,7 +78,7 @@ class Walker extends Lint.ProgramAwareRuleWalker {
             return new RegExp(value, flags);
         }
         const fragments = value as string[];
-        const joined = fragments.map(fragment => `(\\b|[_'"])${fragment}(\\b|[_'"])`).join("|");
+        const joined = fragments.map(fragment => `(\\b|_)${fragment}(\\b|_)`).join("|");
         return new RegExp(`(${joined})`, flags);
     }
 
@@ -89,6 +91,7 @@ class Walker extends Lint.ProgramAwareRuleWalker {
             this.allowRegExp = Walker.createRegExp(options.allow);
             this.disallowRegExp = Walker.createRegExp(options.disallow);
         } else {
+            this.allowRegExp = null;
             this.disallowRegExp = Walker.createRegExp(Walker.DEFAULT_DISALLOW);
         }
     }
@@ -131,12 +134,12 @@ class Walker extends Lint.ProgramAwareRuleWalker {
 
     private shouldDisallow(args: ts.NodeArray<ts.Expression>): boolean {
 
-        const names = args.map(arg => arg.getText());
-        if (this.allowRegExp && !names.every(name => this.allowRegExp.test(name))) {
-            return true;
+        const names = args.map(arg => decamelize(arg.getText()));
+        if (this.allowRegExp) {
+            return !names.every(name => this.allowRegExp.test(name));
         }
-        if (this.disallowRegExp && names.some(name => this.disallowRegExp.test(name))) {
-            return true;
+        if (this.disallowRegExp) {
+            return names.some(name => this.disallowRegExp.test(name));
         }
         return false;
     }

@@ -19,7 +19,7 @@ describe("fixtures", function (): void {
 
             it("should effect 'no-unsafe-switchmap' errors", () => {
                 const result = lint("no-unsafe-switchmap", "tslint.json");
-                expect(result).to.have.property("errorCount", 11);
+                expect(result).to.have.property("errorCount", 12);
                 result.failures.forEach(failure => expect(failure).to.have.property("ruleName", "rxjs-no-unsafe-switchmap"));
             });
         });

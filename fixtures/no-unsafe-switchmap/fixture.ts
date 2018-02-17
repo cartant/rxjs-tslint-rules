@@ -22,6 +22,8 @@ const empty = Observable.empty() as Observable<never>;
 
 const GET_SOMETHING = "GET_SOMETHING";
 const PUT_SOMETHING = "PUT_SOMETHING";
+const GetSomething = GET_SOMETHING;
+const PutSomething = PUT_SOMETHING;
 
 const patchedGetEffect = actions.ofType("GET_SOMETHING").do(() => {}).switchMap(() => empty);
 const patchedPutEffect = actions.ofType("PUT_SOMETHING").do(() => {}).switchMap(() => empty);
@@ -50,3 +52,6 @@ const pipedSymbolPutEffect = actions.ofType(PUT_SOMETHING).pipe(tap(() => {}), s
 
 const pipedOfTypeGetEffect = actions.pipe(ofType(GET_SOMETHING), tap(() => {}), switchMap(() => empty));
 const pipedOfTypePutEffect = actions.pipe(ofType(PUT_SOMETHING), tap(() => {}), switchMap(() => empty));
+
+const pipedOfTypeCamelCaseGetEffect = actions.pipe(ofType(GetSomething), tap(() => {}), switchMap(() => empty));
+const pipedOfTypeCamelCasePutEffect = actions.pipe(ofType(PutSomething), tap(() => {}), switchMap(() => empty));
