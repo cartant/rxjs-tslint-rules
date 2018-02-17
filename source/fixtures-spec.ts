@@ -25,6 +25,95 @@ describe("fixtures", function (): void {
         });
     });
 
+    describe("finnish-related rules", () => {
+
+        describe("finnish-with-$", () => {
+
+            it("should effect no errors", () => {
+
+                const result = lint("finnish-with-$", "tslint.json");
+
+                expect(result).to.have.property("errorCount", 0);
+            });
+        });
+
+        describe("finnish-without-$", () => {
+
+            it("should effect 'rxjs-finnish' errors", () => {
+
+                const result = lint("finnish-without-$", "tslint.json");
+
+                expect(result).to.have.property("errorCount", 19);
+                result.failures.forEach(failure => expect(failure).to.have.property("ruleName", "rxjs-finnish"));
+            });
+
+            it("should support supressing errors with rule flags", () => {
+
+                const result = lint("finnish-without-$", "tslint.json", "fixture-with-flags.ts");
+
+                expect(result).to.have.property("errorCount", 1);
+                result.failures.forEach(failure => expect(failure).to.have.property("ruleName", "rxjs-finnish"));
+            });
+        });
+
+        describe("no-finnish-with-$", () => {
+
+            it("should effect 'rxjs-no-finnish' errors", () => {
+
+                const result = lint("no-finnish-with-$", "tslint.json");
+
+                expect(result).to.have.property("errorCount", 19);
+                result.failures.forEach(failure => expect(failure).to.have.property("ruleName", "rxjs-no-finnish"));
+            });
+        });
+
+        describe("no-finnish-without-$", () => {
+
+            it("should effect no errors", () => {
+
+                const result = lint("no-finnish-without-$", "tslint.json");
+
+                expect(result).to.have.property("errorCount", 0);
+            });
+        });
+    });
+
+    describe("general rules", () => {
+
+        describe("no-create", () => {
+
+            it("should effect 'rxjs-no-create' errors", () => {
+
+                const result = lint("no-create", "tslint.json");
+
+                expect(result).to.have.property("errorCount", 1);
+                expect(result.failures[0]).to.have.property("ruleName", "rxjs-no-create");
+            });
+        });
+
+        describe("no-do", () => {
+
+            it("should effect 'rxjs-no-do' errors", () => {
+
+                const result = lint("no-do", "tslint.json");
+
+                expect(result).to.have.property("errorCount", 4);
+                result.failures.forEach(failure => expect(failure).to.have.property("ruleName", "rxjs-no-do"));
+            });
+        });
+
+        describe("no-tap", () => {
+
+            it("should effect 'rxjs-no-tap' errors", () => {
+
+                const result = lint("no-tap", "tslint.json");
+
+                expect(result).to.have.property("errorCount", 2);
+                result.failures.forEach(failure => expect(failure).to.have.property("ruleName", "rxjs-no-tap"));
+            });
+        });
+    });
+
     describe("import-related rules", () => {
 
         describe("custom-observable", () => {
@@ -75,35 +164,6 @@ describe("fixtures", function (): void {
                 const result = lint("elsewhere-with-file-allowed", "tslint.json");
 
                 expect(result).to.have.property("errorCount", 0);
-            });
-        });
-
-        describe("finnish-with-$", () => {
-
-            it("should effect no errors", () => {
-
-                const result = lint("finnish-with-$", "tslint.json");
-
-                expect(result).to.have.property("errorCount", 0);
-            });
-        });
-
-        describe("finnish-without-$", () => {
-
-            it("should effect 'rxjs-finnish' errors", () => {
-
-                const result = lint("finnish-without-$", "tslint.json");
-
-                expect(result).to.have.property("errorCount", 19);
-                result.failures.forEach(failure => expect(failure).to.have.property("ruleName", "rxjs-finnish"));
-            });
-
-            it("should support supressing errors with rule flags", () => {
-
-                const result = lint("finnish-without-$", "tslint.json", "fixture-with-flags.ts");
-
-                expect(result).to.have.property("errorCount", 1);
-                result.failures.forEach(failure => expect(failure).to.have.property("ruleName", "rxjs-finnish"));
             });
         });
 
@@ -182,17 +242,6 @@ describe("fixtures", function (): void {
             });
         });
 
-        describe("no-create", () => {
-
-            it("should effect 'rxjs-no-create' errors", () => {
-
-                const result = lint("no-create", "tslint.json");
-
-                expect(result).to.have.property("errorCount", 1);
-                expect(result.failures[0]).to.have.property("ruleName", "rxjs-no-create");
-            });
-        });
-
         describe("no-deep-operators", () => {
 
             it("should effect 'rxjs-no-deep-operators' errors", () => {
@@ -201,17 +250,6 @@ describe("fixtures", function (): void {
 
                 expect(result).to.have.property("errorCount", 1);
                 result.failures.forEach(failure => expect(failure).to.have.property("ruleName", "rxjs-no-deep-operators"));
-            });
-        });
-
-        describe("no-do", () => {
-
-            it("should effect 'rxjs-no-do' errors", () => {
-
-                const result = lint("no-do", "tslint.json");
-
-                expect(result).to.have.property("errorCount", 4);
-                result.failures.forEach(failure => expect(failure).to.have.property("ruleName", "rxjs-no-do"));
             });
         });
 
@@ -230,27 +268,6 @@ describe("fixtures", function (): void {
             it("should effect no errors", () => {
 
                 const result = lint("no-errors-with-file", "tslint.json");
-
-                expect(result).to.have.property("errorCount", 0);
-            });
-        });
-
-        describe("no-finnish-with-$", () => {
-
-            it("should effect 'rxjs-no-finnish' errors", () => {
-
-                const result = lint("no-finnish-with-$", "tslint.json");
-
-                expect(result).to.have.property("errorCount", 19);
-                result.failures.forEach(failure => expect(failure).to.have.property("ruleName", "rxjs-no-finnish"));
-            });
-        });
-
-        describe("no-finnish-without-$", () => {
-
-            it("should effect no errors", () => {
-
-                const result = lint("no-finnish-without-$", "tslint.json");
 
                 expect(result).to.have.property("errorCount", 0);
             });
@@ -390,17 +407,6 @@ describe("fixtures", function (): void {
             });
         });
 
-        describe("no-tap", () => {
-
-            it("should effect 'rxjs-no-tap' errors", () => {
-
-                const result = lint("no-tap", "tslint.json");
-
-                expect(result).to.have.property("errorCount", 2);
-                result.failures.forEach(failure => expect(failure).to.have.property("ruleName", "rxjs-no-tap"));
-            });
-        });
-
         describe("observable-create", () => {
 
             it("should effect an error unless explicit typing is used", () => {
@@ -477,7 +483,7 @@ describe("fixtures", function (): void {
         });
     });
 
-    describe("issue-related fixtures", () => {
+    describe("issue-related rules", () => {
 
         describe("issue-33", () => {
 
