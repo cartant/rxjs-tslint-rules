@@ -1,3 +1,10 @@
+<a name="3.11.0"></a>
+## [3.11.0](https://github.com/cartant/rxjs-tslint-rules/compare/v3.10.0...v3.11.0) (2018-02-17)
+
+### Features
+
+* Added the `rxjs-no-unsafe-switchmap` rule to disallow the use of `switchMap` in effects and epics with actions for which it is likely to be unsafe. See [this tweet](https://mobile.twitter.com/victorsavkin/status/963486303118557185) from Victor Savkin. ([c08d98b](https://github.com/cartant/rxjs-tslint-rules/commit/c08d98b))
+
 <a name="3.10.0"></a>
 ## [3.10.0](https://github.com/cartant/rxjs-tslint-rules/compare/v3.9.0...v3.10.0) (2018-02-16)
 
