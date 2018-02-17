@@ -144,33 +144,35 @@ export class Walker extends Lint.ProgramAwareRuleWalker {
         return false;
     }
 
-    private walkPatchedOperators(): void {
+    private walkPatchedOperators(node: ts.Node): void {
+
+        let name: ts.Identifier | undefined = undefined;
+        for (let parent = node.parent; parent; parent = parent.parent) {
+            if (tsutils.isCallExpression(parent)) {
+                if (name) {
+                    switch (name.getText()) {
+                    case "pipe":
+                        this.walkPipedOperators(parent);
+                        break;
+                    case "switchMap":
+                        this.addFailureAtNode(parent, Rule.FAILURE_STRING);
+                        break;
+                    default:
+                        break;
+                    }
+                }
+            } else if (tsutils.isPropertyAccessExpression(parent)) {
+                name = parent.name;
+            } else {
+                break;
+            }
+        }
     }
 
     private walkPatchedTypes(node: ts.CallExpression): void {
 
         if (this.shouldDisallow(node.arguments)) {
-            let name: ts.Identifier | undefined = undefined;
-            for (let parent = node.parent; parent; parent = parent.parent) {
-                if (tsutils.isCallExpression(parent)) {
-                    if (name) {
-                        switch (name.getText()) {
-                        case "pipe":
-                            this.walkPipedOperators(parent);
-                            break;
-                        case "switchMap":
-                            this.addFailureAtNode(parent, Rule.FAILURE_STRING);
-                            break;
-                        default:
-                            break;
-                        }
-                    }
-                } else if (tsutils.isPropertyAccessExpression(parent)) {
-                    name = parent.name;
-                } else {
-                    break;
-                }
-            }
+            this.walkPatchedOperators(node);
         }
     }
 
