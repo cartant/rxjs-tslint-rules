@@ -6,6 +6,7 @@
 
 import * as Lint from "tslint";
 import * as ts from "typescript";
+import * as tsutils from "tsutils";
 
 import { UsedWalker } from "../support/used-walker";
 
@@ -36,7 +37,7 @@ class Walker extends UsedWalker {
         const moduleSpecifier = node.moduleSpecifier.getText();
 
         if (/^['"]rxjs\/operators?/.test(moduleSpecifier)) {
-            if (node.importClause.namedBindings.kind === ts.SyntaxKind.NamedImports) {
+            if (tsutils.isNamedImports(node.importClause.namedBindings)) {
                 node.importClause.namedBindings.elements.forEach(binding => {
                     this.validateName(binding.propertyName || binding.name);
                 });

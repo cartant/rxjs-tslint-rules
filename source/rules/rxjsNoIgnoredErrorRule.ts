@@ -6,6 +6,7 @@
 
 import * as Lint from "tslint";
 import * as ts from "typescript";
+import * as tsutils from "tsutils";
 
 import { couldBeType, isReferenceType } from "../support/util";
 import { InternalSymbolName } from "typescript";
@@ -36,11 +37,11 @@ export class Walker extends Lint.ProgramAwareRuleWalker {
 
         node.forEachChild((child) => {
 
-            if (child.kind === ts.SyntaxKind.PropertyAccessExpression) {
-                const propertyAccessExpression = child as ts.PropertyAccessExpression;
-                const name = propertyAccessExpression.name.getText();
+            if (tsutils.isPropertyAccessExpression(child)) {
+
+                const name = child.name.getText();
                 const typeChecker = this.getTypeChecker();
-                const type = typeChecker.getTypeAtLocation(propertyAccessExpression.expression);
+                const type = typeChecker.getTypeAtLocation(child.expression);
 
                 if ((name === "subscribe") &&
                     isReferenceType(type) &&
@@ -48,7 +49,7 @@ export class Walker extends Lint.ProgramAwareRuleWalker {
                     (node.arguments.length && this.nodeIsLikelyAFunction(node.arguments[0])) &&
                     node.arguments.length < 2
                 ) {
-                    this.addFailureAtNode(propertyAccessExpression.name, Rule.FAILURE_STRING);
+                    this.addFailureAtNode(child.name, Rule.FAILURE_STRING);
                 }
             }
         });
@@ -57,12 +58,12 @@ export class Walker extends Lint.ProgramAwareRuleWalker {
     }
 
     private nodeIsLikelyAFunction(node: ts.Expression): boolean {
+
         // Fast check
-        if (node.kind === ts.SyntaxKind.ArrowFunction ||
-            node.kind === ts.SyntaxKind.FunctionExpression
-        ) {
+        if (tsutils.isArrowFunction(node) || tsutils.isFunctionExpression(node)) {
             return true;
         }
+
         // Check with a type checker
         const typeChecker = this.getTypeChecker();
         const type: ts.Type = typeChecker.getTypeAtLocation(node);

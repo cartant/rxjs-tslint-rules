@@ -6,6 +6,7 @@
 
 import * as Lint from "tslint";
 import * as ts from "typescript";
+import * as tsutils from "tsutils";
 
 import { couldBeType, isReferenceType } from "../support/util";
 
@@ -35,20 +36,19 @@ export class Walker extends Lint.ProgramAwareRuleWalker {
 
         node.forEachChild((child) => {
 
-            if (child.kind === ts.SyntaxKind.PropertyAccessExpression) {
+            if (tsutils.isPropertyAccessExpression(child)) {
 
-                const propertyAccessExpression = child as ts.PropertyAccessExpression;
-                const name = propertyAccessExpression.name.getText();
+                const name = child.name.getText();
                 const typeChecker = this.getTypeChecker();
-                const type = typeChecker.getTypeAtLocation(propertyAccessExpression.expression);
+                const type = typeChecker.getTypeAtLocation(child.expression);
 
                 if ((name === "unsubscribe") && isReferenceType(type) && couldBeType(type.target, "Subject")) {
-                    this.addFailureAtNode(propertyAccessExpression.name, Rule.FAILURE_STRING);
+                    this.addFailureAtNode(child.name, Rule.FAILURE_STRING);
                 } else if ((name === "add") && isReferenceType(type) && couldBeType(type.target, "Subscription")) {
                     const [argument] = node.arguments;
                     const argumentType = typeChecker.getTypeAtLocation(argument);
                     if (couldBeType(argumentType, "Subject")) {
-                        this.addFailureAtNode(propertyAccessExpression.name, Rule.FAILURE_STRING);
+                        this.addFailureAtNode(child.name, Rule.FAILURE_STRING);
                     }
                 }
             }

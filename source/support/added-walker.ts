@@ -5,6 +5,7 @@
 
 import * as Lint from "tslint";
 import * as ts from "typescript";
+import * as tsutils from "tsutils";
 import { knownObservables, knownOperators } from "./knowns";
 
 export class AddedWalker extends Lint.ProgramAwareRuleWalker {
@@ -49,7 +50,7 @@ export class AddedWalker extends Lint.ProgramAwareRuleWalker {
 
         super.visitNode(node);
 
-        if (node.kind === ts.SyntaxKind.SourceFile) {
+        if (tsutils.isSourceFile(node)) {
             this.sourceFilePath = node["path"];
             this.onSourceFileEnd();
         }
