@@ -28,15 +28,23 @@ export class Rule extends Lint.Rules.TypedRule {
                         { type: "string" },
                         { type: "array", items: { type: "string" } }
                     ]
+                },
+                observable: {
+                    oneOf: [
+                        { type: "string" },
+                        { type: "array", items: { type: "string" } }
+                    ]
                 }
             },
             type: "object"
         },
         optionsDescription: Lint.Utils.dedent`
-            An optional object with optional \`allow\` and \`disallow\` properties.
-            Either can be specified, but not both.
-            The properties can be specifed as regular expression strings or as arrays containing
-            the words that are allowed or disallowed.`,
+            An optional object with optional \`allow\`, \`disallow\` and \`observable\` properties.
+            The properties can be specifed as regular expression strings or as arrays of words.
+            The \`allow\` or \`disallow\` properties are mutually exclusive. Whether or not
+            \`switchMap\` is allowed will depend upon the matching of action types with \`allow\` or \`disallow\`.
+            The \`observable\` property is used to identify the action observables from which effects and epics are composed.
+            `,
         requiresTypeInfo: true,
         ruleName: "rxjs-no-unsafe-switchmap",
         type: "functionality",
@@ -52,7 +60,6 @@ export class Rule extends Lint.Rules.TypedRule {
 
 export class Walker extends Lint.ProgramAwareRuleWalker {
 
-    public static ACTIONS_REGEXP = /action(s|\$)?/i;
     public static METHODS_REGEXP = /(ofType|pipe)/;
     public static DEFAULT_DISALLOW = [
         "add",
@@ -64,9 +71,11 @@ export class Walker extends Lint.ProgramAwareRuleWalker {
         "set",
         "update"
     ];
+    public static DEFAULT_OBSERVABLE = "action(s|\\$)?";
 
     private allowRegExp: RegExp | null;
     private disallowRegExp: RegExp | null;
+    private observableRegExp: RegExp;
 
     public static createRegExp(value: any): RegExp | null {
 
@@ -88,11 +97,14 @@ export class Walker extends Lint.ProgramAwareRuleWalker {
 
         const [options] = this.getOptions();
         if (options && (options.allow || options.disallow)) {
+
             this.allowRegExp = Walker.createRegExp(options.allow);
             this.disallowRegExp = Walker.createRegExp(options.disallow);
+            this.observableRegExp = new RegExp(options.observable || Walker.DEFAULT_OBSERVABLE, "i");
         } else {
             this.allowRegExp = null;
             this.disallowRegExp = Walker.createRegExp(Walker.DEFAULT_DISALLOW);
+            this.observableRegExp = new RegExp(Walker.DEFAULT_OBSERVABLE, "i");
         }
     }
 
@@ -110,7 +122,7 @@ export class Walker extends Lint.ProgramAwareRuleWalker {
                     const type = typeChecker.getTypeAtLocation(expression);
 
                     if (isReferenceType(type) &&
-                        Walker.ACTIONS_REGEXP.test(expressionText) &&
+                        this.observableRegExp.test(expressionText) &&
                         Walker.METHODS_REGEXP.test(propertyName) &&
                         couldBeType(type.target, "Observable")) {
 

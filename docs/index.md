@@ -87,13 +87,15 @@ The `rxjs-no-unsafe-switchmap` rule does its best to determine whether or not Ng
 
 For example, it would be unsafe to use `switchMap` in an effect or epic that deletes a resource. If the user were to instigate another delete action whilst one was pending, the pending action would be cancelled and the pending delete might or might not occur. Victor Savkin has mentioned such scenarios in [a tweet](https://mobile.twitter.com/victorsavkin/status/963486303118557185).
 
-The rule takes an optional object with optional `allow` and `disallow` properties. Either can be specified, but not both. The properties can be specifed as regular expression strings or as arrays containing the words that are allowed or disallowed.
+The rule takes an optional object with optional `allow`, `disallow` and `observable` properties. The properties can be specifed as regular expression strings or as arrays of words.
 
 If the `allow` option is specified, any actions that do not match the regular expression or do not contain one the specified words will effect an error if `switchMap` is used.
 
 If the `disallow` option is specified, any actions that do match the regular expression or do contain one the specified words will effect an error if `switchMap` is used.
 
-If no options are specifed, the rule will default to a set of words are are likely to be present in any actions for which `switchMap` is unsafe.
+If neither option is specifed, the rule will default to a set of words are are likely to be present in any actions for which `switchMap` is unsafe.
+
+The `observable` property is used to identify the action observables from which effects and epics are composed.
 
 The following options are equivalent to the rule's default configuration:
 
@@ -101,7 +103,21 @@ The following options are equivalent to the rule's default configuration:
 "rules": {
   "rxjs-no-unsafe-switchmap": {
     "options": [{
-      "disallow": ["add", "create", "delete", "post", "put", "remove", "set", "update"]
+      "disallow": ["add", "create", "delete", "post", "put", "remove", "set", "update"],
+      "observable": "action(s|\\$)?"
+    }],
+    "severity": "error"
+  }
+}
+```
+
+To disallow or warn about all uses of `switchMap` within effects or epics, use a regular expression that will match all action types:
+
+```json
+"rules": {
+  "rxjs-no-unsafe-switchmap": {
+    "options": [{
+      "disallow": "."
     }],
     "severity": "error"
   }
