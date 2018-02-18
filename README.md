@@ -147,13 +147,13 @@ The `rxjs-no-unsafe-switchmap` rule does its best to determine whether or not Ng
 
 For example, it would be unsafe to use `switchMap` in an effect or epic that deletes a resource. If the user were to instigate another delete action whilst one was pending, the pending action would be cancelled and the pending delete might or might not occur. Victor Savkin has mentioned such scenarios in [a tweet](https://mobile.twitter.com/victorsavkin/status/963486303118557185).
 
-The rule takes an optional object with optional `allow` and `disallow` properties. Either can be specified, but not both. The properties can be specifed as regular expression strings or as arrays containing the string fragments that are allowed or disallowed.
+The rule takes an optional object with optional `allow` and `disallow` properties. Either can be specified, but not both. The properties can be specifed as regular expression strings or as arrays containing the words that are allowed or disallowed.
 
-If the `allow` option is specified, any actions that do not match the regular expression or do not contain one the specified fragments will effect an error if `switchMap` is used.
+If the `allow` option is specified, any actions that do not match the regular expression or do not contain one the specified words will effect an error if `switchMap` is used.
 
-If the `disallow` option is specified, any actions that do match the regular expression or do contain one the specified fragments will effect an error if `switchMap` is used.
+If the `disallow` option is specified, any actions that do match the regular expression or do contain one the specified words will effect an error if `switchMap` is used.
 
-If no options are specifed, the rule will default to a set of fragments are are likely to be present in any actions for which `switchMap` is unsafe.
+If no options are specifed, the rule will default to a set of words are are likely to be present in any actions for which `switchMap` is unsafe.
 
 The following options are equivalent to the rule's default configuration:
 

@@ -36,7 +36,7 @@ export class Rule extends Lint.Rules.TypedRule {
             An optional object with optional \`allow\` and \`disallow\` properties.
             Either can be specified, but not both.
             The properties can be specifed as regular expression strings or as arrays containing
-            the string fragments that are allowed or disallowed.`,
+            the words that are allowed or disallowed.`,
         requiresTypeInfo: true,
         ruleName: "rxjs-no-unsafe-switchmap",
         type: "functionality",
@@ -77,8 +77,8 @@ export class Walker extends Lint.ProgramAwareRuleWalker {
         if (typeof value === "string") {
             return new RegExp(value, flags);
         }
-        const fragments = value as string[];
-        const joined = fragments.map(fragment => `(\\b|_)${fragment}(\\b|_)`).join("|");
+        const words = value as string[];
+        const joined = words.map(word => `(\\b|_)${word}(\\b|_)`).join("|");
         return new RegExp(`(${joined})`, flags);
     }
 

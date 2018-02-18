@@ -39,7 +39,7 @@ describe("rxjs-no-unsafe-switchmap", () => {
             expect(decamelize("SomethingAdd")).to.match(regExp);
         });
 
-        it("should not match fragments within words", () => {
+        it("should not match words within larger words", () => {
 
             expect("READD").to.not.match(regExp);
             expect("Readd").to.not.match(regExp);
