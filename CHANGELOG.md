@@ -1,3 +1,10 @@
+<a name="3.12.0"></a>
+## [3.12.0](https://github.com/cartant/rxjs-tslint-rules/compare/v3.11.1...v3.12.0) (2018-02-18)
+
+### Features
+
+* Added an `observable` option for the `rxjs-no-unsafe-switchmap` rule. ([9bffe6e](https://github.com/cartant/rxjs-tslint-rules/commit/9bffe6e))
+
 <a name="3.11.1"></a>
 ## [3.11.1](https://github.com/cartant/rxjs-tslint-rules/compare/v3.11.0...v3.11.1) (2018-02-18)
 
