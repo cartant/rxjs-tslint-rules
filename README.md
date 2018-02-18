@@ -168,6 +168,19 @@ The following options are equivalent to the rule's default configuration:
 }
 ```
 
+To disallow or warn about all uses of `switchMap` within effects or epics, use a regular expression:
+
+```json
+"rules": {
+  "rxjs-no-unsafe-switchmap": {
+    "options": [{
+      "disallow": "."
+    }],
+    "severity": "error"
+  }
+}
+```
+
 ## Gotchas
 
 ### `@angular/cli`

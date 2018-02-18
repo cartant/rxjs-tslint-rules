@@ -50,5 +50,10 @@ describe("rxjs-no-unsafe-switchmap", () => {
             expect("LADDER").to.not.match(regExp);
             expect("Ladder").to.not.match(regExp);
         });
+
+        it("should create a RegExp from a string", () => {
+
+            expect(Walker.createRegExp(".").toString()).to.equal("/./i");
+        });
     });
 });
