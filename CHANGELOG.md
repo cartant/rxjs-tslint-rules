@@ -1,3 +1,10 @@
+<a name="3.13.0"></a>
+## [3.13.0](https://github.com/cartant/rxjs-tslint-rules/compare/v3.12.0...v3.13.0) (2018-02-19)
+
+### Features
+
+* Added options for the `rxjs-finnish` rule. ([d249119](https://github.com/cartant/rxjs-tslint-rules/commit/d249119))
+
 <a name="3.12.0"></a>
 ## [3.12.0](https://github.com/cartant/rxjs-tslint-rules/compare/v3.11.1...v3.12.0) (2018-02-18)
 
