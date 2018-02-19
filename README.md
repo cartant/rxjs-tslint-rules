@@ -92,7 +92,7 @@ The package includes the following rules (none of which are enabled by default):
 
 <a name="rxjs-add"></a>
 
-#### `rxjs-add`
+#### rxjs-add
 
 The `rxjs-add` rule takes an optional object with the property `file`. This is the path of the module - relative to the `tsconfig.json` - that imports the patched observables and operators.
 
@@ -121,7 +121,7 @@ If the `file` option is not specified, patched observables and operators must be
 
 <a name="rxjs-finnish"></a>
 
-#### `rxjs-finnish`
+#### rxjs-finnish
 
 The `rxjs-finnish` rule takes an optional object with optional `functions`, `methods`, `parameters`, `properties` and `variables` properties.
 
@@ -146,7 +146,7 @@ For example, to enforce Finnish notation for variables only:
 
 <a name="rxjs-no-add"></a>
 
-#### `rxjs-no-add` and `rxjs-no-patched`
+#### rxjs-no-add and rxjs-no-patched
 
 The `rxjs-no-add` and `rxjs-no-patched` rules take an optional object with the optional properties `allowObservables` and `allowOperators`. The properties can be specified as booleans - to allow or disallow all observables or operators - or as arrays of strings - to allow or disallow a subset of observables or operators.
 
@@ -166,7 +166,7 @@ For example:
 
 <a name="rxjs-no-unsafe-switchmap"></a>
 
-#### `rxjs-no-unsafe-switchmap`
+#### rxjs-no-unsafe-switchmap
 
 The `rxjs-no-unsafe-switchmap` rule does its best to determine whether or not NgRx effects or `redux-observable` epics use the `switchMap` operator with actions for which it could be unsafe.
 
@@ -211,7 +211,7 @@ To disallow or warn about all uses of `switchMap` within effects or epics, use a
 
 ## Gotchas
 
-### `@angular/cli`
+### @angular/cli
 
 Angular's CLI runs TSLint three times:
 
@@ -245,7 +245,7 @@ With these changes, the rule should play nice with the CLI's running of TSLint. 
 
 If you experience difficulties in configuring the rules with an `@angular/cli`-generated application, there is an example in this repo of a working configuration. To see the configuration changes that were made to a vanilla CLI application, have a look at [this commit](https://github.com/cartant/rxjs-tslint-rules/commit/73872cc381765d2fcc9fc22cb686128b76dfd6fb).
 
-### `Observable.create`
+### Observable.create
 
 `Observable.create` is [declared as a `Function`](https://github.com/ReactiveX/rxjs/blob/5.3.1/src/Observable.ts#L46-L58), which means that its return type is `any`. This results in an observable that's not seen by the rules, as they use TypeScript's [TypeChecker](https://github.com/Microsoft/TypeScript/wiki/Using-the-Compiler-API#using-the-type-checker) to determine whether or not a call involves an observable.
 

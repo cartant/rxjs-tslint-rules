@@ -32,7 +32,7 @@ The package includes the following rules (none of which are enabled by default):
 
 <a name="rxjs-add"></a>
 
-#### `rxjs-add`
+#### rxjs-add
 
 The `rxjs-add` rule takes an optional object with the property `file`. This is the path of the module - relative to the `tsconfig.json` - that imports the patched observables and operators.
 
@@ -61,7 +61,7 @@ If the `file` option is not specified, patched observables and operators must be
 
 <a name="rxjs-finnish"></a>
 
-#### `rxjs-finnish`
+#### rxjs-finnish
 
 The `rxjs-finnish` rule takes an optional object with optional `functions`, `methods`, `parameters`, `properties` and `variables` properties.
 
@@ -86,7 +86,7 @@ For example, to enforce Finnish notation for variables only:
 
 <a name="rxjs-no-add"></a>
 
-#### `rxjs-no-add` and `rxjs-no-patched`
+#### rxjs-no-add and rxjs-no-patched
 
 The `rxjs-no-add` and `rxjs-no-patched` rules take an optional object with the optional properties `allowObservables` and `allowOperators`. The properties can be specified as booleans - to allow or disallow all observables or operators - or as arrays of strings - to allow or disallow a subset of observables or operators.
 
@@ -106,7 +106,7 @@ For example:
 
 <a name="rxjs-no-unsafe-switchmap"></a>
 
-#### `rxjs-no-unsafe-switchmap`
+#### rxjs-no-unsafe-switchmap
 
 The `rxjs-no-unsafe-switchmap` rule does its best to determine whether or not NgRx effects or `redux-observable` epics use the `switchMap` operator with actions for which it could be unsafe.
 
