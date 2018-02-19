@@ -66,6 +66,8 @@ Update your `tslint.json` file to extend this package:
 
 ### Rules
 
+**WARNING**: Before configuring any of the following rules, you should ensure that TSLint's `no-unused-variable` is **not** enabled in your configuration (or in any configuration that you extend). The rule [has caused problems in the past](https://github.com/cartant/rxjs-tslint-rules/issues/4) - as it leaves the TypeScript program in an unstable state - and has a [significant number of still-open issues](https://github.com/palantir/tslint/search?q=no-unused-variable&type=Issues&utf8=%E2%9C%93).
+
 The package includes the following rules (none of which are enabled by default):
 
 | Rule | Description | Options |
