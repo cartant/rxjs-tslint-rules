@@ -1,3 +1,10 @@
+<a name="3.13.1"></a>
+## [3.13.1](https://github.com/cartant/rxjs-tslint-rules/compare/v3.13.0...v3.13.1) (2018-02-19)
+
+### Docs
+
+* Added a warning regarding TSLint's `no-unused-variable` rule. ([44fa739](https://github.com/cartant/rxjs-tslint-rules/commit/44fa739))
+
 <a name="3.13.0"></a>
 ## [3.13.0](https://github.com/cartant/rxjs-tslint-rules/compare/v3.12.0...v3.13.0) (2018-02-19)
 
