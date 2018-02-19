@@ -69,6 +69,46 @@ describe("fixtures", function (): void {
                 expect(result).to.have.property("errorCount", 1);
                 result.failures.forEach(failure => expect(failure).to.have.property("ruleName", "rxjs-finnish"));
             });
+
+            it("should support not enforcing functions", () => {
+
+                const result = lint("finnish-without-$", "tslint-no-functions.json");
+
+                expect(result).to.have.property("errorCount", 18);
+                result.failures.forEach(failure => expect(failure).to.have.property("ruleName", "rxjs-finnish"));
+            });
+
+            it("should support not enforcing methods", () => {
+
+                const result = lint("finnish-without-$", "tslint-no-methods.json");
+
+                expect(result).to.have.property("errorCount", 17);
+                result.failures.forEach(failure => expect(failure).to.have.property("ruleName", "rxjs-finnish"));
+            });
+
+            it("should support not enforcing parameters", () => {
+
+                const result = lint("finnish-without-$", "tslint-no-parameters.json");
+
+                expect(result).to.have.property("errorCount", 12);
+                result.failures.forEach(failure => expect(failure).to.have.property("ruleName", "rxjs-finnish"));
+            });
+
+            it("should support not enforcing properties", () => {
+
+                const result = lint("finnish-without-$", "tslint-no-properties.json");
+
+                expect(result).to.have.property("errorCount", 12);
+                result.failures.forEach(failure => expect(failure).to.have.property("ruleName", "rxjs-finnish"));
+            });
+
+            it("should support not enforcing variables", () => {
+
+                const result = lint("finnish-without-$", "tslint-no-variables.json");
+
+                expect(result).to.have.property("errorCount", 15);
+                result.failures.forEach(failure => expect(failure).to.have.property("ruleName", "rxjs-finnish"));
+            });
         });
 
         describe("no-finnish-with-$", () => {

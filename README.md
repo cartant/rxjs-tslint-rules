@@ -71,7 +71,7 @@ The package includes the following rules (none of which are enabled by default):
 | Rule | Description | Options |
 | --- | --- | --- |
 | `rxjs-add` | Enforces the importation of patched observables and operators used in the module. | [See below](#rxjs-add) |
-| `rxjs-finnish` | Enforces the use of [Finnish notation](https://medium.com/@benlesh/observables-and-finnish-notation-df8356ed1c9b). | None |
+| `rxjs-finnish` | Enforces the use of [Finnish notation](https://medium.com/@benlesh/observables-and-finnish-notation-df8356ed1c9b). | [See below](#rxjs-finnish) |
 | `rxjs-no-add` | Disallows the importation of patched observables and operators. | [See below](#rxjs-no-add) |
 | `rxjs-no-create` | Disallows the calling of `Observable.create`. Useful as a warning. | None |
 | `rxjs-no-deep-operators` | Disallows deep importation from 'rxjs/operators'. Deep imports won't be in available in RxJS v6. | None |
@@ -118,6 +118,31 @@ If `file` is specified, the `allowElsewhere` and `allowUnused` options can be us
 Note that there is no `file` option for the `rxjs-no-unused-add` rule, so that rule should not be used in conjunction with the `rxjs-add` rule - if the `file` option is specified for the latter. Use the `rxjs-add` rule's `allowUnused` option instead.
 
 If the `file` option is not specified, patched observables and operators must be imported in the modules in which they are used.
+
+<a name="rxjs-finnish"></a>
+
+#### `rxjs-finnish`
+
+The `rxjs-finnish` rule takes an optional object with optional `functions`, `methods`, `parameters`, `properties` and `variables` properties.
+
+The properies are booleans and determine whether or not Finnish notation is enforced. All properties default to `true`.
+
+For example, to enforce Finnish notation for variables only:
+
+```json
+"rules": {
+  "rxjs-finnish": {
+    "options": [{
+      "functions": false,
+      "methods": false,
+      "parameters": false,
+      "properties": false,
+      "variables": true
+    }],
+    "severity": "error"
+  }
+}
+```
 
 <a name="rxjs-no-add"></a>
 
