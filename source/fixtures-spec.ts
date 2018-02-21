@@ -201,6 +201,17 @@ describe("fixtures", function (): void {
             });
         });
 
+        describe("deep-operators", () => {
+
+            it("should effect 'rxjs-deep-operators' errors", () => {
+
+                const result = lint("deep-operators", "tslint.json");
+
+                expect(result).to.have.property("errorCount", 1);
+                result.failures.forEach(failure => expect(failure).to.have.property("ruleName", "rxjs-deep-operators"));
+            });
+        });
+
         describe("elsewhere-with-file", () => {
 
             it("should effect an 'rxjs-add' error", () => {
