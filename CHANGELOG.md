@@ -1,3 +1,10 @@
+<a name="3.14.0"></a>
+## [3.14.0](https://github.com/cartant/rxjs-tslint-rules/compare/v3.13.1...v3.14.0) (2018-02-21)
+
+### Features
+
+* Added an `rxjs-deep-operators` rule to enforce deep operator imports (e.g. `rxjs/operators/map`) for situations in which tree shaking is not available. ([95cc17c](https://github.com/cartant/rxjs-tslint-rules/commit/95cc17c))
+
 <a name="3.13.1"></a>
 ## [3.13.1](https://github.com/cartant/rxjs-tslint-rules/compare/v3.13.0...v3.13.1) (2018-02-19)
 
