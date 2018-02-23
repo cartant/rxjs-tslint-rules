@@ -11,7 +11,7 @@
 
 ### What is it?
 
-`rxjs-tslint-rules` is small set of TSLint rules to:
+`rxjs-tslint-rules` is set of TSLint rules to:
 
 * help manage projects that use `rxjs/add/...` imports;
 * enforce or disallow [Finnish notation](https://medium.com/@benlesh/observables-and-finnish-notation-df8356ed1c9b); and
@@ -177,9 +177,9 @@ For example, it would be unsafe to use `switchMap` in an effect or epic that del
 
 The rule takes an optional object with optional `allow`, `disallow` and `observable` properties. The properties can be specifed as regular expression strings or as arrays of words.
 
-If the `allow` option is specified, any actions that do not match the regular expression or do not contain one the specified words will effect an error if `switchMap` is used.
+If the `allow` option is specified, actions that do not match the regular expression or do not contain any of the specified words will effect an error if `switchMap` is used.
 
-If the `disallow` option is specified, any actions that do match the regular expression or do contain one the specified words will effect an error if `switchMap` is used.
+If the `disallow` option is specified, actions that match the regular expression or contain one of the specified words will effect an error if `switchMap` is used.
 
 If neither option is specifed, the rule will default to a set of words are are likely to be present in any actions for which `switchMap` is unsafe.
 
