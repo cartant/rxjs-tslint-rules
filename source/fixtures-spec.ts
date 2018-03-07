@@ -167,6 +167,17 @@ describe("fixtures", function (): void {
                 result.failures.forEach(failure => expect(failure).to.have.property("ruleName", "rxjs-no-tap"));
             });
         });
+
+        describe("throw-error", () => {
+
+            it("should effect 'rxjs-throw-error' errors", () => {
+
+                const result = lint("throw-error", "tslint.json");
+
+                expect(result).to.have.property("errorCount", 2);
+                result.failures.forEach(failure => expect(failure).to.have.property("ruleName", "rxjs-throw-error"));
+            });
+        });
     });
 
     describe("import-related rules", () => {
