@@ -1,3 +1,10 @@
+<a name="3.15.0"></a>
+## [3.15.0](https://github.com/cartant/rxjs-tslint-rules/compare/v3.14.0...v3.15.0) (2018-03-07)
+
+### Features
+
+* Added an `rxjs-throw-error` rule to disallow the use of non-`Error` values with `error` notifications. ([26beb0e](https://github.com/cartant/rxjs-tslint-rules/commit/26beb0e))
+
 <a name="3.14.0"></a>
 ## [3.14.0](https://github.com/cartant/rxjs-tslint-rules/compare/v3.13.1...v3.14.0) (2018-02-21)
 
