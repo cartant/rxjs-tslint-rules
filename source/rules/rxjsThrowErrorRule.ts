@@ -13,7 +13,7 @@ import { couldBeType, isReferenceType } from "../support/util";
 export class Rule extends Lint.Rules.TypedRule {
 
     public static metadata: Lint.IRuleMetadata = {
-        description: "Disallows the throwing of non-Error values.",
+        description: "Disallows the passing of non-Error values for error notifications.",
         options: null,
         optionsDescription: "Not configurable.",
         requiresTypeInfo: true,
@@ -22,7 +22,7 @@ export class Rule extends Lint.Rules.TypedRule {
         typescriptOnly: true
     };
 
-    public static FAILURE_STRING = "Throwing non-Error values is forbidden";
+    public static FAILURE_STRING = "Passing non-Error values is forbidden";
 
     public applyWithProgram(sourceFile: ts.SourceFile, program: ts.Program): Lint.RuleFailure[] {
 
