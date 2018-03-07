@@ -34,20 +34,31 @@ export class Walker extends Lint.ProgramAwareRuleWalker {
 
     protected visitCallExpression(node: ts.CallExpression): void {
 
-        node.forEachChild((child) => {
+        const { expression } = node;
+        if (tsutils.isPropertyAccessExpression(expression)) {
 
-            if (tsutils.isPropertyAccessExpression(child)) {
+            const name = expression.name.getText();
+            const typeChecker = this.getTypeChecker();
+            const type = typeChecker.getTypeAtLocation(expression.expression);
 
-                const name = child.name.getText();
-                const typeChecker = this.getTypeChecker();
-                const type = typeChecker.getTypeAtLocation(child.expression);
-
-                if (((name === "value") || (name === "getValue")) && isReferenceType(type) && couldBeType(type.target, "BehaviorSubject")) {
-                    this.addFailureAtNode(child.name, Rule.FAILURE_STRING);
-                }
+            if ((name === "getValue") && isReferenceType(type) && couldBeType(type.target, "BehaviorSubject")) {
+                this.addFailureAtNode(expression.name, Rule.FAILURE_STRING);
             }
-        });
+        }
 
         super.visitCallExpression(node);
+    }
+
+    protected visitPropertyAccessExpression(node: ts.PropertyAccessExpression): void {
+
+        const name = node.name.getText();
+        const typeChecker = this.getTypeChecker();
+        const type = typeChecker.getTypeAtLocation(node.expression);
+
+        if ((name === "value") && isReferenceType(type) && couldBeType(type.target, "BehaviorSubject")) {
+            this.addFailureAtNode(node.name, Rule.FAILURE_STRING);
+        }
+
+        super.visitPropertyAccessExpression(node);
     }
 }

@@ -35,24 +35,22 @@ export class Walker extends Lint.ProgramAwareRuleWalker {
 
     protected visitCallExpression(node: ts.CallExpression): void {
 
-        node.forEachChild((child) => {
+        const { expression } = node;
+        if (tsutils.isPropertyAccessExpression(expression)) {
 
-            if (tsutils.isPropertyAccessExpression(child)) {
+            const name = expression.name.getText();
+            const typeChecker = this.getTypeChecker();
+            const type = typeChecker.getTypeAtLocation(expression.expression);
 
-                const name = child.name.getText();
-                const typeChecker = this.getTypeChecker();
-                const type = typeChecker.getTypeAtLocation(child.expression);
-
-                if ((name === "subscribe") &&
-                    isReferenceType(type) &&
-                    couldBeType(type, "Observable") &&
-                    (node.arguments.length && this.nodeIsLikelyAFunction(node.arguments[0])) &&
-                    node.arguments.length < 2
-                ) {
-                    this.addFailureAtNode(child.name, Rule.FAILURE_STRING);
-                }
+            if ((name === "subscribe") &&
+                isReferenceType(type) &&
+                couldBeType(type, "Observable") &&
+                (node.arguments.length && this.nodeIsLikelyAFunction(node.arguments[0])) &&
+                node.arguments.length < 2
+            ) {
+                this.addFailureAtNode(expression.name, Rule.FAILURE_STRING);
             }
-        });
+        }
 
         super.visitCallExpression(node);
     }

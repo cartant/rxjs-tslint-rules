@@ -5,6 +5,7 @@
 
 import * as Lint from "tslint";
 import * as ts from "typescript";
+import * as tsutils from "tsutils";
 import { AddedWalker } from "./added-walker";
 import { knownObservables, knownOperators, knownPrototypeMethods, knownStaticMethods } from "./knowns";
 import { couldBeType, isReferenceType } from "./util";
@@ -18,32 +19,30 @@ export class UsedWalker extends AddedWalker {
 
     protected visitCallExpression(node: ts.CallExpression): void {
 
-        node.forEachChild((child) => {
+        const { expression } = node;
 
-            if (child.kind === ts.SyntaxKind.PropertyAccessExpression) {
+        if (tsutils.isPropertyAccessExpression(expression)) {
 
-                const propertyAccessExpression = child as ts.PropertyAccessExpression;
-                const name = propertyAccessExpression.name.getText();
-                const typeChecker = this.getTypeChecker();
-                const type = typeChecker.getTypeAtLocation(propertyAccessExpression.expression);
+            const name = expression.name.getText();
+            const typeChecker = this.getTypeChecker();
+            const type = typeChecker.getTypeAtLocation(expression.expression);
 
-                if (isReferenceType(type)) {
-                    if (knownOperators.hasOwnProperty(name) && couldBeType(type.target, "Observable")) {
-                        const actual = knownOperators[name];
-                        UsedWalker.add(this.usedOperators, actual, propertyAccessExpression.name);
-                    } else if (knownPrototypeMethods.hasOwnProperty(name) && couldBeType(type.target, "Observable")) {
-                        UsedWalker.add(this.usedPrototypeMethods, name, propertyAccessExpression.name);
-                    }
-                } else {
-                    if (knownObservables.hasOwnProperty(name) && couldBeType(type, "Observable")) {
-                        const actual = knownObservables[name];
-                        UsedWalker.add(this.usedObservables, actual, propertyAccessExpression.name);
-                    } else if (knownStaticMethods.hasOwnProperty(name) && couldBeType(type, "Observable")) {
-                        UsedWalker.add(this.usedStaticMethods, name, propertyAccessExpression.name);
-                    }
+            if (isReferenceType(type)) {
+                if (knownOperators.hasOwnProperty(name) && couldBeType(type.target, "Observable")) {
+                    const actual = knownOperators[name];
+                    UsedWalker.add(this.usedOperators, actual, expression.name);
+                } else if (knownPrototypeMethods.hasOwnProperty(name) && couldBeType(type.target, "Observable")) {
+                    UsedWalker.add(this.usedPrototypeMethods, name, expression.name);
+                }
+            } else {
+                if (knownObservables.hasOwnProperty(name) && couldBeType(type, "Observable")) {
+                    const actual = knownObservables[name];
+                    UsedWalker.add(this.usedObservables, actual, expression.name);
+                } else if (knownStaticMethods.hasOwnProperty(name) && couldBeType(type, "Observable")) {
+                    UsedWalker.add(this.usedStaticMethods, name, expression.name);
                 }
             }
-        });
+        }
 
         super.visitCallExpression(node);
     }

@@ -110,36 +110,35 @@ export class Walker extends Lint.ProgramAwareRuleWalker {
 
     protected visitCallExpression(node: ts.CallExpression): void {
 
-        node.forEachChild((child) => {
+        const { expression: propertyAccessExpression } = node;
+        if (tsutils.isPropertyAccessExpression(propertyAccessExpression)) {
 
-            if (tsutils.isPropertyAccessExpression(child)) {
-                const { expression } = child;
-                if (tsutils.isIdentifier(expression)) {
+            const { expression: identifier } = propertyAccessExpression;
+            if (tsutils.isIdentifier(identifier)) {
 
-                    const propertyName = child.name.getText();
-                    const expressionText = expression.getText();
-                    const typeChecker = this.getTypeChecker();
-                    const type = typeChecker.getTypeAtLocation(expression);
+                const propertyName = propertyAccessExpression.name.getText();
+                const identifierText = identifier.getText();
+                const typeChecker = this.getTypeChecker();
+                const type = typeChecker.getTypeAtLocation(identifier);
 
-                    if (isReferenceType(type) &&
-                        this.observableRegExp.test(expressionText) &&
-                        Walker.METHODS_REGEXP.test(propertyName) &&
-                        couldBeType(type.target, "Observable")) {
+                if (isReferenceType(type) &&
+                    this.observableRegExp.test(identifierText) &&
+                    Walker.METHODS_REGEXP.test(propertyName) &&
+                    couldBeType(type.target, "Observable")) {
 
-                        switch (propertyName) {
-                        case "ofType":
-                            this.walkPatchedTypes(node);
-                            break;
-                        case "pipe":
-                            this.walkPipedTypes(node);
-                            break;
-                        default:
-                            break;
-                        }
+                    switch (propertyName) {
+                    case "ofType":
+                        this.walkPatchedTypes(node);
+                        break;
+                    case "pipe":
+                        this.walkPipedTypes(node);
+                        break;
+                    default:
+                        break;
                     }
                 }
             }
-        });
+        }
 
         super.visitCallExpression(node);
     }
