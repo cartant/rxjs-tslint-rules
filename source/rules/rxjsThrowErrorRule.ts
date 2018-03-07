@@ -13,7 +13,7 @@ import { couldBeType, isReferenceType } from "../support/util";
 export class Rule extends Lint.Rules.TypedRule {
 
     public static metadata: Lint.IRuleMetadata = {
-        description: "Disallows the passing of non-Error values for error notifications.",
+        description: "Enforces the passing of Error values to error notifications.",
         options: null,
         optionsDescription: "Not configurable.",
         requiresTypeInfo: true,
