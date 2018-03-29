@@ -168,6 +168,75 @@ describe("fixtures", function (): void {
             });
         });
 
+        describe.only("no-unsafe-scope", () => {
+
+            it("should effect 'rxjs-no-unsafe-scope' errors", () => {
+
+                const result = lint("no-unsafe-scope", "tslint.json");
+
+                expect(result).to.have.property("errorCount", 2);
+                result.failures.forEach(failure => expect(failure).to.have.property("ruleName", "rxjs-no-unsafe-scope"));
+            });
+
+            it("should effect 'rxjs-no-unsafe-scope' errors for non-arrow functions", () => {
+
+                const result = lint("no-unsafe-scope", "tslint.json", "fixture-functions.ts");
+
+                expect(result).to.have.property("errorCount", 2);
+                result.failures.forEach(failure => expect(failure).to.have.property("ruleName", "rxjs-no-unsafe-scope"));
+            });
+
+            it("should not effect 'rxjs-no-unsafe-scope' errors for safe usage", () => {
+
+                const result = lint("no-unsafe-scope", "tslint.json", "fixture-safe.ts");
+
+                expect(result).to.have.property("errorCount", 0);
+            });
+
+            it("should not effect 'rxjs-no-unsafe-scope' errors for do/tap", () => {
+
+                const result = lint("no-unsafe-scope", "tslint.json", "fixture-do.ts");
+
+                expect(result).to.have.property("errorCount", 0);
+            });
+
+            it("should not effect 'rxjs-no-unsafe-scope' errors for globals", () => {
+
+                const result = lint("no-unsafe-scope", "tslint.json", "fixture-globals.ts");
+
+                expect(result).to.have.property("errorCount", 0);
+            });
+
+            it("should not effect 'rxjs-no-unsafe-scope' errors for Math", () => {
+
+                const result = lint("no-unsafe-scope", "tslint.json", "fixture-math.ts");
+
+                expect(result).to.have.property("errorCount", 0);
+            });
+
+            it("should not effect 'rxjs-no-unsafe-scope' errors for constants", () => {
+
+                const result = lint("no-unsafe-scope", "tslint.json", "fixture-constants.ts");
+
+                expect(result).to.have.property("errorCount", 0);
+            });
+
+            it("should not effect 'rxjs-no-unsafe-scope' errors for enums", () => {
+
+                const result = lint("no-unsafe-scope", "tslint.json", "fixture-enums.ts");
+
+                expect(result).to.have.property("errorCount", 0);
+            });
+
+            it("should effect 'rxjs-no-unsafe-scope' errors for this", () => {
+
+                const result = lint("no-unsafe-scope", "tslint.json", "fixture-this.ts");
+
+                expect(result).to.have.property("errorCount", 2);
+                result.failures.forEach(failure => expect(failure).to.have.property("ruleName", "rxjs-no-unsafe-scope"));
+            });
+        });
+
         describe("throw-error", () => {
 
             it("should effect 'rxjs-throw-error' errors", () => {
