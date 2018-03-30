@@ -13,7 +13,7 @@ import { couldBeType } from "../support/util";
 export class Rule extends Lint.Rules.TypedRule {
 
     public static metadata: Lint.IRuleMetadata = {
-        description: "Disallows unsafe scopes.",
+        description: "Disallows the use of variables/properties from unsafe/outer scopes in operator callbacks.",
         options: null,
         optionsDescription: "Not configurable.",
         requiresTypeInfo: true,
