@@ -168,7 +168,7 @@ describe("fixtures", function (): void {
             });
         });
 
-        describe.only("no-unsafe-scope", () => {
+        describe("no-unsafe-scope", () => {
 
             it("should effect 'rxjs-no-unsafe-scope' errors", () => {
 
