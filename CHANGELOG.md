@@ -1,3 +1,10 @@
+<a name="3.16.0"></a>
+## [3.16.0](https://github.com/cartant/rxjs-tslint-rules/compare/v3.15.0...v3.16.0) (2018-03-30)
+
+### Features
+
+* Added an `rxjs-no-unsafe-scope` rule to disallow the use of variables/properties in unsafe/outer scopes. ([da22b6d](https://github.com/cartant/rxjs-tslint-rules/commit/da22b6d))
+
 <a name="3.15.0"></a>
 ## [3.15.0](https://github.com/cartant/rxjs-tslint-rules/compare/v3.14.0...v3.15.0) (2018-03-07)
 
