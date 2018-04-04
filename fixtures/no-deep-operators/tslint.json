@@ -1,8 +1,0 @@
-{
-  "defaultSeverity": "error",
-  "jsRules": {},
-  "rules": {
-    "rxjs-no-deep-operators": { "severity": "error" }
-  },
-  "rulesDirectory": "../../build/rules"
-}

@@ -1,8 +1,0 @@
-{
-  "defaultSeverity": "error",
-  "jsRules": {},
-  "rules": {
-    "rxjs-no-unsafe-switchmap": { "severity": "error" }
-  },
-  "rulesDirectory": "../../build/rules"
-}

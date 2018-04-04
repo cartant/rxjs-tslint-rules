@@ -10,13 +10,20 @@ import * as resolve from "resolve";
 let peerDir: string | undefined = undefined;
 let peerVersion: string | undefined = undefined;
 
-try {
-    const entry = resolve.sync("rxjs");
-    peerDir = path.dirname(entry);
-    const root = peerDir.replace(/node_modules[\/\\]rxjs[\/\\](.*)$/, (match) => match);
-    peerVersion = require(path.join(root, "package.json")).version;
-} catch (error) {
-    warn();
+const fixturesDir = process.env["FIXTURES_DIR"];
+if (fixturesDir) {
+    peerDir = path.join(path.resolve(fixturesDir), "node_modules/rxjs");
+    peerVersion = require(path.join(peerDir, "package.json")).version;
+} else {
+    try {
+        const entry = resolve.sync("rxjs");
+        peerDir = path.dirname(entry);
+        const root = peerDir.replace(/node_modules[\/\\]rxjs[\/\\](.*)$/, (match) => match);
+        const pack = require(path.join(root, "package.json"));
+        peerVersion = pack.version;
+    } catch (error) {
+        warn();
+    }
 }
 
 export const dir = peerDir;
