@@ -28,6 +28,7 @@ describe("fixtures", function (): void {
 
         testFinnishRules();
         testSubjectRules();
+        testSubscriptionRules();
     }
 });
 
@@ -796,18 +797,12 @@ function testSubscriptionRules(): void {
                 expect(result).to.have.property("errorCount", 1);
                 expect(result.failures[0]).to.have.property("ruleName", "rxjs-no-ignored-error");
             });
-        });
-
-        describe("subscription-without-error-handler", () => {
 
             it("should effect an 'rxjs-no-ignored-error' error on Observable's ancestors", () => {
                 const result = lint("subscription-without-error-handler", "tslint.json", "fixture-subject.ts");
                 expect(result).to.have.property("errorCount", 1);
                 expect(result.failures[0]).to.have.property("ruleName", "rxjs-no-ignored-error");
             });
-        });
-
-        describe("subscription-without-error-handler", () => {
 
             it("should effect an 'rxjs-no-ignored-error' error even if first parameter is a funciton variable", () => {
                 const result = lint("subscription-without-error-handler", "tslint.json", "fixture-with-parameter.ts");
