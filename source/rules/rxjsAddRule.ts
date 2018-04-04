@@ -163,9 +163,9 @@ class Walker extends UsedWalker {
 
     private findSourceFile(file: string): ts.SourceFile {
 
-        let message = "Cannot find 'tsconfig.json'";
         const program = this.getProgram();
         const rootFiles = program.getRootFileNames();
+        const fileDirCandidates = new Set<string>();
 
         for (let i = 0, length = rootFiles.length; i < length; ++i) {
 
@@ -173,7 +173,7 @@ class Walker extends UsedWalker {
                 this.normalizeFile(path.dirname(rootFiles[i])),
                 ts.sys.fileExists
             );
-            if (configFile) {
+            if (configFile && !fileDirCandidates.has(path.dirname(configFile))) {
                 const resolvedFile = this.normalizeFile(
                     path.resolve(path.dirname(configFile), file)
                 );
@@ -181,13 +181,17 @@ class Walker extends UsedWalker {
                 if (sourceFile) {
                     return sourceFile;
                 } else {
-                    message = `Cannot find '${resolvedFile}' in the compiled program. Has it been imported?`;
-                    break;
+                    fileDirCandidates.add(path.dirname(configFile));
                 }
             }
         }
 
-        throw new Error(message);
+        if (fileDirCandidates.size === 0) {
+            throw new Error("Cannot find 'tsconfig.json'");
+        } else {
+            throw new Error(`Cannot find an import of '${file}' from any of these locations: `
+                + `[${Array.from(fileDirCandidates.values()).join(", ")}]. Has it been imported?`);
+        }
     }
 
     private normalizeFile(file: string): string {
