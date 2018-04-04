@@ -6,6 +6,7 @@
 import * as fs from "fs";
 import * as path from "path";
 import * as resolve from "resolve";
+import * as semver from "semver";
 
 let peerDir: string | undefined = undefined;
 let peerVersion: string | undefined = undefined;
@@ -28,6 +29,8 @@ if (fixturesDir) {
 
 export const dir = peerDir;
 export const version = peerVersion;
+export const v5 = peerVersion && semver.satisfies(peerVersion, "^5.0.0");
+export const v6 = peerVersion && semver.satisfies(peerVersion, "^6.0.0-rc.0");
 
 export function warn(dir: string = ""): void {
     /*tslint:disable-next-line:no-console*/

@@ -7,6 +7,7 @@
 import * as Lint from "tslint";
 import * as path from "path";
 import * as ts from "typescript";
+import * as peer from "../support/peer";
 
 import { AddedWalker } from "../support/added-walker";
 import { UsedWalker } from "../support/used-walker";
@@ -14,6 +15,7 @@ import { UsedWalker } from "../support/used-walker";
 export class Rule extends Lint.Rules.TypedRule {
 
     public static metadata: Lint.IRuleMetadata = {
+        deprecationMessage: peer.v6 ? "Rule not needed for v6." : undefined,
         description: "Enforces the importation of patched observables and operators used in the module.",
         options: {
             properties: {
