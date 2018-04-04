@@ -8,7 +8,7 @@ import * as fs from "fs";
 import { Configuration, Linter, LintResult } from "tslint";
 import * as ts from "typescript";
 
-if (process.env["FIXTURES_DIR"]) {
+if (process.env["RXJS_TSLINT_FIXTURES_DIR"]) {
 
     describe("fixtures", function (): void {
 
@@ -786,7 +786,7 @@ if (process.env["FIXTURES_DIR"]) {
             });
         }
 
-        if (/v5$/.test(process.env["FIXTURES_DIR"])) {
+        if (/v5$/.test(process.env["RXJS_TSLINT_FIXTURES_DIR"])) {
 
             effectTests();
             finnishTests();
@@ -797,14 +797,14 @@ if (process.env["FIXTURES_DIR"]) {
             subscriptionTests();
         }
 
-        if (/v6$/.test(process.env["FIXTURES_DIR"])) {
+        if (/v6$/.test(process.env["RXJS_TSLINT_FIXTURES_DIR"])) {
 
             finnishTests();
         }
 
         function lint(dir: string, configFileName?: string, fixtureFileName?: string): LintResult {
 
-            const rootDir = process.env["FIXTURES_DIR"];
+            const rootDir = process.env["RXJS_TSLINT_FIXTURES_DIR"];
             const fixtureDir = `${rootDir}/${dir}`;
             const fileName = `${fixtureDir}/${fixtureFileName || "fixture.ts"}`;
             const content = fs.readFileSync(fileName, "utf8");
