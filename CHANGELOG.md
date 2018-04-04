@@ -1,3 +1,10 @@
+<a name="3.16.1"></a>
+## [3.16.1](https://github.com/cartant/rxjs-tslint-rules/compare/v3.16.0...v3.16.1) (2018-04-05)
+
+### Fixes
+
+* Fix `tsconfig.json`-based source file discovery when packages within `node_modules` themselves contain `tsconfig.json` files. ([79bc163](https://github.com/cartant/rxjs-tslint-rules/commit/79bc163))
+
 <a name="3.16.0"></a>
 ## [3.16.0](https://github.com/cartant/rxjs-tslint-rules/compare/v3.15.0...v3.16.0) (2018-03-30)
 
