@@ -1,4 +1,4 @@
-import { Observable } from "rxjs";
+import { Observable } from "rxjs/Observable";
 import { of } from "rxjs/observable/of";
 import { map } from "rxjs/operators/map";
 import { mergeMap } from "rxjs/operators/mergeMap";

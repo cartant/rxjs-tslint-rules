@@ -8,51 +8,19 @@ import * as fs from "fs";
 import { Configuration, Linter, LintResult } from "tslint";
 import * as ts from "typescript";
 
-describe("fixtures", function (): void {
+const fixturesDir = process.env["RXJS_TSLINT_FIXTURES_DIR"] || "";
+const match = fixturesDir.match(/fixtures\/(v\d)/);
+const fixtureVersion = match ? match[1] : "";
+
+describe(`${fixtureVersion} fixtures`, function (): void {
+
+    if (!fixturesDir || !fixtureVersion) {
+        return;
+    }
 
     /*tslint:disable-next-line:no-invalid-this*/
     this.timeout(5000);
-
-    if (/v5$/.test(process.env["RXJS_TSLINT_FIXTURES_DIR"])) {
-
-        testEffectRules();
-        testFinnishRules();
-        testGeneralRules();
-        testImportRules();
-        testIssues();
-        testSubjectRules();
-        testSubscriptionRules();
-    }
-
-    if (/v6$/.test(process.env["RXJS_TSLINT_FIXTURES_DIR"])) {
-
-        testFinnishRules();
-        testSubjectRules();
-        testSubscriptionRules();
-    }
-});
-
-function lint(dir: string, configFileName?: string, fixtureFileName?: string): LintResult {
-
-    const rootDir = process.env["RXJS_TSLINT_FIXTURES_DIR"];
-    const fixtureDir = `${rootDir}/${dir}`;
-    const fileName = `${fixtureDir}/${fixtureFileName || "fixture.ts"}`;
-    const content = fs.readFileSync(fileName, "utf8");
-    const program = Linter.createProgram(`${fixtureDir}/tsconfig.json`);
-    const linter = new Linter({ fix: false }, program);
-
-    const configuration = Configuration.findConfiguration(
-        configFileName ?
-            `${fixtureDir}/${configFileName}` :
-            `${rootDir}/tslint.json`,
-        fileName
-    ).results;
-    linter.lint(fileName, content, configuration);
-    return linter.getResult();
-}
-
-function testEffectRules(): void {
-
+    /*
     describe("effect/epic-related rules", () => {
 
         describe("no-unsafe-switchmap", () => {
@@ -79,10 +47,7 @@ function testEffectRules(): void {
             });
         });
     });
-}
-
-function testFinnishRules(): void {
-
+    */
     describe("finnish-related rules", () => {
 
         describe("finnish-with-$", () => {
@@ -175,9 +140,6 @@ function testFinnishRules(): void {
             });
         });
     });
-}
-
-function testGeneralRules(): void {
 
     describe("general rules", () => {
 
@@ -192,16 +154,19 @@ function testGeneralRules(): void {
             });
         });
 
-        describe("no-do", () => {
+        if (fixtureVersion === "v5") {
 
-            it("should effect 'rxjs-no-do' errors", () => {
+            describe("no-do", () => {
 
-                const result = lint("no-do", "tslint.json");
+                it("should effect 'rxjs-no-do' errors", () => {
 
-                expect(result).to.have.property("errorCount", 4);
-                result.failures.forEach(failure => expect(failure).to.have.property("ruleName", "rxjs-no-do"));
+                    const result = lint("no-do", "tslint.json");
+
+                    expect(result).to.have.property("errorCount", 4);
+                    result.failures.forEach(failure => expect(failure).to.have.property("ruleName", "rxjs-no-do"));
+                });
             });
-        });
+        }
 
         describe("no-tap", () => {
 
@@ -220,7 +185,7 @@ function testGeneralRules(): void {
 
                 const result = lint("no-unsafe-scope", "tslint.json");
 
-                expect(result).to.have.property("errorCount", 2);
+                expect(result).to.have.property("errorCount", (fixtureVersion === "v5") ? 2 : 1);
                 result.failures.forEach(failure => expect(failure).to.have.property("ruleName", "rxjs-no-unsafe-scope"));
             });
 
@@ -228,7 +193,7 @@ function testGeneralRules(): void {
 
                 const result = lint("no-unsafe-scope", "tslint.json", "fixture-functions.ts");
 
-                expect(result).to.have.property("errorCount", 2);
+                expect(result).to.have.property("errorCount", (fixtureVersion === "v5") ? 2 : 1);
                 result.failures.forEach(failure => expect(failure).to.have.property("ruleName", "rxjs-no-unsafe-scope"));
             });
 
@@ -278,7 +243,7 @@ function testGeneralRules(): void {
 
                 const result = lint("no-unsafe-scope", "tslint.json", "fixture-this.ts");
 
-                expect(result).to.have.property("errorCount", 2);
+                expect(result).to.have.property("errorCount", (fixtureVersion === "v5") ? 2 : 1);
                 result.failures.forEach(failure => expect(failure).to.have.property("ruleName", "rxjs-no-unsafe-scope"));
             });
         });
@@ -289,411 +254,408 @@ function testGeneralRules(): void {
 
                 const result = lint("throw-error", "tslint.json");
 
-                expect(result).to.have.property("errorCount", 2);
+                expect(result).to.have.property("errorCount", (fixtureVersion === "v5") ? 2 : 1);
                 result.failures.forEach(failure => expect(failure).to.have.property("ruleName", "rxjs-throw-error"));
             });
         });
     });
-}
-
-function testImportRules(): void {
 
     describe("import-related rules", () => {
 
-        describe("custom-observable", () => {
+        if (fixtureVersion === "v5") {
 
-            it("should effect no errors", () => {
+            describe("custom-observable", () => {
 
-                const result = lint("custom-observable");
+                it("should effect no errors", () => {
 
-                expect(result).to.have.property("errorCount", 0);
+                    const result = lint("custom-observable");
+
+                    expect(result).to.have.property("errorCount", 0);
+                });
             });
-        });
 
-        describe("custom-operator", () => {
+            describe("custom-operator", () => {
 
-            it("should effect no errors", () => {
+                it("should effect no errors", () => {
 
-                const result = lint("custom-operator");
+                    const result = lint("custom-operator");
 
-                expect(result).to.have.property("errorCount", 0);
+                    expect(result).to.have.property("errorCount", 0);
+                });
             });
-        });
 
-        describe("custom-source", () => {
+            describe("custom-source", () => {
 
-            it("should effect no errors", () => {
+                it("should effect no errors", () => {
 
-                const result = lint("custom-source");
+                    const result = lint("custom-source");
 
-                expect(result).to.have.property("errorCount", 0);
+                    expect(result).to.have.property("errorCount", 0);
+                });
             });
-        });
 
-        describe("deep-operators", () => {
+            describe("deep-operators", () => {
 
-            it("should effect 'rxjs-deep-operators' errors", () => {
+                it("should effect 'rxjs-deep-operators' errors", () => {
 
-                const result = lint("deep-operators", "tslint.json");
+                    const result = lint("deep-operators", "tslint.json");
 
-                expect(result).to.have.property("errorCount", 1);
-                result.failures.forEach(failure => expect(failure).to.have.property("ruleName", "rxjs-deep-operators"));
+                    expect(result).to.have.property("errorCount", 1);
+                    result.failures.forEach(failure => expect(failure).to.have.property("ruleName", "rxjs-deep-operators"));
+                });
             });
-        });
 
-        describe("elsewhere-with-file", () => {
+            describe("elsewhere-with-file", () => {
 
-            it("should effect an 'rxjs-add' error", () => {
+                it("should effect an 'rxjs-add' error", () => {
 
-                const result = lint("elsewhere-with-file", "tslint.json");
+                    const result = lint("elsewhere-with-file", "tslint.json");
 
-                expect(result).to.have.property("errorCount", 1);
-                expect(result.failures[0]).to.have.property("ruleName", "rxjs-add");
+                    expect(result).to.have.property("errorCount", 1);
+                    expect(result.failures[0]).to.have.property("ruleName", "rxjs-add");
+                });
             });
-        });
 
-        describe("elsewhere-with-file-allowed", () => {
+            describe("elsewhere-with-file-allowed", () => {
 
-            it("should not effect an 'rxjs-add' error", () => {
+                it("should not effect an 'rxjs-add' error", () => {
 
-                const result = lint("elsewhere-with-file-allowed", "tslint.json");
+                    const result = lint("elsewhere-with-file-allowed", "tslint.json");
 
-                expect(result).to.have.property("errorCount", 0);
+                    expect(result).to.have.property("errorCount", 0);
+                });
             });
-        });
 
-        describe("flat-map", () => {
+            describe("flat-map", () => {
 
-            it("should effect no errors", () => {
+                it("should effect no errors", () => {
 
-                const result = lint("flat-map");
+                    const result = lint("flat-map");
 
-                expect(result).to.have.property("errorCount", 0);
+                    expect(result).to.have.property("errorCount", 0);
+                });
             });
-        });
 
-        describe("import-wholesale", () => {
+            describe("import-wholesale", () => {
 
-            it("should effect 'rxjs-no-wholesale' errors", () => {
+                it("should effect 'rxjs-no-wholesale' errors", () => {
 
-                const result = lint("import-wholesale");
+                    const result = lint("import-wholesale");
 
-                expect(result).to.have.property("errorCount", 2);
-                expect(result.failures[0]).to.have.property("ruleName", "rxjs-no-wholesale");
-                expect(result.failures[1]).to.have.property("ruleName", "rxjs-no-wholesale");
+                    expect(result).to.have.property("errorCount", 2);
+                    expect(result.failures[0]).to.have.property("ruleName", "rxjs-no-wholesale");
+                    expect(result.failures[1]).to.have.property("ruleName", "rxjs-no-wholesale");
+                });
             });
-        });
 
-        describe("no-add", () => {
+            describe("no-add", () => {
 
-            it("should effect 'rxjs-no-add' errors", () => {
+                it("should effect 'rxjs-no-add' errors", () => {
 
-                const result = lint("no-add", "tslint.json");
+                    const result = lint("no-add", "tslint.json");
 
-                expect(result).to.have.property("errorCount", 1);
-                expect(result.failures[0]).to.have.property("ruleName", "rxjs-no-add");
+                    expect(result).to.have.property("errorCount", 1);
+                    expect(result.failures[0]).to.have.property("ruleName", "rxjs-no-add");
+                });
             });
-        });
 
-        describe("no-add-allow-all-observables", () => {
+            describe("no-add-allow-all-observables", () => {
 
-            it("should not effect an 'rxjs-no-add' error", () => {
+                it("should not effect an 'rxjs-no-add' error", () => {
 
-                const result = lint("no-add-allow-all-observables", "tslint.json");
+                    const result = lint("no-add-allow-all-observables", "tslint.json");
 
-                expect(result).to.have.property("errorCount", 0);
+                    expect(result).to.have.property("errorCount", 0);
+                });
             });
-        });
 
-        describe("no-add-allow-all-operators", () => {
+            describe("no-add-allow-all-operators", () => {
 
-            it("should not effect an 'rxjs-no-add' error", () => {
+                it("should not effect an 'rxjs-no-add' error", () => {
 
-                const result = lint("no-add-allow-all-observables", "tslint.json");
+                    const result = lint("no-add-allow-all-observables", "tslint.json");
 
-                expect(result).to.have.property("errorCount", 0);
+                    expect(result).to.have.property("errorCount", 0);
+                });
             });
-        });
 
-        describe("no-add-allow-some-observables", () => {
+            describe("no-add-allow-some-observables", () => {
 
-            it("should not effect an 'rxjs-no-add' error for allowed observable", () => {
+                it("should not effect an 'rxjs-no-add' error for allowed observable", () => {
 
-                const result = lint("no-add-allow-some-observables", "tslint.json");
+                    const result = lint("no-add-allow-some-observables", "tslint.json");
 
-                expect(result).to.have.property("errorCount", 1);
-                expect(result.failures[0]).to.have.property("ruleName", "rxjs-no-add");
+                    expect(result).to.have.property("errorCount", 1);
+                    expect(result.failures[0]).to.have.property("ruleName", "rxjs-no-add");
+                });
             });
-        });
 
-        describe("no-add-allow-some-operators", () => {
+            describe("no-add-allow-some-operators", () => {
 
-            it("should not effect an 'rxjs-no-add' error for allowed operator", () => {
+                it("should not effect an 'rxjs-no-add' error for allowed operator", () => {
 
-                const result = lint("no-add-allow-some-operators", "tslint.json");
+                    const result = lint("no-add-allow-some-operators", "tslint.json");
 
-                expect(result).to.have.property("errorCount", 1);
-                expect(result.failures[0]).to.have.property("ruleName", "rxjs-no-add");
+                    expect(result).to.have.property("errorCount", 1);
+                    expect(result.failures[0]).to.have.property("ruleName", "rxjs-no-add");
+                });
             });
-        });
 
-        describe("no-deep-operators", () => {
+            describe("no-deep-operators", () => {
 
-            it("should effect 'rxjs-no-deep-operators' errors", () => {
+                it("should effect 'rxjs-no-deep-operators' errors", () => {
 
-                const result = lint("no-deep-operators", "tslint.json");
+                    const result = lint("no-deep-operators", "tslint.json");
 
-                expect(result).to.have.property("errorCount", 1);
-                result.failures.forEach(failure => expect(failure).to.have.property("ruleName", "rxjs-no-deep-operators"));
+                    expect(result).to.have.property("errorCount", 1);
+                    result.failures.forEach(failure => expect(failure).to.have.property("ruleName", "rxjs-no-deep-operators"));
+                });
             });
-        });
 
-        describe("no-errors", () => {
+            describe("no-errors", () => {
 
-            it("should effect no errors", () => {
+                it("should effect no errors", () => {
 
-                const result = lint("no-errors");
+                    const result = lint("no-errors");
 
-                expect(result).to.have.property("errorCount", 0);
+                    expect(result).to.have.property("errorCount", 0);
+                });
             });
-        });
 
-        describe("no-errors-with-file", () => {
+            describe("no-errors-with-file", () => {
 
-            it("should effect no errors", () => {
+                it("should effect no errors", () => {
 
-                const result = lint("no-errors-with-file", "tslint.json");
+                    const result = lint("no-errors-with-file", "tslint.json");
 
-                expect(result).to.have.property("errorCount", 0);
+                    expect(result).to.have.property("errorCount", 0);
+                });
             });
-        });
 
-        describe("no-observable", () => {
+            describe("no-observable", () => {
 
-            it("should effect 'rxjs-add' errors", () => {
+                it("should effect 'rxjs-add' errors", () => {
 
-                const result = lint("no-observable");
+                    const result = lint("no-observable");
 
-                expect(result).to.have.property("errorCount", 9);
-                expect(result.failures[0]).to.have.property("ruleName", "rxjs-add");
-                expect(result.failures[1]).to.have.property("ruleName", "rxjs-add");
-                expect(result.failures[2]).to.have.property("ruleName", "rxjs-add");
-                expect(result.failures[3]).to.have.property("ruleName", "rxjs-add");
-                expect(result.failures[4]).to.have.property("ruleName", "rxjs-add");
-                expect(result.failures[5]).to.have.property("ruleName", "rxjs-add");
-                expect(result.failures[6]).to.have.property("ruleName", "rxjs-add");
-                expect(result.failures[7]).to.have.property("ruleName", "rxjs-add");
-                expect(result.failures[8]).to.have.property("ruleName", "rxjs-add");
+                    expect(result).to.have.property("errorCount", 9);
+                    expect(result.failures[0]).to.have.property("ruleName", "rxjs-add");
+                    expect(result.failures[1]).to.have.property("ruleName", "rxjs-add");
+                    expect(result.failures[2]).to.have.property("ruleName", "rxjs-add");
+                    expect(result.failures[3]).to.have.property("ruleName", "rxjs-add");
+                    expect(result.failures[4]).to.have.property("ruleName", "rxjs-add");
+                    expect(result.failures[5]).to.have.property("ruleName", "rxjs-add");
+                    expect(result.failures[6]).to.have.property("ruleName", "rxjs-add");
+                    expect(result.failures[7]).to.have.property("ruleName", "rxjs-add");
+                    expect(result.failures[8]).to.have.property("ruleName", "rxjs-add");
+                });
             });
-        });
 
-        describe("no-observable-with-file", () => {
+            describe("no-observable-with-file", () => {
 
-            it("should effect 'rxjs-add' errors", () => {
+                it("should effect 'rxjs-add' errors", () => {
 
-                const result = lint("no-observable-with-file", "tslint.json");
+                    const result = lint("no-observable-with-file", "tslint.json");
 
-                expect(result).to.have.property("errorCount", 9);
-                expect(result.failures[0]).to.have.property("ruleName", "rxjs-add");
-                expect(result.failures[1]).to.have.property("ruleName", "rxjs-add");
-                expect(result.failures[2]).to.have.property("ruleName", "rxjs-add");
-                expect(result.failures[3]).to.have.property("ruleName", "rxjs-add");
-                expect(result.failures[4]).to.have.property("ruleName", "rxjs-add");
-                expect(result.failures[5]).to.have.property("ruleName", "rxjs-add");
-                expect(result.failures[6]).to.have.property("ruleName", "rxjs-add");
-                expect(result.failures[7]).to.have.property("ruleName", "rxjs-add");
-                expect(result.failures[8]).to.have.property("ruleName", "rxjs-add");
+                    expect(result).to.have.property("errorCount", 9);
+                    expect(result.failures[0]).to.have.property("ruleName", "rxjs-add");
+                    expect(result.failures[1]).to.have.property("ruleName", "rxjs-add");
+                    expect(result.failures[2]).to.have.property("ruleName", "rxjs-add");
+                    expect(result.failures[3]).to.have.property("ruleName", "rxjs-add");
+                    expect(result.failures[4]).to.have.property("ruleName", "rxjs-add");
+                    expect(result.failures[5]).to.have.property("ruleName", "rxjs-add");
+                    expect(result.failures[6]).to.have.property("ruleName", "rxjs-add");
+                    expect(result.failures[7]).to.have.property("ruleName", "rxjs-add");
+                    expect(result.failures[8]).to.have.property("ruleName", "rxjs-add");
+                });
             });
-        });
 
-        describe("no-operator", () => {
+            describe("no-operator", () => {
 
-            it("should effect 'rxjs-add' errors", () => {
+                it("should effect 'rxjs-add' errors", () => {
 
-                const result = lint("no-operator");
+                    const result = lint("no-operator");
 
-                expect(result).to.have.property("errorCount", 6);
-                expect(result.failures[0]).to.have.property("ruleName", "rxjs-add");
-                expect(result.failures[1]).to.have.property("ruleName", "rxjs-add");
-                expect(result.failures[2]).to.have.property("ruleName", "rxjs-add");
-                expect(result.failures[3]).to.have.property("ruleName", "rxjs-add");
-                expect(result.failures[4]).to.have.property("ruleName", "rxjs-add");
-                expect(result.failures[5]).to.have.property("ruleName", "rxjs-add");
+                    expect(result).to.have.property("errorCount", 6);
+                    expect(result.failures[0]).to.have.property("ruleName", "rxjs-add");
+                    expect(result.failures[1]).to.have.property("ruleName", "rxjs-add");
+                    expect(result.failures[2]).to.have.property("ruleName", "rxjs-add");
+                    expect(result.failures[3]).to.have.property("ruleName", "rxjs-add");
+                    expect(result.failures[4]).to.have.property("ruleName", "rxjs-add");
+                    expect(result.failures[5]).to.have.property("ruleName", "rxjs-add");
+                });
             });
-        });
 
-        describe("no-operator-import", () => {
+            describe("no-operator-import", () => {
 
-            it("should effect 'rxjs-no-operator' errors", () => {
+                it("should effect 'rxjs-no-operator' errors", () => {
 
-                const result = lint("no-operator-import", "tslint.json");
+                    const result = lint("no-operator-import", "tslint.json");
 
-                expect(result).to.have.property("errorCount", 1);
-                expect(result.failures[0]).to.have.property("ruleName", "rxjs-no-operator");
+                    expect(result).to.have.property("errorCount", 1);
+                    expect(result.failures[0]).to.have.property("ruleName", "rxjs-no-operator");
+                });
             });
-        });
 
-        describe("no-operator-with-file", () => {
+            describe("no-operator-with-file", () => {
 
-            it("should effect 'rxjs-add' errors", () => {
+                it("should effect 'rxjs-add' errors", () => {
 
-                const result = lint("no-operator-with-file", "tslint.json");
+                    const result = lint("no-operator-with-file", "tslint.json");
 
-                expect(result).to.have.property("errorCount", 6);
-                expect(result.failures[0]).to.have.property("ruleName", "rxjs-add");
-                expect(result.failures[1]).to.have.property("ruleName", "rxjs-add");
-                expect(result.failures[2]).to.have.property("ruleName", "rxjs-add");
-                expect(result.failures[3]).to.have.property("ruleName", "rxjs-add");
-                expect(result.failures[4]).to.have.property("ruleName", "rxjs-add");
-                expect(result.failures[5]).to.have.property("ruleName", "rxjs-add");
+                    expect(result).to.have.property("errorCount", 6);
+                    expect(result.failures[0]).to.have.property("ruleName", "rxjs-add");
+                    expect(result.failures[1]).to.have.property("ruleName", "rxjs-add");
+                    expect(result.failures[2]).to.have.property("ruleName", "rxjs-add");
+                    expect(result.failures[3]).to.have.property("ruleName", "rxjs-add");
+                    expect(result.failures[4]).to.have.property("ruleName", "rxjs-add");
+                    expect(result.failures[5]).to.have.property("ruleName", "rxjs-add");
+                });
             });
-        });
 
-        describe("no-patched", () => {
+            describe("no-patched", () => {
 
-            it("should effect an 'rxjs-no-patched' error", () => {
+                it("should effect an 'rxjs-no-patched' error", () => {
 
-                const result = lint("no-patched", "tslint.json");
+                    const result = lint("no-patched", "tslint.json");
 
-                expect(result).to.have.property("errorCount", 1);
-                expect(result.failures[0]).to.have.property("ruleName", "rxjs-no-patched");
+                    expect(result).to.have.property("errorCount", 1);
+                    expect(result.failures[0]).to.have.property("ruleName", "rxjs-no-patched");
+                });
             });
-        });
 
-        describe("no-patched-allow-all-observables", () => {
+            describe("no-patched-allow-all-observables", () => {
 
-            it("should not effect an 'rxjs-no-patched' error", () => {
+                it("should not effect an 'rxjs-no-patched' error", () => {
 
-                const result = lint("no-patched-allow-all-observables", "tslint.json");
+                    const result = lint("no-patched-allow-all-observables", "tslint.json");
 
-                expect(result).to.have.property("errorCount", 0);
+                    expect(result).to.have.property("errorCount", 0);
+                });
             });
-        });
 
-        describe("no-patched-allow-all-operators", () => {
+            describe("no-patched-allow-all-operators", () => {
 
-            it("should not effect an 'rxjs-no-patched' error", () => {
+                it("should not effect an 'rxjs-no-patched' error", () => {
 
-                const result = lint("no-patched-allow-all-operators", "tslint.json");
+                    const result = lint("no-patched-allow-all-operators", "tslint.json");
 
-                expect(result).to.have.property("errorCount", 0);
+                    expect(result).to.have.property("errorCount", 0);
+                });
             });
-        });
 
-        describe("no-patched-allow-some-observables", () => {
+            describe("no-patched-allow-some-observables", () => {
 
-            it("should not effect an 'rxjs-no-patched' error for allowed observable", () => {
+                it("should not effect an 'rxjs-no-patched' error for allowed observable", () => {
 
-                const result = lint("no-patched-allow-some-observables", "tslint.json");
+                    const result = lint("no-patched-allow-some-observables", "tslint.json");
 
-                expect(result).to.have.property("errorCount", 1);
-                expect(result.failures[0]).to.have.property("ruleName", "rxjs-no-patched");
+                    expect(result).to.have.property("errorCount", 1);
+                    expect(result.failures[0]).to.have.property("ruleName", "rxjs-no-patched");
+                });
             });
-        });
 
-        describe("no-patched-allow-some-operators", () => {
+            describe("no-patched-allow-some-operators", () => {
 
-            it("should not effect an 'rxjs-no-patched' error for allowed operator", () => {
+                it("should not effect an 'rxjs-no-patched' error for allowed operator", () => {
 
-                const result = lint("no-patched-allow-some-operators", "tslint.json");
+                    const result = lint("no-patched-allow-some-operators", "tslint.json");
 
-                expect(result).to.have.property("errorCount", 1);
-                expect(result.failures[0]).to.have.property("ruleName", "rxjs-no-patched");
+                    expect(result).to.have.property("errorCount", 1);
+                    expect(result.failures[0]).to.have.property("ruleName", "rxjs-no-patched");
+                });
             });
-        });
 
-        describe("observable-create", () => {
+            describe("observable-create", () => {
 
-            it("should effect an error unless explicit typing is used", () => {
+                it("should effect an error unless explicit typing is used", () => {
 
-                const result = lint("observable-create");
+                    const result = lint("observable-create");
 
-                expect(result).to.have.property("errorCount", 1);
-                expect(result.failures[0]).to.have.property("ruleName", "rxjs-no-unused-add");
+                    expect(result).to.have.property("errorCount", 1);
+                    expect(result.failures[0]).to.have.property("ruleName", "rxjs-no-unused-add");
+                });
             });
-        });
 
-        describe("unused-observable", () => {
+            describe("unused-observable", () => {
 
-            it("should effect 'rxjs-no-unused-add' errors", () => {
+                it("should effect 'rxjs-no-unused-add' errors", () => {
 
-                const result = lint("unused-observable");
+                    const result = lint("unused-observable");
 
-                expect(result).to.have.property("errorCount", 1);
-                expect(result.failures[0]).to.have.property("ruleName", "rxjs-no-unused-add");
+                    expect(result).to.have.property("errorCount", 1);
+                    expect(result.failures[0]).to.have.property("ruleName", "rxjs-no-unused-add");
+                });
             });
-        });
 
-        describe("unused-observable-with-file", () => {
+            describe("unused-observable-with-file", () => {
 
-            it("should effect an 'rxjs-add' error", () => {
+                it("should effect an 'rxjs-add' error", () => {
 
-                const result = lint("unused-observable-with-file", "tslint.json", "adds.ts");
+                    const result = lint("unused-observable-with-file", "tslint.json", "adds.ts");
 
-                expect(result).to.have.property("errorCount", 1);
-                expect(result.failures[0]).to.have.property("ruleName", "rxjs-add");
+                    expect(result).to.have.property("errorCount", 1);
+                    expect(result.failures[0]).to.have.property("ruleName", "rxjs-add");
+                });
             });
-        });
 
-        describe("unused-observable-with-file-allowed", () => {
+            describe("unused-observable-with-file-allowed", () => {
 
-            it("should not effect an 'rxjs-add' error", () => {
+                it("should not effect an 'rxjs-add' error", () => {
 
-                const result = lint("unused-observable-with-file-allowed", "tslint.json", "adds.ts");
+                    const result = lint("unused-observable-with-file-allowed", "tslint.json", "adds.ts");
 
-                expect(result).to.have.property("errorCount", 0);
+                    expect(result).to.have.property("errorCount", 0);
+                });
             });
-        });
 
-        describe("unused-operator", () => {
+            describe("unused-operator", () => {
 
-            it("should effect 'rxjs-no-unused-add' errors", () => {
+                it("should effect 'rxjs-no-unused-add' errors", () => {
 
-                const result = lint("unused-operator");
+                    const result = lint("unused-operator");
 
-                expect(result).to.have.property("errorCount", 1);
-                expect(result.failures[0]).to.have.property("ruleName", "rxjs-no-unused-add");
+                    expect(result).to.have.property("errorCount", 1);
+                    expect(result.failures[0]).to.have.property("ruleName", "rxjs-no-unused-add");
+                });
             });
-        });
 
-        describe("unused-operator-with-file", () => {
+            describe("unused-operator-with-file", () => {
 
-            it("should effect an 'rxjs-add' error", () => {
+                it("should effect an 'rxjs-add' error", () => {
 
-                const result = lint("unused-operator-with-file", "tslint.json", "adds.ts");
+                    const result = lint("unused-operator-with-file", "tslint.json", "adds.ts");
 
-                expect(result).to.have.property("errorCount", 1);
-                expect(result.failures[0]).to.have.property("ruleName", "rxjs-add");
+                    expect(result).to.have.property("errorCount", 1);
+                    expect(result.failures[0]).to.have.property("ruleName", "rxjs-add");
+                });
             });
-        });
 
-        describe("unused-operator-with-file-allowed", () => {
+            describe("unused-operator-with-file-allowed", () => {
 
-            it("should not effect an 'rxjs-add' error", () => {
+                it("should not effect an 'rxjs-add' error", () => {
 
-                const result = lint("unused-operator-with-file-allowed", "tslint.json", "adds.ts");
+                    const result = lint("unused-operator-with-file-allowed", "tslint.json", "adds.ts");
 
-                expect(result).to.have.property("errorCount", 0);
+                    expect(result).to.have.property("errorCount", 0);
+                });
             });
-        });
+        }
     });
-}
-
-function testIssues(): void {
 
     describe("issue-related rules", () => {
 
-        describe("issue-33", () => {
+        if (fixtureVersion === "v5") {
 
-            it("should not effect errors", () => {
-                const result = lint("issue-33", "tslint.json", "adds.ts");
-                expect(result).to.have.property("errorCount", 0);
+            describe("issue-33", () => {
+
+                it("should not effect errors", () => {
+                    const result = lint("issue-33", "tslint.json", "adds.ts");
+                    expect(result).to.have.property("errorCount", 0);
+                });
             });
-        });
+        }
     });
-}
-
-function testSubjectRules(): void {
 
     describe("subject-related rules", () => {
 
@@ -762,9 +724,6 @@ function testSubjectRules(): void {
             });
         });
     });
-}
-
-function testSubscriptionRules(): void {
 
     describe("subscription-related rules", () => {
 
@@ -814,4 +773,22 @@ function testSubscriptionRules(): void {
             });
         });
     });
-}
+
+    function lint(dir: string, configFileName?: string, fixtureFileName?: string): LintResult {
+
+        const fixtureDir = `${fixturesDir}/${dir}`;
+        const fileName = `${fixtureDir}/${fixtureFileName || "fixture.ts"}`;
+        const content = fs.readFileSync(fileName, "utf8");
+        const program = Linter.createProgram(`${fixtureDir}/tsconfig.json`);
+        const linter = new Linter({ fix: false }, program);
+
+        const configuration = Configuration.findConfiguration(
+            configFileName ?
+                `${fixtureDir}/${configFileName}` :
+                `${fixturesDir}/tslint.json`,
+            fileName
+        ).results;
+        linter.lint(fileName, content, configuration);
+        return linter.getResult();
+    }
+});
