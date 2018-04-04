@@ -12,8 +12,8 @@ describe("peer", () => {
     it("should determine the dir", () => {
 
         expect(peer.dir).to.equal(path.join(
-            process.env["FIXTURES_DIR"] ?
-                path.resolve(process.env["FIXTURES_DIR"]) :
+            process.env["RXJS_TSLINT_FIXTURES_DIR"] ?
+                path.resolve(process.env["RXJS_TSLINT_FIXTURES_DIR"]) :
                 path.resolve("."),
             "node_modules/rxjs"
         ));

@@ -59,8 +59,8 @@
     "test": "yarn run lint && yarn run test:build && yarn run test:non-fixtures && yarn run test:fixtures-v5 && yarn run test:fixtures-v6",
     "test:build": "yarn run test:clean && tsc -p tsconfig.json",
     "test:clean": "rimraf build",
-    "test:fixtures-v5": "yarn --cwd ./fixtures/v5 install && cross-env FIXTURES_DIR=./fixtures/v5 mocha build/**/*-spec.js",
-    "test:fixtures-v6": "yarn --cwd ./fixtures/v6 install && cross-env FIXTURES_DIR=./fixtures/v6 mocha build/**/*-spec.js",
+    "test:fixtures-v5": "yarn --cwd ./fixtures/v5 install && cross-env RXJS_TSLINT_FIXTURES_DIR=./fixtures/v5 mocha build/**/*-spec.js",
+    "test:fixtures-v6": "yarn --cwd ./fixtures/v6 install && cross-env RXJS_TSLINT_FIXTURES_DIR=./fixtures/v6 mocha build/**/*-spec.js",
     "test:non-fixtures": "mocha build/**/*-spec.js"
   },
   "version": "3.16.1"

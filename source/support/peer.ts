@@ -10,7 +10,7 @@ import * as resolve from "resolve";
 let peerDir: string | undefined = undefined;
 let peerVersion: string | undefined = undefined;
 
-const fixturesDir = process.env["FIXTURES_DIR"];
+const fixturesDir = process.env["RXJS_TSLINT_FIXTURES_DIR"];
 if (fixturesDir) {
     peerDir = path.join(path.resolve(fixturesDir), "node_modules/rxjs");
     peerVersion = require(path.join(peerDir, "package.json")).version;
