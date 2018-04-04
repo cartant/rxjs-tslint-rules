@@ -20,14 +20,14 @@ describe(`${fixtureVersion} fixtures`, function (): void {
 
     /*tslint:disable-next-line:no-invalid-this*/
     this.timeout(5000);
-    /*
+
     describe("effect/epic-related rules", () => {
 
         describe("no-unsafe-switchmap", () => {
 
             it("should effect 'no-unsafe-switchmap' errors", () => {
                 const result = lint("no-unsafe-switchmap", "tslint.json");
-                expect(result).to.have.property("errorCount", 12);
+                expect(result).to.have.property("errorCount", (fixtureVersion === "v5") ? 12 : 6);
                 result.failures.forEach(failure => expect(failure).to.have.property("ruleName", "rxjs-no-unsafe-switchmap"));
             });
         });
@@ -47,7 +47,7 @@ describe(`${fixtureVersion} fixtures`, function (): void {
             });
         });
     });
-    */
+
     describe("finnish-related rules", () => {
 
         describe("finnish-with-$", () => {
