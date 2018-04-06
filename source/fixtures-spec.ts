@@ -293,7 +293,7 @@ describe(`${fixtureVersion} fixtures`, function (): void {
 
     describe("import-related rules", () => {
 
-        if (["v5"].includes(fixtureVersion)) {
+        if (["v5", "v6-compat"].includes(fixtureVersion)) {
 
             describe("custom-observable", () => {
 
@@ -324,9 +324,6 @@ describe(`${fixtureVersion} fixtures`, function (): void {
                     expect(result).to.have.property("errorCount", 0);
                 });
             });
-        }
-
-        if (["v5", "v6-compat"].includes(fixtureVersion)) {
 
             describe("deep-operators", () => {
 
