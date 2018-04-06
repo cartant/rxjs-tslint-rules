@@ -27,6 +27,9 @@ if (fixturesDir) {
     }
 }
 
+export const compat = peerDir ?
+    fs.existsSync(path.join(path.dirname(peerDir), "rxjs-compat")) :
+    false;
 export const dir = peerDir;
 export const version = peerVersion;
 export const v5 = peerVersion && semver.satisfies(peerVersion, "^5.0.0");
