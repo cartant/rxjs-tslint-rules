@@ -11,7 +11,7 @@ import * as peer from "../support/peer";
 export class Rule extends Lint.Rules.AbstractRule {
 
     public static metadata: Lint.IRuleMetadata = {
-        deprecationMessage: peer.v6 ? "Rule not needed for v6." : undefined,
+        deprecationMessage: (peer.v6 && !peer.compat) ? "Rule not needed for v6." : undefined,
         description: "Enforces deep importation from within 'rxjs/operators'.",
         options: null,
         optionsDescription: "Not configurable.",

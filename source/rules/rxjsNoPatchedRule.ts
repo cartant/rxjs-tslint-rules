@@ -14,7 +14,7 @@ import { UsedWalker } from "../support/used-walker";
 export class Rule extends Lint.Rules.TypedRule {
 
     public static metadata: Lint.IRuleMetadata = {
-        deprecationMessage: peer.v6 ? "Rule not needed for v6." : undefined,
+        deprecationMessage: (peer.v6 && !peer.compat) ? "Rule not needed for v6." : undefined,
         description: "Disallows the calling of patched methods.",
         options: {
             properties: {
