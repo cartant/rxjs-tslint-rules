@@ -27,8 +27,7 @@ export class Rule extends Lint.Rules.TypedRule {
             An optional object with optional \`functions\`, \`methods\`, \`parameters\`,
             \`properties\` and \`variables\` properties.
             The properies are booleans and determine whether or not Finnish notation is enforced.
-            All properties default to \`true\`.
-            `,
+            All properties default to \`true\`.`,
         requiresTypeInfo: true,
         ruleName: "rxjs-finnish",
         type: "style",

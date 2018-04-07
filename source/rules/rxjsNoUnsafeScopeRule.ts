@@ -14,8 +14,18 @@ export class Rule extends Lint.Rules.TypedRule {
 
     public static metadata: Lint.IRuleMetadata = {
         description: "Disallows the use of variables/properties from unsafe/outer scopes in operator callbacks.",
-        options: null,
-        optionsDescription: "Not configurable.",
+        options: {
+            properties: {
+                allowDo: { type: "boolean" },
+                allowParameters: { type: "boolean" },
+                allowTap: { type: "boolean" }
+            },
+            type: "object"
+        },
+        optionsDescription: Lint.Utils.dedent`
+            An optional object with optional \`allowDo\`, \`allowParameters\` and \`allowTap\` properties all of which default to \`true\`.
+            If the \`allowDo\` and \`allowTap\` options are \`true\`, the rule is not applied within \`do\` and \`tap\` operators respectively.
+            If the \`allowParameters\` option is \`true\`, referencing function parameters from outer scopes is allowed.`,
         requiresTypeInfo: true,
         ruleName: "rxjs-no-unsafe-scopes",
         type: "functionality",
@@ -32,8 +42,23 @@ export class Rule extends Lint.Rules.TypedRule {
 
 class Walker extends Lint.ProgramAwareRuleWalker {
 
+    private allowDo = true;
+    private allowParameters = true;
+    private allowTap = true;
     private callbackMap: Map<ts.Node, string> = new Map<ts.Node, string>();
     private callbackStack: (ts.ArrowFunction | ts.FunctionExpression)[] = [];
+
+    constructor(sourceFile: ts.SourceFile, rawOptions: Lint.IOptions, program: ts.Program) {
+
+        super(sourceFile, rawOptions, program);
+
+        const [options] = this.getOptions();
+        if (options) {
+            this.allowDo = (options.allowDo !== undefined) ? options.allowDo : this.allowDo;
+            this.allowParameters = (options.allowParameters !== undefined) ? options.allowParameters : this.allowParameters;
+            this.allowTap = (options.allowTap !== undefined) ? options.allowTap : this.allowTap;
+        }
+    }
 
     protected visitArrowFunction(node: ts.ArrowFunction): void {
 
@@ -94,9 +119,13 @@ class Walker extends Lint.ProgramAwareRuleWalker {
 
         const { callbackMap, callbackStack } = this;
         const leafCallback = callbackStack[callbackStack.length - 1];
+        const leafOperator = callbackMap.get(leafCallback);
         const rootCallback = callbackStack[0];
 
-        if (/(do|tap)/.test(callbackMap.get(leafCallback))) {
+        if (this.allowDo && (leafOperator === "do")) {
+            return false;
+        }
+        if (this.allowTap && (leafOperator === "tap")) {
             return false;
         }
 
@@ -104,6 +133,9 @@ class Walker extends Lint.ProgramAwareRuleWalker {
         const symbol = typeChecker.getSymbolAtLocation(node);
         const [declaration] = symbol.getDeclarations();
 
+        if (this.allowParameters && tsutils.isParameterDeclaration(declaration)) {
+            return false;
+        }
         if ((declaration.pos >= rootCallback.pos) && (declaration.pos < rootCallback.end)) {
             return false;
         }

@@ -235,6 +235,28 @@ describe("fixtures", function (): void {
                 expect(result).to.have.property("errorCount", 2);
                 result.failures.forEach(failure => expect(failure).to.have.property("ruleName", "rxjs-no-unsafe-scope"));
             });
+
+            it("should not effect 'rxjs-no-unsafe-scope' errors for parameters", () => {
+
+                const result = lint("no-unsafe-scope", "tslint.json", "fixture-parameters.ts");
+
+                expect(result).to.have.property("errorCount", 0);
+            });
+
+            it("should not effect 'rxjs-no-unsafe-scope' errors with default options", () => {
+
+                const result = lint("no-unsafe-scope", "tslint.json", "fixture-options.ts");
+
+                expect(result).to.have.property("errorCount", 0);
+            });
+
+            it("should effect 'rxjs-no-unsafe-scope' errors with specific options", () => {
+
+                const result = lint("no-unsafe-scope", "tslint-options.json", "fixture-options.ts");
+
+                expect(result).to.have.property("errorCount", 4);
+                result.failures.forEach(failure => expect(failure).to.have.property("ruleName", "rxjs-no-unsafe-scope"));
+            });
         });
 
         describe("throw-error", () => {
