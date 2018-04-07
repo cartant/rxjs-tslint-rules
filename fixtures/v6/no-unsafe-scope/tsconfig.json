@@ -17,6 +17,8 @@
     "fixture-functions.ts",
     "fixture-globals.ts",
     "fixture-math.ts",
+    "fixture-options.ts",
+    "fixture-parameters.ts",
     "fixture-safe.ts",
     "fixture-this.ts"
   ]

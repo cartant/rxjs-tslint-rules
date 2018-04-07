@@ -273,7 +273,7 @@ describe(`${fixtureVersion} fixtures`, function (): void {
 
                     const result = lint("no-unsafe-scope", "tslint-options.json", "fixture-options.ts");
 
-                    expect(result).to.have.property("errorCount", 4);
+                    expect(result).to.have.property("errorCount", (fixtureVersion === "v5") ? 4 : 2);
                     result.failures.forEach(failure => expect(failure).to.have.property("ruleName", "rxjs-no-unsafe-scope"));
                 });
             });
