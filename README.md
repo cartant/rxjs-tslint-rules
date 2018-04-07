@@ -87,7 +87,7 @@ The package includes the following rules (none of which are enabled by default):
 | `rxjs-no-subject-unsubscribe` | Disallows calling the `unsubscribe` method of a `Subject` instance. For an explanation of why this can be a problem, see [this](https://stackoverflow.com/a/45112125/6680611) Stack Overflow answer. | None |
 | `rxjs-no-subject-value` | Disallows accessing the `value` property of a `BehaviorSubject` instance. | None |
 | `rxjs-no-tap` | An alias for `rxjs-no-do`. | None |
-| `rxjs-no-unsafe-scope` | Disallows the use of variables/properties from unsafe/outer scopes in operator callbacks. | None |
+| `rxjs-no-unsafe-scope` | Disallows the use of variables/properties from unsafe/outer scopes in operator callbacks. | [See below](#rxjs-no-unsafe-scope) |
 | `rxjs-no-unsafe-switchmap` | Disallows unsafe `switchMap` usage in [NgRx](https://github.com/ngrx/platform) effects and [`redux-observable`](https://github.com/redux-observable/redux-observable) epics. | [See below](#rxjs-no-unsafe-switchmap) |
 | `rxjs-no-unused-add` | Disallows the importation of patched observables or operators that are not used in the module. | None |
 | `rxjs-no-wholesale` | Disallows the wholesale importation of `rxjs` or `rxjs/Rx`. | None |
@@ -163,6 +163,31 @@ For example:
     "options": [{
       "allowObservables": ["never", "throw"],
       "allowOperators": false
+    }],
+    "severity": "error"
+  }
+}
+```
+
+<a name="rxjs-no-unsafe-scope"></a>
+
+#### rxjs-no-unsafe-scope
+
+The rule takes an optional object with optional `allowDo`, `allowParameters` and `allowTap` properties all of which default to `true`.
+
+If the `allowDo` and `allowTap` options are `true`, the rule is not applied within `do` and `tap` operators respectively.
+
+If the `allowParameters` option is `true`, referencing function parameters from outer scopes is allowed.
+
+The following options are equivalent to the rule's default configuration:
+
+```json
+"rules": {
+  "rxjs-no-unsafe-scope": {
+    "options": [{
+      "allowDo": true,
+      "allowParameters": true,
+      "allowTap": true
     }],
     "severity": "error"
   }
