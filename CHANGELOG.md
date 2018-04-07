@@ -1,3 +1,10 @@
+<a name="3.17.0"></a>
+## [3.17.0](https://github.com/cartant/rxjs-tslint-rules/compare/v3.16.1...v3.17.0) (2018-04-07)
+
+## Features
+
+* Add options for `rxjs-no-unsafe-scope`. ([43bd486](https://github.com/cartant/rxjs-tslint-rules/commit/43bd486))
+
 <a name="3.16.1"></a>
 ## [3.16.1](https://github.com/cartant/rxjs-tslint-rules/compare/v3.16.0...v3.16.1) (2018-04-05)
 
