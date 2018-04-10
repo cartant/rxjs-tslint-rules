@@ -330,9 +330,9 @@ rimraf@^2.6.1:
   dependencies:
     glob "^7.0.5"
 
-rxjs@6.0.0-rc.0:
-  version "6.0.0-rc.0"
-  resolved "https://registry.yarnpkg.com/rxjs/-/rxjs-6.0.0-rc.0.tgz#3fed5454dfaf5a01005c973de857f860826d3eac"
+rxjs@^6.0.0-rc.0:
+  version "6.0.0-tactical-rc.1"
+  resolved "https://registry.yarnpkg.com/rxjs/-/rxjs-6.0.0-tactical-rc.1.tgz#1fe1f1204132d1c71c72f249a487f8e76a5ec1d5"
   dependencies:
     tslib "^1.9.0"
 
