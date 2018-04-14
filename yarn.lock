@@ -15,8 +15,8 @@
   resolved "https://registry.yarnpkg.com/@types/mocha/-/mocha-5.0.0.tgz#a3014921991066193f6c8e47290d4d598dfd19e6"
 
 "@types/node@*", "@types/node@^9.3.0":
-  version "9.6.4"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-9.6.4.tgz#0ef7b4cfc3499881c81e0ea1ce61a23f6f4f5b42"
+  version "9.6.5"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-9.6.5.tgz#ee700810fdf49ac1c399fc5980b7559b3e5a381d"
 
 "@types/resolve@^0.0.7":
   version "0.0.7"
@@ -332,8 +332,8 @@ rimraf@^2.6.1:
     glob "^7.0.5"
 
 rxjs@^6.0.0-rc.0:
-  version "6.0.0-turbo-rc.4"
-  resolved "https://registry.yarnpkg.com/rxjs/-/rxjs-6.0.0-turbo-rc.4.tgz#5995dab91914f03ee4a68d923678333ae626d2ec"
+  version "6.0.0-uncanny-rc.7"
+  resolved "https://registry.yarnpkg.com/rxjs/-/rxjs-6.0.0-uncanny-rc.7.tgz#e5d6ebe2c538c583bf4b3600b60112d64a7a6991"
   dependencies:
     tslib "^1.9.0"
 
