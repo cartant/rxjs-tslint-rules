@@ -3,8 +3,8 @@
  * can be found in the LICENSE file at https://github.com/cartant/rxjs-tslint-rules
  */
 
-import * as Lint from "tslint";
 import * as ts from "typescript";
+import * as tsutils from "tsutils";
 
 export function couldBeType(type: ts.Type, name: string): boolean {
 
@@ -26,8 +26,8 @@ export function couldBeType(type: ts.Type, name: string): boolean {
 
 export function isReferenceType(type: ts.Type): type is ts.TypeReference {
 
-    return Lint.isTypeFlagSet(type, ts.TypeFlags.Object) &&
-        Lint.isObjectFlagSet(type as ts.ObjectType, ts.ObjectFlags.Reference);
+    return tsutils.isTypeFlagSet(type, ts.TypeFlags.Object) &&
+        tsutils.isObjectFlagSet(type as ts.ObjectType, ts.ObjectFlags.Reference);
 }
 
 export function isType(type: ts.Type, name: string): boolean {
@@ -37,5 +37,5 @@ export function isType(type: ts.Type, name: string): boolean {
 
 export function isUnionType(type: ts.Type): type is ts.UnionType {
 
-    return Lint.isTypeFlagSet(type, ts.TypeFlags.Union);
+    return tsutils.isTypeFlagSet(type, ts.TypeFlags.Union);
 }
