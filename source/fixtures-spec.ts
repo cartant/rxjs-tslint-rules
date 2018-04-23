@@ -672,6 +672,20 @@ describe(`${fixtureVersion} fixtures`, function (): void {
                 });
             });
         }
+
+        if (["v6"].includes(fixtureVersion)) {
+
+            describe("no-internal", () => {
+
+                it("should effect 'rxjs-no-internal' errors", () => {
+
+                    const result = lint("no-internal", "tslint.json");
+
+                    expect(result).to.have.property("errorCount", 2);
+                    result.failures.forEach(failure => expect(failure).to.have.property("ruleName", "rxjs-no-internal"));
+                });
+            });
+        }
     });
 
     describe("issue-related rules", () => {
