@@ -295,6 +295,60 @@ describe(`${fixtureVersion} fixtures`, function (): void {
 
         if (["v5", "v6-compat"].includes(fixtureVersion)) {
 
+            describe("ban-observables", () => {
+
+                it("should effect 'rxjs-ban-observables' errors", () => {
+
+                    const result = lint("ban-observables", "tslint.json");
+
+                    expect(result).to.have.property("errorCount", 2);
+                    result.failures.forEach(failure => expect(failure).to.have.property("ruleName", "rxjs-ban-observables"));
+                });
+
+                it("should effect 'rxjs-ban-observables' errors for patching imports", () => {
+
+                    const result = lint("ban-observables", "tslint.json", "fixture-add.ts");
+
+                    expect(result).to.have.property("errorCount", 2);
+                    result.failures.forEach(failure => expect(failure).to.have.property("ruleName", "rxjs-ban-observables"));
+                });
+
+                it("should effect 'rxjs-ban-observables' errors for already-patched observables", () => {
+
+                    const result = lint("ban-observables", "tslint.json", "fixture-patch.ts");
+
+                    expect(result).to.have.property("errorCount", 2);
+                    result.failures.forEach(failure => expect(failure).to.have.property("ruleName", "rxjs-ban-observables"));
+                });
+            });
+
+            describe("ban-operators", () => {
+
+                it("should effect 'rxjs-ban-operators' errors", () => {
+
+                    const result = lint("ban-operators", "tslint.json");
+
+                    expect(result).to.have.property("errorCount", 2);
+                    result.failures.forEach(failure => expect(failure).to.have.property("ruleName", "rxjs-ban-operators"));
+                });
+
+                it("should effect 'rxjs-ban-operators' errors for patching imports", () => {
+
+                    const result = lint("ban-operators", "tslint.json", "fixture-add.ts");
+
+                    expect(result).to.have.property("errorCount", 2);
+                    result.failures.forEach(failure => expect(failure).to.have.property("ruleName", "rxjs-ban-operators"));
+                });
+
+                it("should effect 'rxjs-ban-operators' errors for already-patched operators", () => {
+
+                    const result = lint("ban-operators", "tslint.json", "fixture-patch.ts");
+
+                    expect(result).to.have.property("errorCount", 2);
+                    result.failures.forEach(failure => expect(failure).to.have.property("ruleName", "rxjs-ban-operators"));
+                });
+            });
+
             describe("custom-observable", () => {
 
                 it("should effect no errors", () => {
@@ -674,6 +728,28 @@ describe(`${fixtureVersion} fixtures`, function (): void {
         }
 
         if (["v6"].includes(fixtureVersion)) {
+
+            describe("ban-observables", () => {
+
+                it("should effect 'rxjs-ban-observables' errors", () => {
+
+                    const result = lint("ban-observables", "tslint.json");
+
+                    expect(result).to.have.property("errorCount", 2);
+                    result.failures.forEach(failure => expect(failure).to.have.property("ruleName", "rxjs-ban-observables"));
+                });
+            });
+
+            describe("ban-operators", () => {
+
+                it("should effect 'rxjs-ban-operators' errors", () => {
+
+                    const result = lint("ban-operators", "tslint.json");
+
+                    expect(result).to.have.property("errorCount", 2);
+                    result.failures.forEach(failure => expect(failure).to.have.property("ruleName", "rxjs-ban-operators"));
+                });
+            });
 
             describe("no-internal", () => {
 
