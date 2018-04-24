@@ -1,0 +1,25 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "lib": ["es2015"],
+    "noEmit": true,
+    "paths": {
+      "rxjs": ["../node_modules/rxjs"]
+    },
+    "skipLibCheck": true,
+    "target": "es5"
+  },
+  "include": [
+    "fixture.ts",
+    "fixture-constants.ts",
+    "fixture-do.ts",
+    "fixture-enums.ts",
+    "fixture-functions.ts",
+    "fixture-globals.ts",
+    "fixture-math.ts",
+    "fixture-options.ts",
+    "fixture-parameters.ts",
+    "fixture-safe.ts",
+    "fixture-this.ts"
+  ]
+}

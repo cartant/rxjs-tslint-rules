@@ -17,9 +17,10 @@
     "@types/resolve": "^0.0.7",
     "@types/semver": "^5.4.0",
     "chai": "^4.0.0",
+    "cross-env": "^5.1.4",
     "mocha": "^5.0.0",
     "rimraf": "^2.6.1",
-    "rxjs": "^5.4.0",
+    "rxjs": "^6.0.0-rc.0",
     "semver": "^5.4.0",
     "tslint": "^5.1.0",
     "tsutils": "^2.19.1",
@@ -37,11 +38,14 @@
   "name": "rxjs-tslint-rules",
   "optionalDependencies": {},
   "peerDependencies": {
-    "rxjs": "^5.0.0",
+    "rxjs": "^5.0.0 || ^6.0.0-rc.0",
     "tslint": "^5.0.0",
     "typescript": "^2.3.0"
   },
   "private": false,
+  "publishConfig": {
+    "tag": "rc"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/cartant/rxjs-tslint-rules.git"
@@ -52,9 +56,13 @@
     "dist:clean": "rimraf dist",
     "lint": "tslint --project tsconfig.json source/**/*.ts",
     "prepublishOnly": "yarn run test && yarn run dist",
-    "test": "yarn run lint && yarn run test:build && mocha build/**/*-spec.js",
+    "test": "yarn run lint && yarn run test:build && yarn run test:non-fixtures && yarn run test:fixtures-v5 && yarn run test:fixtures-v6 && yarn run test:fixtures-v6-compat",
     "test:build": "yarn run test:clean && tsc -p tsconfig.json",
-    "test:clean": "rimraf build"
+    "test:clean": "rimraf build",
+    "test:fixtures-v5": "yarn --cwd ./fixtures/v5 install && yarn --cwd ./fixtures/v5 upgrade && cross-env RXJS_TSLINT_FIXTURES_DIR=./fixtures/v5 mocha build/**/*-spec.js",
+    "test:fixtures-v6": "yarn --cwd ./fixtures/v6 install && yarn --cwd ./fixtures/v6 upgrade && cross-env RXJS_TSLINT_FIXTURES_DIR=./fixtures/v6 mocha build/**/*-spec.js",
+    "test:fixtures-v6-compat": "yarn --cwd ./fixtures/v6-compat install && yarn --cwd ./fixtures/v6-compat upgrade && cross-env RXJS_TSLINT_FIXTURES_DIR=./fixtures/v6-compat mocha build/**/*-spec.js",
+    "test:non-fixtures": "mocha build/**/*-spec.js"
   },
-  "version": "3.17.0"
+  "version": "4.0.0-rc.2"
 }

@@ -6,10 +6,12 @@
 
 import * as Lint from "tslint";
 import * as ts from "typescript";
+import * as peer from "../support/peer";
 
 export class Rule extends Lint.Rules.AbstractRule {
 
     public static metadata: Lint.IRuleMetadata = {
+        deprecationMessage: (peer.v6 && !peer.compat) ? "Rule not needed for v6." : undefined,
         description: "Disallows deep importation from 'rxjs/operators'.",
         options: null,
         optionsDescription: "Not configurable.",
