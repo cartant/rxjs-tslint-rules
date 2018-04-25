@@ -1,3 +1,13 @@
+<a name="4.0.0"></a>
+## [4.0.0](https://github.com/cartant/rxjs-tslint-rules/compare/v3.17.0...v4.0.0) (2018-04-25)
+
+## Features
+
+* Supports `rxjs` version 5 and 6 and supports the use of `rxjs-compat` with version 6.
+* Adds an `rxjs-no-internal` rule.
+* Adds an `rxjs-ban-observables` rule.
+* Adds an `rxjs-ban-operators` rule.
+
 <a name="3.17.0"></a>
 ## [3.17.0](https://github.com/cartant/rxjs-tslint-rules/compare/v3.16.1...v3.17.0) (2018-04-07)
 
