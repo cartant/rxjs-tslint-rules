@@ -13,6 +13,8 @@ The package includes the following rules (none of which are enabled by default):
 | Rule | Description | Options |
 | --- | --- | --- |
 | `rxjs-add` | Enforces the importation of patched observables and operators used in the module. | [See below](#rxjs-add) |
+| `rxjs-ban-observables` | Disallows the use of banned observables. | [See below](#rxjs-ban) |
+| `rxjs-ban-operators` | Disallows the use of banned operators. | [See below](#rxjs-ban) |
 | `rxjs-deep-operators` | Enforces deep importation from within `rxjs/operators` - e.g. `rxjs/operators/map`. Until Webpack does not require configuration for tree shaking to work, there will be situations where deep imports are preferred. | None |
 | `rxjs-finnish` | Enforces the use of [Finnish notation](https://medium.com/@benlesh/observables-and-finnish-notation-df8356ed1c9b). | [See below](#rxjs-finnish) |
 | `rxjs-no-add` | Disallows the importation of patched observables and operators. | [See below](#rxjs-no-add) |
@@ -22,6 +24,7 @@ The package includes the following rules (none of which are enabled by default):
 | `rxjs-no-finnish` | Disallows the use of [Finnish notation](https://medium.com/@benlesh/observables-and-finnish-notation-df8356ed1c9b). | None |
 | `rxjs-no-ignored-error` | Disallows the calling of `subscribe` without specifying an error handler. | None |
 | `rxjs-no-ignored-subscribe` | Disallows the calling of subscribe without specifying arguments. | None |
+| `rxjs-no-internal` | Disallows importation from `rxjs/internal`. | None |
 | `rxjs-no-operator` | Disallows importation from `rxjs/operator`. Useful if you prefer ['pipeable' operators](https://github.com/ReactiveX/rxjs/blob/master/doc/pipeable-operators.md) - which are located in the `operators` directory. | None |
 | `rxjs-no-patched` | Disallows the calling of patched methods. Methods must be imported and called explicitly - not via `Observable` or `Observable.prototype`. | [See below](#rxjs-no-add) |
 | `rxjs-no-subject-unsubscribe` | Disallows calling the `unsubscribe` method of a `Subject` instance. For an explanation of why this can be a problem, see [this](https://stackoverflow.com/a/45112125/6680611) Stack Overflow answer. | None |
@@ -63,6 +66,26 @@ If `file` is specified, the `allowElsewhere` and `allowUnused` options can be us
 Note that there is no `file` option for the `rxjs-no-unused-add` rule, so that rule should not be used in conjunction with the `rxjs-add` rule - if the `file` option is specified for the latter. Use the `rxjs-add` rule's `allowUnused` option instead.
 
 If the `file` option is not specified, patched observables and operators must be imported in the modules in which they are used.
+
+<a name="rxjs-ban"></a>
+
+#### rxjs-ban-observables/operators
+
+The `rxjs-ban-observables` and `rxjs-ban-operators` rules take an object containing keys that are the names of observables/operators and values that are either booleans or strings containing the explanation for the ban.
+
+For example:
+
+```json
+"rules": {
+  "rxjs-ban-operators": {
+    "options": [{
+      "concat": "Use the concat factory function",
+      "merge": "Use the merge factory function"
+    }],
+    "severity": "error"
+  }
+}
+```
 
 <a name="rxjs-finnish"></a>
 
