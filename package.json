@@ -64,5 +64,5 @@
     "test:fixtures-v6-compat": "yarn --cwd ./fixtures/v6-compat install && yarn --cwd ./fixtures/v6-compat upgrade && cross-env RXJS_TSLINT_FIXTURES_DIR=./fixtures/v6-compat mocha build/**/*-spec.js",
     "test:non-fixtures": "mocha build/**/*-spec.js"
   },
-  "version": "4.0.0-rc.2"
+  "version": "4.0.0"
 }
