@@ -18,7 +18,7 @@ export class Rule extends Lint.Rules.TypedRule {
             "type": "object"
         },
         optionsDescription: Lint.Utils.dedent`
-            An object containing keys that are regular expressions against which the observables are matched
+            An object containing keys that are names of observable factory functions
             and values that are either booleans or strings containing the explanation for the ban.`,
         requiresTypeInfo: true,
         ruleName: "rxjs-ban-observables",
@@ -48,7 +48,7 @@ class Walker extends UsedWalker {
                 if (value !== false) {
                     this._bans.push({
                         explanation: (typeof value === "string") ? value : "",
-                        regExp: new RegExp(key)
+                        regExp: new RegExp(`^${key}$`)
                     });
                 }
             });
