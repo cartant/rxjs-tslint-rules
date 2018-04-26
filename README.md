@@ -1,3 +1,7 @@
+If you've arrived here looking for the TSLint rules that automatically convert RxJS version 5 code to version 6, you can find those rules here: [`rxjs-tslint`](https://github.com/ReactiveX/rxjs-tslint).
+
+That said, if you've not already done so, you might want to checkout the rules in this package, too. Using them, you can avoid potential problems and questionable practices.
+
 # rxjs-tslint-rules
 
 [![GitHub License](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/cartant/rxjs-tslint-rules/blob/master/LICENSE)
