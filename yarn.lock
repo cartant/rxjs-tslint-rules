@@ -14,9 +14,13 @@
   version "5.2.0"
   resolved "https://registry.yarnpkg.com/@types/mocha/-/mocha-5.2.0.tgz#b3c8e69f038835db1a7fdc0b3d879fc50506e29e"
 
-"@types/node@*", "@types/node@^9.3.0":
-  version "9.6.6"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-9.6.6.tgz#439b91f9caf3983cad2eef1e11f6bedcbf9431d2"
+"@types/node@*":
+  version "10.0.0"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-10.0.0.tgz#c40f8e07dce607d3ef25a626b93a6a7cdcf97881"
+
+"@types/node@^9.3.0":
+  version "9.6.7"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-9.6.7.tgz#5f3816d1db2155edcde1b2e3aa5d0e5c520cb564"
 
 "@types/resolve@^0.0.7":
   version "0.0.7"
@@ -101,8 +105,8 @@ chalk@^1.1.3:
     supports-color "^2.0.0"
 
 chalk@^2.3.0:
-  version "2.4.0"
-  resolved "https://registry.yarnpkg.com/chalk/-/chalk-2.4.0.tgz#a060a297a6b57e15b61ca63ce84995daa0fe6e52"
+  version "2.4.1"
+  resolved "https://registry.yarnpkg.com/chalk/-/chalk-2.4.1.tgz#18c49ab16a037b6eb0152cc83e3471338215b66e"
   dependencies:
     ansi-styles "^3.2.1"
     escape-string-regexp "^1.0.5"
@@ -331,9 +335,9 @@ rimraf@^2.6.1:
   dependencies:
     glob "^7.0.5"
 
-rxjs@^6.0.0-rc.0:
-  version "6.0.0-uncanny-rc.7"
-  resolved "https://registry.yarnpkg.com/rxjs/-/rxjs-6.0.0-uncanny-rc.7.tgz#e5d6ebe2c538c583bf4b3600b60112d64a7a6991"
+rxjs@^6.0.0:
+  version "6.0.0"
+  resolved "https://registry.yarnpkg.com/rxjs/-/rxjs-6.0.0.tgz#d647e029b5854617f994c82fe57a4c6747b352da"
   dependencies:
     tslib "^1.9.0"
 
@@ -399,8 +403,8 @@ tslint@^5.1.0:
     tsutils "^2.12.1"
 
 tsutils@^2.12.1, tsutils@^2.19.1:
-  version "2.26.1"
-  resolved "https://registry.yarnpkg.com/tsutils/-/tsutils-2.26.1.tgz#9e4a0cb9ff173863f34c22a961969081270d1878"
+  version "2.26.2"
+  resolved "https://registry.yarnpkg.com/tsutils/-/tsutils-2.26.2.tgz#a9f9f63434a456a5e0c95a45d9a59181cb32d3bf"
   dependencies:
     tslib "^1.8.1"
 
