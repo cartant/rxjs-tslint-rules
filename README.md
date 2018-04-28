@@ -41,6 +41,7 @@ There are some examples of policies that can be implemented using particular rul
 
 * [Managing RxJS Imports with TSLint](https://medium.com/@cartant/managing-rxjs-imports-with-tslint-828cdc66b5ee); and
 * [Understanding Lettable Operators](https://blog.angularindepth.com/rxjs-understanding-lettable-operators-fe74dda186d3).
+* [TSLint Rules for Version 6](https://blog.angularindepth.com/rxjs-tslint-rules-for-version-6-d10e2482292d)
 
 And [Christian Liebel](https://github.com/chliebel) has written about his approach to importing RxJS in his blog post:
 
