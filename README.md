@@ -228,7 +228,7 @@ The following options are equivalent to the rule's default configuration:
 
 The `rxjs-no-unsafe-switchmap` rule does its best to determine whether or not NgRx effects or `redux-observable` epics use the `switchMap` operator with actions for which it could be unsafe.
 
-For example, it would be unsafe to use `switchMap` in an effect or epic that deletes a resource. If the user were to instigate another delete action whilst one was pending, the pending action would be cancelled and the pending delete might or might not occur. Victor Savkin has mentioned such scenarios in [a tweet](https://mobile.twitter.com/victorsavkin/status/963486303118557185).
+For example, it would be unsafe to use `switchMap` in an effect or epic that deletes a resource. If the user were to instigate another delete action whilst one was pending, the pending action would be cancelled and the pending delete might or might not occur. Victor Savkin has mentioned such scenarios in [a tweet](https://mobile.twitter.com/victorsavkin/status/963486303118557185) and I've written an article that's based on his tweet: [Avoiding switchMap-Related Bugs](https://blog.angularindepth.com/switchmap-bugs-b6de69155524).
 
 The rule takes an optional object with optional `allow`, `disallow` and `observable` properties. The properties can be specifed as regular expression strings or as arrays of words.
 
