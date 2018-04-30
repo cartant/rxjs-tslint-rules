@@ -1,3 +1,10 @@
+<a name="4.0.1"></a>
+## [4.0.1](https://github.com/cartant/rxjs-tslint-rules/compare/v4.0.0...v4.0.1) (2018-04-30)
+
+## Fixes
+
+* Include ban explanation in failure message. ([5e993fe](https://github.com/cartant/rxjs-tslint-rules/commit/5e993fe))
+
 <a name="4.0.0"></a>
 ## [4.0.0](https://github.com/cartant/rxjs-tslint-rules/compare/v3.17.0...v4.0.0) (2018-04-25)
 
