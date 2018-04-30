@@ -1,3 +1,10 @@
+<a name="4.0.2"></a>
+## [4.0.2](https://github.com/cartant/rxjs-tslint-rules/compare/v4.0.1...v4.0.2) (2018-04-30)
+
+## Fixes
+
+* The `rxjs-throw-error` rule now fails for thrown non-errors, as well as non-errors passed to `throw` or `throwError`. ([11158f1](https://github.com/cartant/rxjs-tslint-rules/commit/11158f1))
+
 <a name="4.0.1"></a>
 ## [4.0.1](https://github.com/cartant/rxjs-tslint-rules/compare/v4.0.0...v4.0.1) (2018-04-30)
 
