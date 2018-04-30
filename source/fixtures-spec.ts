@@ -280,11 +280,19 @@ describe(`${fixtureVersion} fixtures`, function (): void {
 
             describe("throw-error", () => {
 
-                it("should effect 'rxjs-throw-error' errors", () => {
+                it("should effect 'rxjs-throw-error' for passed non-errors", () => {
 
                     const result = lint("throw-error", "tslint.json");
 
                     expect(result).to.have.property("errorCount", (fixtureVersion === "v5") ? 2 : 1);
+                    result.failures.forEach(failure => expect(failure).to.have.property("ruleName", "rxjs-throw-error"));
+                });
+
+                it("should effect 'rxjs-throw-error' for thrown non-errors", () => {
+
+                    const result = lint("throw-error", "tslint.json", "fixture-thrown.ts");
+
+                    expect(result).to.have.property("errorCount", 1);
                     result.failures.forEach(failure => expect(failure).to.have.property("ruleName", "rxjs-throw-error"));
                 });
             });

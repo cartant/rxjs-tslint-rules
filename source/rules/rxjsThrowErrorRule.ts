@@ -64,4 +64,16 @@ export class Walker extends Lint.ProgramAwareRuleWalker {
 
         super.visitCallExpression(node);
     }
+
+    protected visitThrowStatement(node: ts.ThrowStatement): void {
+
+        const typeChecker = this.getTypeChecker();
+        const type = typeChecker.getTypeAtLocation(node.expression);
+
+        if (!couldBeType(type, "Error")) {
+            this.addFailureAtNode(node, Rule.FAILURE_STRING);
+        }
+
+        super.visitThrowStatement(node);
+    }
 }
