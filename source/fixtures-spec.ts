@@ -736,7 +736,11 @@ describe(`${fixtureVersion} fixtures`, function (): void {
                     const result = lint("ban-observables", "tslint.json");
 
                     expect(result).to.have.property("errorCount", 2);
-                    result.failures.forEach(failure => expect(failure).to.have.property("ruleName", "rxjs-ban-observables"));
+                    result.failures.forEach(failure => {
+                        expect(failure).to.have.property("ruleName", "rxjs-ban-observables");
+                        const message = failure.getFailure();
+                        expect(/concat/.test(message)).to.equal(/Explanation for concat/.test(message));
+                    });
                 });
             });
 
@@ -747,7 +751,11 @@ describe(`${fixtureVersion} fixtures`, function (): void {
                     const result = lint("ban-operators", "tslint.json");
 
                     expect(result).to.have.property("errorCount", 2);
-                    result.failures.forEach(failure => expect(failure).to.have.property("ruleName", "rxjs-ban-operators"));
+                    result.failures.forEach(failure => {
+                        expect(failure).to.have.property("ruleName", "rxjs-ban-operators");
+                        const message = failure.getFailure();
+                        expect(/concat/.test(message)).to.equal(/Explanation for concat/.test(message));
+                    });
                 });
             });
 

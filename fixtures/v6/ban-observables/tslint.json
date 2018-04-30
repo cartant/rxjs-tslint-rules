@@ -4,7 +4,7 @@
   "rules": {
     "rxjs-ban-observables": {
       "options": [{
-        "concat": true,
+        "concat": "Explanation for concat",
         "merge": true
       }],
       "severity": "error"

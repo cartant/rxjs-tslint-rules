@@ -92,8 +92,10 @@ class Walker extends UsedWalker {
 
         const { _bans } = this;
         for (let b = 0, length = _bans.length; b < length; ++b) {
-            if (_bans[b].regExp.test(name)) {
-                return `${Rule.FAILURE_STRING}: ${name}`;
+            const ban = _bans[b];
+            if (ban.regExp.test(name)) {
+                const explanation = ban.explanation ? `: ${ban.explanation}` : "";
+                return `${Rule.FAILURE_STRING}: ${name}${explanation}`;
             }
         }
         return undefined;
