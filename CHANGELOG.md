@@ -1,7 +1,7 @@
 <a name="4.1.0"></a>
 ## [4.1.0](https://github.com/cartant/rxjs-tslint-rules/compare/v4.0.2...v4.1.0) (2018-05-02)
 
-## Fixes
+## Features
 
 * Add whitelist support to `rxjs-finnish` and default to not enforcing Finnish notation for Angular's `EventEmitter`. ([5051876](https://github.com/cartant/rxjs-tslint-rules/commit/5051876))
 
