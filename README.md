@@ -177,7 +177,7 @@ For example, to enforce Finnish notation for variables only:
 }
 ```
 
-The options also support `names` and `types` properties that can be used to prevent the enforcement of Finnish notation for certain names or types.
+The options also support `names` and `types` properties that can be used to prevent the enforcement of Finnish notation for certain names or types. The properties themselves are objects with keys that are regular expressions and values that are booleans.
 
 For example, the following configuration will not enforce Finnish notation for names ending with `Stream` or for the `EventEmitter` type:
 
