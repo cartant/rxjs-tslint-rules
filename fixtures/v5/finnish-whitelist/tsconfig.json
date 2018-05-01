@@ -9,5 +9,5 @@
     "skipLibCheck": true,
     "target": "es5"
   },
-  "include": ["fixture.ts", "fixture-blacklist.ts"]
+  "include": ["fixture.ts", "fixture-angular.ts", "fixture-blacklist.ts"]
 }

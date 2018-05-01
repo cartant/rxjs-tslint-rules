@@ -71,6 +71,13 @@ describe(`${fixtureVersion} fixtures`, function (): void {
                     expect(result).to.have.property("errorCount", 2);
                     result.failures.forEach(failure => expect(failure).to.have.property("ruleName", "rxjs-finnish"));
                 });
+
+                it("should not effect 'rxjs-finnish' errors, by default, for Angular interfaces and types", () => {
+
+                    const result = lint("finnish-whitelist", "tslint-angular.json", "fixture-angular.ts");
+
+                    expect(result).to.have.property("errorCount", 0);
+                });
             });
 
             describe("finnish-with-$", () => {

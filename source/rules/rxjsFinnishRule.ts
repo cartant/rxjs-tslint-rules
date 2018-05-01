@@ -9,6 +9,9 @@ import * as ts from "typescript";
 import * as tsutils from "tsutils";
 import { couldBeType } from "../support/util";
 
+const defaultNamesRegExp = /^(canActivate|canActivateChild|canDeactivate|canLoad|intercept|resolve|validate)$/;
+const defaultTypesRegExp = /^EventEmitter$/;
+
 export class Rule extends Lint.Rules.TypedRule {
 
     public static metadata: Lint.IRuleMetadata = {
@@ -67,15 +70,20 @@ class Walker extends Lint.ProgramAwareRuleWalker {
                 Object.entries(options.names).forEach(([key, validate]: [string, boolean]) => {
                     this.names.push({ regExp: new RegExp(key), validate });
                 });
+            } else {
+                this.names.push({ regExp: defaultNamesRegExp, validate: false });
             }
             if (options.types) {
                 Object.entries(options.types).forEach(([key, validate]: [string, boolean]) => {
                     this.types.push({ regExp: new RegExp(key), validate });
                 });
             } else {
-                this.types.push({ regExp: /^EventEmitter$/, validate: true });
+                this.types.push({ regExp: defaultTypesRegExp, validate: false });
             }
             this.validate = { ...this.validate, ...options };
+        } else {
+            this.names.push({ regExp: defaultNamesRegExp, validate: false });
+            this.types.push({ regExp: defaultTypesRegExp, validate: false });
         }
     }
 
