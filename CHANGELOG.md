@@ -1,3 +1,10 @@
+<a name="4.1.1"></a>
+## [4.1.1](https://github.com/cartant/rxjs-tslint-rules/compare/v4.1.1...v4.1.1) (2018-05-02)
+
+## Fixes
+
+* Correctly configure the Angular whitelist for `rxjs-finnish` and add Angular interface methods that return `Observable`. ([4f1401e](https://github.com/cartant/rxjs-tslint-rules/commit/4f1401e))
+
 <a name="4.1.0"></a>
 ## [4.1.0](https://github.com/cartant/rxjs-tslint-rules/compare/v4.0.2...v4.1.0) (2018-05-02)
 
