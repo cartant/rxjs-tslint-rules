@@ -55,6 +55,24 @@ describe(`${fixtureVersion} fixtures`, function (): void {
 
         if (["v5", "v6"].includes(fixtureVersion)) {
 
+            describe("finnish-whitelist", () => {
+
+                it("should not effect 'rxjs-finnish' errors for whitelisted usage", () => {
+
+                    const result = lint("finnish-whitelist", "tslint.json");
+
+                    expect(result).to.have.property("errorCount", 0);
+                });
+
+                it("should effect 'rxjs-finnish' errors for blacklisted usage", () => {
+
+                    const result = lint("finnish-whitelist", "tslint.json", "fixture-blacklist.ts");
+
+                    expect(result).to.have.property("errorCount", 2);
+                    result.failures.forEach(failure => expect(failure).to.have.property("ruleName", "rxjs-finnish"));
+                });
+            });
+
             describe("finnish-with-$", () => {
 
                 it("should effect no errors", () => {

@@ -17,8 +17,10 @@ export class Rule extends Lint.Rules.TypedRule {
             properties: {
                 functions: { type: "boolean" },
                 methods: { type: "boolean" },
+                names: { type: "object" },
                 parameters: { type: "boolean" },
                 properties: { type: "boolean" },
+                types: { type: "object" },
                 variables: { type: "boolean" }
             },
             type: "object"
@@ -27,7 +29,10 @@ export class Rule extends Lint.Rules.TypedRule {
             An optional object with optional \`functions\`, \`methods\`, \`parameters\`,
             \`properties\` and \`variables\` properties.
             The properies are booleans and determine whether or not Finnish notation is enforced.
-            All properties default to \`true\`.`,
+            All properties default to \`true\`.
+            The object also has optional \`names\` and \`types\` properties which are themselves
+            objects containing keys that are regular expressions and values that are booleans -
+            indicating whether Finnish notation is required for particular names or types.`,
         requiresTypeInfo: true,
         ruleName: "rxjs-finnish",
         type: "style",
@@ -42,6 +47,8 @@ export class Rule extends Lint.Rules.TypedRule {
 
 class Walker extends Lint.ProgramAwareRuleWalker {
 
+    private names: { regExp: RegExp, validate: boolean }[] = [];
+    private types: { regExp: RegExp, validate: boolean }[] = [];
     private validate = {
         functions: true,
         methods: true,
@@ -56,6 +63,18 @@ class Walker extends Lint.ProgramAwareRuleWalker {
 
         const [options] = this.getOptions();
         if (options) {
+            if (options.names) {
+                Object.entries(options.names).forEach(([key, validate]: [string, boolean]) => {
+                    this.names.push({ regExp: new RegExp(key), validate });
+                });
+            }
+            if (options.types) {
+                Object.entries(options.types).forEach(([key, validate]: [string, boolean]) => {
+                    this.types.push({ regExp: new RegExp(key), validate });
+                });
+            } else {
+                this.types.push({ regExp: /^EventEmitter$/, validate: true });
+            }
             this.validate = { ...this.validate, ...options };
         }
     }
@@ -161,6 +180,18 @@ class Walker extends Lint.ProgramAwareRuleWalker {
             const text = name.getText();
             const type = this.getTypeChecker().getTypeAtLocation(typeNode || node);
             if (!/\$$/.test(text) && couldBeType(type, "Observable")) {
+                for (let i = 0; i < this.names.length; ++i) {
+                    const { regExp, validate } = this.names[i];
+                    if (regExp.test(text) && !validate) {
+                        return;
+                    }
+                }
+                for (let i = 0; i < this.types.length; ++i) {
+                    const { regExp, validate } = this.types[i];
+                    if (regExp.test(type.symbol.name) && !validate) {
+                        return;
+                    }
+                }
                 this.addFailureAtNode(node, `Finnish notation required for ${text}`);
             }
         }

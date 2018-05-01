@@ -177,6 +177,28 @@ For example, to enforce Finnish notation for variables only:
 }
 ```
 
+The options also support `names` and `types` properties that can be used to prevent the enforcement of Finnish notation for certain names or types.
+
+For example, the following configuration will not enforce Finnish notation for names ending with `Stream` or for the `EventEmitter` type:
+
+```json
+"rules": {
+  "rxjs-finnish": {
+    "options": [{
+      "names": {
+          "Stream$": false
+      },
+      "types": {
+          "^EventEmitter$": false
+      }
+    }],
+    "severity": "error"
+  }
+}
+```
+
+If the `types` property is not specified, it will default to not enforcing Finnish notation for Angular's `EventEmitter` type.
+
 <a name="rxjs-no-add"></a>
 
 #### rxjs-no-add and rxjs-no-patched
