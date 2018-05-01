@@ -22,7 +22,7 @@ export class Rule extends Lint.Rules.TypedRule {
         typescriptOnly: true
     };
 
-    public static FAILURE_STRING = "Observable.create is forbidden";
+    public static FAILURE_STRING = "Observable.create is forbidden; use new Observable.";
 
     public applyWithProgram(sourceFile: ts.SourceFile, program: ts.Program): Lint.RuleFailure[] {
 
