@@ -43,7 +43,7 @@ class Walker extends UsedWalker {
                 });
             }
         } else if (/^['"]rxjs\/add\/operator\/do['"]/.test(moduleSpecifier)) {
-            this.addFailureAtNode(node, Rule.FAILURE_STRING);
+            this.addFailureAtNode(node.moduleSpecifier, Rule.FAILURE_STRING);
         }
 
         super.visitImportDeclaration(node);
