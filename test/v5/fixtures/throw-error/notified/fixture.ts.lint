@@ -1,0 +1,12 @@
+import { Observable } from "rxjs/Observable";
+import { _throw } from "rxjs/observable/throw";
+import "rxjs/add/observable/throw";
+
+const ob1 = Observable.throw("Boom!");
+                             ~~~~~~~                [throw-error]
+const ob2 = Observable.throw(new Error("Boom!"));
+const ob3 = _throw("Boom!");
+                   ~~~~~~~                          [throw-error]
+const ob4 = _throw(new Error("Boom!"));
+
+[throw-error]: Passing non-Error values is forbidden
