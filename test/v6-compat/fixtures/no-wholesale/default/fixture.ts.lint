@@ -1,0 +1,5 @@
+import { Observable } from "rxjs";
+                           ~~~~~~       [no-wholesale]
+import { Subject } from "rxjs/Subject";
+
+[no-wholesale]: Wholesale RxJS imports are forbidden
