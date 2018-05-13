@@ -1,4 +1,4 @@
-import { Observable } from "rxjs";
+import { Observable } from "rxjs/Observable";
 import { _do } from "rxjs/operator/do";
 import { _do as doAlias } from "rxjs/operator/do";
 import "rxjs/add/observable/of";

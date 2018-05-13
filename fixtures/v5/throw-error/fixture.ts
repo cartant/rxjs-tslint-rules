@@ -1,4 +1,4 @@
-import { Observable } from "rxjs";
+import { Observable } from "rxjs/Observable";
 import { _throw } from "rxjs/observable/throw";
 import "rxjs/add/observable/throw";
 

@@ -1,4 +1,4 @@
-import { Observable } from "rxjs";
+import { Observable } from "rxjs/Observable";
 import { switchMap, tap } from "rxjs/operators";
 import "rxjs/add/observable/empty";
 import "rxjs/add/observable/of";
