@@ -110,7 +110,7 @@ class Walker extends Lint.ProgramAwareRuleWalker {
             const text = name.getText();
             const type = this.getTypeChecker().getTypeAtLocation(typeNode || node);
             if (/\$$/.test(text) && couldBeType(type, "Observable")) {
-                this.addFailureAtNode(node, Rule.FAILURE_STRING);
+                this.addFailureAtNode(name, Rule.FAILURE_STRING);
             }
         }
     }

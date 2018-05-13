@@ -200,7 +200,7 @@ class Walker extends Lint.ProgramAwareRuleWalker {
                         return;
                     }
                 }
-                this.addFailureAtNode(node, `Finnish notation required for ${text}`);
+                this.addFailureAtNode(name, `Finnish notation required for ${text}`);
             }
         }
     }
