@@ -1,6 +1,7 @@
-import { Observable, of } from "rxjs";
+import { Observable } from "rxjs/Observable";
+import "rxjs/add/observable/of";
 
-const someObservable = of(0);
+const someObservable = Observable.of(0);
       ~~~~~~~~~~~~~~                                                                        [finnish % ("someObservable")]
 
 const someEmptyObject = {};
@@ -34,7 +35,6 @@ class SomeClass {
         ~~~~~~~~~~                                                                          [finnish % ("someSetter")]
                    ~~~~~~~~~                                                                [finnish % ("someParam")]
     someMethod(someParam: Observable<any>): Observable<any> { return someParam; }
-    ~~~~~~~~~~                                                                              [finnish % ("someMethod")]
                ~~~~~~~~~                                                                    [finnish % ("someParam")]
 }
 
@@ -42,7 +42,6 @@ interface SomeInterface {
     someProperty: Observable<any>;
     ~~~~~~~~~~~~                                                                            [finnish % ("someProperty")]
     someMethod(someParam: Observable<any>): Observable<any>;
-    ~~~~~~~~~~                                                                              [finnish % ("someMethod")]
                ~~~~~~~~~                                                                    [finnish % ("someParam")]
 }
 

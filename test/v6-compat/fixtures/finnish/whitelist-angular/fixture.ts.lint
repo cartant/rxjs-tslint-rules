@@ -1,0 +1,18 @@
+import { Observable } from "rxjs/Observable";
+import { Subject } from "rxjs/Subject";
+import { of } from "rxjs/observable/of";
+
+class EventEmitter<T> extends Subject<T> {}
+
+class Something {
+    public somethingChanged: EventEmitter<any>;
+    public canActivate(): Observable<any> { return of(); }
+    public canActivateChild(): Observable<any> { return of(); }
+    public canDeactivate(): Observable<any> { return of(); }
+    public canLoad(): Observable<any> { return of(); }
+    public intercept(): Observable<any> { return of(); }
+    public resolve(): Observable<any> { return of(); }
+    public validate(): Observable<any> { return of(); }
+}
+
+[finnish]: Finnish notation required for %s

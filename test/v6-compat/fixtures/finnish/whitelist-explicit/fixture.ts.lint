@@ -1,0 +1,14 @@
+import { Subject } from "rxjs/Subject";
+import { of } from "rxjs/observable/of";
+
+class EventEmitter<T> extends Subject<T> {}
+let eventEmitter: EventEmitter<any>;
+const foreign = of(1);
+
+class SomeSubject<T> extends Subject<T> {}
+let someSubject: SomeSubject<any>;
+    ~~~~~~~~~~~                                 [finnish % ("someSubject")]
+const finnish = of(1);
+      ~~~~~~~                                   [finnish % ("finnish")]
+
+[finnish]: Finnish notation required for %s

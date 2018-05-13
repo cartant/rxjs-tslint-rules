@@ -1,19 +1,16 @@
-import { Observable, of } from "rxjs";
+import { Observable } from "rxjs/Observable";
+import "rxjs/add/observable/of";
 
-const someObservable = of(0);
-      ~~~~~~~~~~~~~~                                                                        [finnish % ("someObservable")]
+const someObservable = Observable.of(0);
 
 const someEmptyObject = {};
 const someObject = { ...someEmptyObject, someKey: someObservable };
                                          ~~~~~~~                                            [finnish % ("someKey")]
 const { someKey } = someObject;
-        ~~~~~~~                                                                             [finnish % ("someKey")]
 const { someKey: someRenamedKey } = someObject;
-                 ~~~~~~~~~~~~~~                                                             [finnish % ("someRenamedKey")]
 
 const someArray = [someObservable];
 const [someElement] = someArray;
-       ~~~~~~~~~~~                                                                          [finnish % ("someElement")]
 someArray.forEach(function (element: Observable<any>): void {});
                             ~~~~~~~                                                         [finnish % ("element")]
 someArray.forEach((element: Observable<any>) => {});

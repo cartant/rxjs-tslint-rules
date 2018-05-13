@@ -22,6 +22,7 @@ someArray.forEach((element$: Observable<any>) => {});
 function someFunction$(someParam$: Observable<any>): Observable<any> { return someParam; }
          ~~~~~~~~~~~~~                                                                      [no-finnish]
                        ~~~~~~~~~~                                                           [no-finnish]
+
 class SomeClass {
     someProperty$: Observable<any>;
     ~~~~~~~~~~~~~                                                                           [no-finnish]

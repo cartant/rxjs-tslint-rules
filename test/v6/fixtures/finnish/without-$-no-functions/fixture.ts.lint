@@ -20,7 +20,6 @@ someArray.forEach((element: Observable<any>) => {});
                    ~~~~~~~                                                                  [finnish % ("element")]
 
 function someFunction(someParam: Observable<any>): Observable<any> { return someParam; }
-         ~~~~~~~~~~~~                                                                       [finnish % ("someFunction")]
                       ~~~~~~~~~                                                             [finnish % ("someParam")]
 
 class SomeClass {

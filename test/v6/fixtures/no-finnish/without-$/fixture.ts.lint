@@ -1,0 +1,30 @@
+import { Observable, of } from "rxjs";
+
+const someObservable = of(0);
+
+const someEmptyObject = {};
+const someObject = { ...someEmptyObject, someKey: someObservable };
+const { someKey } = someObject;
+const { someKey: someRenamedKey } = someObject;
+
+const someArray = [someObservable];
+const [someElement] = someArray;
+someArray.forEach(function (element: Observable<any>): void {});
+someArray.forEach((element: Observable<any>) => {});
+
+function someFunction(someParam: Observable<any>): Observable<any> { return someParam; }
+
+class SomeClass {
+    someProperty: Observable<any>;
+    constructor (someParam: Observable<any>) {}
+    get someGetter(): Observable<any> { throw new Error("Some error."); }
+    set someSetter(someParam: Observable<any>) {}
+    someMethod(someParam: Observable<any>): Observable<any> { return someParam; }
+}
+
+interface SomeInterface {
+    someProperty: Observable<any>;
+    someMethod(someParam: Observable<any>): Observable<any>;
+}
+
+[no-finnish]: Finnish notation is forbidden

@@ -5,7 +5,6 @@ const someObservable = of(0);
 
 const someEmptyObject = {};
 const someObject = { ...someEmptyObject, someKey: someObservable };
-                                         ~~~~~~~                                            [finnish % ("someKey")]
 const { someKey } = someObject;
         ~~~~~~~                                                                             [finnish % ("someKey")]
 const { someKey: someRenamedKey } = someObject;
@@ -25,13 +24,10 @@ function someFunction(someParam: Observable<any>): Observable<any> { return some
 
 class SomeClass {
     someProperty: Observable<any>;
-    ~~~~~~~~~~~~                                                                            [finnish % ("someProperty")]
     constructor (someParam: Observable<any>) {}
                  ~~~~~~~~~                                                                  [finnish % ("someParam")]
     get someGetter(): Observable<any> { throw new Error("Some error."); }
-        ~~~~~~~~~~                                                                          [finnish % ("someGetter")]
     set someSetter(someParam: Observable<any>) {}
-        ~~~~~~~~~~                                                                          [finnish % ("someSetter")]
                    ~~~~~~~~~                                                                [finnish % ("someParam")]
     someMethod(someParam: Observable<any>): Observable<any> { return someParam; }
     ~~~~~~~~~~                                                                              [finnish % ("someMethod")]
@@ -40,7 +36,6 @@ class SomeClass {
 
 interface SomeInterface {
     someProperty: Observable<any>;
-    ~~~~~~~~~~~~                                                                            [finnish % ("someProperty")]
     someMethod(someParam: Observable<any>): Observable<any>;
     ~~~~~~~~~~                                                                              [finnish % ("someMethod")]
                ~~~~~~~~~                                                                    [finnish % ("someParam")]
