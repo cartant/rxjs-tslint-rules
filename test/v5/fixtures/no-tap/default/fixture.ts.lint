@@ -1,0 +1,11 @@
+import { of } from "rxjs/observable/of";
+import { tap } from "rxjs/operators/tap";
+         ~~~                                            [no-tap]
+import { tap as tapAlias } from "rxjs/operators/tap";
+         ~~~                                            [no-tap]
+const ob = of(1).pipe(
+    tap(value => console.log(value)),
+    tapAlias(value => console.log(value))
+);
+
+[no-tap]: RxJS do/tap operator is forbidden
