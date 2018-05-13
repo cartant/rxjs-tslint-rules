@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "rxjs": "^6.0.0"
+  },
+  "name": "rxjs-tslint-rules-fixtures-v6"
+}
