@@ -34,7 +34,7 @@ class Walker extends Lint.RuleWalker {
         const moduleSpecifier = node.moduleSpecifier.getText();
         const match = moduleSpecifier.match(/^['"]rxjs\/internal\/\w+/);
         if (match) {
-            this.addFailureAtNode(node, Rule.FAILURE_STRING);
+            this.addFailureAtNode(node.moduleSpecifier, Rule.FAILURE_STRING);
         }
         super.visitImportDeclaration(node);
     }
