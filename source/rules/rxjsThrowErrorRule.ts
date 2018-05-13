@@ -44,7 +44,7 @@ export class Walker extends Lint.ProgramAwareRuleWalker {
 
             if ((name === "throw") && couldBeType(type, "Observable")) {
                 if (!argument || !couldBeType(typeChecker.getTypeAtLocation(argument), "Error")) {
-                    this.addFailureAtNode(node, Rule.FAILURE_STRING);
+                    this.addFailureAtNode(argument, Rule.FAILURE_STRING);
                 }
             }
 
@@ -57,7 +57,7 @@ export class Walker extends Lint.ProgramAwareRuleWalker {
 
             if (((name === "_throw") || (name === "throwError")) && couldBeType(returnType, "Observable")) {
                 if (!argument || !couldBeType(typeChecker.getTypeAtLocation(argument), "Error")) {
-                    this.addFailureAtNode(node, Rule.FAILURE_STRING);
+                    this.addFailureAtNode(argument, Rule.FAILURE_STRING);
                 }
             }
         }
@@ -71,7 +71,7 @@ export class Walker extends Lint.ProgramAwareRuleWalker {
         const type = typeChecker.getTypeAtLocation(node.expression);
 
         if (!couldBeType(type, "Error")) {
-            this.addFailureAtNode(node, Rule.FAILURE_STRING);
+            this.addFailureAtNode(node.expression, Rule.FAILURE_STRING);
         }
 
         super.visitThrowStatement(node);
