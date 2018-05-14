@@ -1,0 +1,73 @@
+import { Observable } from "rxjs/Observable";
+import { of } from "rxjs/observable/of";
+import { map } from "rxjs/operators/map";
+import { THOUSAND } from "./constants";
+import { Vertical } from "./enums";
+import "rxjs/add/observable/of";
+import "rxjs/add/operator/map";
+
+enum Horizontal {
+    Left = 1,
+    Right
+}
+
+const HUNDRED = 100;
+let outer: any;
+
+Observable.of(1).map(value => outer = value).subscribe();
+                              ~~~~~                                                 [no-unsafe-scope]
+of(1).pipe(map(value => outer = value)).subscribe();
+                        ~~~~~                                                       [no-unsafe-scope]
+
+Observable.of(1).map(function (value) { return outer = value; }).subscribe();
+                                               ~~~~~                                [no-unsafe-scope]
+of(1).pipe(map(function (value) { return outer = value; })).subscribe();
+                                         ~~~~~                                      [no-unsafe-scope]
+
+Observable.of(1).map(value => value * HUNDRED * THOUSAND).subscribe();
+of(1).pipe(map(value => value * HUNDRED * THOUSAND)).subscribe();
+
+Observable.of(1).do(value => outer = value).subscribe();
+of(1).pipe(tap(value => outer = value)).subscribe();
+
+Observable.of(1)
+    .map(() => Horizontal.Left)
+    .map(() => Vertical.Up).subscribe();
+of(1).pipe(
+    map(() => Horizontal.Left),
+    map(() => Vertical.Up)
+).subscribe();
+
+Observable.of("1").map(value => parseInt(value, 10)).subscribe();
+of("1").pipe(map(value => parseInt(value, 10))).subscribe();
+
+Observable.of(1).map(value => Math.ceil(value)).subscribe();
+of(1).pipe(map(value => Math.ceil(value))).subscribe();
+
+function patched(outer: number): Observable<number> {
+    return Observable.of(1).map(value => outer + value);
+}
+function piped(outer: number): Observable<number> {
+    return of(1).pipe(map(value => outer + value));
+}
+
+Observable.of(1)
+    .mergeMap(value => Observable.of(null)
+        .map(() => value)
+    ).subscribe();
+of(1).pipe(
+    mergeMap(value => of(null).pipe(
+        map(() => value)
+    ))
+).subscribe();
+
+class User {
+    constructor(private name: string) {
+        Observable.of("Hello").map(value => `${value}, ${this.name}.`).subscribe();
+                                                         ~~~~                       [no-unsafe-scope]
+        of("Hello").pipe(map(value => `${value}, ${this.name}.`)).subscribe();
+                                                   ~~~~                             [no-unsafe-scope]
+    }
+}
+
+[no-unsafe-scope]: Unsafe scopes are forbidden
