@@ -1,0 +1,17 @@
+import { AsyncSubject } from "rxjs/AsyncSubject";
+import { Subscription } from "rxjs/Subscription";
+
+const a = new AsyncSubject<number>();
+const asub = a.subscribe();
+asub.unsubscribe();
+
+const b = new AsyncSubject<number>();
+b.unsubscribe();
+  ~~~~~~~~~~~                                       [no-subject-unsubscribe]
+
+const csub = new Subscription();
+const c = new AsyncSubject<number>();
+csub.add(c);
+         ~                                          [no-subject-unsubscribe]
+
+[no-subject-unsubscribe]: Calling unsubscribe on a subject is forbidden
