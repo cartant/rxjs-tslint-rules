@@ -1,0 +1,6 @@
+import { Observable } from "rxjs/Observable";
+import "rxjs/add/operator/filter";
+       ~~~~~~~~~~~~~~~~~~~~~~~~~~               [no-add]
+import "rxjs/add/operator/map";
+
+[no-add]: RxJS add import is forbidden
