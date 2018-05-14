@@ -1,0 +1,8 @@
+{
+  "defaultSeverity": "error",
+  "jsRules": {},
+  "rules": {
+    "rxjs-no-ignored-subscribe": { "severity": "error" }
+  },
+  "rulesDirectory": "../../../../../build/rules"
+}

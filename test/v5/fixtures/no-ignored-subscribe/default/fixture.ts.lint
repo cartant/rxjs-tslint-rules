@@ -1,0 +1,14 @@
+import { Subject } from "rxjs/Subject";
+import { of } from "rxjs/observable/of";
+
+const subject = new Subject<any>();
+const observable = of([1, 2]);
+observable.subscribe();
+           ~~~~~~~~~                                [no-ignored-subscribe]
+observable.subscribe(value => console.log(value));
+
+subject.subscribe();
+        ~~~~~~~~~                                   [no-ignored-subscribe]
+subject.subscribe(value => console.log(value));
+
+[no-ignored-subscribe]: Calling subscribe without arguments is forbidden

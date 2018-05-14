@@ -1,0 +1,20 @@
+import { Subject } from "rxjs/Subject";
+import { of } from "rxjs/observable/of";
+
+const subject = new Subject<any>();
+const observable = of([1, 2]);
+const next = () => {};
+
+observable.subscribe(() => {}, () => {});
+observable.subscribe(() => {});
+           ~~~~~~~~~                        [no-ignored-error]
+observable.subscribe(next);
+           ~~~~~~~~~                        [no-ignored-error]
+observable.subscribe(subject);
+
+subject.subscribe(() => {});
+        ~~~~~~~~~                           [no-ignored-error]
+subject.subscribe(next);
+        ~~~~~~~~~                           [no-ignored-error]
+
+[no-ignored-error]: Calling subscribe without an error handler is forbidden

@@ -1,0 +1,8 @@
+{
+  "defaultSeverity": "error",
+  "jsRules": {},
+  "rules": {
+    "rxjs-no-ignored-error": { "severity": "error" }
+  },
+  "rulesDirectory": "../../../../../build/rules"
+}
