@@ -70,7 +70,7 @@ class Walker extends UsedWalker {
             if (match) {
                 const failure = this.getFailure(match[1]);
                 if (failure) {
-                    this.addFailureAtNode(node, failure);
+                    this.addFailureAtNode(node.moduleSpecifier, failure);
                 }
             }
         }
