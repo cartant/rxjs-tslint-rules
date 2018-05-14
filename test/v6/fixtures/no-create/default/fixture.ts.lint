@@ -1,0 +1,10 @@
+import { Observable, Observer } from "rxjs";
+
+const ob = Observable.create((observer: Observer<string>) => {
+                      ~~~~~~                                    [no-create]
+    observer.next("Hello, world.");
+    observer.complete();
+    return () => {};
+});
+
+[no-create]: Observable.create is forbidden; use new Observable.
