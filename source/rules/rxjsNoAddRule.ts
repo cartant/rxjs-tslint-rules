@@ -84,11 +84,11 @@ class Walker extends Lint.RuleWalker {
         if (match) {
             if ((match[1] === "observable") && !this.allowAllObservables) {
                 if (this.allowedObservables.indexOf(match[2]) === -1) {
-                    this.addFailureAtNode(node, Rule.FAILURE_STRING);
+                    this.addFailureAtNode(node.moduleSpecifier, Rule.FAILURE_STRING);
                 }
             } else if ((match[1] === "operator") && !this.allowAllOperators) {
                 if (this.allowedOperators.indexOf(match[2]) === -1) {
-                    this.addFailureAtNode(node, Rule.FAILURE_STRING);
+                    this.addFailureAtNode(node.moduleSpecifier, Rule.FAILURE_STRING);
                 }
             }
         }
