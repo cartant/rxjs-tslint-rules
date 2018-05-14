@@ -35,7 +35,7 @@ class Walker extends Lint.RuleWalker {
         const moduleSpecifier = node.moduleSpecifier.getText();
 
         if (/^['"]rxjs\/operators\/?['"]$/.test(moduleSpecifier)) {
-            this.addFailureAtNode(node, Rule.FAILURE_STRING);
+            this.addFailureAtNode(node.moduleSpecifier, Rule.FAILURE_STRING);
         }
 
         super.visitImportDeclaration(node);
