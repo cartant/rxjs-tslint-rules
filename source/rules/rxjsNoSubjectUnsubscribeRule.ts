@@ -47,7 +47,7 @@ export class Walker extends Lint.ProgramAwareRuleWalker {
                 const [argument] = node.arguments;
                 const argumentType = typeChecker.getTypeAtLocation(argument);
                 if (couldBeType(argumentType, "Subject")) {
-                    this.addFailureAtNode(expression.name, Rule.FAILURE_STRING);
+                    this.addFailureAtNode(argument, Rule.FAILURE_STRING);
                 }
             }
         }
