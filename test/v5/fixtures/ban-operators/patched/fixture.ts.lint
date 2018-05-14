@@ -1,0 +1,6 @@
+import "rxjs/add/operator/concat";
+       ~~~~~~~~~~~~~~~~~~~~~~~~~~   [ban-operators % ("concat")]
+import "rxjs/add/operator/merge";
+       ~~~~~~~~~~~~~~~~~~~~~~~~~    [ban-operators % ("merge")]
+
+[ban-operators]: RxJS operator is banned: %s

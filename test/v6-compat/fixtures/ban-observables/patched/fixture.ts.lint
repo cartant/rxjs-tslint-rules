@@ -1,0 +1,6 @@
+import "rxjs/add/observable/concat";
+       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~     [ban-observables % ("concat")]
+import "rxjs/add/observable/merge";
+       ~~~~~~~~~~~~~~~~~~~~~~~~~~~      [ban-observables % ("merge")]
+
+[ban-observables]: RxJS observable is banned: %s

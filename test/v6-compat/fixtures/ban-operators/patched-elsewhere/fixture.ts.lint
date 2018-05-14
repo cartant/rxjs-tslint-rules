@@ -1,0 +1,10 @@
+import { Observable } from "rxjs/Observable";
+
+declare const o: Observable<number>;
+
+o.concat(Observable.of(1), Observable.of(2));
+  ~~~~~~                                        [ban-operators % ("concat")]
+o.merge(Observable.of(1), Observable.of(2));
+  ~~~~~                                         [ban-operators % ("merge")]
+
+[ban-operators]: RxJS operator is banned: %s

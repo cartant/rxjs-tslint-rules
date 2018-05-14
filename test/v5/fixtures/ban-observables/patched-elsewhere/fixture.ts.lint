@@ -1,0 +1,8 @@
+import { Observable } from "rxjs/Observable";
+
+Observable.concat(Observable.of(1), Observable.of(2));
+           ~~~~~~                                       [ban-observables % ("concat")]
+Observable.merge(Observable.of(1), Observable.of(2));
+           ~~~~~                                        [ban-observables % ("merge")]
+
+[ban-observables]: RxJS observable is banned: %s
