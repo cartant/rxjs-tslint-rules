@@ -1,0 +1,13 @@
+{
+  "defaultSeverity": "error",
+  "jsRules": {},
+  "rules": {
+    "rxjs-no-unsafe-switchmap": {
+      "options": [{
+        "allow": ["FOO"]
+      }],
+      "severity": "error"
+    }
+  },
+  "rulesDirectory": "../../../../../build/rules"
+}
