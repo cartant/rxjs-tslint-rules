@@ -1,0 +1,15 @@
+{
+  "defaultSeverity": "error",
+  "jsRules": {},
+  "rules": {
+    "rxjs-add": {
+      "options": [{
+        "allowElsewhere": false,
+        "allowUnused": false,
+        "file": "./add.ts"
+      }],
+      "severity": "error"
+    }
+  },
+  "rulesDirectory": "../../../../../build/rules"
+}

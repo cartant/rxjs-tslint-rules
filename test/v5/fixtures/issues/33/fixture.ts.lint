@@ -1,0 +1,5 @@
+import { Observable } from "rxjs/Observable";
+
+const ob = Observable.from([]);
+
+[add]: RxJS add import is missing
