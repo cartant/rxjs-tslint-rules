@@ -1,0 +1,6 @@
+import { Observable } from "rxjs/Observable";
+import { map } from "rxjs/operators/map";
+import { tap } from "rxjs/operators";
+                    ~~~~~~~~~~~~~~~~            [deep-operators]
+
+[deep-operators]: Deep importation from 'rxjs/operators' is required
