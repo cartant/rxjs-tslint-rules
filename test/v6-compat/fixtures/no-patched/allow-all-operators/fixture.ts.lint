@@ -1,0 +1,11 @@
+import { Observable } from "rxjs/Observable";
+import { concat } from "rxjs/observable/concat";
+import { filter } from "rxjs/operator/filter";
+
+const source = concat(Observable.of(1), Observable.from([2, 3]));
+                                 ~~                                             [no-patched % ("of")]
+                                                   ~~~~                         [no-patched % ("from")]
+const filtered = source.filter((value) => value > 1) as Observable<number>;
+const mapped = filtered.map((value) => value + 1);
+
+[no-patched]: RxJS patched methods are forbidden: %s
