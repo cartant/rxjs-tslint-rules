@@ -165,7 +165,7 @@ export class Walker extends Lint.ProgramAwareRuleWalker {
                         this.walkPipedOperators(parent);
                         break;
                     case "switchMap":
-                        this.addFailureAtNode(parent, Rule.FAILURE_STRING);
+                        this.addFailureAtNode(name, Rule.FAILURE_STRING);
                         break;
                     default:
                         break;
@@ -191,7 +191,7 @@ export class Walker extends Lint.ProgramAwareRuleWalker {
             if (tsutils.isCallExpression(arg)) {
                 const { expression } = arg;
                 if (tsutils.isIdentifier(expression) && (expression.getText() === "switchMap")) {
-                    this.addFailureAtNode(arg, Rule.FAILURE_STRING);
+                    this.addFailureAtNode(expression, Rule.FAILURE_STRING);
                 }
             }
         });
