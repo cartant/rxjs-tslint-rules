@@ -1,0 +1,9 @@
+import { BehaviorSubject } from "rxjs";
+
+const subject = new BehaviorSubject<number>(1);
+console.log(subject.value);
+                    ~~~~~                               [no-subject-value]
+console.log(subject.getValue());
+                    ~~~~~~~~                            [no-subject-value]
+
+[no-subject-value]: Accessing the value property of a BehaviorSubject is forbidden
