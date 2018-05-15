@@ -8,6 +8,7 @@ import * as fs from "fs";
 import * as Lint from "tslint";
 import * as path from "path";
 import * as ts from "typescript";
+import * as tsutils from "tsutils";
 import * as peer from "../support/peer";
 
 import { AddedWalker } from "../support/added-walker";
@@ -116,7 +117,7 @@ class Walker extends UsedWalker {
 
                         if (!usedObservables[key]) {
                             addedObservables[key].forEach((node) => this.addFailureAtNode(
-                                node,
+                                tsutils.isImportDeclaration(node) ? node.moduleSpecifier : node,
                                 `Unused patched observable in ${options.file}: ${key}`
                             ));
                         }
@@ -126,7 +127,7 @@ class Walker extends UsedWalker {
 
                         if (!usedOperators[key]) {
                             addedOperators[key].forEach((node) => this.addFailureAtNode(
-                                node,
+                                tsutils.isImportDeclaration(node) ? node.moduleSpecifier : node,
                                 `Unused patched operator in ${options.file}: ${key}`
                             ));
                         }
