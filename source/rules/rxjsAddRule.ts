@@ -140,14 +140,14 @@ class Walker extends UsedWalker {
 
                     Object.keys(this.addedObservables).forEach((key) => {
                         this.addedObservables[key].forEach((node) => this.addFailureAtNode(
-                            node,
+                            tsutils.isImportDeclaration(node) ? node.moduleSpecifier : node,
                             `Patched observables are forbidden outside of ${options.file}: ${key}`
                         ));
                     });
 
                     Object.keys(this.addedOperators).forEach((key) => {
                         this.addedOperators[key].forEach((node) => this.addFailureAtNode(
-                            node,
+                            tsutils.isImportDeclaration(node) ? node.moduleSpecifier : node,
                             `Patched operators are forbidden outside of ${options.file}: ${key}`
                         ));
                     });
