@@ -1,0 +1,12 @@
+import { Observable } from "rxjs/Observable";
+import "./add";
+
+const ob1 = Observable.of(1) as Observable<number>;
+                       ~~                           [add % ("of")]
+const ob2 = ob1.map(value => value + 1);
+                ~~~                                 [add % ("map")]
+
+const ob3 = Observable.from([1]);
+const ob4 = ob1.filter(value => value > 1);
+
+[add]: RxJS add import is missing from ./add.ts: %s

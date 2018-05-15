@@ -1,0 +1,12 @@
+import { Observable } from "rxjs/Observable";
+import "rxjs/add/observable/of";
+import "rxjs/add/operator/map";
+import "./add";
+
+const ob1 = Observable.of(1) as Observable<number>;
+const ob2 = ob1.map(value => value + 1);
+
+const ob3 = Observable.from([1]);
+const ob4 = ob1.filter(value => value > 1);
+
+[forbidden]: Patched %s are forbidden outside of ./add.ts: %s

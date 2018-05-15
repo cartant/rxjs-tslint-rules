@@ -1,0 +1,8 @@
+import { Observable } from "rxjs/Observable";
+import "rxjs/add/observable/of";
+import "rxjs/add/operator/mergeMap";
+
+const ob1 = Observable.of(1) as Observable<number>;
+const ob2 = ob1.flatMap(value => Observable.of(value + 1));
+
+[add]: RxJS add import is missing: %s

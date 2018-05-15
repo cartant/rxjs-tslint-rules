@@ -1,0 +1,25 @@
+import { Observable } from "rxjs/Observable";
+import { Observer } from "rxjs/Observer";
+import { Operator } from "rxjs/Operator";
+import { Subscriber } from "rxjs/Subscriber";
+import { Subscription, TeardownLogic } from "rxjs/Subscription";
+import "rxjs/add/operator/map";
+
+export class CustomObservable<T> extends Observable<T> {
+
+    static create(value: number): CustomObservable<number> {
+
+        return new CustomObservable((observer: Observer<number>) => {
+            observer.next(value);
+            observer.complete();
+        });
+    }
+
+    constructor(subscribe?: <R>(subscriber: Subscriber<R>) => TeardownLogic) {
+        super(subscribe);
+    }
+}
+
+const ob = CustomObservable.create(1).map((value) => value + 1);
+
+[add]: RxJS add import is missing: %s
