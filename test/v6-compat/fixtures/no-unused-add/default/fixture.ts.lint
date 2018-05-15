@@ -1,0 +1,14 @@
+import { Observable } from "rxjs/Observable";
+import "rxjs/add/observable/from";
+       ~~~~~~~~~~~~~~~~~~~~~~~~~~                           [no-unused-add % ("from")]
+import "rxjs/add/observable/of";
+import "rxjs/add/operator/filter";
+import "rxjs/add/operator/map";
+import "rxjs/add/operator/scan";
+       ~~~~~~~~~~~~~~~~~~~~~~~~                             [no-unused-add % ("scan")]
+
+const ob1 = Observable.of(1);
+const ob2 = ob1.filter((value) => value > 1);
+const ob3 = ob2.map((value) => value + 1);
+
+[no-unused-add]: RxJS add import is unused: %s
