@@ -4,6 +4,7 @@
  */
 /*tslint:disable:no-use-before-declare*/
 
+import * as fs from "fs";
 import * as Lint from "tslint";
 import * as path from "path";
 import * as ts from "typescript";
@@ -48,7 +49,18 @@ export class Rule extends Lint.Rules.TypedRule {
 
 class Walker extends UsedWalker {
 
+    private static isCaseSensitive = Walker.initCaseSensitive();
     private static fileWalkerCache = new Map<ts.Program, AddedWalker>();
+
+    private static initCaseSensitive(): boolean {
+
+        try {
+            fs.statSync(__filename.toLowerCase());
+            return false;
+        } catch {
+            return true;
+        }
+    }
 
     protected onSourceFileEnd(): void {
 
@@ -182,9 +194,16 @@ class Walker extends UsedWalker {
                 const sourceFile = program.getSourceFileByPath(resolvedFile as any);
                 if (sourceFile) {
                     return sourceFile;
-                } else {
-                    fileDirCandidates.add(path.dirname(configFile));
                 }
+                if (!Walker.isCaseSensitive) {
+                    const found = program.getSourceFiles().find(file => {
+                        return file["path"].toLowerCase() === resolvedFile.toLowerCase();
+                    });
+                    if (found) {
+                        return found;
+                    }
+                }
+                fileDirCandidates.add(path.dirname(configFile));
             }
         }
 
