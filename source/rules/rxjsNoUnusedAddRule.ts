@@ -6,6 +6,7 @@
 
 import * as Lint from "tslint";
 import * as ts from "typescript";
+import * as tsutils from "tsutils";
 import * as peer from "../support/peer";
 
 import { UsedWalker } from "../support/used-walker";
@@ -39,7 +40,7 @@ class Walker extends UsedWalker {
 
             if (!this.usedObservables[key]) {
                 this.addedObservables[key].forEach((node) => this.addFailureAtNode(
-                    node,
+                    tsutils.isImportDeclaration(node) ? node.moduleSpecifier : node,
                     `${Rule.FAILURE_STRING}: ${key}`
                 ));
             }
@@ -49,7 +50,7 @@ class Walker extends UsedWalker {
 
             if (!this.usedOperators[key]) {
                 this.addedOperators[key].forEach((node) => this.addFailureAtNode(
-                    node,
+                    tsutils.isImportDeclaration(node) ? node.moduleSpecifier : node,
                     `${Rule.FAILURE_STRING}: ${key}`
                 ));
             }
