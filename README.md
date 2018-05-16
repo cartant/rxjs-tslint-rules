@@ -95,6 +95,7 @@ The package includes the following rules (none of which are enabled by default):
 | `rxjs-no-subject-unsubscribe` | Disallows calling the `unsubscribe` method of a `Subject` instance. For an explanation of why this can be a problem, see [this](https://stackoverflow.com/a/45112125/6680611) Stack Overflow answer. | None |
 | `rxjs-no-subject-value` | Disallows accessing the `value` property of a `BehaviorSubject` instance. | None |
 | `rxjs-no-tap` | An alias for `rxjs-no-do`. | None |
+| `rxjs-no-unsafe-catch` | Disallows unsafe `catch` and `catchError` usage in [NgRx](https://github.com/ngrx/platform) effects and [`redux-observable`](https://github.com/redux-observable/redux-observable) epics. | [See below](#rxjs-no-unsafe-catch) |
 | `rxjs-no-unsafe-scope` | Disallows the use of variables/properties from unsafe/outer scopes in operator callbacks. | [See below](#rxjs-no-unsafe-scope) |
 | `rxjs-no-unsafe-switchmap` | Disallows unsafe `switchMap` usage in [NgRx](https://github.com/ngrx/platform) effects and [`redux-observable`](https://github.com/redux-observable/redux-observable) epics. | [See below](#rxjs-no-unsafe-switchmap) |
 | `rxjs-no-unused-add` | Disallows the importation of patched observables or operators that are not used in the module. | None |
@@ -213,6 +214,27 @@ For example:
     "options": [{
       "allowObservables": ["never", "throw"],
       "allowOperators": false
+    }],
+    "severity": "error"
+  }
+}
+```
+
+<a name="rxjs-no-unsafe-catch"></a>
+
+#### rxjs-no-unsafe-catch
+
+This rule disallows the usage of `catch` and `catchError` operators that are not within a flattening operator (`switchMap`, etc.). Such usage will see the effect or epic complete and stop dispatching actions after an error occurs.
+
+The rule takes an optional object with an optional `observable` property. The property can be specifed as a regular expression string or as an array of words and is used to identify the action observables from which effects and epics are composed.
+
+The following options are equivalent to the rule's default configuration:
+
+```json
+"rules": {
+  "rxjs-no-unsafe-catch": {
+    "options": [{
+      "observable": "action(s|\\$)?"
     }],
     "severity": "error"
   }
