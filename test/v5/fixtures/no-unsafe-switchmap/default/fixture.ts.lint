@@ -17,7 +17,6 @@ function ofType<T>(type: string, ...moreTypes: string[]): (source: Observable<T>
 
 type Actions = Observable<any>;
 const actions = Observable.of({});
-const action$ = Observable.of({});
 const empty = Observable.empty() as Observable<never>;
 
 const GET_SOMETHING = "GET_SOMETHING";

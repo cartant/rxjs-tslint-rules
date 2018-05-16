@@ -7,7 +7,6 @@ function ofType<T>(type: string, ...moreTypes: string[]): (source: Observable<T>
 
 type Actions = Observable<any>;
 const actions = of({});
-const action$ = of({});
 
 const GET_SOMETHING = "GET_SOMETHING";
 const PUT_SOMETHING = "PUT_SOMETHING";
