@@ -1,5 +1,12 @@
+<a name="4.2.0"></a>
+## [4.2.0](https://github.com/cartant/rxjs-tslint-rules/compare/v4.1.1...v4.2.0) (2018-05-16)
+
+## Features
+
+* Add an `rxjs-no-unsafe-catch` rule for effects and epics. ([b3a3e01](https://github.com/cartant/rxjs-tslint-rules/commit/b3a3e01))
+
 <a name="4.1.1"></a>
-## [4.1.1](https://github.com/cartant/rxjs-tslint-rules/compare/v4.1.1...v4.1.1) (2018-05-02)
+## [4.1.1](https://github.com/cartant/rxjs-tslint-rules/compare/v4.1.0...v4.1.1) (2018-05-02)
 
 ## Fixes
 
