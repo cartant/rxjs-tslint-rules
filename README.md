@@ -224,7 +224,7 @@ For example:
 
 #### rxjs-no-unsafe-catch
 
-This rule disallows the usage of `catch` and `catchError` operators that are not within a flattening operator (`switchMap`, etc.). Such usage will see the effect or epic complete and stop dispatching actions after an error occurs.
+This rule disallows the usage of `catch` and `catchError` operators that are not within a flattening operator (`switchMap`, etc.). Such usage will see the effect or epic complete and stop dispatching actions after an error occurs. See Paul Lessing's article: [Handling Errors in NgRx Effects](https://medium.com/@P_Lessing/handling-errors-in-ngrx-effects-a95d918490d9).
 
 The rule takes an optional object with an optional `observable` property. The property can be specifed as a regular expression string or as an array of words and is used to identify the action observables from which effects and epics are composed.
 
