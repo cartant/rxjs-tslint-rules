@@ -1,0 +1,89 @@
+import { Observable } from "rxjs/Observable";
+import { catchError, switchMap, tap } from "rxjs/operators";
+import "rxjs/add/observable/empty";
+import "rxjs/add/observable/of";
+import "rxjs/add/operator/catch";
+import "rxjs/add/operator/do";
+import "rxjs/add/operator/switchMap";
+
+declare module "rxjs/Observable" {
+    interface Observable<T> {
+        ofType(type: string, ...moreTypes: string[]): Observable<T>;
+    }
+}
+
+function ofType<T>(type: string, ...moreTypes: string[]): (source: Observable<T>) => Observable<T> {
+    return source => source;
+}
+
+type Actions = Observable<any>;
+const actions = Observable.of({});
+const empty = Observable.empty() as Observable<never>;
+
+const safePatchedEffect = actions.ofType("DO_SOMETHING")
+    .do(() => {})
+    .switchMap(() => empty.catch(() => empty));
+const unsafePatchedEffect = actions.ofType("DO_SOMETHING")
+    .do(() => {})
+    .switchMap(() => empty)
+    .catch(() => empty);
+     ~~~~~                                                                          [no-unsafe-catch]
+
+const safePipedEffect = actions.ofType("DO_SOMETHING").pipe(
+    tap(() => {}),
+    switchMap(() => empty.pipe(catchError(() => empty)))
+);
+const unsafePipedEffect = actions.ofType("DO_SOMETHING").pipe(
+    tap(() => {}),
+    switchMap(() => empty),
+    catchError(() => empty)
+    ~~~~~~~~~~                                                                      [no-unsafe-catch]
+);
+
+const safePatchedEpic = (action$: Actions) => action$.ofType("DO_SOMETHING")
+    .do(() => {})
+    .switchMap(() => empty.catch(() => empty));
+const unsafePatchedEpic = (action$: Actions) => action$.ofType("DO_SOMETHING")
+    .do(() => {})
+    .switchMap(() => empty)
+    .catch(() => empty);
+     ~~~~~                                                                          [no-unsafe-catch]
+
+const safePipedEpic = (action$: Actions) => action$.ofType("DO_SOMETHING").pipe(
+    tap(() => {}),
+    switchMap(() => empty.pipe(catchError(() => empty)))
+);
+const unsafePipedEpic = (action$: Actions) => action$.ofType("DO_SOMETHING").pipe(
+    tap(() => {}),
+    switchMap(() => empty),
+    catchError(() => empty)
+    ~~~~~~~~~~                                                                      [no-unsafe-catch]
+);
+
+const safePipedOfTypeEffect = actions.pipe(
+    ofType("DO_SOMETHING"),
+    tap(() => {}),
+    switchMap(() => empty.pipe(catchError(() => empty)))
+);
+const unsafePipedOfTypeEffect = actions.pipe(
+    ofType("DO_SOMETHING"),
+    tap(() => {}),
+    switchMap(() => empty),
+    catchError(() => empty)
+    ~~~~~~~~~~                                                                      [no-unsafe-catch]
+);
+
+const safePipedOfTypeEpic = (action$: Actions) => action$.pipe(
+    ofType("DO_SOMETHING"),
+    tap(() => {}),
+    switchMap(() => empty.pipe(catchError(() => empty)))
+);
+const unsafePipedOfTypeEpic = (action$: Actions) => action$.pipe(
+    ofType("DO_SOMETHING"),
+    tap(() => {}),
+    switchMap(() => empty),
+    catchError(() => empty)
+    ~~~~~~~~~~                                                                      [no-unsafe-catch]
+);
+
+[no-unsafe-catch]: Unsafe catch usage in effects and epics is forbidden
