@@ -53,11 +53,12 @@ export class Walker extends Lint.ProgramAwareRuleWalker {
             const name = expression.getText();
             const type = typeChecker.getTypeAtLocation(expression);
             const [signature] = typeChecker.getSignaturesOfType(type, ts.SignatureKind.Call);
-            const returnType = typeChecker.getReturnTypeOfSignature(signature);
-
-            if (((name === "_throw") || (name === "throwError")) && couldBeType(returnType, "Observable")) {
-                if (!argument || !couldBeType(typeChecker.getTypeAtLocation(argument), "Error")) {
-                    this.addFailureAtNode(argument, Rule.FAILURE_STRING);
+            if (signature) {
+                const returnType = typeChecker.getReturnTypeOfSignature(signature);
+                if (((name === "_throw") || (name === "throwError")) && couldBeType(returnType, "Observable")) {
+                    if (!argument || !couldBeType(typeChecker.getTypeAtLocation(argument), "Error")) {
+                        this.addFailureAtNode(argument, Rule.FAILURE_STRING);
+                    }
                 }
             }
         }
