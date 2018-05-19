@@ -9,4 +9,9 @@ const ob3 = _throw("Boom!");
                    ~~~~~~~                          [throw-error]
 const ob4 = _throw(new Error("Boom!"));
 
+// There will be no signature for callback and
+// that should not effect and internal error.
+declare const callback: Function;
+callback();
+
 [throw-error]: Passing non-Error values is forbidden
