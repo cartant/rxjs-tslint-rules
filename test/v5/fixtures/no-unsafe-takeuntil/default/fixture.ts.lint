@@ -1,0 +1,26 @@
+import { Observable } from "rxjs/Observable";
+import { combineLatest } from "rxjs/observable/combineLatest";
+import { of } from "rxjs/observable/of";
+import { switchMap, takeUntil } from "rxjs/operators";
+
+import "rxjs/add/operator/combineLatest";
+import "rxjs/add/operator/switchMap";
+import "rxjs/add/operator/takeUntil";
+
+const a = of("a");
+const b = of("b");
+const c = of("c");
+const d = of("d");
+
+const e = a.takeUntil(d).switchMap(_ => b).subscribe();
+            ~~~~~~~~~                                                       [no-unsafe-takeuntil]
+const f = a.takeUntil(d).combineLatest(b, c).subscribe();
+            ~~~~~~~~~                                                       [no-unsafe-takeuntil]
+const g = a.takeUntil(d).pipe(s => combineLatest(s, b, c)).subscribe();
+            ~~~~~~~~~                                                       [no-unsafe-takeuntil]
+const h = a.pipe(takeUntil(d), switchMap(_ => b)).subscribe();
+                 ~~~~~~~~~                                                  [no-unsafe-takeuntil]
+const i = a.pipe(takeUntil(d), s => combineLatest(s, b, c)).subscribe();
+                 ~~~~~~~~~                                                  [no-unsafe-takeuntil]
+
+[no-unsafe-takeuntil]: Applying operators after takeUntil is forbidden
