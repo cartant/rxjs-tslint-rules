@@ -8,7 +8,10 @@ const d = of("d");
 
 const e = a.pipe(takeUntil(d), switchMap(_ => b)).subscribe();
                  ~~~~~~~~~                                                  [no-unsafe-takeuntil]
-const f = a.pipe(takeUntil(d), s => combineLatest(s, b, c)).subscribe();
+const f = a.pipe(switchMap(_ => b), takeUntil(d)).subscribe();
+
+const g = a.pipe(takeUntil(d), s => combineLatest(s, b, c)).subscribe();
                  ~~~~~~~~~                                                  [no-unsafe-takeuntil]
+const h = a.pipe(s => combineLatest(s, b, c), takeUntil(d)).subscribe();
 
 [no-unsafe-takeuntil]: Applying operators after takeUntil is forbidden

@@ -14,13 +14,22 @@ const d = of("d");
 
 const e = a.takeUntil(d).switchMap(_ => b).subscribe();
             ~~~~~~~~~                                                       [no-unsafe-takeuntil]
-const f = a.takeUntil(d).combineLatest(b, c).subscribe();
+const f = a.switchMap(_ => b).takeUntil(d).subscribe();
+
+const g = a.takeUntil(d).combineLatest(b, c).subscribe();
             ~~~~~~~~~                                                       [no-unsafe-takeuntil]
-const g = a.takeUntil(d).pipe(s => combineLatest(s, b, c)).subscribe();
+const h = a.combineLatest(b, c).takeUntil(d).subscribe();
+
+const i = a.takeUntil(d).pipe(s => combineLatest(s, b, c)).subscribe();
             ~~~~~~~~~                                                       [no-unsafe-takeuntil]
-const h = a.pipe(takeUntil(d), switchMap(_ => b)).subscribe();
+const j = a.pipe(s => combineLatest(s, b, c)).takeUntil(d).subscribe();
+
+const k = a.pipe(takeUntil(d), switchMap(_ => b)).subscribe();
                  ~~~~~~~~~                                                  [no-unsafe-takeuntil]
-const i = a.pipe(takeUntil(d), s => combineLatest(s, b, c)).subscribe();
+const l = a.pipe(switchMap(_ => b), takeUntil(d)).subscribe();
+
+const m = a.pipe(takeUntil(d), s => combineLatest(s, b, c)).subscribe();
                  ~~~~~~~~~                                                  [no-unsafe-takeuntil]
+const n = a.pipe(s => combineLatest(s, b, c), takeUntil(d)).subscribe();
 
 [no-unsafe-takeuntil]: Applying operators after takeUntil is forbidden
