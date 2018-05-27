@@ -98,7 +98,7 @@ The package includes the following rules (none of which are enabled by default):
 | `rxjs-no-unsafe-catch` | Disallows unsafe `catch` and `catchError` usage in [NgRx](https://github.com/ngrx/platform) effects and [`redux-observable`](https://github.com/redux-observable/redux-observable) epics. | [See below](#rxjs-no-unsafe-catch) |
 | `rxjs-no-unsafe-scope` | Disallows the use of variables/properties from unsafe/outer scopes in operator callbacks. | [See below](#rxjs-no-unsafe-scope) |
 | `rxjs-no-unsafe-switchmap` | Disallows unsafe `switchMap` usage in [NgRx](https://github.com/ngrx/platform) effects and [`redux-observable`](https://github.com/redux-observable/redux-observable) epics. | [See below](#rxjs-no-unsafe-switchmap) |
-| `rxjs-no-unsafe-takeuntil` | Disallows the application of operators after `takeUntil`. | None |
+| `rxjs-no-unsafe-takeuntil` | Disallows the application of operators after `takeUntil`. Operators placed after `takeUntil` can effect [subscription leaks](https://medium.com/@cartant/rxjs-avoiding-takeuntil-leaks-fb5182d047ef). | None |
 | `rxjs-no-unused-add` | Disallows the importation of patched observables or operators that are not used in the module. | None |
 | `rxjs-no-wholesale` | Disallows the wholesale importation of `rxjs` or `rxjs/Rx`. | None |
 | `rxjs-throw-error` | Enforces the passing of `Error` values to `error` notifications. | None |
