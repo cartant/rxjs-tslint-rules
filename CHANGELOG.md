@@ -1,3 +1,10 @@
+<a name="4.3.0"></a>
+## [4.3.0](https://github.com/cartant/rxjs-tslint-rules/compare/v4.2.1...v4.3.0) (2018-05-27)
+
+## Features
+
+* Add an `rxjs-no-unsafe-takeuntil` rule. ([80e11e0](https://github.com/cartant/rxjs-tslint-rules/commit/80e11e0))
+
 <a name="4.2.1"></a>
 ## [4.2.1](https://github.com/cartant/rxjs-tslint-rules/compare/v4.2.0...v4.2.1) (2018-05-19)
 
