@@ -196,7 +196,7 @@ class Walker extends Lint.ProgramAwareRuleWalker {
                 }
                 for (let i = 0; i < this.types.length; ++i) {
                     const { regExp, validate } = this.types[i];
-                    if (regExp.test(type.symbol.name) && !validate) {
+                    if (type.symbol !== undefined && regExp.test(type.symbol.name) && !validate) {
                         return;
                     }
                 }
