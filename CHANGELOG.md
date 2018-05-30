@@ -1,3 +1,10 @@
+<a name="4.3.1"></a>
+## [4.3.1](https://github.com/cartant/rxjs-tslint-rules/compare/v4.3.0...v4.3.1) (2018-05-31)
+
+## Fixes
+
+* Fixes a problem the `rxjs-finnish` rule had with optional types. ([989c615](https://github.com/cartant/rxjs-tslint-rules/commit/989c615))
+
 <a name="4.3.0"></a>
 ## [4.3.0](https://github.com/cartant/rxjs-tslint-rules/compare/v4.2.1...v4.3.0) (2018-05-27)
 
