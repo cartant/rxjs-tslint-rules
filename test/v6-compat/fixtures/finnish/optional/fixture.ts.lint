@@ -1,0 +1,8 @@
+import { Observable, of } from "rxjs";
+
+const someOptionalObservable$: Observable<any> | undefined = of();
+
+const someOptionalObservable: Observable<any> | undefined = of();
+      ~~~~~~~~~~~~~~~~~~~~~~                                                                [finnish % ("someOptionalObservable")]
+
+[finnish]: Finnish notation required for %s

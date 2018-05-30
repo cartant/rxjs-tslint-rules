@@ -1,0 +1,14 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "lib": ["es2015"],
+    "noEmit": true,
+    "paths": {
+      "rxjs": ["../../node_modules/rxjs"]
+    },
+    "skipLibCheck": true,
+    "target": "es5",
+    "strictNullChecks": true
+  },
+  "include": ["fixture.ts"]
+}
