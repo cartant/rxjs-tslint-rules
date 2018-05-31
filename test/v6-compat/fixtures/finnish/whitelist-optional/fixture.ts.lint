@@ -1,0 +1,10 @@
+import { Subject } from "rxjs/Subject";
+
+class EventEmitter<T> extends Subject<T> {}
+let eventEmitter: EventEmitter<any> | undefined;
+
+class SomeSubject<T> extends Subject<T> {}
+let someSubject: SomeSubject<any> | undefined;
+    ~~~~~~~~~~~                                     [finnish % ("someSubject")]
+
+[finnish]: Finnish notation required for %s

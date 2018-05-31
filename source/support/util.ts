@@ -6,7 +6,7 @@
 import * as ts from "typescript";
 import * as tsutils from "tsutils";
 
-export function couldBeType(type: ts.Type, name: string): boolean {
+export function couldBeType(type: ts.Type, name: string | RegExp): boolean {
 
     if (isReferenceType(type)) {
         type = type.target;
@@ -30,9 +30,14 @@ export function isReferenceType(type: ts.Type): type is ts.TypeReference {
         tsutils.isObjectFlagSet(type as ts.ObjectType, ts.ObjectFlags.Reference);
 }
 
-export function isType(type: ts.Type, name: string): boolean {
+export function isType(type: ts.Type, name: string | RegExp): boolean {
 
-    return Boolean(type.symbol) && type.symbol.name === name;
+    if (!type.symbol) {
+        return false;
+    }
+    return (typeof name === "string") ?
+        (type.symbol.name === name) :
+        Boolean(type.symbol.name.match(name));
 }
 
 export function isUnionType(type: ts.Type): type is ts.UnionType {
