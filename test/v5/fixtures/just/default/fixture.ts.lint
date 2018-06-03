@@ -1,0 +1,7 @@
+import { of } from "rxjs/observable/of";
+         ~~                                 [just]
+
+const a = of("a");
+          ~~                                [just]
+
+[just]: Use just alias

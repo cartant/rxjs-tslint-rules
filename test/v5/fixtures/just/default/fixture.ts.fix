@@ -1,0 +1,4 @@
+import { of as just } from "rxjs/observable/of";
+
+const a = just("a");
+

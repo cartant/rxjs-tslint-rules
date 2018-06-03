@@ -1,0 +1,16 @@
+import { of as just } from "rxjs";
+
+function foo(): void {
+    function of(): void {}
+    of();
+}
+
+function bar(of: Function): void {
+    of();
+}
+
+function baz(): void {
+    const of = () => {};
+    of();
+}
+

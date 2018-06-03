@@ -10,6 +10,7 @@
   },
   "description": "TSLint rules for RxJS",
   "devDependencies": {
+    "@phenomnomnominal/tsquery": "^1.0.5",
     "@types/chai": "^4.0.0",
     "@types/decamelize": "^1.2.0",
     "@types/mocha": "^5.0.0",

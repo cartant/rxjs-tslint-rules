@@ -1,0 +1,4 @@
+import { of as just } from "rxjs";
+
+const a = just("a");
+
