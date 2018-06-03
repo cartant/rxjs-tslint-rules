@@ -1,3 +1,10 @@
+<a name="4.4.0"></a>
+## [4.4.0](https://github.com/cartant/rxjs-tslint-rules/compare/v4.3.1...v4.4.0) (2018-06-03)
+
+## Features
+
+* Add an `rxjs-just` rule. ([a34bd66](https://github.com/cartant/rxjs-tslint-rules/commit/a34bd66))
+
 <a name="4.3.1"></a>
 ## [4.3.1](https://github.com/cartant/rxjs-tslint-rules/compare/v4.3.0...v4.3.1) (2018-05-31)
 
