@@ -1,3 +1,10 @@
+<a name="4.4.1"></a>
+## [4.4.1](https://github.com/cartant/rxjs-tslint-rules/compare/v4.4.0...v4.4.1) (2018-06-04)
+
+## Fixes
+
+* Fixed a non-dev dependency that was added to `devDependencies`.
+
 <a name="4.4.0"></a>
 ## [4.4.0](https://github.com/cartant/rxjs-tslint-rules/compare/v4.3.1...v4.4.0) (2018-06-03)
 
