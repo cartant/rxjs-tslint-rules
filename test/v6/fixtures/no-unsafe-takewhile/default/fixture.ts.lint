@@ -1,0 +1,15 @@
+import { Observable } from "rxjs";
+import { takeWhile, tap } from "rxjs/operators";
+
+class Something<T> {
+    private _alive = true;
+    constructor(private _source: Observable<T>) {
+        _source.pipe(
+            takeWhile(() => this._alive),
+            ~~~~~~~~~                               [no-unsafe-takewhile]
+            tap(() => { /* do something */ })
+        ).subscribe();
+    }
+}
+
+[no-unsafe-takewhile]: Outer scopes are forbidden in takeWhile
