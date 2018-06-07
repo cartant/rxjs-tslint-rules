@@ -1,7 +1,9 @@
-import { Observable } from "rxjs";
+import { Observable } from "rxjs/Observable";
 import { takeWhile } from "rxjs/operators";
 import { THOUSAND } from "./constants";
 import { Vertical } from "./enums";
+
+import "rxjs/add/operator/takeWhile";
 
 enum Horizontal {
     Left = 1,
@@ -15,9 +17,28 @@ class Something {
     private _alive = true;
     constructor(private _source: Observable<string>) {
 
-        _source.pipe(
-            takeWhile(value => value === Horizontal.Left.toString())
-        ).subscribe();
+        _source
+            .takeWhile(value => value === Vertical.Up.toString())
+            .subscribe();
+
+        _source
+            .takeWhile(value => value === HUNDRED.toString())
+            .subscribe();
+
+        _source
+            .takeWhile(value => value === THOUSAND.toString())
+            .subscribe();
+
+        _source.
+            .takeWhile(() => alive)
+                             ~~~~~                                      [no-unsafe-takewhile]
+            .subscribe();
+
+        _source
+            .takeWhile(() => this._alive)
+                             ~~~~                                       [no-unsafe-takewhile]
+            .subscribe();
+
 
         _source.pipe(
             takeWhile(value => value === Vertical.Up.toString())

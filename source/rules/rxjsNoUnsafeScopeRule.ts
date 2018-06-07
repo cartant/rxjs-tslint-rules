@@ -8,7 +8,7 @@ import * as Lint from "tslint";
 import * as ts from "typescript";
 import * as tsutils from "tsutils";
 import { knownOperators, knownPipeableOperators } from "../support/knowns";
-import { couldBeType } from "../support/util";
+import { couldBeType, isThis } from "../support/util";
 
 export class Rule extends Lint.Rules.TypedRule {
 
@@ -170,8 +170,4 @@ class Walker extends Lint.ProgramAwareRuleWalker {
 
         return true;
     }
-}
-
-function isThis(node: ts.Node): boolean {
-    return node.kind === ts.SyntaxKind.ThisKeyword;
 }

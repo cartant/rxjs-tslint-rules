@@ -30,6 +30,11 @@ export function isReferenceType(type: ts.Type): type is ts.TypeReference {
         tsutils.isObjectFlagSet(type as ts.ObjectType, ts.ObjectFlags.Reference);
 }
 
+export function isThis(node: ts.Node): boolean {
+
+    return node.kind === ts.SyntaxKind.ThisKeyword;
+}
+
 export function isType(type: ts.Type, name: string | RegExp): boolean {
 
     if (!type.symbol) {
