@@ -131,14 +131,18 @@ class Walker extends Lint.ProgramAwareRuleWalker {
 
         const typeChecker = this.getTypeChecker();
         const symbol = typeChecker.getSymbolAtLocation(node);
-        const [declaration] = symbol.getDeclarations();
+        if (!symbol) {
+            return false;
+        }
 
+        const [declaration] = symbol.getDeclarations();
         if (this.allowParameters && tsutils.isParameterDeclaration(declaration)) {
             return false;
         }
         if ((declaration.pos >= rootCallback.pos) && (declaration.pos < rootCallback.end)) {
             return false;
         }
+
         if (tsutils.isCallExpression(node.parent)) {
             return false;
         }

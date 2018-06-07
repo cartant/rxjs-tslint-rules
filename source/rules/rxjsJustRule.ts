@@ -76,15 +76,17 @@ class Walker extends Lint.ProgramAwareRuleWalker {
                     if (tsutils.isIdentifier(expression)) {
 
                         const symbol = typeChecker.getSymbolAtLocation(expression);
-                        const [declaration] = symbol.getDeclarations();
+                        if (symbol) {
 
-                        if (declaration === importIdentifier.parent) {
-                            const fix = Lint.Replacement.replaceFromTo(
-                                expression.getStart(),
-                                expression.getStart() + expression.getWidth(),
-                                "just"
-                            );
-                            this.addFailureAtNode(expression, Rule.FAILURE_STRING, fix);
+                            const [declaration] = symbol.getDeclarations();
+                            if (declaration === importIdentifier.parent) {
+                                const fix = Lint.Replacement.replaceFromTo(
+                                    expression.getStart(),
+                                    expression.getStart() + expression.getWidth(),
+                                    "just"
+                                );
+                                this.addFailureAtNode(expression, Rule.FAILURE_STRING, fix);
+                            }
                         }
                     }
                 }
