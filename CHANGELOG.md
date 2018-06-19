@@ -1,3 +1,10 @@
+<a name="4.4.2"></a>
+## [4.4.2](https://github.com/cartant/rxjs-tslint-rules/compare/v4.4.1...v4.4.2) (2018-06-19)
+
+## Fixes
+
+* Fixed a problem with the `rxjs-no-unsafe-takeuntil`. It was only enforced when the call was made on an identifier. ([e2f378c](https://github.com/cartant/rxjs-tslint-rules/commit/e2f378c))
+
 <a name="4.4.1"></a>
 ## [4.4.1](https://github.com/cartant/rxjs-tslint-rules/compare/v4.4.0...v4.4.1) (2018-06-04)
 
