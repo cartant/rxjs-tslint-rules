@@ -36,26 +36,22 @@ class Walker extends Lint.ProgramAwareRuleWalker {
         const { expression: propertyAccessExpression } = node;
         if (tsutils.isPropertyAccessExpression(propertyAccessExpression)) {
 
-            const { expression: identifier } = propertyAccessExpression;
-            if (tsutils.isIdentifier(identifier)) {
+            const { expression } = propertyAccessExpression;
+            const propertyName = propertyAccessExpression.name.getText();
+            const typeChecker = this.getTypeChecker();
+            const type = typeChecker.getTypeAtLocation(expression);
 
-                const propertyName = propertyAccessExpression.name.getText();
-                const identifierText = identifier.getText();
-                const typeChecker = this.getTypeChecker();
-                const type = typeChecker.getTypeAtLocation(identifier);
+            if (isReferenceType(type) && couldBeType(type.target, "Observable")) {
 
-                if (isReferenceType(type) && couldBeType(type.target, "Observable")) {
-
-                    switch (propertyName) {
-                    case "takeUntil":
-                        this.walkPatchedOperators(node, propertyAccessExpression.name);
-                        break;
-                    case "pipe":
-                        this.walkPipedOperators(node);
-                        break;
-                    default:
-                        break;
-                    }
+                switch (propertyName) {
+                case "takeUntil":
+                    this.walkPatchedOperators(node, propertyAccessExpression.name);
+                    break;
+                case "pipe":
+                    this.walkPipedOperators(node);
+                    break;
+                default:
+                    break;
                 }
             }
         }
