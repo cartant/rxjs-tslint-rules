@@ -1,3 +1,10 @@
+<a name="4.4.3"></a>
+## [4.4.3](https://github.com/cartant/rxjs-tslint-rules/compare/v4.4.2...v4.4.3) (2018-06-26)
+
+## Fixes
+
+* Account for `this` in the `rxjs-no-unsafe-switchmap` rule. ([97546e4](https://github.com/cartant/rxjs-tslint-rules/commit/97546e4))
+
 <a name="4.4.2"></a>
 ## [4.4.2](https://github.com/cartant/rxjs-tslint-rules/compare/v4.4.1...v4.4.2) (2018-06-19)
 
