@@ -112,7 +112,6 @@ export class Walker extends Lint.ProgramAwareRuleWalker {
         if (tsutils.isPropertyAccessExpression(propertyAccessExpression)) {
 
             const { expression: observableExpression } = propertyAccessExpression;
-
             let observableIdentifier: ts.Identifier | undefined = undefined;
             if (tsutils.isIdentifier(observableExpression)) {
                 observableIdentifier = observableExpression;

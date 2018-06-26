@@ -7,6 +7,7 @@ function ofType<T>(type: string, ...moreTypes: string[]): (source: Observable<T>
 
 type Actions = Observable<any>;
 const actions = of({});
+const that = { actions };
 
 const safePipedOfTypeEffect = actions.pipe(
     ofType("DO_SOMETHING"),
@@ -14,6 +15,19 @@ const safePipedOfTypeEffect = actions.pipe(
     switchMap(() => EMPTY.pipe(catchError(() => EMPTY)))
 );
 const unsafePipedOfTypeEffect = actions.pipe(
+    ofType("DO_SOMETHING"),
+    tap(() => {}),
+    switchMap(() => EMPTY),
+    catchError(() => EMPTY)
+    ~~~~~~~~~~                                                      [no-unsafe-catch]
+);
+
+const safePipedOfTypeEffect = that.actions.pipe(
+    ofType("DO_SOMETHING"),
+    tap(() => {}),
+    switchMap(() => EMPTY.pipe(catchError(() => EMPTY)))
+);
+const unsafePipedOfTypeEffect = that.actions.pipe(
     ofType("DO_SOMETHING"),
     tap(() => {}),
     switchMap(() => EMPTY),

@@ -80,16 +80,22 @@ export class Walker extends Lint.ProgramAwareRuleWalker {
         const { expression: propertyAccessExpression } = node;
         if (tsutils.isPropertyAccessExpression(propertyAccessExpression)) {
 
-            const { expression: identifier } = propertyAccessExpression;
-            if (tsutils.isIdentifier(identifier)) {
+            const { expression: observableExpression } = propertyAccessExpression;
+            let observableIdentifier: ts.Identifier | undefined = undefined;
+            if (tsutils.isIdentifier(observableExpression)) {
+                observableIdentifier = observableExpression;
+            } else if (tsutils.isPropertyAccessExpression(observableExpression)) {
+                observableIdentifier = observableExpression.name;
+            }
+
+            if (observableIdentifier && this.observableRegExp.test(observableIdentifier.getText())) {
 
                 const propertyName = propertyAccessExpression.name.getText();
-                const identifierText = identifier.getText();
+                const identifierText = observableIdentifier.getText();
                 const typeChecker = this.getTypeChecker();
-                const type = typeChecker.getTypeAtLocation(identifier);
+                const type = typeChecker.getTypeAtLocation(observableExpression);
 
                 if (isReferenceType(type) &&
-                    this.observableRegExp.test(identifierText) &&
                     Walker.METHODS_REGEXP.test(propertyName) &&
                     couldBeType(type.target, "Observable")) {
 
