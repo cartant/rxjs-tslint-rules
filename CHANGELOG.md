@@ -1,3 +1,10 @@
+<a name="4.4.4"></a>
+## [4.4.4](https://github.com/cartant/rxjs-tslint-rules/compare/v4.4.3...v4.4.4) (2018-06-26)
+
+## Fixes
+
+* Account for `this` in the `rxjs-no-unsafe-catch` rule. ([ae27369](https://github.com/cartant/rxjs-tslint-rules/commit/ae27369))
+
 <a name="4.4.3"></a>
 ## [4.4.3](https://github.com/cartant/rxjs-tslint-rules/compare/v4.4.2...v4.4.3) (2018-06-26)
 
