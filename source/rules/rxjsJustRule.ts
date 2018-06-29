@@ -7,12 +7,7 @@
 import * as Lint from "tslint";
 import * as ts from "typescript";
 import * as tsutils from "tsutils";
-
 import { tsquery } from "@phenomnomnominal/tsquery";
-import { couldBeType } from "../support/util";
-
-const defaultNamesRegExp = /^(canActivate|canActivateChild|canDeactivate|canLoad|intercept|resolve|validate)$/;
-const defaultTypesRegExp = /^EventEmitter$/;
 
 export class Rule extends Lint.Rules.TypedRule {
 
@@ -66,11 +61,12 @@ class Walker extends Lint.ProgramAwareRuleWalker {
         });
 
         if (importIdentifier) {
-            const callExpressions = tsquery(
+            const ofIdentifiers = tsquery(
                 sourceFile,
-                `CallExpression:has(Identifier[escapedText="of"])`
+                `CallExpression Identifier[escapedText="of"]`
             );
-            callExpressions.forEach(callExpression => {
+            ofIdentifiers.forEach(ofIdentifier => {
+                const { parent: callExpression } = ofIdentifier;
                 if (tsutils.isCallExpression(callExpression)) {
                     const expression = callExpression.expression;
                     if (tsutils.isIdentifier(expression)) {
