@@ -1,0 +1,38 @@
+import { Observable, of, Subscription, throwError } from "rxjs";
+import { catchError, map } from "rxjs/operators";
+
+const userland = <T>(selector: (t: T) => T) => map(selector);
+
+class Something {
+    deeper = {
+        catchError(error: any): Observable<never> { return throwError(error); },
+        complete(): void {},
+        error(error: any): void {},
+        map<T>(t: T): T { return t; },
+        next<T>(t: T): void {},
+        tearDown(): void {}
+    }
+    constructor() {
+        const ob = of(1).pipe(
+            map(this.deeper.map),
+                ~~~~~~~~~~~~~~~                                                     [no-unbound-this]
+            userland(this.deeper.map),
+                     ~~~~~~~~~~~~~~~                                                [no-unbound-this]
+            catchError(this.deeper.catchError)
+                       ~~~~~~~~~~~~~~~~~~~~~~                                       [no-unbound-this]
+        ).subscribe(
+            this.deeper.next,
+            ~~~~~~~~~~~~~~~~                                                        [no-unbound-this]
+            this.deeper.error,
+            ~~~~~~~~~~~~~~~~~                                                       [no-unbound-this]
+            this.deeper.complete
+            ~~~~~~~~~~~~~~~~~~~~                                                    [no-unbound-this]
+        );
+        const subscription = new Subscription(this.deeper.tearDown);
+                                              ~~~~~~~~~~~~~~~~~~~~                  [no-unbound-this]
+        subscription.add(this.deeper.tearDown);
+                         ~~~~~~~~~~~~~~~~~~~~                                       [no-unbound-this]
+    }
+}
+
+[no-unbound-this]: Unbound this calls are forbidden
