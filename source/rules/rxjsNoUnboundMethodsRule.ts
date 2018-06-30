@@ -16,16 +16,16 @@ export class Rule extends Lint.Rules.TypedRule {
 
     public static metadata: Lint.IRuleMetadata = {
         deprecationMessage: (peer.v5 || peer.compat) ? "Rule is v6-only." : undefined,
-        description: "Disallows the use of unbound `this` calls.",
+        description: "Disallows the use of unbound methods.",
         options: null,
         optionsDescription: "Not configurable.",
         requiresTypeInfo: true,
-        ruleName: "rxjs-no-unbound-this",
+        ruleName: "rxjs-no-unbound-methods",
         type: "maintainability",
         typescriptOnly: true
     };
 
-    public static FAILURE_STRING = "Unbound this calls are forbidden";
+    public static FAILURE_STRING = "Unbound methods are forbidden";
 
     public applyWithProgram(sourceFile: ts.SourceFile, program: ts.Program): Lint.RuleFailure[] {
 

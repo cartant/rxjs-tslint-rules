@@ -25,4 +25,4 @@ class Something {
     tearDown(): void {}
 }
 
-[no-unbound-this]: Unbound this calls are forbidden
+[no-unbound-methods]: Unbound methods are forbidden

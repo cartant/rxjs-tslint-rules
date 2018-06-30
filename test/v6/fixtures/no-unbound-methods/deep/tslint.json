@@ -2,7 +2,7 @@
   "defaultSeverity": "error",
   "jsRules": {},
   "rules": {
-    "rxjs-no-unbound-this": { "severity": "error" }
+    "rxjs-no-unbound-methods": { "severity": "error" }
   },
   "rulesDirectory": "../../../../../build/rules"
 }
