@@ -1,3 +1,10 @@
+<a name="4.5.0"></a>
+## [4.5.0](https://github.com/cartant/rxjs-tslint-rules/compare/v4.4.4...v4.5.0) (2018-06-30)
+
+## Features
+
+* Add an `rxjs-no-unbound-methods` rule.
+
 <a name="4.4.4"></a>
 ## [4.4.4](https://github.com/cartant/rxjs-tslint-rules/compare/v4.4.3...v4.4.4) (2018-06-26)
 
