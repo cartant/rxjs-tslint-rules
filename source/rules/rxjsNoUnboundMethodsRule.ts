@@ -16,7 +16,7 @@ export class Rule extends Lint.Rules.TypedRule {
 
     public static metadata: Lint.IRuleMetadata = {
         deprecationMessage: (peer.v5 || peer.compat) ? "Rule is v6-only." : undefined,
-        description: "Disallows the use of unbound methods.",
+        description: "Disallows the passing of unbound methods.",
         options: null,
         optionsDescription: "Not configurable.",
         requiresTypeInfo: true,
