@@ -1,3 +1,10 @@
+<a name="4.5.1"></a>
+## [4.5.1](https://github.com/cartant/rxjs-tslint-rules/compare/v4.5.0...v4.5.1) (2018-07-01)
+
+## Fixes
+
+* Consider only arguments that are functions in the `rxjs-no-unbound-methods` rule. ([251a075](https://github.com/cartant/rxjs-tslint-rules/commit/251a075))
+
 <a name="4.5.0"></a>
 ## [4.5.0](https://github.com/cartant/rxjs-tslint-rules/compare/v4.4.4...v4.5.0) (2018-06-30)
 
