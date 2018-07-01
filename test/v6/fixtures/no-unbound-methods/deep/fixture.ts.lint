@@ -1,5 +1,5 @@
-import { Observable, of, Subscription, throwError } from "rxjs";
-import { catchError, map } from "rxjs/operators";
+import { NEVER, Observable, of, Subscription, throwError } from "rxjs";
+import { catchError, map, takeUntil } from "rxjs/operators";
 
 const userland = <T>(selector: (t: T) => T) => map(selector);
 
@@ -12,12 +12,14 @@ class Something {
         next<T>(t: T): void {},
         tearDown(): void {}
     }
+    someObservable = NEVER;
     constructor() {
         const ob = of(1).pipe(
             map(this.deep.map),
                 ~~~~~~~~~~~~~                                                       [no-unbound-methods]
             userland(this.deep.map),
                      ~~~~~~~~~~~~~                                                  [no-unbound-methods]
+            takeUntil(this.someObservable),
             catchError(this.deep.catchError)
                        ~~~~~~~~~~~~~~~~~~~~                                         [no-unbound-methods]
         ).subscribe(

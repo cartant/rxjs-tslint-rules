@@ -1,13 +1,15 @@
-import { Observable, of, Subscription, throwError } from "rxjs";
-import { catchError, map } from "rxjs/operators";
+import { NEVER, Observable, of, Subscription, throwError } from "rxjs";
+import { catchError, map, takeUntil } from "rxjs/operators";
 
 const userland = <T>(selector: (t: T) => T) => map(selector);
 
 class Something {
+    someObservable = NEVER;
     constructor() {
         const ob = of(1).pipe(
             map(value => this.map(value)),
             userland(value => this.map(value)),
+            takeUntil(this.someObservable),
             catchError(error => this.catchError(error))
         ).subscribe(
             value => this.next(value),
