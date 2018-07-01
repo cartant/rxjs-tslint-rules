@@ -24,7 +24,7 @@ class Something {
     static error(error: any): void {}
     static map<T>(t: T): T { return t; }
     static next<T>(t: T): void {}
-    tearDown(): void {}
+    static tearDown(): void {}
 }
 
 [no-unbound-methods]: Unbound methods are forbidden

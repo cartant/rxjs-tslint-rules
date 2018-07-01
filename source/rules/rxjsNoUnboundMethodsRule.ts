@@ -78,11 +78,17 @@ class Walker extends Lint.ProgramAwareRuleWalker {
     }
 
     private validateArgs(args: ts.NodeArray<ts.Expression>): void {
+
+        const typeChecker = this.getTypeChecker();
+
         args.forEach(arg => {
             if (tsutils.isPropertyAccessExpression(arg)) {
-                const thisKeywords = tsquery(arg, `ThisKeyword`);
-                if (thisKeywords.length) {
-                    this.addFailureAtNode(arg, Rule.FAILURE_STRING);
+                const type = typeChecker.getTypeAtLocation(arg);
+                if (type.getCallSignatures().length > 0) {
+                    const thisKeywords = tsquery(arg, `ThisKeyword`);
+                    if (thisKeywords.length > 0) {
+                        this.addFailureAtNode(arg, Rule.FAILURE_STRING);
+                    }
                 }
             }
         });
