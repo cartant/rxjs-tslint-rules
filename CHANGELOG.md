@@ -1,3 +1,10 @@
+<a name="4.6.0"></a>
+## [4.6.0](https://github.com/cartant/rxjs-tslint-rules/compare/v4.5.1...v4.6.0) (2018-07-12)
+
+## Features
+
+* Add an `rxjs-no-unsafe-first` rule. ([38b32a0](https://github.com/cartant/rxjs-tslint-rules/commit/38b32a0))
+
 <a name="4.5.1"></a>
 ## [4.5.1](https://github.com/cartant/rxjs-tslint-rules/compare/v4.5.0...v4.5.1) (2018-07-01)
 
