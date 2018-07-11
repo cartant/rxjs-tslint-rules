@@ -1,0 +1,86 @@
+import { EMPTY, Observable, of } from "rxjs";
+import { first, switchMap, take, tap } from "rxjs/operators";
+
+function ofType<T>(type: string, ...moreTypes: string[]): (source: Observable<T>) => Observable<T> {
+    return source => source;
+}
+
+type Actions = Observable<any>;
+const actions = of({});
+const that = { actions };
+
+const safePipedOfTypeFirstEffect = actions.pipe(
+    ofType("DO_SOMETHING"),
+    tap(() => {}),
+    switchMap(() => EMPTY.pipe(first()))
+);
+const unsafePipedOfTypeFirstEffect = actions.pipe(
+    ofType("DO_SOMETHING"),
+    tap(() => {}),
+    switchMap(() => EMPTY),
+    first());
+    ~~~~~                                                           [no-unsafe-first]
+const safePipedOfTypeTakeEffect = actions.pipe(
+    ofType("DO_SOMETHING"),
+    tap(() => {}),
+    switchMap(() => EMPTY.pipe(take(1)))
+);
+const unsafePipedOfTypeTakeEffect = actions.pipe(
+    ofType("DO_SOMETHING"),
+    tap(() => {}),
+    switchMap(() => EMPTY),
+    take(1));
+    ~~~~                                                            [no-unsafe-first]
+
+
+const safePipedOfTypeFirstEffect = that.actions.pipe(
+    ofType("DO_SOMETHING"),
+    tap(() => {}),
+    switchMap(() => EMPTY.pipe(first()))
+);
+const unsafePipedOfTypeFirstEffect = that.actions.pipe(
+    ofType("DO_SOMETHING"),
+    tap(() => {}),
+    switchMap(() => EMPTY),
+    first());
+    ~~~~~                                                           [no-unsafe-first]
+const safePipedOfTypeTakeEffect = that.actions.pipe(
+    ofType("DO_SOMETHING"),
+    tap(() => {}),
+    switchMap(() => EMPTY.pipe(take(1)))
+);
+const unsafePipedOfTypeTakeEffect = that.actions.pipe(
+    ofType("DO_SOMETHING"),
+    tap(() => {}),
+    switchMap(() => EMPTY),
+    take(1));
+    ~~~~                                                           [no-unsafe-first]
+
+
+const safePipedOfTypeFirstEpic = (action$: Actions) => action$.pipe(
+    ofType("DO_SOMETHING"),
+    tap(() => {}),
+    switchMap(() => EMPTY.pipe(first())
+);
+const unsafePipedOfTypeFirstEpic = (action$: Actions) => action$.pipe(
+    ofType("DO_SOMETHING"),
+    tap(() => {}),
+    switchMap(() => EMPTY),
+    first()
+    ~~~~~                                                           [no-unsafe-first]
+);
+
+const safePipedOfTypeTakeEpic = (action$: Actions) => action$.pipe(
+    ofType("DO_SOMETHING"),
+    tap(() => {}),
+    switchMap(() => EMPTY.pipe(take(1)))
+);
+const unsafePipedOfTypeTakeEpic = (action$: Actions) => action$.pipe(
+    ofType("DO_SOMETHING"),
+    tap(() => {}),
+    switchMap(() => EMPTY),
+    take(1)
+    ~~~~                                                           [no-unsafe-first]
+);
+
+[no-unsafe-first]: Unsafe first usage in effects and epics is forbidden
