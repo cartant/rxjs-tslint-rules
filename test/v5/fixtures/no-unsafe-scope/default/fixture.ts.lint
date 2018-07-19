@@ -67,7 +67,10 @@ class User {
                                                          ~~~~                       [no-unsafe-scope]
         of("Hello").pipe(map(value => `${value}, ${this.name}.`)).subscribe();
                                                    ~~~~                             [no-unsafe-scope]
+        Observable.of("Hello").map(value => `${value}, ${this.foo()}.`).subscribe();
+        of("Hello").pipe(map(value => `${value}, ${this.foo()}.`)).subscribe();
     }
+    foo(): string { return "foo"; }
 }
 
 [no-unsafe-scope]: Unsafe scopes are forbidden

@@ -61,6 +61,13 @@ class Something {
             takeWhile(() => this._alive)
                             ~~~~                                        [no-unsafe-takewhile]
         ).subscribe();
+
+        _source.pipe(
+            takeWhile(() => this.alive())
+        ).subscribe();
+    }
+    alive(): boolean {
+        return this._alive;
     }
 }
 
