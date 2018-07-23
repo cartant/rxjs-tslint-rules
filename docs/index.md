@@ -190,6 +190,10 @@ If the `allowDo` and `allowTap` options are `true`, the rule is not applied with
 
 If the `allowParameters` option is `true`, referencing function parameters from outer scopes is allowed.
 
+If the `allowMethods` option is `true`, calling methods via `this` is allowed.
+
+If the `allowProperties` option is `true`, accessing properties via `this` is allowed.`,
+
 The following options are equivalent to the rule's default configuration:
 
 ```json
@@ -197,7 +201,9 @@ The following options are equivalent to the rule's default configuration:
   "rxjs-no-unsafe-scope": {
     "options": [{
       "allowDo": true,
+      "allowMethods": true,
       "allowParameters": true,
+      "allowProperties": false,
       "allowTap": true
     }],
     "severity": "error"
