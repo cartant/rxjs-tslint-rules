@@ -12,10 +12,10 @@ const HUNDRED = 100;
 let outer: any;
 
 of(1).pipe(map(value => outer = value)).subscribe();
-                        ~~~~~                                                       [no-unsafe-scope]
+                        ~~~~~                                                           [no-unsafe-scope]
 
 of(1).pipe(map(function (value) { return outer = value; })).subscribe();
-                                         ~~~~~                                      [no-unsafe-scope]
+                                         ~~~~~                                          [no-unsafe-scope]
 
 of(1).pipe(map(value => value * HUNDRED * THOUSAND)).subscribe();
 
@@ -41,10 +41,18 @@ of(1).pipe(
 ).subscribe();
 
 class User {
-    constructor(private name: string) {
+    constructor(private name: string, private service: { bar(): string }) {
+        of("Hello").pipe(
+            map(value => {
+                console.log(this.name);
+                            ~~~~                                                        [no-unsafe-scope]
+                return  value;
+            })
+        ).subscribe();
         of("Hello").pipe(map(value => `${value}, ${this.name}.`)).subscribe();
-                                                   ~~~~                             [no-unsafe-scope]
+                                                   ~~~~                                 [no-unsafe-scope]
         of("Hello").pipe(map(value => `${value}, ${this.foo()}.`)).subscribe();
+        of("Hello").pipe(map(value => `${value}, ${this.service.bar()}.`)).subscribe();
     }
     foo(): string { return "foo"; }
 }
