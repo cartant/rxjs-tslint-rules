@@ -4,10 +4,7 @@
   "rules": {
     "rxjs-no-unsafe-scope": {
       "options": [{
-        "allowDo": false,
-        "allowMethods": false,
-        "allowParameters": false,
-        "allowTap": false
+        "allowProperties": true
       }],
       "severity": "error"
     }

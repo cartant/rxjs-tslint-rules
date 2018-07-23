@@ -17,7 +17,9 @@ export class Rule extends Lint.Rules.TypedRule {
         options: {
             properties: {
                 allowDo: { type: "boolean" },
+                allowMethods: { type: "boolean" },
                 allowParameters: { type: "boolean" },
+                allowProperties: { type: "boolean" },
                 allowTap: { type: "boolean" }
             },
             type: "object"
@@ -25,7 +27,9 @@ export class Rule extends Lint.Rules.TypedRule {
         optionsDescription: Lint.Utils.dedent`
             An optional object with optional \`allowDo\`, \`allowParameters\` and \`allowTap\` properties all of which default to \`true\`.
             If the \`allowDo\` and \`allowTap\` options are \`true\`, the rule is not applied within \`do\` and \`tap\` operators respectively.
-            If the \`allowParameters\` option is \`true\`, referencing function parameters from outer scopes is allowed.`,
+            If the \`allowParameters\` option is \`true\`, referencing function parameters from outer scopes is allowed.
+            If the \`allowMethods\` option is \`true\`, calling methods via \`this\` is allowed.
+            If the \`allowProperties\` option is \`true\`, accessing properties via \`this\` is allowed.`,
         requiresTypeInfo: true,
         ruleName: "rxjs-no-unsafe-scopes",
         type: "functionality",
@@ -43,7 +47,9 @@ export class Rule extends Lint.Rules.TypedRule {
 class Walker extends ScopeWalker {
 
     private allowDo = true;
+    private allowMethods = true;
     private allowParameters = true;
+    private allowProperties = false;
     private allowTap = true;
 
     constructor(sourceFile: ts.SourceFile, rawOptions: Lint.IOptions, program: ts.Program) {
@@ -53,7 +59,9 @@ class Walker extends ScopeWalker {
         const [options] = this.getOptions();
         if (options) {
             this.allowDo = (options.allowDo !== undefined) ? options.allowDo : this.allowDo;
+            this.allowMethods = (options.allowMethods !== undefined) ? options.allowMethods : this.allowMethods;
             this.allowParameters = (options.allowParameters !== undefined) ? options.allowParameters : this.allowParameters;
+            this.allowProperties = (options.allowProperties !== undefined) ? options.allowProperties : this.allowProperties;
             this.allowTap = (options.allowTap !== undefined) ? options.allowTap : this.allowTap;
         }
     }
@@ -98,12 +106,18 @@ class Walker extends ScopeWalker {
         }
 
         if (isWithinCallExpressionExpression(node)) {
+            if (isThis(node)) {
+                return !this.allowMethods;
+            }
             return false;
         }
         if (tsutils.isNewExpression(node.parent)) {
             return false;
         }
         if (tsutils.isPropertyAccessExpression(node.parent)) {
+            if (isThis(node)) {
+                return !this.allowProperties;
+            }
             if (node === node.parent.name) {
                 return false;
             }
