@@ -8,7 +8,7 @@ import * as Lint from "tslint";
 import * as ts from "typescript";
 import * as tsutils from "tsutils";
 import { ScopeWalker } from "../support/scope-walker";
-import { couldBeType, isThis } from "../support/util";
+import { isThis, isWithinCallExpressionExpression } from "../support/util";
 
 export class Rule extends Lint.Rules.TypedRule {
 
@@ -97,7 +97,7 @@ class Walker extends ScopeWalker {
             return false;
         }
 
-        if (tsutils.isCallExpression(node.parent)) {
+        if (isWithinCallExpressionExpression(node)) {
             return false;
         }
         if (tsutils.isNewExpression(node.parent)) {
@@ -105,8 +105,6 @@ class Walker extends ScopeWalker {
         }
         if (tsutils.isPropertyAccessExpression(node.parent)) {
             if (node === node.parent.name) {
-                return false;
-            } else if (tsutils.isCallExpression(node.parent.parent)) {
                 return false;
             }
             const type = typeChecker.getTypeAtLocation(node.parent.name);

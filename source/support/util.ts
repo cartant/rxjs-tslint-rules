@@ -49,3 +49,13 @@ export function isUnionType(type: ts.Type): type is ts.UnionType {
 
     return tsutils.isTypeFlagSet(type, ts.TypeFlags.Union);
 }
+
+export function isWithinCallExpressionExpression(node: ts.Node): boolean {
+
+    let parent = node.parent;
+    while (parent && tsutils.isPropertyAccessExpression(parent)) {
+        node = parent;
+        parent = node.parent;
+    }
+    return parent && tsutils.isCallExpression(parent) && (node === parent.expression);
+}
