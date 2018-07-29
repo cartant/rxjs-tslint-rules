@@ -23,7 +23,7 @@
     "rxjs": "^6.0.0",
     "semver": "^5.4.0",
     "tslint": "^5.1.0",
-    "tsutils": "^2.19.1",
+    "tsutils": "^3.0.0",
     "typescript": "~2.9.1"
   },
   "homepage": "https://github.com/cartant/rxjs-tslint-rules",
