@@ -1,0 +1,18 @@
+import { of } from "rxjs";
+import { map, tap } from "rxjs/operators";
+
+ok_mapAnArray () {
+  const q = '123'
+  return [ 1, 2, 3 ].map(val => {
+    return `${q}-${val}`
+  })
+}
+
+notOk_mapAnArrayFromParam (input: { q: string }) {
+  const { q } = input
+  return [ 1, 2, 3 ].map(val => {
+    return `${q}-${val}`
+  })
+}
+
+[no-unsafe-scope]: Unsafe scopes are forbidden
