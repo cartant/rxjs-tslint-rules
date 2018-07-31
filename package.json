@@ -40,7 +40,7 @@
   "peerDependencies": {
     "rxjs": "^5.0.0 || ^6.0.0",
     "tslint": "^5.0.0",
-    "typescript": "^2.3.0"
+    "typescript": "^2.3.0 || ^3.0.0"
   },
   "private": false,
   "publishConfig": {
