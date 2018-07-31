@@ -1,3 +1,10 @@
+<a name="4.7.1"></a>
+## [4.7.1](https://github.com/cartant/rxjs-tslint-rules/compare/v4.7.0...v4.7.1) (2018-07-31)
+
+## Build
+
+* Widen TypeScript peer semver to allow for version 3.0. ([77f9e56](https://github.com/cartant/rxjs-tslint-rules/commit/77f9e56))
+
 <a name="4.7.0"></a>
 ## [4.7.0](https://github.com/cartant/rxjs-tslint-rules/compare/v4.6.0...v4.7.0) (2018-07-23)
 
