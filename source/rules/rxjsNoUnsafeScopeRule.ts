@@ -8,7 +8,7 @@ import * as Lint from "tslint";
 import * as ts from "typescript";
 import * as tsutils from "tsutils";
 import { ScopeWalker } from "../support/scope-walker";
-import { isThis, isWithinCallExpressionExpression } from "../support/util";
+import { isConstDeclaration, isThis, isWithinCallExpressionExpression } from "../support/util";
 
 export class Rule extends Lint.Rules.TypedRule {
 
@@ -128,10 +128,8 @@ class Walker extends ScopeWalker {
             }
         }
 
-        if (tsutils.isVariableDeclarationList(declaration.parent)) {
-            if (tsutils.getVariableDeclarationKind(declaration.parent) === tsutils.VariableDeclarationKind.Const) {
-                return false;
-            }
+        if (isConstDeclaration(declaration)) {
+            return false;
         }
 
         if (tsutils.isImportSpecifier(declaration)) {

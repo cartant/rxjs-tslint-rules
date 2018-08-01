@@ -24,6 +24,24 @@ export function couldBeType(type: ts.Type, name: string | RegExp): boolean {
     return Boolean(baseTypes) && baseTypes.some((t) => couldBeType(t, name));
 }
 
+export function isConstDeclaration(declaration: ts.Declaration): boolean {
+
+    if (tsutils.isVariableDeclaration(declaration)) {
+        if (tsutils.isVariableDeclarationList(declaration.parent)) {
+            return tsutils.getVariableDeclarationKind(declaration.parent) === tsutils.VariableDeclarationKind.Const;
+        }
+    } else if (tsutils.isBindingElement(declaration)) {
+        let parent: ts.Node = declaration.parent;
+        while (tsutils.isBindingPattern(parent) || tsutils.isVariableDeclaration(parent)) {
+            parent = parent.parent;
+        }
+        if (tsutils.isVariableDeclarationList(parent)) {
+            return tsutils.getVariableDeclarationKind(parent) === tsutils.VariableDeclarationKind.Const;
+        }
+    }
+    return false;
+}
+
 export function isReferenceType(type: ts.Type): type is ts.TypeReference {
 
     return tsutils.isTypeFlagSet(type, ts.TypeFlags.Object) &&
