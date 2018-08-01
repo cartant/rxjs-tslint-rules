@@ -1,3 +1,10 @@
+<a name="4.7.2"></a>
+## [4.7.2](https://github.com/cartant/rxjs-tslint-rules/compare/v4.7.1...v4.7.2) (2018-08-01)
+
+## Fixes
+
+* Recognise constants declared using destructuring as `const`. ([53af1d4](https://github.com/cartant/rxjs-tslint-rules/commit/53af1d4))
+
 <a name="4.7.1"></a>
 ## [4.7.1](https://github.com/cartant/rxjs-tslint-rules/compare/v4.7.0...v4.7.1) (2018-07-31)
 
