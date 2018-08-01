@@ -26,9 +26,11 @@ export function couldBeType(type: ts.Type, name: string | RegExp): boolean {
 
 export function isConstDeclaration(declaration: ts.Declaration): boolean {
 
+    let variableDeclarationList: ts.VariableDeclarationList | null = null;
+
     if (tsutils.isVariableDeclaration(declaration)) {
         if (tsutils.isVariableDeclarationList(declaration.parent)) {
-            return tsutils.getVariableDeclarationKind(declaration.parent) === tsutils.VariableDeclarationKind.Const;
+            variableDeclarationList = declaration.parent;
         }
     } else if (tsutils.isBindingElement(declaration)) {
         let parent: ts.Node = declaration.parent;
@@ -36,8 +38,12 @@ export function isConstDeclaration(declaration: ts.Declaration): boolean {
             parent = parent.parent;
         }
         if (tsutils.isVariableDeclarationList(parent)) {
-            return tsutils.getVariableDeclarationKind(parent) === tsutils.VariableDeclarationKind.Const;
+            variableDeclarationList = parent;
         }
+    }
+
+    if (variableDeclarationList) {
+        return tsutils.getVariableDeclarationKind(variableDeclarationList) === tsutils.VariableDeclarationKind.Const;
     }
     return false;
 }
