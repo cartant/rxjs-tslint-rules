@@ -7,7 +7,8 @@
     "@phenomnomnominal/tsquery": "^1.0.5",
     "decamelize": "^2.0.0",
     "resolve": "^1.4.0",
-    "tslib": "^1.8.0"
+    "tslib": "^1.8.0",
+    "tsutils": "^2.19.1"
   },
   "description": "TSLint rules for RxJS",
   "devDependencies": {
@@ -23,7 +24,6 @@
     "rxjs": "^6.0.0",
     "semver": "^5.4.0",
     "tslint": "^5.1.0",
-    "tsutils": "^2.19.1",
     "typescript": "~3.0.1"
   },
   "homepage": "https://github.com/cartant/rxjs-tslint-rules",
