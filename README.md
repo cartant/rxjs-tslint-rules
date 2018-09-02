@@ -101,7 +101,7 @@ The package includes the following rules (none of which are enabled by default):
 | `rxjs-no-unsafe-first` | Disallows unsafe `first` and `take` usage in [NgRx](https://github.com/ngrx/platform) effects and [`redux-observable`](https://github.com/redux-observable/redux-observable) epics. | None |
 | `rxjs-no-unsafe-scope` | Disallows the use of variables/properties from unsafe/outer scopes in operator callbacks. | [See below](#rxjs-no-unsafe-scope) |
 | `rxjs-no-unsafe-switchmap` | Disallows unsafe `switchMap` usage in [NgRx](https://github.com/ngrx/platform) effects and [`redux-observable`](https://github.com/redux-observable/redux-observable) epics. | [See below](#rxjs-no-unsafe-switchmap) |
-| `rxjs-no-unsafe-takeuntil` | Disallows the application of operators after `takeUntil`. Operators placed after `takeUntil` can effect [subscription leaks](https://medium.com/@cartant/rxjs-avoiding-takeuntil-leaks-fb5182d047ef). | None |
+| `rxjs-no-unsafe-takeuntil` | Disallows the application of operators after `takeUntil`. Operators placed after `takeUntil` can effect [subscription leaks](https://medium.com/@cartant/rxjs-avoiding-takeuntil-leaks-fb5182d047ef). | [See below](#rxjs-no-unsafe-takeuntil) |
 | `rxjs-no-unused-add` | Disallows the importation of patched observables or operators that are not used in the module. | None |
 | `rxjs-no-wholesale` | Disallows the wholesale importation of `rxjs` or `rxjs/Rx`. | None |
 | `rxjs-throw-error` | Enforces the passing of `Error` values to `error` notifications. | None |
@@ -315,6 +315,25 @@ To disallow or warn about all uses of `switchMap` within effects or epics, use a
   "rxjs-no-unsafe-switchmap": {
     "options": [{
       "disallow": "."
+    }],
+    "severity": "error"
+  }
+}
+```
+
+<a name="rxjs-no-unsafe-takeuntil"></a>
+
+#### rxjs-no-unsafe-takeuntil
+
+The rule takes an optional object with optional `allow` property. The property is an array containing the names of the operators that are allowed to follow `takeUntil`.
+
+The following options are equivalent to the rule's default configuration:
+
+```json
+"rules": {
+  "rxjs-no-unsafe-takeuntil": {
+    "options": [{
+      "allow": ["publish", "publishBehavior", "publishLast", "publishReplay", "share", "shareReplay"]
     }],
     "severity": "error"
   }
