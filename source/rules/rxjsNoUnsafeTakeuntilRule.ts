@@ -13,8 +13,15 @@ export class Rule extends Lint.Rules.TypedRule {
 
     public static metadata: Lint.IRuleMetadata = {
         description: "Disallows the application of operators after takeUntil.",
-        options: null,
-        optionsDescription: "Not configurable.",
+        options: {
+            properties: {
+                allow: { type: "array", items: { type: "string" } }
+            },
+            type: "object"
+        },
+        optionsDescription: Lint.Utils.dedent`
+            An optional object with optional \`allow\` property.
+            The property is an array containing the names of the operators that are allowed to follow \`takeUntil\`.`,
         requiresTypeInfo: true,
         ruleName: "rxjs-no-unsafe-takeuntil",
         type: "functionality",
@@ -30,6 +37,27 @@ export class Rule extends Lint.Rules.TypedRule {
 }
 
 class Walker extends Lint.ProgramAwareRuleWalker {
+
+    private allow: string[] = [
+        "publish",
+        "publishBehavior",
+        "publishLast",
+        "publishReplay",
+        "share",
+        "shareReplay"
+    ];
+
+    constructor(sourceFile: ts.SourceFile, options: Lint.IOptions, program: ts.Program) {
+
+        super(sourceFile, options, program);
+
+        const [ruleOptions] = this.getOptions();
+        if (ruleOptions) {
+            if (ruleOptions.hasOwnProperty("allow")) {
+                this.allow = ruleOptions.allow;
+            }
+        }
+    }
 
     protected visitCallExpression(node: ts.CallExpression): void {
 
@@ -67,7 +95,7 @@ class Walker extends Lint.ProgramAwareRuleWalker {
                 if (name) {
                     if (name.getText() === "pipe") {
                         this.walkPipedOperators(parent, identifier);
-                    } else {
+                    } else if (this.allow.indexOf(name.getText()) === -1) {
                         const typeChecker = this.getTypeChecker();
                         const type = typeChecker.getTypeAtLocation(parent);
                         if (isReferenceType(type) && couldBeType(type.target, "Observable")) {
@@ -86,18 +114,33 @@ class Walker extends Lint.ProgramAwareRuleWalker {
 
     private walkPipedOperators(node: ts.CallExpression, identifier: ts.Identifier | null = null): void {
 
+        const some = (args: {
+            some(callback: (arg: ts.Expression) => boolean): boolean
+        }) => args.some(arg => {
+            if (
+                tsutils.isCallExpression(arg) &&
+                tsutils.isIdentifier(arg.expression) &&
+                (this.allow.indexOf(arg.expression.getText()) !== -1)
+            ) {
+                return false;
+            }
+            return true;
+        });
+
         if (identifier) {
-            if (node.arguments.length > 0) {
+            if (some(node.arguments.slice(0))) {
                 this.addFailureAtNode(identifier, Rule.FAILURE_STRING);
             }
         } else {
             node.arguments.forEach((arg, index) => {
-                if (tsutils.isCallExpression(arg)) {
-                    const { expression } = arg;
-                    if (tsutils.isIdentifier(expression) && (expression.getText() === "takeUntil")) {
-                        if (index < (node.arguments.length - 1)) {
-                            this.addFailureAtNode(expression, Rule.FAILURE_STRING);
-                        }
+                if (
+                    tsutils.isCallExpression(arg) &&
+                    tsutils.isIdentifier(arg.expression) &&
+                    (arg.expression.getText() === "takeUntil")
+                ) {
+                    const after = node.arguments.slice(index + 1);
+                    if (some(after)) {
+                        this.addFailureAtNode(arg.expression, Rule.FAILURE_STRING);
                     }
                 }
             });

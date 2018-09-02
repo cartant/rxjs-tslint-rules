@@ -1,0 +1,17 @@
+import { Observable } from "rxjs/Observable";
+import { of } from "rxjs/observable/of";
+import { takeUntil, tap } from "rxjs/operators";
+
+import "rxjs/add/operator/takeUntil";
+import "rxjs/add/operator/tap";
+
+const a = of("a");
+const b = of("b");
+const c = of("c");
+const d = of("d");
+
+const e = a.takeUntil(d).tap(value => console.log(value)).subscribe();
+const f = a.takeUntil(d).pipe(tap(value => console.log(value)))subscribe();
+const g = a.pipe(takeUntil(d), tap(value => console.log(value)))subscribe();
+
+[no-unsafe-takeuntil]: Applying operators after takeUntil is forbidden
