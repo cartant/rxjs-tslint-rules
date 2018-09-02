@@ -1,3 +1,10 @@
+<a name="4.8.0"></a>
+## [4.8.0](https://github.com/cartant/rxjs-tslint-rules/compare/v4.7.2...v4.8.0) (2018-08-02)
+
+## Features
+
+* Add an `allow` option to the `rxjs-no-unsafe-takeuntil` rule and default to allowing the `publish` and `share` operators and their variants. ([9610b86](https://github.com/cartant/rxjs-tslint-rules/commit/9610b86))
+
 <a name="4.7.2"></a>
 ## [4.7.2](https://github.com/cartant/rxjs-tslint-rules/compare/v4.7.1...v4.7.2) (2018-08-01)
 
