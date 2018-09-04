@@ -1,5 +1,5 @@
 import { of } from "rxjs";
-import { publish, publishBehavior, publishLast, publishReplay, share, shareReplay, takeUntil } from "rxjs/operators";
+import { finalize, publish, publishBehavior, publishLast, publishReplay, share, shareReplay, takeUntil } from "rxjs/operators";
 
 const a = of("a");
 const b = of("b");
@@ -12,5 +12,6 @@ const g = a.pipe(takeUntil(d), publishLast()).subscribe();
 const h = a.pipe(takeUntil(d), publishReplay(1)).subscribe();
 const i = a.pipe(takeUntil(d), share()).subscribe();
 const j = a.pipe(takeUntil(d), shareReplay(1)).subscribe();
+const k = a.pipe(takeUntil(d), finalize()).subscribe();
 
 [no-unsafe-takeuntil]: Applying operators after takeUntil is forbidden

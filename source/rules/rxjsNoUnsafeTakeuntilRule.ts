@@ -39,6 +39,8 @@ export class Rule extends Lint.Rules.TypedRule {
 class Walker extends Lint.ProgramAwareRuleWalker {
 
     private allow: string[] = [
+        "finalize",
+        "finally",
         "publish",
         "publishBehavior",
         "publishLast",

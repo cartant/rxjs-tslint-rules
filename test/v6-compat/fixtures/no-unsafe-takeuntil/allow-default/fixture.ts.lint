@@ -1,7 +1,8 @@
 import { Observable } from "rxjs/Observable";
 import { of } from "rxjs/observable/of";
-import { publish, publishBehavior, publishLast, publishReplay, share, shareReplay, takeUntil } from "rxjs/operators";
+import { finalize, publish, publishBehavior, publishLast, publishReplay, share, shareReplay, takeUntil } from "rxjs/operators";
 
+import "rxjs/add/operator/finally";
 import "rxjs/add/operator/publish";
 import "rxjs/add/operator/publishBehavior";
 import "rxjs/add/operator/publishLast";
@@ -35,5 +36,9 @@ const s = a.pipe(takeUntil(d), publishLast()).subscribe();
 const t = a.pipe(takeUntil(d), publishReplay(1)).subscribe();
 const u = a.pipe(takeUntil(d), share()).subscribe();
 const v = a.pipe(takeUntil(d), shareReplay(1)).subscribe();
+
+const w = a.takeUntil(d).finally(() => {}).subscribe();
+const x = a.takeUntil(d).pipe(finalize(() => {})).subscribe();
+const y = a.pipe(takeUntil(d), finalize(() => {})).subscribe();
 
 [no-unsafe-takeuntil]: Applying operators after takeUntil is forbidden
