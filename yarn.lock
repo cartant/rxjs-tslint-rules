@@ -3,8 +3,8 @@
 
 
 "@phenomnomnominal/tsquery@^2.0.0":
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/@phenomnomnominal/tsquery/-/tsquery-2.0.0.tgz#5255dd899f247858dad7b4664e8d0ee994a8711c"
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/@phenomnomnominal/tsquery/-/tsquery-2.0.1.tgz#3be9dc0f8de574d92d8256ab0a508535bf736b9c"
   dependencies:
     esquery "^1.0.1"
 
@@ -321,8 +321,8 @@ rimraf@^2.6.1:
     glob "^7.0.5"
 
 rxjs@^6.0.0:
-  version "6.3.1"
-  resolved "https://registry.yarnpkg.com/rxjs/-/rxjs-6.3.1.tgz#878a1a8c64b8a5da11dcf74b5033fe944cdafb84"
+  version "6.3.2"
+  resolved "https://registry.yarnpkg.com/rxjs/-/rxjs-6.3.2.tgz#6a688b16c4e6e980e62ea805ec30648e1c60907f"
   dependencies:
     tslib "^1.9.0"
 
