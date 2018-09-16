@@ -2,7 +2,6 @@
  * @license Use of this source code is governed by an MIT-style license that
  * can be found in the LICENSE file at https://github.com/cartant/rxjs-tslint-rules
  */
-/*tslint:disable:no-use-before-declare*/
 
 import * as Lint from "tslint";
 import * as ts from "typescript";
@@ -29,15 +28,8 @@ export class Rule extends Lint.Rules.TypedRule {
 
     public applyWithProgram(sourceFile: ts.SourceFile, program: ts.Program): Lint.RuleFailure[] {
 
-        return this.applyWithWalker(new Walker(sourceFile, this.getOptions(), program));
-    }
-}
-
-class Walker extends Lint.ProgramAwareRuleWalker {
-
-    walk(sourceFile: ts.SourceFile): void {
-
-        const typeChecker = this.getTypeChecker();
+        const failures: Lint.RuleFailure[] = [];
+        const typeChecker = program.getTypeChecker();
 
         const propertyAccessExpressions = tsquery(
             sourceFile,
@@ -54,11 +46,11 @@ class Walker extends Lint.ProgramAwareRuleWalker {
                         if (name.getText() === "pipe") {
                             args.forEach(arg => {
                                 if (tsutils.isCallExpression(arg)) {
-                                    this.validateArgs(arg.arguments);
+                                    this.validateArgs(arg.arguments, sourceFile, typeChecker, failures);
                                 }
                             });
                         } else {
-                            this.validateArgs(args);
+                            this.validateArgs(args, sourceFile, typeChecker, failures);
                         }
                     }
                 }
@@ -72,14 +64,19 @@ class Walker extends Lint.ProgramAwareRuleWalker {
         subscriptionIdentifiers.forEach(subscriptionIdentifier => {
             const { parent: newExpression } = subscriptionIdentifier;
             if (tsutils.isNewExpression(newExpression)) {
-                this.validateArgs(newExpression.arguments);
+                this.validateArgs(newExpression.arguments, sourceFile, typeChecker, failures);
             }
         });
+
+        return failures;
     }
 
-    private validateArgs(args: ts.NodeArray<ts.Expression>): void {
-
-        const typeChecker = this.getTypeChecker();
+    private validateArgs(
+        args: ts.NodeArray<ts.Expression>,
+        sourceFile: ts.SourceFile,
+        typeChecker: ts.TypeChecker,
+        failures: Lint.RuleFailure[]
+    ): void {
 
         args.forEach(arg => {
             if (tsutils.isPropertyAccessExpression(arg)) {
@@ -87,7 +84,13 @@ class Walker extends Lint.ProgramAwareRuleWalker {
                 if (type.getCallSignatures().length > 0) {
                     const thisKeywords = tsquery(arg, `ThisKeyword`);
                     if (thisKeywords.length > 0) {
-                        this.addFailureAtNode(arg, Rule.FAILURE_STRING);
+                        failures.push(new Lint.RuleFailure(
+                            sourceFile,
+                            arg.getStart(),
+                            arg.getStart() + arg.getWidth(),
+                            Rule.FAILURE_STRING,
+                            this.ruleName
+                        ));
                     }
                 }
             }
