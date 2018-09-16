@@ -2,7 +2,6 @@
  * @license Use of this source code is governed by an MIT-style license that
  * can be found in the LICENSE file at https://github.com/cartant/rxjs-tslint-rules
  */
-/*tslint:disable:no-use-before-declare*/
 
 import * as Lint from "tslint";
 import * as ts from "typescript";
@@ -25,15 +24,8 @@ export class Rule extends Lint.Rules.TypedRule {
 
     public applyWithProgram(sourceFile: ts.SourceFile, program: ts.Program): Lint.RuleFailure[] {
 
-        return this.applyWithWalker(new Walker(sourceFile, this.getOptions(), program));
-    }
-}
-
-class Walker extends Lint.ProgramAwareRuleWalker {
-
-    walk(sourceFile: ts.SourceFile): void {
-
-        const typeChecker = this.getTypeChecker();
+        const failures: Lint.RuleFailure[] = [];
+        const typeChecker = program.getTypeChecker();
         let importIdentifier: ts.Identifier | undefined = undefined;
 
         const importDeclarations = tsquery(
@@ -54,7 +46,14 @@ class Walker extends Lint.ProgramAwareRuleWalker {
                             importIdentifier.getStart() + importIdentifier.getWidth(),
                             "of as just"
                         );
-                        this.addFailureAtNode(importIdentifier, Rule.FAILURE_STRING, fix);
+                        failures.push(new Lint.RuleFailure(
+                            sourceFile,
+                            importIdentifier.getStart(),
+                            importIdentifier.getStart() + importIdentifier.getWidth(),
+                            Rule.FAILURE_STRING,
+                            this.ruleName,
+                            fix
+                        ));
                     }
                 }
             });
@@ -81,12 +80,20 @@ class Walker extends Lint.ProgramAwareRuleWalker {
                                     expression.getStart() + expression.getWidth(),
                                     "just"
                                 );
-                                this.addFailureAtNode(expression, Rule.FAILURE_STRING, fix);
+                                failures.push(new Lint.RuleFailure(
+                                    sourceFile,
+                                    expression.getStart(),
+                                    expression.getStart() + expression.getWidth(),
+                                    Rule.FAILURE_STRING,
+                                    this.ruleName,
+                                    fix
+                                ));
                             }
                         }
                     }
                 }
             });
         }
+        return failures;
     }
 }
