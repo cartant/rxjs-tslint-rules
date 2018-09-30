@@ -39,6 +39,7 @@ The package includes the following rules (none of which are enabled by default):
 | `rxjs-no-unsafe-takeuntil` | Disallows the application of operators after `takeUntil`. Operators placed after `takeUntil` can effect [subscription leaks](https://medium.com/@cartant/rxjs-avoiding-takeuntil-leaks-fb5182d047ef). | [See below](#rxjs-no-unsafe-takeuntil) |
 | `rxjs-no-unused-add` | Disallows the importation of patched observables or operators that are not used in the module. | None |
 | `rxjs-no-wholesale` | Disallows the wholesale importation of `rxjs` or `rxjs/Rx`. | None |
+| `rxjs-prefer-observer` | Enforces the passing of observers to `subscribe` and `tap`. See [this RxJS issue](https://github.com/ReactiveX/rxjs/issues/4159). | [See below](#rxjs-prefer-observer) |
 | `rxjs-throw-error` | Enforces the passing of `Error` values to `error` notifications. | None |
 
 ### Options
@@ -260,7 +261,7 @@ To disallow or warn about all uses of `switchMap` within effects or epics, use a
 
 #### rxjs-no-unsafe-takeuntil
 
-The rule takes an optional object with optional `allow` property. The property is an array containing the names of the operators that are allowed to follow `takeUntil`.
+The rule takes an optional object with an optional `allow` property. The property is an array containing the names of the operators that are allowed to follow `takeUntil`.
 
 The following options are equivalent to the rule's default configuration:
 
@@ -269,6 +270,25 @@ The following options are equivalent to the rule's default configuration:
   "rxjs-no-unsafe-takeuntil": {
     "options": [{
       "allow": ["publish", "publishBehavior", "publishLast", "publishReplay", "share", "shareReplay"]
+    }],
+    "severity": "error"
+  }
+}
+```
+
+<a name="rxjs-prefer-observer"></a>
+
+#### rxjs-prefer-observer
+
+The rule takes an optional object with an optional `allowNext` property. The property defaults to `true`, allowing a `next` callback to be passed instead of an observer. For more information, see [this RxJS issue](https://github.com/ReactiveX/rxjs/issues/4159).
+
+The following options are equivalent to the rule's default configuration:
+
+```json
+"rules": {
+  "rxjs-prefer-observer": {
+    "options": [{
+      "allowNext": true
     }],
     "severity": "error"
   }
