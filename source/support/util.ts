@@ -5,6 +5,14 @@
 
 import * as ts from "typescript";
 import * as tsutils from "tsutils";
+import { InternalSymbolName } from "typescript";
+
+export function couldBeFunction(type: ts.Type): boolean {
+    return (type.getCallSignatures().length > 0) ||
+        couldBeType(type, "Function") ||
+        couldBeType(type, "ArrowFunction") ||
+        couldBeType(type, InternalSymbolName.Function);
+}
 
 export function couldBeType(type: ts.Type, name: string | RegExp): boolean {
 

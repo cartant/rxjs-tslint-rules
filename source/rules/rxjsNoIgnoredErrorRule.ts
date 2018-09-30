@@ -7,9 +7,7 @@
 import * as Lint from "tslint";
 import * as ts from "typescript";
 import * as tsutils from "tsutils";
-
-import { couldBeType, isReferenceType } from "../support/util";
-import { InternalSymbolName } from "typescript";
+import { couldBeFunction, couldBeType, isReferenceType } from "../support/util";
 
 export class Rule extends Lint.Rules.TypedRule {
 
@@ -65,8 +63,6 @@ export class Walker extends Lint.ProgramAwareRuleWalker {
         // Check with a type checker
         const typeChecker = this.getTypeChecker();
         const type: ts.Type = typeChecker.getTypeAtLocation(node);
-        return couldBeType(type, "Function") ||
-            couldBeType(type, "ArrowFunction") ||
-            couldBeType(type, InternalSymbolName.Function);
+        return couldBeFunction(type);
     }
 }
