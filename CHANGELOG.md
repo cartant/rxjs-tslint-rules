@@ -1,3 +1,11 @@
+<a name="4.10.0"></a>
+## [4.10.0](https://github.com/cartant/rxjs-tslint-rules/compare/v4.9.0...v4.10.0) (2018-10-06)
+
+## Features
+
+* Add an `rxjs-no-nested-subscribe` rule. ([c7028ac](https://github.com/cartant/rxjs-tslint-rules/commit/c7028ac))
+* Add an `rxjs-prefer-async-pipe` rule. ([b25af74](https://github.com/cartant/rxjs-tslint-rules/commit/b25af74))
+
 <a name="4.9.0"></a>
 ## [4.9.0](https://github.com/cartant/rxjs-tslint-rules/compare/v4.8.0...v4.9.0) (2018-09-30)
 
