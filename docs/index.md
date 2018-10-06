@@ -26,6 +26,7 @@ The package includes the following rules (none of which are enabled by default):
 | `rxjs-no-ignored-error` | Disallows the calling of `subscribe` without specifying an error handler. | None |
 | `rxjs-no-ignored-subscribe` | Disallows the calling of subscribe without specifying arguments. | None |
 | `rxjs-no-internal` | Disallows importation from `rxjs/internal`. | None |
+| `rxjs-no-nested-subscribe` | Disallows the calling of `subscribe` within a `subscribe` callback. | None |
 | `rxjs-no-operator` | Disallows importation from `rxjs/operator`. Useful if you prefer ['pipeable' operators](https://github.com/ReactiveX/rxjs/blob/master/doc/pipeable-operators.md) - which are located in the `operators` directory. | None |
 | `rxjs-no-patched` | Disallows the calling of patched methods. Methods must be imported and called explicitly - not via `Observable` or `Observable.prototype`. | [See below](#rxjs-no-add) |
 | `rxjs-no-subject-unsubscribe` | Disallows calling the `unsubscribe` method of a `Subject` instance. For an explanation of why this can be a problem, see [this](https://stackoverflow.com/a/45112125/6680611) Stack Overflow answer. | None |
@@ -39,6 +40,7 @@ The package includes the following rules (none of which are enabled by default):
 | `rxjs-no-unsafe-takeuntil` | Disallows the application of operators after `takeUntil`. Operators placed after `takeUntil` can effect [subscription leaks](https://medium.com/@cartant/rxjs-avoiding-takeuntil-leaks-fb5182d047ef). | [See below](#rxjs-no-unsafe-takeuntil) |
 | `rxjs-no-unused-add` | Disallows the importation of patched observables or operators that are not used in the module. | None |
 | `rxjs-no-wholesale` | Disallows the wholesale importation of `rxjs` or `rxjs/Rx`. | None |
+| `rxjs-prefer-async-pipe` | Disallows the calling of `subscribe` within an Angular component. | None |
 | `rxjs-prefer-observer` | Enforces the passing of observers to `subscribe` and `tap`. See [this RxJS issue](https://github.com/ReactiveX/rxjs/issues/4159). | [See below](#rxjs-prefer-observer) |
 | `rxjs-throw-error` | Enforces the passing of `Error` values to `error` notifications. | None |
 
