@@ -1,0 +1,45 @@
+import { of } from "rxjs";
+
+of("foo").subscribe(
+    value => of("bar").subscribe()
+                       ~~~~~~~~~                [no-nested-subscribe]
+);
+of("foo").subscribe({
+    next: value => of("bar").subscribe()
+                             ~~~~~~~~~          [no-nested-subscribe]
+});
+of("foo").subscribe({
+    next(value) { of("bar").subscribe(); }
+                            ~~~~~~~~~           [no-nested-subscribe]
+});
+
+of("foo").subscribe(
+    undefined,
+    error => of("bar").subscribe()
+                       ~~~~~~~~~                [no-nested-subscribe]
+);
+of("foo").subscribe({
+    error: error => of("bar").subscribe()
+                              ~~~~~~~~~         [no-nested-subscribe]
+});
+of("foo").subscribe({
+    error(error) { of("bar").subscribe(); }
+                             ~~~~~~~~~          [no-nested-subscribe]
+});
+
+of("foo").subscribe(
+    undefined,
+    undefined,
+    () => of("bar").subscribe()
+                    ~~~~~~~~~                   [no-nested-subscribe]
+);
+of("foo").subscribe({
+    complete: () => of("bar").subscribe()
+                              ~~~~~~~~~         [no-nested-subscribe]
+});
+of("foo").subscribe({
+    complete() { of("bar").subscribe(); }
+                           ~~~~~~~~~            [no-nested-subscribe]
+});
+
+[no-nested-subscribe]: Nested subscribe calls are forbidden
