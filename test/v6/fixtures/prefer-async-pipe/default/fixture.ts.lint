@@ -1,0 +1,15 @@
+import { Component OnInit } from "@angular/core";
+import { of } from "rxjs";
+
+@Component({
+    selector: "some-component",
+    template: "<span>something</span>"
+})
+export class SomeComponent implements OnInit {
+    ngOnInit() {
+        of("foo").subscribe();
+                  ~~~~~~~~~                     [prefer-async-pipe]
+    }
+}
+
+[prefer-async-pipe]: Prefer async pipe over subscribe
