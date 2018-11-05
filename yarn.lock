@@ -384,8 +384,8 @@ tsutils@^2.27.2:
     tslib "^1.8.1"
 
 tsutils@^3.0.0:
-  version "3.3.0"
-  resolved "https://registry.yarnpkg.com/tsutils/-/tsutils-3.3.0.tgz#014e0277ab59e8a059226785b843c5348cbffd83"
+  version "3.3.1"
+  resolved "https://registry.yarnpkg.com/tsutils/-/tsutils-3.3.1.tgz#b7f34e23efbff41f729a712f0bfc628550c7119c"
   dependencies:
     tslib "^1.8.1"
 
