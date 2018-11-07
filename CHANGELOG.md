@@ -1,3 +1,10 @@
+<a name="4.10.1"></a>
+## [4.10.1](https://github.com/cartant/rxjs-tslint-rules/compare/v4.10.0...v4.10.1) (2018-11-08)
+
+## Changes
+
+* Upgrade to `tsquery` 3.0.0. ([ec8dcb1](https://github.com/cartant/rxjs-tslint-rules/commit/ec8dcb1))
+
 <a name="4.10.0"></a>
 ## [4.10.0](https://github.com/cartant/rxjs-tslint-rules/compare/v4.9.0...v4.10.0) (2018-10-06)
 
