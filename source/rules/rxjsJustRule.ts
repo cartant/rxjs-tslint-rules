@@ -37,24 +37,23 @@ export class Rule extends Lint.Rules.TypedRule {
                 importDeclaration,
                 `ImportSpecifier:has(Identifier[escapedText="of"])`
             );
-            importSpecifiers.forEach(importSpecifier => {
-                if (tsutils.isImportSpecifier(importSpecifier)) {
-                    if (!importSpecifier.propertyName && (importSpecifier.name.getText() === "of")) {
-                        importIdentifier = importSpecifier.name;
-                        const fix = Lint.Replacement.replaceFromTo(
-                            importIdentifier.getStart(),
-                            importIdentifier.getStart() + importIdentifier.getWidth(),
-                            "of as just"
-                        );
-                        failures.push(new Lint.RuleFailure(
-                            sourceFile,
-                            importIdentifier.getStart(),
-                            importIdentifier.getStart() + importIdentifier.getWidth(),
-                            Rule.FAILURE_STRING,
-                            this.ruleName,
-                            fix
-                        ));
-                    }
+            importSpecifiers.forEach(node => {
+                const importSpecifier = node as ts.ImportSpecifier;
+                if (!importSpecifier.propertyName && (importSpecifier.name.getText() === "of")) {
+                    importIdentifier = importSpecifier.name;
+                    const fix = Lint.Replacement.replaceFromTo(
+                        importIdentifier.getStart(),
+                        importIdentifier.getStart() + importIdentifier.getWidth(),
+                        "of as just"
+                    );
+                    failures.push(new Lint.RuleFailure(
+                        sourceFile,
+                        importIdentifier.getStart(),
+                        importIdentifier.getStart() + importIdentifier.getWidth(),
+                        Rule.FAILURE_STRING,
+                        this.ruleName,
+                        fix
+                    ));
                 }
             });
         });

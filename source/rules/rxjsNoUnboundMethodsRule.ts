@@ -35,23 +35,22 @@ export class Rule extends Lint.Rules.TypedRule {
             sourceFile,
             `CallExpression PropertyAccessExpression[name.name=/^(add|pipe|subscribe)$/]`
         );
-        propertyAccessExpressions.forEach(propertyAccessExpression => {
+        propertyAccessExpressions.forEach(node => {
+            const propertyAccessExpression = node as ts.PropertyAccessExpression;
             const { parent: callExpression } = propertyAccessExpression;
             if (tsutils.isCallExpression(callExpression)) {
-                if (tsutils.isPropertyAccessExpression(propertyAccessExpression)) {
-                    const type = typeChecker.getTypeAtLocation(propertyAccessExpression.expression);
-                    if (couldBeType(type, /^(Observable|Subscription)$/)) {
-                        const { arguments: args } = callExpression;
-                        const { name } = propertyAccessExpression;
-                        if (name.getText() === "pipe") {
-                            args.forEach(arg => {
-                                if (tsutils.isCallExpression(arg)) {
-                                    this.validateArgs(arg.arguments, sourceFile, typeChecker, failures);
-                                }
-                            });
-                        } else {
-                            this.validateArgs(args, sourceFile, typeChecker, failures);
-                        }
+                const type = typeChecker.getTypeAtLocation(propertyAccessExpression.expression);
+                if (couldBeType(type, /^(Observable|Subscription)$/)) {
+                    const { arguments: args } = callExpression;
+                    const { name } = propertyAccessExpression;
+                    if (name.getText() === "pipe") {
+                        args.forEach(arg => {
+                            if (tsutils.isCallExpression(arg)) {
+                                this.validateArgs(arg.arguments, sourceFile, typeChecker, failures);
+                            }
+                        });
+                    } else {
+                        this.validateArgs(args, sourceFile, typeChecker, failures);
                     }
                 }
             }

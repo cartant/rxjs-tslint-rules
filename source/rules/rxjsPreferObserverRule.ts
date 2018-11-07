@@ -40,23 +40,22 @@ export class Rule extends Lint.Rules.TypedRule {
             sourceFile,
             `CallExpression PropertyAccessExpression[name.name=/^(pipe|subscribe)$/]`
         );
-        propertyAccessExpressions.forEach(propertyAccessExpression => {
+        propertyAccessExpressions.forEach(node => {
+            const propertyAccessExpression = node as ts.PropertyAccessExpression;
             const { parent: callExpression } = propertyAccessExpression;
             if (tsutils.isCallExpression(callExpression)) {
-                if (tsutils.isPropertyAccessExpression(propertyAccessExpression)) {
-                    const type = typeChecker.getTypeAtLocation(propertyAccessExpression.expression);
-                    if (couldBeType(type, "Observable")) {
-                        const name = propertyAccessExpression.name.getText();
-                        switch (name) {
-                        case "pipe":
-                            failures.push(...this.validatePipe(sourceFile, typeChecker, callExpression));
-                            break;
-                        case "subscribe":
-                            failures.push(...this.validateArgs(sourceFile, typeChecker, callExpression));
-                            break;
-                        default:
-                            throw new Error(`Unexpected property '${name}'`);
-                        }
+                const type = typeChecker.getTypeAtLocation(propertyAccessExpression.expression);
+                if (couldBeType(type, "Observable")) {
+                    const name = propertyAccessExpression.name.getText();
+                    switch (name) {
+                    case "pipe":
+                        failures.push(...this.validatePipe(sourceFile, typeChecker, callExpression));
+                        break;
+                    case "subscribe":
+                        failures.push(...this.validateArgs(sourceFile, typeChecker, callExpression));
+                        break;
+                    default:
+                        throw new Error(`Unexpected property '${name}'`);
                     }
                 }
             }

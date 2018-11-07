@@ -30,31 +30,29 @@ export class Rule extends Lint.Rules.TypedRule {
 
         const subscribeQuery = `CallExpression PropertyAccessExpression[name.name="subscribe"]`;
         const propertyAccessExpressions = tsquery(sourceFile, subscribeQuery);
-        propertyAccessExpressions.forEach(propertyAccessExpression => {
+        propertyAccessExpressions.forEach(node => {
+            const propertyAccessExpression = node as ts.PropertyAccessExpression;
             const { parent: callExpression } = propertyAccessExpression;
             if (tsutils.isCallExpression(callExpression)) {
-                if (tsutils.isPropertyAccessExpression(propertyAccessExpression)) {
-                    const type = typeChecker.getTypeAtLocation(propertyAccessExpression.expression);
-                    if (couldBeType(type, "Observable")) {
-                        callExpression.arguments.forEach(arg => {
-                            const propertyAccessExpressions = tsquery(arg, subscribeQuery);
-                            propertyAccessExpressions.forEach(propertyAccessExpression => {
-                                if (tsutils.isPropertyAccessExpression(propertyAccessExpression)) {
-                                    const type = typeChecker.getTypeAtLocation(propertyAccessExpression.expression);
-                                    if (couldBeType(type, "Observable")) {
-                                        const { name } = propertyAccessExpression;
-                                        failures.push(new Lint.RuleFailure(
-                                            sourceFile,
-                                            name.getStart(),
-                                            name.getStart() + name.getWidth(),
-                                            Rule.FAILURE_STRING,
-                                            this.ruleName
-                                        ));
-                                    }
-                                }
-                            });
+                const type = typeChecker.getTypeAtLocation(propertyAccessExpression.expression);
+                if (couldBeType(type, "Observable")) {
+                    callExpression.arguments.forEach(arg => {
+                        const propertyAccessExpressions = tsquery(arg, subscribeQuery);
+                        propertyAccessExpressions.forEach(node => {
+                            const propertyAccessExpression = node as ts.PropertyAccessExpression;
+                            const type = typeChecker.getTypeAtLocation(propertyAccessExpression.expression);
+                            if (couldBeType(type, "Observable")) {
+                                const { name } = propertyAccessExpression;
+                                failures.push(new Lint.RuleFailure(
+                                    sourceFile,
+                                    name.getStart(),
+                                    name.getStart() + name.getWidth(),
+                                    Rule.FAILURE_STRING,
+                                    this.ruleName
+                                ));
+                            }
                         });
-                    }
+                    });
                 }
             }
         });

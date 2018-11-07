@@ -38,19 +38,18 @@ export class Rule extends Lint.Rules.TypedRule {
                 classDeclaration,
                 `CallExpression PropertyAccessExpression[name.name="subscribe"]`
             );
-            propertyAccessExpressions.forEach(propertyAccessExpression => {
-                if (tsutils.isPropertyAccessExpression(propertyAccessExpression)) {
-                    const type = typeChecker.getTypeAtLocation(propertyAccessExpression.expression);
-                    if (couldBeType(type, "Observable")) {
-                        const { name } = propertyAccessExpression;
-                        failures.push(new Lint.RuleFailure(
-                            sourceFile,
-                            name.getStart(),
-                            name.getStart() + name.getWidth(),
-                            Rule.FAILURE_STRING,
-                            this.ruleName
-                        ));
-                    }
+            propertyAccessExpressions.forEach(node => {
+                const propertyAccessExpression = node as ts.PropertyAccessExpression;
+                const type = typeChecker.getTypeAtLocation(propertyAccessExpression.expression);
+                if (couldBeType(type, "Observable")) {
+                    const { name } = propertyAccessExpression;
+                    failures.push(new Lint.RuleFailure(
+                        sourceFile,
+                        name.getStart(),
+                        name.getStart() + name.getWidth(),
+                        Rule.FAILURE_STRING,
+                        this.ruleName
+                    ));
                 }
             });
         });
