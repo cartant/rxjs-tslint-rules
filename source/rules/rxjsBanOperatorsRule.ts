@@ -15,7 +15,7 @@ export class Rule extends Lint.Rules.TypedRule {
     public static metadata: Lint.IRuleMetadata = {
         description: "Disallows the use of banned operators.",
         options: {
-            "type": "object"
+            type: "object"
         },
         optionsDescription: Lint.Utils.dedent`
             An object containing keys that are names of operators
