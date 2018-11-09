@@ -1,0 +1,43 @@
+import { AsyncSubject, BehaviorSubject, Observable, ReplaySubject, Subject, Subscriber } from "rxjs";
+import { Scheduler } from "rxjs/internal/Scheduler";
+
+class GenericObservable<T> extends Observable<T> {}
+                                   ~~~~~~~~~~~~~                [no-subclass]
+
+class StringObservable extends Observable<string> {}
+                               ~~~~~~~~~~~~~~~~~~               [no-subclass]
+
+class GenericSubject<T> extends Subject<T> {}
+                                ~~~~~~~~~~                      [no-subclass]
+
+class StringSubject extends Subject<string> {}
+                            ~~~~~~~~~~~~~~~                     [no-subclass]
+
+class GenericSubscriber<T> extends Subscriber<T> {}
+                                   ~~~~~~~~~~~~~                [no-subclass]
+
+class GenericAsyncSubject<T> extends AsyncSubject<T> {}
+                                     ~~~~~~~~~~~~~~~            [no-subclass]
+
+class StringAsyncSubject extends AsyncSubject<string> {}
+                                 ~~~~~~~~~~~~~~~~~~~~           [no-subclass]
+
+class GenericBehaviorSubject<T> extends BehaviorSubject<T> {}
+                                        ~~~~~~~~~~~~~~~~~~      [no-subclass]
+
+class StringBehaviorSubject extends BehaviorSubject<string> {}
+                                    ~~~~~~~~~~~~~~~~~~~~~~~     [no-subclass]
+
+class GenericReplaySubject<T> extends ReplaySubject<T> {}
+                                      ~~~~~~~~~~~~~~~~          [no-subclass]
+
+class StringReplaySubject extends ReplaySubject<string> {}
+                                  ~~~~~~~~~~~~~~~~~~~~~         [no-subclass]
+
+class StringSubscriber extends Subscriber<string> {}
+                               ~~~~~~~~~~~~~~~~~~               [no-subclass]
+
+class AnotherScheduler extends Scheduler {}
+                               ~~~~~~~~~                        [no-subclass]
+
+[no-subclass]: Subclassing RxJS classes is forbidden
