@@ -1,3 +1,11 @@
+<a name="4.11.1"></a>
+## [4.11.1](https://github.com/cartant/rxjs-tslint-rules/compare/v4.11.0...v4.11.1) (2018-11-16)
+
+## Fixes
+
+* Support literal properties in `rxjs-no-unsafe-scope`. ([4d39fed](https://github.com/cartant/rxjs-tslint-rules/commit/4d39fed))
+* Support namespace imports in `rxjs-no-unsafe-scope`. ([8598cc8](https://github.com/cartant/rxjs-tslint-rules/commit/8598cc8))
+
 <a name="4.11.0"></a>
 ## [4.11.0](https://github.com/cartant/rxjs-tslint-rules/compare/v4.10.1...v4.11.0) (2018-11-09)
 
