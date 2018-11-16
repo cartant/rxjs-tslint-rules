@@ -97,7 +97,11 @@ class Walker extends ScopeWalker {
             return false;
         }
 
-        const [declaration] = symbol.getDeclarations();
+        const declarations = symbol.getDeclarations();
+        if (!declarations || (declarations.length === 0)) {
+            return false;
+        }
+        const [declaration] = declarations;
         if (this.allowParameters && tsutils.isParameterDeclaration(declaration)) {
             return false;
         }
@@ -131,11 +135,9 @@ class Walker extends ScopeWalker {
         if (isConstDeclaration(declaration)) {
             return false;
         }
-
         if (tsutils.isImportSpecifier(declaration)) {
             return false;
         }
-
         return true;
     }
 }

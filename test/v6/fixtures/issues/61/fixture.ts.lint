@@ -24,6 +24,7 @@
 /* 24 */     ),
 /* 25 */     switchMap(({ payload: { applyLabelIdAsPrefix, labelId, localeId } }) =>
 /* 26 */       this.labelService.getLabels(labelId, localeId || this.localeId).pipe(
+                                                                ~~~~                    [Unsafe scopes are forbidden]
 /* 27 */         map(
 /* 28 */           (labels) =>
 /* 29 */             new featureActions.LoadSuccessAction({
