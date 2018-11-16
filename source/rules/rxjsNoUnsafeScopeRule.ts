@@ -138,6 +138,9 @@ class Walker extends ScopeWalker {
         if (tsutils.isImportSpecifier(declaration)) {
             return false;
         }
+        if (tsutils.isNamespaceImport(declaration)) {
+            return false;
+        }
         return true;
     }
 }
