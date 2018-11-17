@@ -1,0 +1,86 @@
+import { of, range } from "rxjs";
+import { repeatWhen, retryWhen } from "rxjs/operators";
+
+const source = of(42);
+
+const a = source.pipe(
+    repeatWhen(notifications => notifications)
+);
+
+const b = source.pipe(
+    repeatWhen(
+        function (notifications) {
+            return notifications;
+        }
+    )
+);
+
+const c = source.pipe(
+    repeatWhen(notifications => range(0, 3))
+    ~~~~~~~~~~                                  [no-ignored-notifier]
+);
+
+const d = source.pipe(
+    repeatWhen(() => range(0, 3))
+    ~~~~~~~~~~                                  [no-ignored-notifier]
+);
+
+const e = source.pipe(
+    repeatWhen(
+    ~~~~~~~~~~                                  [no-ignored-notifier]
+        function (notifications) {
+            return range(0, 3);
+        }
+    )
+);
+
+const f = source.pipe(
+    repeatWhen(
+    ~~~~~~~~~~                                  [no-ignored-notifier]
+        function () {
+            return range(0, 3);
+        }
+    )
+);
+
+const g = source.pipe(
+    retryWhen(errors => errors)
+);
+
+const h = source.pipe(
+    retryWhen(
+        function (errors) {
+            return errors;
+        }
+    )
+);
+
+const i = source.pipe(
+    retryWhen(errors => range(0, 3))
+    ~~~~~~~~~                                   [no-ignored-notifier]
+);
+
+const j = source.pipe(
+    retryWhen(() => range(0, 3))
+    ~~~~~~~~~                                   [no-ignored-notifier]
+);
+
+const k = source.pipe(
+    retryWhen(
+    ~~~~~~~~~                                   [no-ignored-notifier]
+        function (errors) {
+            return range(0, 3);
+        }
+    )
+);
+
+const l = source.pipe(
+    retryWhen(
+    ~~~~~~~~~                                   [no-ignored-notifier]
+        function () {
+            return range(0, 3);
+        }
+    )
+);
+
+[no-ignored-notifier]: Ignoring the notifier is forbidden
