@@ -1,0 +1,16 @@
+import { of, ReplaySubject } from "rxjs";
+import { publishReplay, shareReplay } from "rxjs/operators";
+
+const a = new ReplaySubject<string>(1);
+const b = new ReplaySubject<string>();
+              ~~~~~~~~~~~~~                 [no-ignored-replay-buffer]
+
+const c = of(42).pipe(publishReplay(1));
+const d = of(42).pipe(publishReplay());
+                      ~~~~~~~~~~~~~         [no-ignored-replay-buffer]
+
+const e = of(42).pipe(shareReplay(1));
+const f = of(42).pipe(shareReplay());
+                      ~~~~~~~~~~~           [no-ignored-replay-buffer]
+
+[no-ignored-replay-buffer]: Ignoring the buffer size is forbidden
