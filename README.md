@@ -90,6 +90,7 @@ The package includes the following rules (none of which are enabled by default):
 | `rxjs-no-finnish` | Disallows the use of [Finnish notation](https://medium.com/@benlesh/observables-and-finnish-notation-df8356ed1c9b). | None |
 | `rxjs-no-ignored-error` | Disallows the calling of `subscribe` without specifying an error handler. | None |
 | `rxjs-no-ignored-notifier` | Disallows observables not composed from the `repeatWhen` or `retryWhen` notifier. | None |
+| `rxjs-no-ignored-replay-buffer` | Disallows using `ReplaySubject`, `publishReplay` or `shareReplay` without specifying the buffer size. | None |
 | `rxjs-no-ignored-subscribe` | Disallows the calling of subscribe without specifying arguments. | None |
 | `rxjs-no-internal` | Disallows importation from `rxjs/internal`. | None |
 | `rxjs-no-nested-subscribe` | Disallows the calling of `subscribe` within a `subscribe` callback. | None |
