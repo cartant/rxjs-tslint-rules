@@ -1,3 +1,10 @@
+<a name="4.13.0"></a>
+## [4.13.0](https://github.com/cartant/rxjs-tslint-rules/compare/v4.12.0...v4.13.0) (2018-11-25)
+
+## Features
+
+* Add an `rxjs-no-ignored-replay-buffer` rule. ([5958750](https://github.com/cartant/rxjs-tslint-rules/commit/5958750))
+
 <a name="4.12.0"></a>
 ## [4.12.0](https://github.com/cartant/rxjs-tslint-rules/compare/v4.11.1...v4.12.0) (2018-11-18)
 
