@@ -1,3 +1,10 @@
+<a name="4.13.1"></a>
+## [4.13.1](https://github.com/cartant/rxjs-tslint-rules/compare/v4.13.0...v4.13.1) (2018-12-09)
+
+## Fixes
+
+* Add more allowed operators for the `rxjs-no-unsafe-takeuntil` (`count`, `every`, `toArray`, etc.). ([5255fcf](https://github.com/cartant/rxjs-tslint-rules/commit/5255fcf))
+
 <a name="4.13.0"></a>
 ## [4.13.0](https://github.com/cartant/rxjs-tslint-rules/compare/v4.12.0...v4.13.0) (2018-11-25)
 
