@@ -273,7 +273,7 @@ The following options are equivalent to the rule's default configuration:
 "rules": {
   "rxjs-no-unsafe-takeuntil": {
     "options": [{
-      "allow": ["publish", "publishBehavior", "publishLast", "publishReplay", "share", "shareReplay"]
+      "allow": ["count", "endWith", "every", "finalize", "finally", "isEmpty", "last", "max", "min", "publish", "publishBehavior", "publishLast", "publishReplay", "reduce", "share", "shareReplay", "skipLast", "takeLast", "throwIfEmpty", "toArray"]
     }],
     "severity": "error"
   }
