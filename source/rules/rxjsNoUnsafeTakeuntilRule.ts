@@ -39,14 +39,26 @@ export class Rule extends Lint.Rules.TypedRule {
 class Walker extends Lint.ProgramAwareRuleWalker {
 
     private allow: string[] = [
+        "count",
+        "endWith",
+        "every",
         "finalize",
         "finally",
+        "isEmpty",
+        "last",
+        "max",
+        "min",
         "publish",
         "publishBehavior",
         "publishLast",
         "publishReplay",
+        "reduce",
         "share",
-        "shareReplay"
+        "shareReplay",
+        "skipLast",
+        "takeLast",
+        "throwIfEmpty",
+        "toArray"
     ];
 
     constructor(sourceFile: ts.SourceFile, options: Lint.IOptions, program: ts.Program) {
