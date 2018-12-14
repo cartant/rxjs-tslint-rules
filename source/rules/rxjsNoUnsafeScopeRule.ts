@@ -131,6 +131,9 @@ class Walker extends ScopeWalker {
                 return false;
             }
         }
+        if (tsutils.isTypeReferenceNode(node.parent)) {
+            return false;
+        }
 
         if (isConstDeclaration(declaration)) {
             return false;
