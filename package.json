@@ -59,7 +59,7 @@
     "test": "yarn run lint && yarn run test:build && yarn run test:mocha && yarn run test:tslint-v5 && yarn run test:tslint-v6 && yarn run test:tslint-v6-compat",
     "test:build": "yarn run test:clean && tsc -p tsconfig.json",
     "test:clean": "rimraf build",
-    "test:debug": "tslint --test ./test/v6/fixtures/no-ignored-replay-buffer/**/tslint.json",
+    "test:debug": "tslint --test ./test/v6/fixtures/issues/65/tslint.json",
     "test:issues": "yarn run test:clean && tsc -p tsconfig.json && tslint --test ./test/v6/fixtures/issues/**/tslint.json",
     "test:mocha": "mocha build/**/*-spec.js",
     "test:tslint-v5": "yarn --cwd ./test/v5 install && yarn --cwd ./test/v5 upgrade && tslint --test ./test/v5/fixtures/**/tslint.json",

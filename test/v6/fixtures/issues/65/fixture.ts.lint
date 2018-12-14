@@ -1,0 +1,24 @@
+import { of } from 'rxjs'
+import { concatMap } from 'rxjs/operators'
+
+interface Product {
+  title: string
+}
+
+class MyProductService {
+  getProduct<T> () {
+    return of(null)
+  }
+
+  withGeneric_notOk () {
+    return of(null).pipe(
+      concatMap(() => this.getProduct<Product>())
+    )
+  }
+
+  noGeneric_ok () {
+    return of(null).pipe(
+      concatMap(() => this.getProduct())
+    )
+  }
+}
