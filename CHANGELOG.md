@@ -1,3 +1,10 @@
+<a name="4.13.2"></a>
+## [4.13.2](https://github.com/cartant/rxjs-tslint-rules/compare/v4.13.1...v4.13.2) (2018-12-14)
+
+## Fixes
+
+* Support explicit type parameters in `rxjs-no-unsafe-scope`. ([b37cb78](https://github.com/cartant/rxjs-tslint-rules/commit/b37cb78))
+
 <a name="4.13.1"></a>
 ## [4.13.1](https://github.com/cartant/rxjs-tslint-rules/compare/v4.13.0...v4.13.1) (2018-12-09)
 
