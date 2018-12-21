@@ -1,3 +1,10 @@
+<a name="4.14.1"></a>
+## [4.14.1](https://github.com/cartant/rxjs-tslint-rules/compare/v4.14.0...v4.14.1) (2018-12-21)
+
+## Fixes
+
+* `rxjs-no-unsafe-scope` rule now considers `instanceof` constructors safe. ([e6d8261](https://github.com/cartant/rxjs-tslint-rules/commit/e6d8261))
+
 <a name="4.14.0"></a>
 ## [4.14.0](https://github.com/cartant/rxjs-tslint-rules/compare/v4.13.2...v4.14.0) (2018-12-16)
 
