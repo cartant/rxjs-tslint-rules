@@ -56,6 +56,14 @@ export function isConstDeclaration(declaration: ts.Declaration): boolean {
     return false;
 }
 
+export function isInstanceofCtor(node: ts.Node): boolean {
+
+    const { parent } = node;
+    return tsutils.isBinaryExpression(parent) &&
+        (node === parent.right) &&
+        (parent.operatorToken.kind === ts.SyntaxKind.InstanceOfKeyword);
+}
+
 export function isReferenceType(type: ts.Type): type is ts.TypeReference {
 
     return tsutils.isTypeFlagSet(type, ts.TypeFlags.Object) &&
