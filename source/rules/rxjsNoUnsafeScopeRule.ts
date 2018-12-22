@@ -8,7 +8,13 @@ import * as Lint from "tslint";
 import * as ts from "typescript";
 import * as tsutils from "tsutils";
 import { ScopeWalker } from "../support/scope-walker";
-import { isConstDeclaration, isInstanceofCtor, isThis, isWithinCallExpressionExpression } from "../support/util";
+import {
+    isConstDeclaration,
+    isInstanceofCtor,
+    isThis,
+    isWithinCallExpressionExpression,
+    isWithinParameterDeclaration
+} from "../support/util";
 
 export class Rule extends Lint.Rules.TypedRule {
 
@@ -105,7 +111,7 @@ class Walker extends ScopeWalker {
             return false;
         }
         const [declaration] = declarations;
-        if (this.allowParameters && tsutils.isParameterDeclaration(declaration)) {
+        if (this.allowParameters && isWithinParameterDeclaration(declaration)) {
             return false;
         }
         if ((declaration.pos >= rootCallback.pos) && (declaration.pos < rootCallback.end)) {

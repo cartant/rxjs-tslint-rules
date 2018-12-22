@@ -92,10 +92,20 @@ export function isUnionType(type: ts.Type): type is ts.UnionType {
 
 export function isWithinCallExpressionExpression(node: ts.Node): boolean {
 
-    let parent = node.parent;
+    let { parent } = node;
     while (parent && tsutils.isPropertyAccessExpression(parent)) {
         node = parent;
         parent = node.parent;
     }
     return parent && tsutils.isCallExpression(parent) && (node === parent.expression);
+}
+
+export function isWithinParameterDeclaration(node: ts.Node): boolean {
+
+    if (tsutils.isParameterDeclaration(node)) {
+        return true;
+    }
+    return tsutils.isBindingElement(node) &&
+        tsutils.isBindingPattern(node.parent) &&
+        tsutils.isParameterDeclaration(node.parent.parent);
 }
