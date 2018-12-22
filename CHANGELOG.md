@@ -1,3 +1,11 @@
+<a name="4.14.2"></a>
+## [4.14.2](https://github.com/cartant/rxjs-tslint-rules/compare/v4.14.1...v4.14.2) (2018-12-22)
+
+## Fixes
+
+* `rxjs-no-unsafe-scope` rule now supports static class properties. ([5806b92](https://github.com/cartant/rxjs-tslint-rules/commit/5806b92))
+* `rxjs-no-unsafe-scope` rule now supports parameter destructuring. ([b0458a2](https://github.com/cartant/rxjs-tslint-rules/commit/b0458a2))
+
 <a name="4.14.1"></a>
 ## [4.14.1](https://github.com/cartant/rxjs-tslint-rules/compare/v4.14.0...v4.14.1) (2018-12-21)
 
