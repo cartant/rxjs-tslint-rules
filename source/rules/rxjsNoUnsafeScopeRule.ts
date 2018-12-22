@@ -105,7 +105,6 @@ class Walker extends ScopeWalker {
         if (!symbol) {
             return false;
         }
-
         const declarations = symbol.getDeclarations();
         if (!declarations || (declarations.length === 0)) {
             return false;
@@ -128,15 +127,28 @@ class Walker extends ScopeWalker {
             return false;
         }
         if (tsutils.isPropertyAccessExpression(node.parent)) {
-            if (isThis(node)) {
+            if (tsutils.isClassDeclaration(declaration)) {
+                const nameSymbol = typeChecker.getSymbolAtLocation(node.parent.name);
+                if (!nameSymbol) {
+                    return false;
+                }
+                const nameDeclarations = nameSymbol.getDeclarations();
+                if (!nameDeclarations || (nameDeclarations.length === 0)) {
+                    return false;
+                }
+                const [nameDeclaration] = nameDeclarations;
+                if (tsutils.hasModifier(nameDeclaration.modifiers, ts.SyntaxKind.ReadonlyKeyword)) {
+                    return false;
+                }
                 return !this.allowProperties;
-            }
-            if (node === node.parent.name) {
+            } else if (isThis(node)) {
+                return !this.allowProperties;
+            } else if (node === node.parent.name) {
                 return false;
             }
-            const type = typeChecker.getTypeAtLocation(node.parent.name);
+            const nameType = typeChecker.getTypeAtLocation(node.parent.name);
             /*tslint:disable-next-line:no-bitwise*/
-            if ((type.flags & ts.TypeFlags.EnumLiteral) !== 0) {
+            if ((nameType.flags & ts.TypeFlags.EnumLiteral) !== 0) {
                 return false;
             }
         }

@@ -5,8 +5,8 @@
     "rxjs-no-unsafe-scope": {
       "options": [{
         "allowDo": false,
-        "allowMethods": true,
-        "allowParameters": true,
+        "allowMethods": false,
+        "allowParameters": false,
         "allowProperties": false,
         "allowTap": false
       }],
