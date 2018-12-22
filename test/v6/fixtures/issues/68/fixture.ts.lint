@@ -20,4 +20,4 @@ class MyClass {
     }
 }
 
-[no-unsafe-scope]:  Unsafe scopes are forbidden
+[no-unsafe-scope]: Unsafe scopes are forbidden
