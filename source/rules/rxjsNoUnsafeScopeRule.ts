@@ -9,6 +9,7 @@ import * as ts from "typescript";
 import * as tsutils from "tsutils";
 import { ScopeWalker } from "../support/scope-walker";
 import {
+    findDeclaration,
     isConstDeclaration,
     isInstanceofCtor,
     isThis,
@@ -101,15 +102,10 @@ class Walker extends ScopeWalker {
         }
 
         const typeChecker = this.getTypeChecker();
-        const symbol = typeChecker.getSymbolAtLocation(node);
-        if (!symbol) {
+        const declaration = findDeclaration(node, typeChecker);
+        if (!declaration) {
             return false;
         }
-        const declarations = symbol.getDeclarations();
-        if (!declarations || (declarations.length === 0)) {
-            return false;
-        }
-        const [declaration] = declarations;
         if (this.allowParameters && isWithinParameterDeclaration(declaration)) {
             return false;
         }
@@ -128,15 +124,10 @@ class Walker extends ScopeWalker {
         }
         if (tsutils.isPropertyAccessExpression(node.parent)) {
             if (tsutils.isClassDeclaration(declaration)) {
-                const nameSymbol = typeChecker.getSymbolAtLocation(node.parent.name);
-                if (!nameSymbol) {
+                const nameDeclaration = findDeclaration(node.parent.name, typeChecker);
+                if (!nameDeclaration) {
                     return false;
                 }
-                const nameDeclarations = nameSymbol.getDeclarations();
-                if (!nameDeclarations || (nameDeclarations.length === 0)) {
-                    return false;
-                }
-                const [nameDeclaration] = nameDeclarations;
                 if (tsutils.hasModifier(nameDeclaration.modifiers, ts.SyntaxKind.ReadonlyKeyword)) {
                     return false;
                 }

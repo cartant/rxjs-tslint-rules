@@ -7,6 +7,7 @@ import * as Lint from "tslint";
 import * as ts from "typescript";
 import * as tsutils from "tsutils";
 import { tsquery } from "@phenomnomnominal/tsquery";
+import { findDeclaration } from "../support/util";
 
 export class Rule extends Lint.Rules.TypedRule {
 
@@ -68,26 +69,21 @@ export class Rule extends Lint.Rules.TypedRule {
                 if (tsutils.isCallExpression(callExpression)) {
                     const expression = callExpression.expression;
                     if (tsutils.isIdentifier(expression)) {
-
-                        const symbol = typeChecker.getSymbolAtLocation(expression);
-                        if (symbol) {
-
-                            const [declaration] = symbol.getDeclarations();
-                            if (declaration === importIdentifier.parent) {
-                                const fix = Lint.Replacement.replaceFromTo(
-                                    expression.getStart(),
-                                    expression.getStart() + expression.getWidth(),
-                                    "just"
-                                );
-                                failures.push(new Lint.RuleFailure(
-                                    sourceFile,
-                                    expression.getStart(),
-                                    expression.getStart() + expression.getWidth(),
-                                    Rule.FAILURE_STRING,
-                                    this.ruleName,
-                                    fix
-                                ));
-                            }
+                        const declaration = findDeclaration(expression, typeChecker);
+                        if (declaration === importIdentifier.parent) {
+                            const fix = Lint.Replacement.replaceFromTo(
+                                expression.getStart(),
+                                expression.getStart() + expression.getWidth(),
+                                "just"
+                            );
+                            failures.push(new Lint.RuleFailure(
+                                sourceFile,
+                                expression.getStart(),
+                                expression.getStart() + expression.getWidth(),
+                                Rule.FAILURE_STRING,
+                                this.ruleName,
+                                fix
+                            ));
                         }
                     }
                 }
