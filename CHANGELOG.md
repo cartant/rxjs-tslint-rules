@@ -1,3 +1,10 @@
+<a name="4.14.3"></a>
+## [4.14.3](https://github.com/cartant/rxjs-tslint-rules/compare/v4.14.2...v4.14.3) (2018-12-25)
+
+## Fixes
+
+* `rxjs-no-unsafe-scope` rule now supports tagged template expressions. ([01c5a01](https://github.com/cartant/rxjs-tslint-rules/commit/01c5a01))
+
 <a name="4.14.2"></a>
 ## [4.14.2](https://github.com/cartant/rxjs-tslint-rules/compare/v4.14.1...v4.14.2) (2018-12-22)
 
