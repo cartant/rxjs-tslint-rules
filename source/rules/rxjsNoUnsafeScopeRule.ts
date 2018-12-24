@@ -113,7 +113,7 @@ class Walker extends ScopeWalker {
             return false;
         }
 
-        if (isWithinCallExpressionExpression(node)) {
+        if (isWithinCallExpressionExpression(node) || tsutils.isTaggedTemplateExpression(node.parent)) {
             if (isThis(node)) {
                 return !this.allowMethods;
             }
