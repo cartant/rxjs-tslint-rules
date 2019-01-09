@@ -40,6 +40,7 @@ class Walker extends Lint.ProgramAwareRuleWalker {
 
     private allow: string[] = [
         "count",
+        "defaultIfEmpty",
         "endWith",
         "every",
         "finalize",

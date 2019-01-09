@@ -1,6 +1,7 @@
 import { of } from "rxjs";
 import {
     count,
+    defaultIfEmpty,
     endWith,
     every,
     finalize,
@@ -28,6 +29,7 @@ const b = of("b");
 let r: Observable<any>;
 
 r = a.pipe(takeUntil(b), count()).subscribe();
+r = a.pipe(takeUntil(b), defaultIfEmpty('empty')).subscribe();
 r = a.pipe(takeUntil(b), endWith("z")).subscribe();
 r = a.pipe(takeUntil(b), every(value => value !== "z")).subscribe();
 r = a.pipe(takeUntil(b), finalize(() => {})).subscribe();
