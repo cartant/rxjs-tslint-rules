@@ -1,3 +1,10 @@
+<a name="4.14.4"></a>
+## [4.14.4](https://github.com/cartant/rxjs-tslint-rules/compare/v4.14.3...v4.14.4) (2019-01-13)
+
+## Fixes
+
+* `rxjs-no-unsafe-takeuntil` rule now allows `defaultIfEmpty`. ([8c68457](https://github.com/cartant/rxjs-tslint-rules/commit/8c68457))
+
 <a name="4.14.3"></a>
 ## [4.14.3](https://github.com/cartant/rxjs-tslint-rules/compare/v4.14.2...v4.14.3) (2018-12-25)
 
