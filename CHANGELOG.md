@@ -1,3 +1,10 @@
+<a name="4.15.0"></a>
+## [4.15.0](https://github.com/cartant/rxjs-tslint-rules/compare/v4.14.4...v4.15.0) (2019-01-18)
+
+## Features
+
+* Add `rxjs-no-compat` rule. ([ae4403f](https://github.com/cartant/rxjs-tslint-rules/commit/ae4403f))
+
 <a name="4.14.4"></a>
 ## [4.14.4](https://github.com/cartant/rxjs-tslint-rules/compare/v4.14.3...v4.14.4) (2019-01-13)
 
