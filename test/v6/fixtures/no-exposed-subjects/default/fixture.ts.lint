@@ -1,0 +1,48 @@
+import * as Rx from 'rxjs';
+
+const variable = new Rx.Subject<void>();
+
+class Mock {
+  private submitSubject$ = new Rx.Subject<void>();
+
+  private readonly rSubmitSubject$ = new Rx.Subject<void>();
+
+  public property$ = new Rx.Subject<void>();
+         ~~~~~~~~~            [Subject 'property$' must be private.]
+
+  protected property2$ = new Rx.Subject<void>();
+            ~~~~~~~~~~           [Subject 'property2$' must be private.]
+
+  anyPropertySubject$ = new Rx.Subject<void>();
+  ~~~~~~~~~~~~~~~~~~~         [Subject 'anyPropertySubject$' must be private.]
+
+  readonly public rPropertySubject$ = new Rx.Subject<void>();
+                  ~~~~~~~~~~~~~~~~~    [Subject 'rPropertySubject$' must be private.]
+
+  readonly rSubject$ = new Rx.Subject<void>();
+           ~~~~~~~~~         [Subject 'rSubject$' must be private.]
+
+  constructor(
+    public streamSubject$: Rx.Subject<any>,
+           ~~~~~~~~~~~~~~         [Subject 'streamSubject$' must be private.]
+    protected pSubject$: Rx.Subject<any>,
+              ~~~~~~~~~                 [Subject 'pSubject$' must be private.]
+    private secondParamSubject$: Rx.Subject<any>,
+    anySubject$: Rx.Subject<any>,
+    ~~~~~~~~~~~                        [Subject 'anySubject$' must be private.]
+    observable: Rx.Observable<any>,
+  ) {
+
+    console.log(this.submitSubject$);
+    console.log(this.property$);
+    console.log(this.propertySubject$);
+  }
+
+  public mock(): Rx.Subject<any> {
+    return new Rx.Subject<any>();
+  }
+}
+
+function foo(xSubject$: Rx.Subject<any>) {
+  console.log(x);
+}
