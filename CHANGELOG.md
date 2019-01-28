@@ -1,3 +1,10 @@
+<a name="4.15.1"></a>
+## [4.15.1](https://github.com/cartant/rxjs-tslint-rules/compare/v4.15.0...v4.15.1) (2019-01-28)
+
+## Fixes
+
+* The `rxjs-no-compat` rule no longer effects false positives for packages that begin with `rxjs`. ([1c5b13f](https://github.com/cartant/rxjs-tslint-rules/commit/1c5b13f))
+
 <a name="4.15.0"></a>
 ## [4.15.0](https://github.com/cartant/rxjs-tslint-rules/compare/v4.14.4...v4.15.0) (2019-01-18)
 
