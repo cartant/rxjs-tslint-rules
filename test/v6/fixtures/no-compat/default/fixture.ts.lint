@@ -3,6 +3,7 @@ import { ajax } from "rxjs/ajax";
 import { concatMap } from "rxjs/operators";
 import { TestScheduler } from "rxjs/testing";
 import { webSocket } from "rxjs/webSocket";
+import * from "rxjs-prefixed-package";
 
 import * as Rx from "rxjs/Rx";
                     ~~~~~~~~~                       [no-compat]
