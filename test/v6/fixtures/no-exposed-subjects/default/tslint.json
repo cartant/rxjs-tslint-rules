@@ -2,14 +2,7 @@
   "defaultSeverity": "error",
   "jsRules": {},
   "rules": {
-    "rxjs-no-exposed-subjects": {
-      "options": [{
-        "constructorParams": true,
-        "methods": false,
-        "properties": true
-      }],
-      "severity": "error"
-    }
+    "rxjs-no-exposed-subjects": { "severity": "error" }
   },
   "rulesDirectory": "../../../../../build/rules"
 }
