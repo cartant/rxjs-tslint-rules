@@ -4,27 +4,27 @@
  */
 /*tslint:disable:no-use-before-declare*/
 
-import * as Lint from 'tslint';
-import * as ts from 'typescript';
-import { couldBeType } from '../utils';
+import * as Lint from "tslint";
+import * as ts from "typescript";
+import { couldBeType } from "../support/util";
 
 export class Rule extends Lint.Rules.TypedRule {
   public static metadata: Lint.IRuleMetadata = {
     description: "Ensures that subjects have access level modifier 'private'.",
     options: null,
-    optionsDescription: 'Not configurable.',
+    optionsDescription: "Not configurable.",
     requiresTypeInfo: true,
     ruleName: '"rxjs-no-exposed-subjects"',
-    type: 'style',
-    typescriptOnly: true,
+    type: "style",
+    typescriptOnly: true
   };
 
   public applyWithProgram(
     sourceFile: ts.SourceFile,
-    program: ts.Program,
+    program: ts.Program
   ): Lint.RuleFailure[] {
     return this.applyWithWalker(
-      new RxjsNoExposedSubjects(sourceFile, this.getOptions(), program),
+      new RxjsNoExposedSubjects(sourceFile, this.getOptions(), program)
     );
   }
 }
@@ -33,7 +33,7 @@ class RxjsNoExposedSubjects extends Lint.ProgramAwareRuleWalker {
   constructor(
     sourceFile: ts.SourceFile,
     rawOptions: Lint.IOptions,
-    program: ts.Program,
+    program: ts.Program
   ) {
     super(sourceFile, rawOptions, program);
   }
@@ -76,12 +76,12 @@ class RxjsNoExposedSubjects extends Lint.ProgramAwareRuleWalker {
       const text = name.getText();
       const privateModifier = node.modifiers
         ? node.modifiers.find(
-            modifier => modifier.kind === ts.SyntaxKind.PrivateKeyword,
+            modifier => modifier.kind === ts.SyntaxKind.PrivateKeyword
           )
         : null;
       const type = this.getTypeChecker().getTypeAtLocation(typeNode || node);
 
-      if (!privateModifier && couldBeType(type, 'Subject')) {
+      if (!privateModifier && couldBeType(type, "Subject")) {
         this.addFailureAtNode(name, `Subject '${text}' must be private.`);
       }
     }
