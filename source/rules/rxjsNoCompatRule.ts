@@ -27,12 +27,12 @@ export class Rule extends Lint.Rules.AbstractRule {
         const failures: Lint.RuleFailure[] = [];
         const importDeclarations = tsquery(
             sourceFile,
-            `ImportDeclaration:has(StringLiteral[value=/^rxjs/])`
+            `ImportDeclaration:has(StringLiteral[value=/^rxjs\\u002f/])`
         );
         importDeclarations.forEach(node => {
             const importDeclaration = node as ts.ImportDeclaration;
             const { moduleSpecifier } = importDeclaration;
-            if (!/^['"]rxjs(\/(ajax|operators|testing|webSocket))?['"]$/.test(moduleSpecifier.getText())) {
+            if (!/^['"]rxjs\/(ajax|operators|testing|webSocket)['"]$/.test(moduleSpecifier.getText())) {
                 failures.push(new Lint.RuleFailure(
                     sourceFile,
                     moduleSpecifier.getStart(),
