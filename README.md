@@ -88,6 +88,7 @@ The package includes the following rules (none of which are enabled by default):
 | `rxjs-no-create` | Disallows the calling of `Observable.create`. Use `new Observable` instead. | None |
 | `rxjs-no-deep-operators` | Disallows deep importation from `rxjs/operators`. Deep imports won't be in available in RxJS v6. | None |
 | `rxjs-no-do` | I do without `do` operators. [Do you not?](https://youtu.be/spG-Yj0zEyc) Well, `do` isn't always a code smell, but this rule can be useful as a warning. | None |
+| `rxjs-no-exposed-subjects` | Disallows exposed subjects | None |
 | `rxjs-no-finnish` | Disallows the use of [Finnish notation](https://medium.com/@benlesh/observables-and-finnish-notation-df8356ed1c9b). | None |
 | `rxjs-no-ignored-error` | Disallows the calling of `subscribe` without specifying an error handler. | None |
 | `rxjs-no-ignored-notifier` | Disallows observables not composed from the `repeatWhen` or `retryWhen` notifier. | None |
