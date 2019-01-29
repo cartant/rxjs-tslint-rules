@@ -10,12 +10,12 @@ import { couldBeType } from "../support/util";
 
 export class Rule extends Lint.Rules.TypedRule {
   public static metadata: Lint.IRuleMetadata = {
-    description: "Ensures that subjects have access level modifier 'private'.",
+    description: "Ensures that subjects are not exposed.",
     options: null,
     optionsDescription: "Not configurable.",
     requiresTypeInfo: true,
-    ruleName: '"rxjs-no-exposed-subjects"',
-    type: "style",
+    ruleName: "rxjs-no-exposed-subjects",
+    type: "functionality",
     typescriptOnly: true
   };
 
