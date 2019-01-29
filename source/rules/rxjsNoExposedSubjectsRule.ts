@@ -10,7 +10,7 @@ import { couldBeType } from "../support/util";
 
 export class Rule extends Lint.Rules.TypedRule {
   public static metadata: Lint.IRuleMetadata = {
-    description: "Ensures that subjects are not exposed.",
+    description: "Disallows exposed subjects.",
     options: null,
     optionsDescription: "Not configurable.",
     requiresTypeInfo: true,
