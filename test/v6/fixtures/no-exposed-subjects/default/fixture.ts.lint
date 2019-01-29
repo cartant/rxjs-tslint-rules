@@ -11,28 +11,28 @@ class Mock {
 
   // invalid properties
   public property$ = new Rx.Subject<void>();
-         ~~~~~~~~~                                              [Subject 'property$' must be private.]
+         ~~~~~~~~~                                              [no-exposed % ("property$")]
 
   protected property2$ = new Rx.Subject<void>();
-            ~~~~~~~~~~                                          [Subject 'property2$' must be private.]
+            ~~~~~~~~~~                                          [no-exposed % ("property2$")]
 
   qualitySubject$ = new Rx.Subject<any>();
-  ~~~~~~~~~~~~~~~                                               [Subject 'qualitySubject$' must be private.]
+  ~~~~~~~~~~~~~~~                                               [no-exposed % ("qualitySubject$")]
 
   public readonly rPropertySubject$ = new Rx.Subject<void>();
-                  ~~~~~~~~~~~~~~~~~                             [Subject 'rPropertySubject$' must be private.]
+                  ~~~~~~~~~~~~~~~~~                             [no-exposed % ("rPropertySubject$")]
 
   readonly rSubject$ = new Rx.Subject<void>();
-           ~~~~~~~~~                                            [Subject 'rSubject$' must be private.]
+           ~~~~~~~~~                                            [no-exposed % ("rSubject$")]
 
   constructor(
     public streamSubject$: Rx.Subject<any>,
-           ~~~~~~~~~~~~~~                                       [Subject 'streamSubject$' must be private.]
+           ~~~~~~~~~~~~~~                                       [no-exposed % ("streamSubject$")]
     protected pSubject$: Rx.Subject<any>,
-              ~~~~~~~~~                                         [Subject 'pSubject$' must be private.]
+              ~~~~~~~~~                                         [no-exposed % ("pSubject$")]
     private secondParamSubject$: Rx.Subject<any>,
     anySubject$: Rx.Subject<any>,
-    ~~~~~~~~~~~                                                 [Subject 'anySubject$' must be private.]
+    ~~~~~~~~~~~                                                 [no-exposed % ("anySubject$")]
     observable: Rx.Observable<any>,
   ) {
 
@@ -42,12 +42,12 @@ class Mock {
   }
 
   get submitSubject$(): Rx.Subject<any> {
-      ~~~~~~~~~~~~~~                                            [Subject 'submitSubject$' must be private.]
+      ~~~~~~~~~~~~~~                                            [no-exposed % ("submitSubject$")]
     return this._submitSubject$;
   }
 
   set submitSubject$(set$: Rx.Subject<any>) {
-      ~~~~~~~~~~~~~~                                            [Subject 'submitSubject$' must be private.]
+      ~~~~~~~~~~~~~~                                            [no-exposed % ("submitSubject$")]
     this._submitSubject$ = set$;
   }
 
@@ -60,12 +60,12 @@ class Mock {
   }
 
   public invalidMethod(): Rx.Subject<any> {
-         ~~~~~~~~~~~~~                                          [Subject 'invalidMethod' must be private.]
+         ~~~~~~~~~~~~~                                          [no-exposed % ("invalidMethod")]
     return new Rx.Subject<any>();
   }
 
   invalidMethod2(): Rx.Subject<any> {
-  ~~~~~~~~~~~~~~                                                [Subject 'invalidMethod2' must be private.]
+  ~~~~~~~~~~~~~~                                                [no-exposed % ("invalidMethod2")]
     return new Rx.Subject<any>();
   }
 
@@ -78,3 +78,5 @@ class Mock {
 function foo(xSubject$: Rx.Subject<any>): Rx.Subject<any> {
   return xSubject$;
 }
+
+[no-exposed]: Subject '%s' should not be exposed.
