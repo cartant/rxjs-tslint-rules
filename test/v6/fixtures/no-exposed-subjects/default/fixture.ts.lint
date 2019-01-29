@@ -1,0 +1,80 @@
+import * as Rx from 'rxjs';
+
+const variable = new Rx.Subject<void>();
+
+class Mock {
+
+  // valid properties
+  private _submitSubject$ = new Rx.Subject<void>();
+  private readonly rSubmitSubject$ = new Rx.Subject<void>();
+  private _age: number;
+
+  // invalid properties
+  public property$ = new Rx.Subject<void>();
+         ~~~~~~~~~                                              [Subject 'property$' must be private.]
+
+  protected property2$ = new Rx.Subject<void>();
+            ~~~~~~~~~~                                          [Subject 'property2$' must be private.]
+
+  qualitySubject$ = new Rx.Subject<any>();
+  ~~~~~~~~~~~~~~~                                               [Subject 'qualitySubject$' must be private.]
+
+  public readonly rPropertySubject$ = new Rx.Subject<void>();
+                  ~~~~~~~~~~~~~~~~~                             [Subject 'rPropertySubject$' must be private.]
+
+  readonly rSubject$ = new Rx.Subject<void>();
+           ~~~~~~~~~                                            [Subject 'rSubject$' must be private.]
+
+  constructor(
+    public streamSubject$: Rx.Subject<any>,
+           ~~~~~~~~~~~~~~                                       [Subject 'streamSubject$' must be private.]
+    protected pSubject$: Rx.Subject<any>,
+              ~~~~~~~~~                                         [Subject 'pSubject$' must be private.]
+    private secondParamSubject$: Rx.Subject<any>,
+    anySubject$: Rx.Subject<any>,
+    ~~~~~~~~~~~                                                 [Subject 'anySubject$' must be private.]
+    observable: Rx.Observable<any>,
+  ) {
+
+    console.log(this.submitSubject$);
+    console.log(this.property$);
+    console.log(this.propertySubject$);
+  }
+
+  get submitSubject$(): Rx.Subject<any> {
+      ~~~~~~~~~~~~~~                                            [Subject 'submitSubject$' must be private.]
+    return this._submitSubject$;
+  }
+
+  set submitSubject$(set$: Rx.Subject<any>) {
+      ~~~~~~~~~~~~~~                                            [Subject 'submitSubject$' must be private.]
+    this._submitSubject$ = set$;
+  }
+
+  get age(): number {
+    return this.age;
+  }
+
+  set age(newNum: number) {
+    this._age = newNum;
+  }
+
+  public invalidMethod(): Rx.Subject<any> {
+         ~~~~~~~~~~~~~                                          [Subject 'invalidMethod' must be private.]
+    return new Rx.Subject<any>();
+  }
+
+  invalidMethod2(): Rx.Subject<any> {
+  ~~~~~~~~~~~~~~                                                [Subject 'invalidMethod2' must be private.]
+    return new Rx.Subject<any>();
+  }
+
+  private validMethod(): Rx.Subject<any> {
+    return new Rx.Subject<any>();
+  }
+
+}
+
+function foo(xSubject$: Rx.Subject<any>): Rx.Subject<any> {
+  return xSubject$;
+}
