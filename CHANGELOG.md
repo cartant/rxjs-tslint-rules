@@ -1,3 +1,10 @@
+<a name="4.16.1"></a>
+## [4.16.1](https://github.com/cartant/rxjs-tslint-rules/compare/v4.16.0...v4.16.1) (2019-01-29)
+
+## Fixes
+
+* Use original, clearer message for `rxjs-no-exposed-subjects` rule. ([e25ff9b](https://github.com/cartant/rxjs-tslint-rules/commit/e25ff9b))
+
 <a name="4.16.0"></a>
 ## [4.16.0](https://github.com/cartant/rxjs-tslint-rules/compare/v4.15.1...v4.16.0) (2019-01-29)
 
