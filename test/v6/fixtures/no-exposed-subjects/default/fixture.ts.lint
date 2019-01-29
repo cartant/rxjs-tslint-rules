@@ -79,4 +79,4 @@ function foo(xSubject$: Rx.Subject<any>): Rx.Subject<any> {
   return xSubject$;
 }
 
-[no-exposed]: Subject '%s' should not be exposed.
+[no-exposed]: Subject '%s' must be private.

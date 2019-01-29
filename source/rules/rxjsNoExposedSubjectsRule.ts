@@ -82,7 +82,7 @@ class RxjsNoExposedSubjects extends Lint.ProgramAwareRuleWalker {
       const type = this.getTypeChecker().getTypeAtLocation(typeNode || node);
 
       if (!privateModifier && couldBeType(type, "Subject")) {
-        this.addFailureAtNode(name, `Subject '${text}' should not be exposed.`);
+        this.addFailureAtNode(name, `Subject '${text}' must be private.`);
       }
     }
   }
