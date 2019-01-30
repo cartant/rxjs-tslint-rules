@@ -8,6 +8,8 @@ import * as Lint from "tslint";
 import * as ts from "typescript";
 import { couldBeType } from "../support/util";
 
+const defaultAllowedTypesRegExp = /^EventEmitter$/;
+
 export class Rule extends Lint.Rules.TypedRule {
   public static metadata: Lint.IRuleMetadata = {
     description: "Disallows exposed subjects.",
@@ -81,7 +83,7 @@ class RxjsNoExposedSubjects extends Lint.ProgramAwareRuleWalker {
         : null;
       const type = this.getTypeChecker().getTypeAtLocation(typeNode || node);
 
-      if (!privateModifier && couldBeType(type, "Subject")) {
+      if (!privateModifier && couldBeType(type, "Subject") && !couldBeType(type, defaultAllowedTypesRegExp)) {
         this.addFailureAtNode(name, `Subject '${text}' must be private.`);
       }
     }
