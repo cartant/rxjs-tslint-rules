@@ -3,7 +3,7 @@
 
 ## Fixes
 
-* Relax the enforcement of the `rxjs-no-exposed-subjects` for Angular `EventEmitter`. ([ce73aea](https://github.com/cartant/rxjs-tslint-rules/commit/ce73aea))
+* Relax the enforcement of the `rxjs-no-exposed-subjects` rule for Angular `EventEmitter`. ([ce73aea](https://github.com/cartant/rxjs-tslint-rules/commit/ce73aea))
 
 <a name="4.16.1"></a>
 ## [4.16.1](https://github.com/cartant/rxjs-tslint-rules/compare/v4.16.0...v4.16.1) (2019-01-29)
