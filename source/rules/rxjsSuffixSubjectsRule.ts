@@ -14,7 +14,7 @@ const defaultTypesRegExp = /^EventEmitter$/;
 export class Rule extends Lint.Rules.TypedRule {
   public static metadata: Lint.IRuleMetadata = {
     description:
-      "Ensures the suffix of subjects is 'Subjects$', and ensures their access level modifiers are private.",
+      "Ensures subjects are suffixed with 'Subject'.",
     options: {
       properties: {
         functions: { type: 'boolean' },
