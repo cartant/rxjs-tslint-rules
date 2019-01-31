@@ -1,0 +1,147 @@
+/**
+ * @license Use of this source code is governed by an MIT-style license that
+ * can be found in the LICENSE file at https://github.com/cartant/rxjs-tslint-rules
+ */
+/* tslint:disable:no-use-before-declare */
+
+import { tsquery } from '@phenomnomnominal/tsquery';
+import * as Lint from 'tslint';
+import * as ts from 'typescript';
+import { couldBeType } from "../support/util";
+
+const defaultTypesRegExp = /^EventEmitter$/;
+
+export class Rule extends Lint.Rules.TypedRule {
+  public static metadata: Lint.IRuleMetadata = {
+    description:
+      "Ensures the suffix of subjects is 'Subjects$', and ensures their access level modifiers are private.",
+    options: {
+      properties: {
+        functions: { type: 'boolean' },
+        methods: { type: 'boolean' },
+        names: { type: 'object' },
+        parameters: { type: 'boolean' },
+        properties: { type: 'boolean' },
+        suffix: { type: 'string' },
+        types: { type: 'object' },
+        variables: { type: 'boolean' }, 
+      },
+      type: 'object',
+    },
+    optionsDescription: Lint.Utils.dedent`
+      An optional object with optional \`functions\`, \`methods\`, \`parameters\`,
+      \`properties\` and \`variables\` properties.
+      The properies are booleans and determine whether or not subjects of that particular expression need a suffix.
+      \`parameters\`, \`properties\` and \`variables\` default to \`true\`.
+      The object also has optional \`types\` properties which are themselves
+      objects containing keys that are regular expressions and values that are booleans -
+      indicating whether suffixing is required for particular types.`,
+    requiresTypeInfo: true,
+    ruleName: '"rxjs-suffix-subjects"',
+    type: 'style',
+    typescriptOnly: true,
+  };
+
+  public SUFFIX: string;
+  private types: { regExp: RegExp; validate: boolean }[] = [];
+  private validate = {
+    functions: false,
+    methods: false,
+    parameters: true,
+    properties: true,
+    variables: true,
+  };
+  public readonly FAILURE_MESSAGE = (identifier: string) =>
+    `Subject '${identifier}' must be suffixed with '${this.SUFFIX}'.`;
+
+  public applyWithProgram(
+    sourceFile: ts.SourceFile,
+    program: ts.Program,
+  ): Lint.RuleFailure[] {
+    const failures: Lint.RuleFailure[] = [];
+    const typeChecker = program.getTypeChecker();
+
+    // get configurations
+    const { ruleArguments } = this.getOptions();
+    const [options] = ruleArguments;
+    if (options) {
+      this.SUFFIX = options.suffix;
+      if (options.types) {
+        Object.entries(options.types).forEach(
+          ([key, validate]: [string, boolean]) => {
+            this.types.push({ regExp: new RegExp(key), validate });
+          },
+        );
+      } else {
+        this.types.push({ regExp: defaultTypesRegExp, validate: false });
+      }
+      this.validate = { ...this.validate, ...options };
+    }
+
+    let identifiers: ts.Node[] = [];
+
+    if (options.functions) {
+      identifiers = identifiers.concat(
+        tsquery(
+          sourceFile,
+          `:matches(FunctionDeclaration, FunctionSignature) > Identifier`,
+        ),
+      );
+    }
+
+    if (options.methods) {
+      identifiers = identifiers.concat(
+        tsquery(
+          sourceFile,
+          `:matches(MethodDeclaration, MethodSignature) > Identifier`,
+        ),
+      );
+    }
+
+    if (options.parameters) {
+      identifiers = identifiers.concat(
+        tsquery(sourceFile, `Parameter > Identifier`),
+      );
+    }
+
+    if (options.properties) {
+      identifiers = identifiers.concat(
+        tsquery(
+          sourceFile,
+          `:matches(PropertyAssignment, PropertyDeclaration, PropertySignature, GetAccessor, SetAccessor) > Identifier`,
+        ),
+      );
+    }
+
+    if (options.variables) {
+      identifiers = identifiers.concat(
+        tsquery(sourceFile, `VariableDeclaration > Identifier`),
+      );
+    }
+
+    identifiers.forEach(identifier => {
+      const callExpression = identifier.parent as ts.Identifier;
+      const type = typeChecker.getTypeAtLocation(callExpression);
+      const text = identifier.getText();
+      if (!/Subject\$?$/.test(text) && couldBeType(type, 'Subject')) {
+        for (let i = 0; i < this.types.length; ++i) {
+          const { regExp, validate } = this.types[i];
+          if (couldBeType(type, regExp) && !validate) {
+            return;
+          }
+        }
+
+        failures.push(
+          new Lint.RuleFailure(
+            sourceFile,
+            identifier.getStart(),
+            identifier.getStart() + identifier.getWidth(),
+            this.FAILURE_MESSAGE(text),
+            this.ruleName,
+          ),
+        );
+      }
+    });
+    return failures;
+  }
+}
