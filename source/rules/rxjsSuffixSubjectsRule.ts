@@ -19,7 +19,6 @@ export class Rule extends Lint.Rules.TypedRule {
       properties: {
         functions: { type: 'boolean' },
         methods: { type: 'boolean' },
-        names: { type: 'object' },
         parameters: { type: 'boolean' },
         properties: { type: 'boolean' },
         suffix: { type: 'string' },
