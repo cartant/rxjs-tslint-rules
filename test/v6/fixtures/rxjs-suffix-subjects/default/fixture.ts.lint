@@ -13,8 +13,8 @@ const mockObject = {
 
 class Mock {
   private submitSubject$ = new Rx.Subject<void>();
-  private submit$ = new Rx.Subject<void>();
-          ~~~~~~~                                   [suffix-subjects % ("submit$")]
+  private _submit$ = new Rx.Subject<void>();
+          ~~~~~~~~                                  [suffix-subjects % ("_submit$")]
   private events = new EventEmitter();
 
   public property$ = new Rx.Subject<void>();
@@ -42,7 +42,7 @@ class Mock {
   get submit$(): Rx.Subject<void> {
       ~~~~~~~                                        [suffix-subjects % ("submit$")]
 
-    return this.submit$;
+    return this._submit$;
   }
 
   set submit$(xSubject$: Rx.Subject<void>) {
@@ -57,12 +57,12 @@ interface mockInterface {
 }
 
 function fooCorrect(xSubject$: Rx.Subject<any>) {
-  console.log(x);
+  console.log(xSubject$);
 }
 
 function fooWrong(x$: Rx.Subject<any>) {
                   ~~                                [suffix-subjects % ("x$")]
-  console.log(x);
+  console.log(x$);
 }
 
 [suffix-subjects]: Subject '%s' must be suffixed with 'Subject'.
