@@ -4,9 +4,9 @@
  */
 /* tslint:disable:no-use-before-declare */
 
-import { tsquery } from '@phenomnomnominal/tsquery';
-import * as Lint from 'tslint';
-import * as ts from 'typescript';
+import { tsquery } from "@phenomnomnominal/tsquery";
+import * as Lint from "tslint";
+import * as ts from "typescript";
 import { couldBeType } from "../support/util";
 
 const defaultTypesRegExp = /^EventEmitter$/;
@@ -17,15 +17,15 @@ export class Rule extends Lint.Rules.TypedRule {
       "Ensures subjects are suffixed with 'Subject'.",
     options: {
       properties: {
-        functions: { type: 'boolean' },
-        methods: { type: 'boolean' },
-        parameters: { type: 'boolean' },
-        properties: { type: 'boolean' },
-        suffix: { type: 'string' },
-        types: { type: 'object' },
-        variables: { type: 'boolean' }, 
+        functions: { type: "boolean" },
+        methods: { type: "boolean" },
+        parameters: { type: "boolean" },
+        properties: { type: "boolean" },
+        suffix: { type: "string" },
+        types: { type: "object" },
+        variables: { type: "boolean" }
       },
-      type: 'object',
+      type: "object"
     },
     optionsDescription: Lint.Utils.dedent`
       An optional object with optional \`functions\`, \`methods\`, \`parameters\`,
@@ -37,8 +37,8 @@ export class Rule extends Lint.Rules.TypedRule {
       indicating whether suffixing is required for particular types.`,
     requiresTypeInfo: true,
     ruleName: '"rxjs-suffix-subjects"',
-    type: 'style',
-    typescriptOnly: true,
+    type: "style",
+    typescriptOnly: true
   };
 
   private SUFFIX: string;
@@ -48,14 +48,14 @@ export class Rule extends Lint.Rules.TypedRule {
     methods: false,
     parameters: true,
     properties: true,
-    variables: true,
+    variables: true
   };
   public readonly FAILURE_MESSAGE = (identifier: string) =>
-    `Subject '${identifier}' must be suffixed with '${this.SUFFIX}'.`;
+    `Subject '${identifier}' must be suffixed with '${this.SUFFIX}'.`
 
   public applyWithProgram(
     sourceFile: ts.SourceFile,
-    program: ts.Program,
+    program: ts.Program
   ): Lint.RuleFailure[] {
     const failures: Lint.RuleFailure[] = [];
     const typeChecker = program.getTypeChecker();
@@ -69,7 +69,7 @@ export class Rule extends Lint.Rules.TypedRule {
         Object.entries(options.types).forEach(
           ([key, validate]: [string, boolean]) => {
             this.types.push({ regExp: new RegExp(key), validate });
-          },
+          }
         );
       } else {
         this.types.push({ regExp: defaultTypesRegExp, validate: false });
@@ -83,8 +83,8 @@ export class Rule extends Lint.Rules.TypedRule {
       identifiers = identifiers.concat(
         tsquery(
           sourceFile,
-          `:matches(FunctionDeclaration, FunctionSignature) > Identifier`,
-        ),
+          `:matches(FunctionDeclaration, FunctionSignature) > Identifier`
+        )
       );
     }
 
@@ -92,14 +92,14 @@ export class Rule extends Lint.Rules.TypedRule {
       identifiers = identifiers.concat(
         tsquery(
           sourceFile,
-          `:matches(MethodDeclaration, MethodSignature) > Identifier`,
-        ),
+          `:matches(MethodDeclaration, MethodSignature) > Identifier`
+        )
       );
     }
 
     if (options.parameters) {
       identifiers = identifiers.concat(
-        tsquery(sourceFile, `Parameter > Identifier`),
+        tsquery(sourceFile, `Parameter > Identifier`)
       );
     }
 
@@ -107,14 +107,14 @@ export class Rule extends Lint.Rules.TypedRule {
       identifiers = identifiers.concat(
         tsquery(
           sourceFile,
-          `:matches(PropertyAssignment, PropertyDeclaration, PropertySignature, GetAccessor, SetAccessor) > Identifier`,
-        ),
+          `:matches(PropertyAssignment, PropertyDeclaration, PropertySignature, GetAccessor, SetAccessor) > Identifier`
+        )
       );
     }
 
     if (options.variables) {
       identifiers = identifiers.concat(
-        tsquery(sourceFile, `VariableDeclaration > Identifier`),
+        tsquery(sourceFile, `VariableDeclaration > Identifier`)
       );
     }
 
@@ -122,7 +122,7 @@ export class Rule extends Lint.Rules.TypedRule {
       const currentIdentifier = identifier.parent as ts.Identifier;
       const type = typeChecker.getTypeAtLocation(currentIdentifier);
       const text = identifier.getText();
-      if (!/Subject\$?$/.test(text) && couldBeType(type, 'Subject')) {
+      if (!/Subject\$?$/.test(text) && couldBeType(type, "Subject")) {
         for (let i = 0; i < this.types.length; ++i) {
           const { regExp, validate } = this.types[i];
           if (couldBeType(type, regExp) && !validate) {
@@ -136,8 +136,8 @@ export class Rule extends Lint.Rules.TypedRule {
             identifier.getStart(),
             identifier.getStart() + identifier.getWidth(),
             this.FAILURE_MESSAGE(text),
-            this.ruleName,
-          ),
+            this.ruleName
+          )
         );
       }
     });
