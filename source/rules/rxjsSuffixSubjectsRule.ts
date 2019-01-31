@@ -41,7 +41,7 @@ export class Rule extends Lint.Rules.TypedRule {
     typescriptOnly: true,
   };
 
-  public SUFFIX: string;
+  private SUFFIX: string;
   private types: { regExp: RegExp; validate: boolean }[] = [];
   private validate = {
     functions: false,
