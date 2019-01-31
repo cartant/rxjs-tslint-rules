@@ -120,8 +120,8 @@ export class Rule extends Lint.Rules.TypedRule {
     }
 
     identifiers.forEach(identifier => {
-      const callExpression = identifier.parent as ts.Identifier;
-      const type = typeChecker.getTypeAtLocation(callExpression);
+      const currentIdentifier = identifier.parent as ts.Identifier;
+      const type = typeChecker.getTypeAtLocation(currentIdentifier);
       const text = identifier.getText();
       if (!/Subject\$?$/.test(text) && couldBeType(type, 'Subject')) {
         for (let i = 0; i < this.types.length; ++i) {
