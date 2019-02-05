@@ -5,8 +5,6 @@
   "rules": {
     "rxjs-suffix-subjects": {
       "options": [{
-        "functions": false,
-        "methods": false,
         "parameters": true,
         "properties": true,
         "variables": true,
