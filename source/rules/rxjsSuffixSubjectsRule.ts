@@ -73,7 +73,7 @@ export class Rule extends Lint.Rules.TypedRule {
       }
       this.validate = { ...this.validate, ...options };
     } else {
-       this.types.push({ regExp: defaultTypesRegExp, validate: false });     
+       this.types.push({ regExp: defaultTypesRegExp, validate: false });
     }
 
     let identifiers: ts.Node[] = [];
