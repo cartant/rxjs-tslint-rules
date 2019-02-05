@@ -16,6 +16,7 @@ class Mock {
   private _submit$ = new Rx.Subject<void>();
           ~~~~~~~~                                  [suffix-subjects % ("_submit$")]
   private events = new EventEmitter();
+  private subject = new Rx.Subject<any>();
 
   public property$ = new Rx.Subject<void>();
          ~~~~~~~~~                                  [suffix-subjects % ("property$")]
