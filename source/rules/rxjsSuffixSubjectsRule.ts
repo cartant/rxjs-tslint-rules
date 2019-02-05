@@ -14,7 +14,7 @@ const defaultTypesRegExp = /^EventEmitter$/;
 export class Rule extends Lint.Rules.TypedRule {
   public static metadata: Lint.IRuleMetadata = {
     description:
-      "Ensures subjects are suffixed with 'Subject'.",
+      "Ensures subjects are suffixed with suffix specified by `suffix` option.",
     options: {
       properties: {
         functions: { type: "boolean" },
@@ -28,8 +28,7 @@ export class Rule extends Lint.Rules.TypedRule {
       type: "object"
     },
     optionsDescription: Lint.Utils.dedent`
-      An optional object with optional \`functions\`, \`methods\`, \`parameters\`,
-      \`properties\` and \`variables\` properties.
+      An optional object with optional \`parameters\`, \`properties\` and \`variables\` properties.
       The properies are booleans and determine whether or not subjects of that particular expression need a suffix.
       \`parameters\`, \`properties\` and \`variables\` default to \`true\`.
       The object also has optional \`types\` properties which are themselves
@@ -41,11 +40,9 @@ export class Rule extends Lint.Rules.TypedRule {
     typescriptOnly: true
   };
 
-  private SUFFIX: string;
+  private SUFFIX = "Subject";
   private types: { regExp: RegExp; validate: boolean }[] = [];
   private validate = {
-    functions: false,
-    methods: false,
     parameters: true,
     properties: true,
     variables: true
@@ -75,35 +72,19 @@ export class Rule extends Lint.Rules.TypedRule {
         this.types.push({ regExp: defaultTypesRegExp, validate: false });
       }
       this.validate = { ...this.validate, ...options };
+    } else {
+       this.types.push({ regExp: defaultTypesRegExp, validate: false });     
     }
 
     let identifiers: ts.Node[] = [];
 
-    if (options.functions) {
-      identifiers = identifiers.concat(
-        tsquery(
-          sourceFile,
-          `:matches(FunctionDeclaration, FunctionSignature) > Identifier`
-        )
-      );
-    }
-
-    if (options.methods) {
-      identifiers = identifiers.concat(
-        tsquery(
-          sourceFile,
-          `:matches(MethodDeclaration, MethodSignature) > Identifier`
-        )
-      );
-    }
-
-    if (options.parameters) {
+    if (this.validate.parameters) {
       identifiers = identifiers.concat(
         tsquery(sourceFile, `Parameter > Identifier`)
       );
     }
 
-    if (options.properties) {
+    if (this.validate.properties) {
       identifiers = identifiers.concat(
         tsquery(
           sourceFile,
@@ -112,7 +93,7 @@ export class Rule extends Lint.Rules.TypedRule {
       );
     }
 
-    if (options.variables) {
+    if (this.validate.variables) {
       identifiers = identifiers.concat(
         tsquery(sourceFile, `VariableDeclaration > Identifier`)
       );
@@ -122,7 +103,7 @@ export class Rule extends Lint.Rules.TypedRule {
       const currentIdentifier = identifier.parent as ts.Identifier;
       const type = typeChecker.getTypeAtLocation(currentIdentifier);
       const text = identifier.getText();
-      if (!/Subject\$?$/.test(text) && couldBeType(type, "Subject")) {
+      if (!/[Ss]ubject\$?$/.test(text) && couldBeType(type, "Subject")) {
         for (let i = 0; i < this.types.length; ++i) {
           const { regExp, validate } = this.types[i];
           if (couldBeType(type, regExp) && !validate) {
