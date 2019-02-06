@@ -6,14 +6,23 @@
 
 import * as Lint from "tslint";
 import * as ts from "typescript";
+import * as tsutils from "tsutils";
 import { tsquery } from "@phenomnomnominal/tsquery";
 
 export class Rule extends Lint.Rules.TypedRule {
 
     public static metadata: Lint.IRuleMetadata = {
         description: "Disallows using the `shareReplay` operator.",
-        options: null,
-        optionsDescription: "Not configurable.",
+        options: {
+            properties: {
+                allowConfig: { type: "boolean" }
+            },
+            type: "object"
+        },
+        optionsDescription: Lint.Utils.dedent`
+            An optional object with an optional \`allowConfig\` property.
+            If \`allowConfig\` is \`true\`, calls to \`shareReplay\` are allowed if a
+            config object is passed - instead of separate parameters`,
         requiresTypeInfo: true,
         ruleName: "rxjs-no-sharereplay",
         type: "functionality",
@@ -24,6 +33,8 @@ export class Rule extends Lint.Rules.TypedRule {
 
     public applyWithProgram(sourceFile: ts.SourceFile, program: ts.Program): Lint.RuleFailure[] {
 
+        const { ruleArguments: [options] } = this.getOptions();
+        const allowConfig = (options && options.hasOwnProperty("allowConfig")) ? options.allowConfig : false;
         const failures: Lint.RuleFailure[] = [];
 
         const callIdentifiers = tsquery(
@@ -31,13 +42,20 @@ export class Rule extends Lint.Rules.TypedRule {
             `CallExpression Identifier[name="shareReplay"]`
         );
         callIdentifiers.forEach(identifier => {
-            failures.push(new Lint.RuleFailure(
-                sourceFile,
-                identifier.getStart(),
-                identifier.getStart() + identifier.getWidth(),
-                Rule.FAILURE_STRING,
-                this.ruleName
-            ));
+            let fail = true;
+            if (allowConfig) {
+                const callExpression = identifier.parent as ts.CallExpression;
+                fail = (callExpression.arguments.length !== 1) || !tsutils.isObjectLiteralExpression(callExpression.arguments[0]);
+            }
+            if (fail) {
+                failures.push(new Lint.RuleFailure(
+                    sourceFile,
+                    identifier.getStart(),
+                    identifier.getStart() + identifier.getWidth(),
+                    Rule.FAILURE_STRING,
+                    this.ruleName
+                ));
+            }
         });
         return failures;
     }
