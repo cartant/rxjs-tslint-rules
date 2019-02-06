@@ -30,7 +30,7 @@ export class Rule extends Lint.Rules.TypedRule {
     optionsDescription: Lint.Utils.dedent`
       An optional object with optional \`parameters\`, \`properties\` and \`variables\` properties.
       The properies are booleans and determine whether or not subjects of that particular expression need a suffix.
-      \`parameters\`, \`properties\` and \`variables\` default to \`true\`.
+      \`parameters\`, \`properties\` and \`variables\` default to \`true\`, and the default suffix is 'Subject'.
       The object also has optional \`types\` properties which are themselves
       objects containing keys that are regular expressions and values that are booleans -
       indicating whether suffixing is required for particular types.`,
@@ -40,7 +40,8 @@ export class Rule extends Lint.Rules.TypedRule {
     typescriptOnly: true
   };
 
-  private SUFFIX = "Subject";
+  private suffix = 'Subject';
+  private suffixRegex = new RegExp(`${this.suffix}\\$?$`, "i");
   private types: { regExp: RegExp; validate: boolean }[] = [];
   private validate = {
     parameters: true,
@@ -48,7 +49,7 @@ export class Rule extends Lint.Rules.TypedRule {
     variables: true
   };
   public readonly FAILURE_MESSAGE = (identifier: string) =>
-    `Subject '${identifier}' must be suffixed with '${this.SUFFIX}'.`
+    `Subject '${identifier}' must be suffixed with '${this.suffix}'.`;
 
   public applyWithProgram(
     sourceFile: ts.SourceFile,
@@ -61,7 +62,8 @@ export class Rule extends Lint.Rules.TypedRule {
     const { ruleArguments } = this.getOptions();
     const [options] = ruleArguments;
     if (options) {
-      this.SUFFIX = options.suffix;
+      this.suffix = options.suffix;
+      this.suffixRegex = new RegExp(`${this.suffix}\\$?$`, "i");
       if (options.types) {
         Object.entries(options.types).forEach(
           ([key, validate]: [string, boolean]) => {
@@ -103,7 +105,7 @@ export class Rule extends Lint.Rules.TypedRule {
       const currentIdentifier = identifier.parent as ts.Identifier;
       const type = typeChecker.getTypeAtLocation(currentIdentifier);
       const text = identifier.getText();
-      if (!/[Ss]ubject\$?$/.test(text) && couldBeType(type, "Subject")) {
+      if (!this.suffixRegex.test(text) && couldBeType(type, "Subject")) {
         for (let i = 0; i < this.types.length; ++i) {
           const { regExp, validate } = this.types[i];
           if (couldBeType(type, regExp) && !validate) {
