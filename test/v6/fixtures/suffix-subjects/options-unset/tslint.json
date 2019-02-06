@@ -1,0 +1,10 @@
+{
+  "defaultSeverity": "error",
+  "jsRules": {},
+  "rules": {
+    "rxjs-suffix-subjects": {
+      "severity": "error"
+    }
+  },
+  "rulesDirectory": "../../../../../build/rules"
+}
