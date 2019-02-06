@@ -14,18 +14,16 @@ const defaultTypesRegExp = /^EventEmitter$/;
 export class Rule extends Lint.Rules.TypedRule {
   public static metadata: Lint.IRuleMetadata = {
     description:
-      "Ensures subjects are suffixed with suffix specified by `suffix` option.",
+      'Ensures subjects are suffixed with suffix specified by `suffix` option.',
     options: {
       properties: {
-        functions: { type: "boolean" },
-        methods: { type: "boolean" },
-        parameters: { type: "boolean" },
-        properties: { type: "boolean" },
-        suffix: { type: "string" },
-        types: { type: "object" },
-        variables: { type: "boolean" }
+        parameters: { type: 'boolean' },
+        properties: { type: 'boolean' },
+        suffix: { type: 'string' },
+        types: { type: 'object' },
+        variables: { type: 'boolean' },
       },
-      type: "object"
+      type: 'object',
     },
     optionsDescription: Lint.Utils.dedent`
       An optional object with optional \`parameters\`, \`properties\` and \`variables\` properties.
@@ -36,68 +34,67 @@ export class Rule extends Lint.Rules.TypedRule {
       indicating whether suffixing is required for particular types.`,
     requiresTypeInfo: true,
     ruleName: '"rxjs-suffix-subjects"',
-    type: "style",
-    typescriptOnly: true
+    type: 'style',
+    typescriptOnly: true,
   };
-
-  private suffix = 'Subject';
-  private suffixRegex = new RegExp(`${this.suffix}\\$?$`, "i");
-  private types: { regExp: RegExp; validate: boolean }[] = [];
-  private validate = {
-    parameters: true,
-    properties: true,
-    variables: true
-  };
-  public readonly FAILURE_MESSAGE = (identifier: string) =>
-    `Subject '${identifier}' must be suffixed with '${this.suffix}'.`;
 
   public applyWithProgram(
     sourceFile: ts.SourceFile,
-    program: ts.Program
+    program: ts.Program,
   ): Lint.RuleFailure[] {
     const failures: Lint.RuleFailure[] = [];
     const typeChecker = program.getTypeChecker();
+
+    let SUFFIX = 'Subject';
+    const types: { regExp: RegExp; validate: boolean }[] = [];
+    let validateOptions = {
+      parameters: true,
+      properties: true,
+      variables: true,
+    };
+    const FAILURE_MESSAGE = (identifier: string) =>
+      `Subject '${identifier}' must be suffixed with '${SUFFIX}'.`;
 
     // get configurations
     const { ruleArguments } = this.getOptions();
     const [options] = ruleArguments;
     if (options) {
-      this.suffix = options.suffix;
-      this.suffixRegex = new RegExp(`${this.suffix}\\$?$`, "i");
+      SUFFIX = options.suffix;
+
       if (options.types) {
         Object.entries(options.types).forEach(
           ([key, validate]: [string, boolean]) => {
-            this.types.push({ regExp: new RegExp(key), validate });
-          }
+            types.push({ regExp: new RegExp(key), validate });
+          },
         );
       } else {
-        this.types.push({ regExp: defaultTypesRegExp, validate: false });
+        types.push({ regExp: defaultTypesRegExp, validate: false });
       }
-      this.validate = { ...this.validate, ...options };
+      validateOptions = { ...validateOptions, ...options };
     } else {
-       this.types.push({ regExp: defaultTypesRegExp, validate: false });
+      types.push({ regExp: defaultTypesRegExp, validate: false });
     }
-
+    const suffixRegex = new RegExp(`${SUFFIX}\\$?$`, 'i');
     let identifiers: ts.Node[] = [];
 
-    if (this.validate.parameters) {
+    if (validateOptions.parameters) {
       identifiers = identifiers.concat(
-        tsquery(sourceFile, `Parameter > Identifier`)
+        tsquery(sourceFile, `Parameter > Identifier`),
       );
     }
 
-    if (this.validate.properties) {
+    if (validateOptions.properties) {
       identifiers = identifiers.concat(
         tsquery(
           sourceFile,
-          `:matches(PropertyAssignment, PropertyDeclaration, PropertySignature, GetAccessor, SetAccessor) > Identifier`
-        )
+          `:matches(PropertyAssignment, PropertyDeclaration, PropertySignature, GetAccessor, SetAccessor) > Identifier`,
+        ),
       );
     }
 
-    if (this.validate.variables) {
+    if (validateOptions.variables) {
       identifiers = identifiers.concat(
-        tsquery(sourceFile, `VariableDeclaration > Identifier`)
+        tsquery(sourceFile, `VariableDeclaration > Identifier`),
       );
     }
 
@@ -105,9 +102,9 @@ export class Rule extends Lint.Rules.TypedRule {
       const currentIdentifier = identifier.parent as ts.Identifier;
       const type = typeChecker.getTypeAtLocation(currentIdentifier);
       const text = identifier.getText();
-      if (!this.suffixRegex.test(text) && couldBeType(type, "Subject")) {
-        for (let i = 0; i < this.types.length; ++i) {
-          const { regExp, validate } = this.types[i];
+      if (!suffixRegex.test(text) && couldBeType(type, 'Subject')) {
+        for (let i = 0; i < types.length; ++i) {
+          const { regExp, validate } = types[i];
           if (couldBeType(type, regExp) && !validate) {
             return;
           }
@@ -118,12 +115,13 @@ export class Rule extends Lint.Rules.TypedRule {
             sourceFile,
             identifier.getStart(),
             identifier.getStart() + identifier.getWidth(),
-            this.FAILURE_MESSAGE(text),
-            this.ruleName
-          )
+            FAILURE_MESSAGE(text),
+            this.ruleName,
+          ),
         );
       }
     });
     return failures;
   }
 }
+
