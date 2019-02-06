@@ -14,16 +14,16 @@ const defaultTypesRegExp = /^EventEmitter$/;
 export class Rule extends Lint.Rules.TypedRule {
   public static metadata: Lint.IRuleMetadata = {
     description:
-      'Ensures subjects are suffixed with suffix specified by `suffix` option.',
+      "Ensures subjects are suffixed with suffix specified by `suffix` option.",
     options: {
       properties: {
-        parameters: { type: 'boolean' },
-        properties: { type: 'boolean' },
-        suffix: { type: 'string' },
-        types: { type: 'object' },
-        variables: { type: 'boolean' },
+        parameters: { type: "boolean" },
+        properties: { type: "boolean" },
+        suffix: { type: "string" },
+        types: { type: "object" },
+        variables: { type: "boolean" }
       },
-      type: 'object',
+      type: "object"
     },
     optionsDescription: Lint.Utils.dedent`
       An optional object with optional \`parameters\`, \`properties\` and \`variables\` properties.
@@ -34,23 +34,23 @@ export class Rule extends Lint.Rules.TypedRule {
       indicating whether suffixing is required for particular types.`,
     requiresTypeInfo: true,
     ruleName: '"rxjs-suffix-subjects"',
-    type: 'style',
-    typescriptOnly: true,
+    type: "style",
+    typescriptOnly: true
   };
 
   public applyWithProgram(
     sourceFile: ts.SourceFile,
-    program: ts.Program,
+    program: ts.Program
   ): Lint.RuleFailure[] {
     const failures: Lint.RuleFailure[] = [];
     const typeChecker = program.getTypeChecker();
 
-    let SUFFIX = 'Subject';
+    let SUFFIX = "Subject";
     const types: { regExp: RegExp; validate: boolean }[] = [];
     let validateOptions = {
       parameters: true,
       properties: true,
-      variables: true,
+      variables: true
     };
     const FAILURE_MESSAGE = (identifier: string) =>
       `Subject '${identifier}' must be suffixed with '${SUFFIX}'.`;
@@ -65,7 +65,7 @@ export class Rule extends Lint.Rules.TypedRule {
         Object.entries(options.types).forEach(
           ([key, validate]: [string, boolean]) => {
             types.push({ regExp: new RegExp(key), validate });
-          },
+          }
         );
       } else {
         types.push({ regExp: defaultTypesRegExp, validate: false });
@@ -74,12 +74,12 @@ export class Rule extends Lint.Rules.TypedRule {
     } else {
       types.push({ regExp: defaultTypesRegExp, validate: false });
     }
-    const suffixRegex = new RegExp(`${SUFFIX}\\$?$`, 'i');
+    const suffixRegex = new RegExp(`${SUFFIX}\\$?$`, "i");
     let identifiers: ts.Node[] = [];
 
     if (validateOptions.parameters) {
       identifiers = identifiers.concat(
-        tsquery(sourceFile, `Parameter > Identifier`),
+        tsquery(sourceFile, `Parameter > Identifier`)
       );
     }
 
@@ -87,14 +87,14 @@ export class Rule extends Lint.Rules.TypedRule {
       identifiers = identifiers.concat(
         tsquery(
           sourceFile,
-          `:matches(PropertyAssignment, PropertyDeclaration, PropertySignature, GetAccessor, SetAccessor) > Identifier`,
-        ),
+          `:matches(PropertyAssignment, PropertyDeclaration, PropertySignature, GetAccessor, SetAccessor) > Identifier`
+        )
       );
     }
 
     if (validateOptions.variables) {
       identifiers = identifiers.concat(
-        tsquery(sourceFile, `VariableDeclaration > Identifier`),
+        tsquery(sourceFile, `VariableDeclaration > Identifier`)
       );
     }
 
@@ -102,7 +102,7 @@ export class Rule extends Lint.Rules.TypedRule {
       const currentIdentifier = identifier.parent as ts.Identifier;
       const type = typeChecker.getTypeAtLocation(currentIdentifier);
       const text = identifier.getText();
-      if (!suffixRegex.test(text) && couldBeType(type, 'Subject')) {
+      if (!suffixRegex.test(text) && couldBeType(type, "Subject")) {
         for (let i = 0; i < types.length; ++i) {
           const { regExp, validate } = types[i];
           if (couldBeType(type, regExp) && !validate) {
@@ -116,12 +116,11 @@ export class Rule extends Lint.Rules.TypedRule {
             identifier.getStart(),
             identifier.getStart() + identifier.getWidth(),
             FAILURE_MESSAGE(text),
-            this.ruleName,
-          ),
+            this.ruleName
+          )
         );
       }
     });
     return failures;
   }
 }
-
