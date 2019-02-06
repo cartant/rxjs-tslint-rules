@@ -1,16 +1,14 @@
+
 {
-  "defaultSeverity": "error",
-  "jsRules": {},
-  "rules": {
-    "rxjs-suffix-subjects": {
-      "options": [{
-        "parameters": true,
-        "properties": true,
-        "variables": true,
-        "suffix": "Subject"
-      }],
-      "severity": "error"
-    }
+  "compilerOptions": {
+    "baseUrl": ".",
+    "lib": ["es2015"],
+    "noEmit": true,
+    "paths": {
+      "rxjs": ["../../node_modules/rxjs"]
+    },
+    "skipLibCheck": true,
+    "target": "es5"
   },
-  "rulesDirectory": "../../../../../build/rules"
+  "include": ["fixture.ts"]
 }
