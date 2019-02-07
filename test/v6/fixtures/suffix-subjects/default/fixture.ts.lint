@@ -1,0 +1,69 @@
+import { EventEmitter } from '@angular/core';
+import * as Rx from 'rxjs';
+
+const variableSubject$ = new Rx.Subject<any>();
+const variable$ = new Rx.Subject<any>();
+      ~~~~~~~~~                                    [suffix-subjects % ("variable$")]
+
+const mockObject = {
+  objFieldSubject$: new Rx.Subject<any>(),
+  objField$: new Rx.Subject<any>(),
+  ~~~~~~~~~                                         [suffix-subjects % ("objField$")]
+}
+
+class Mock {
+  private submitSubject$ = new Rx.Subject<void>();
+  private _submit$ = new Rx.Subject<void>();
+          ~~~~~~~~                                  [suffix-subjects % ("_submit$")]
+  private events = new EventEmitter();
+  private subject = new Rx.Subject<any>();
+
+  public property$ = new Rx.Subject<void>();
+         ~~~~~~~~~                                  [suffix-subjects % ("property$")]
+
+  noFinnishSubject = new Rx.Subject<void>();
+  noFinnish = new Rx.Subject<void>();
+  ~~~~~~~~~                                         [suffix-subjects % ("noFinnish")]
+
+  constructor(
+    private _openStream$: Rx.Subject<any>,
+            ~~~~~~~~~~~~                            [suffix-subjects % ("_openStream$")]
+    private _openStreamSubject$: Rx.Subject<any>
+
+  ) {
+    console.log(this.submitSubject$);
+    console.log(this.submit$);
+    console.log(this.property$);
+  }
+
+  public mock(): Rx.Subject<any> {
+    return new Rx.Subject<any>();
+  }
+
+  get submit$(): Rx.Subject<void> {
+      ~~~~~~~                                        [suffix-subjects % ("submit$")]
+
+    return this._submit$;
+  }
+
+  set submit$(xSubject$: Rx.Subject<void>) {
+      ~~~~~~~                                        [suffix-subjects % ("submit$")]
+    this._submit$ = xSubject$;
+  }
+}
+
+interface mockInterface {
+    interfaceField$: Rx.Subject<any>;
+    ~~~~~~~~~~~~~~~                                 [suffix-subjects % ("interfaceField$")]
+}
+
+function fooCorrect(xSubject$: Rx.Subject<any>) {
+  console.log(xSubject$);
+}
+
+function fooWrong(x$: Rx.Subject<any>) {
+                  ~~                                [suffix-subjects % ("x$")]
+  console.log(x$);
+}
+
+[suffix-subjects]: Subject '%s' must be suffixed with 'Subject'.
