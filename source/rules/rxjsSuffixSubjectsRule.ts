@@ -33,7 +33,7 @@ export class Rule extends Lint.Rules.TypedRule {
       objects containing keys that are regular expressions and values that are booleans -
       indicating whether suffixing is required for particular types.`,
     requiresTypeInfo: true,
-    ruleName: '"rxjs-suffix-subjects"',
+    ruleName: "rxjs-suffix-subjects",
     type: "style",
     typescriptOnly: true
   };

@@ -112,6 +112,7 @@ The package includes the following rules (none of which are enabled by default):
 | `rxjs-no-wholesale` | Disallows the wholesale importation of `rxjs` or `rxjs/Rx`. | None |
 | `rxjs-prefer-async-pipe` | Disallows the calling of `subscribe` within an Angular component. | None |
 | `rxjs-prefer-observer` | Enforces the passing of observers to `subscribe` and `tap`. See [this RxJS issue](https://github.com/ReactiveX/rxjs/issues/4159). | [See below](#rxjs-prefer-observer) |
+| `rxjs-suffix-subjects` | Disalllows subjects that don't end with the specified `suffix` option. | [See below](#rxjs-suffix-subjects) |
 | `rxjs-throw-error` | Enforces the passing of `Error` values to `error` notifications. | None |
 
 ### Options
@@ -380,6 +381,32 @@ The following options are equivalent to the rule's default configuration:
   "rxjs-prefer-observer": {
     "options": [{
       "allowNext": true
+    }],
+    "severity": "error"
+  }
+}
+```
+
+<a name="rxjs-suffix-subjects"></a>
+
+#### rxjs-suffix-subjects
+
+The rule takes an optional object with optional `parameters`, `properties` and `variables` properties. The properties are booleans and determine whether or not subjects used in those situations need a suffix.
+
+`parameters`, `properties` and `variables` default to `true`, and the default suffix is 'Subject'.
+
+The object also has optional `types` properties which are themselves objects containing keys that are regular expressions and values that are booleans - indicating whether suffixing is required for particular types.
+
+The following options are equivalent to the rule's default configuration:
+
+```json
+"rules": {
+  "rxjs-suffix-subjects": {
+    "options": [{
+      "parameters": true,
+      "properties": true,
+      "suffix": "Subject",
+      "variables": true
     }],
     "severity": "error"
   }
