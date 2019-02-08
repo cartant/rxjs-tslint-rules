@@ -14,7 +14,7 @@ const defaultTypesRegExp = /^EventEmitter$/;
 export class Rule extends Lint.Rules.TypedRule {
   public static metadata: Lint.IRuleMetadata = {
     description:
-      "Ensures subjects are suffixed with suffix specified by `suffix` option.",
+      "Disalllows subjects that don't end with the specified `suffix` option.",
     options: {
       properties: {
         parameters: { type: "boolean" },
@@ -27,7 +27,7 @@ export class Rule extends Lint.Rules.TypedRule {
     },
     optionsDescription: Lint.Utils.dedent`
       An optional object with optional \`parameters\`, \`properties\` and \`variables\` properties.
-      The properies are booleans and determine whether or not subjects of that particular expression need a suffix.
+      The properties are booleans and determine whether or not subjects used in those situations need a suffix.
       \`parameters\`, \`properties\` and \`variables\` default to \`true\`, and the default suffix is 'Subject'.
       The object also has optional \`types\` properties which are themselves
       objects containing keys that are regular expressions and values that are booleans -
@@ -45,21 +45,20 @@ export class Rule extends Lint.Rules.TypedRule {
     const failures: Lint.RuleFailure[] = [];
     const typeChecker = program.getTypeChecker();
 
-    let SUFFIX = "Subject";
+    let suffix = "Subject";
     const types: { regExp: RegExp; validate: boolean }[] = [];
     let validateOptions = {
       parameters: true,
       properties: true,
       variables: true
     };
-    const FAILURE_MESSAGE = (identifier: string) =>
-      `Subject '${identifier}' must be suffixed with '${SUFFIX}'.`;
+    const message = (identifier: string) =>
+      `Subject '${identifier}' must be suffixed with '${suffix}'.`;
 
-    // get configurations
     const { ruleArguments } = this.getOptions();
     const [options] = ruleArguments;
     if (options) {
-      SUFFIX = options.suffix;
+      suffix = options.suffix;
 
       if (options.types) {
         Object.entries(options.types).forEach(
@@ -74,7 +73,7 @@ export class Rule extends Lint.Rules.TypedRule {
     } else {
       types.push({ regExp: defaultTypesRegExp, validate: false });
     }
-    const suffixRegex = new RegExp(`${SUFFIX}\\$?$`, "i");
+    const suffixRegex = new RegExp(`${suffix}\\$?$`, "i");
     let identifiers: ts.Node[] = [];
 
     if (validateOptions.parameters) {
@@ -99,8 +98,7 @@ export class Rule extends Lint.Rules.TypedRule {
     }
 
     identifiers.forEach(identifier => {
-      const currentIdentifier = identifier.parent as ts.Identifier;
-      const type = typeChecker.getTypeAtLocation(currentIdentifier);
+      const type = typeChecker.getTypeAtLocation(identifier.parent);
       const text = identifier.getText();
       if (!suffixRegex.test(text) && couldBeType(type, "Subject")) {
         for (let i = 0; i < types.length; ++i) {
@@ -115,7 +113,7 @@ export class Rule extends Lint.Rules.TypedRule {
             sourceFile,
             identifier.getStart(),
             identifier.getStart() + identifier.getWidth(),
-            FAILURE_MESSAGE(text),
+            message(text),
             this.ruleName
           )
         );
