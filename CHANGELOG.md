@@ -1,3 +1,11 @@
+<a name="4.17.0"></a>
+## [4.17.0](https://github.com/cartant/rxjs-tslint-rules/compare/v4.16.2...v4.17.0) (2019-02-08)
+
+## Features
+
+* Add an `allowConfig` option to the `rxjs-no-sharereplay` rule. ([a5a7c75](https://github.com/cartant/rxjs-tslint-rules/commit/a5a7c75))
+* Add an `rxjs-suffix-subjects` rule - thanks, [maggie-x](https://github.com/maggie-x)! ([ea34c24](https://github.com/cartant/rxjs-tslint-rules/commit/ea34c24))
+
 <a name="4.16.2"></a>
 ## [4.16.2](https://github.com/cartant/rxjs-tslint-rules/compare/v4.16.1...v4.16.2) (2019-01-30)
 
