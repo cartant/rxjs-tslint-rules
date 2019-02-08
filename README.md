@@ -171,7 +171,7 @@ For example:
 
 The `rxjs-finnish` rule takes an optional object with optional `functions`, `methods`, `parameters`, `properties` and `variables` properties.
 
-The properies are booleans and determine whether or not Finnish notation is enforced. All properties default to `true`.
+The properties are booleans and determine whether or not Finnish notation is enforced. All properties default to `true`.
 
 For example, to enforce Finnish notation for variables only:
 

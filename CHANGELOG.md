@@ -160,7 +160,7 @@
 
 ## Features
 
-* Add `allowMethods` and `allowProperies` options to the `rxjs-no-unsafe-scope` rule. ([410d440](https://github.com/cartant/rxjs-tslint-rules/commit/410d440))
+* Add `allowMethods` and `allowProperties` options to the `rxjs-no-unsafe-scope` rule. ([410d440](https://github.com/cartant/rxjs-tslint-rules/commit/410d440))
 
 <a name="4.6.0"></a>
 ## [4.6.0](https://github.com/cartant/rxjs-tslint-rules/compare/v4.5.1...v4.6.0) (2018-07-12)

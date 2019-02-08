@@ -31,7 +31,7 @@ export class Rule extends Lint.Rules.TypedRule {
         optionsDescription: Lint.Utils.dedent`
             An optional object with optional \`functions\`, \`methods\`, \`parameters\`,
             \`properties\` and \`variables\` properties.
-            The properies are booleans and determine whether or not Finnish notation is enforced.
+            The properties are booleans and determine whether or not Finnish notation is enforced.
             All properties default to \`true\`.
             The object also has optional \`names\` and \`types\` properties which are themselves
             objects containing keys that are regular expressions and values that are booleans -
