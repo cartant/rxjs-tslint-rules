@@ -98,7 +98,7 @@ The package includes the following rules (none of which are enabled by default):
 | `rxjs-no-nested-subscribe` | Disallows the calling of `subscribe` within a `subscribe` callback. | None |
 | `rxjs-no-operator` | Disallows importation from `rxjs/operator`. Useful if you prefer ['pipeable' operators](https://github.com/ReactiveX/rxjs/blob/master/doc/pipeable-operators.md) - which are located in the `operators` directory. | None |
 | `rxjs-no-patched` | Disallows the calling of patched methods. Methods must be imported and called explicitly - not via `Observable` or `Observable.prototype`. | [See below](#rxjs-no-add) |
-| `rxjs-no-sharereplay` | Disallows using the `shareReplay` operator. That operators has a [bug that is not yet fixed](https://github.com/ReactiveX/rxjs/pull/4059). | None |
+| `rxjs-no-sharereplay` | Disallows using the `shareReplay` operator. That operators has a [bug that is not yet fixed](https://github.com/ReactiveX/rxjs/pull/4059). | [See below](#rxjs-no-sharereplay) |
 | `rxjs-no-subject-unsubscribe` | Disallows calling the `unsubscribe` method of a `Subject` instance. For an explanation of why this can be a problem, see [this](https://stackoverflow.com/a/45112125/6680611) Stack Overflow answer. | None |
 | `rxjs-no-subject-value` | Disallows accessing the `value` property of a `BehaviorSubject` instance. | None |
 | `rxjs-no-tap` | An alias for `rxjs-no-do`. | None |
@@ -226,6 +226,25 @@ For example:
     "options": [{
       "allowObservables": ["never", "throw"],
       "allowOperators": false
+    }],
+    "severity": "error"
+  }
+}
+```
+
+<a name="rxjs-no-sharereplay"></a>
+
+#### rxjs-no-sharereplay
+
+This rule disallows the use of `shareReplay` as, prior to RxJS 6.4.0, it exhibited some surprising behaviour - see [this PR](https://github.com/ReactiveX/rxjs/pull/4059) for an explanation. In 6.4.0 and later, it's now possible to pass a configuration argument that includes a `refCount` property - so whether or not the implementation reference counts subscriptions can be determined by the caller.
+
+The rule now has an optional `allowConfig` property that can be specified - it defaults to `false` - to allow `shareReplay` to be used as long as a config argument is passed:
+
+```json
+"rules": {
+  "rxjs-no-sharereplay": {
+    "options": [{
+      "allowConfig": true
     }],
     "severity": "error"
   }
