@@ -27,8 +27,8 @@ When using imports that patch `Observable`:
 
 ```ts
 import { Observable } from "rxjs/Observable";
-import from "rxjs/add/observable/of";
-import from "rxjs/add/operator/map";
+import "rxjs/add/observable/of";
+import "rxjs/add/operator/map";
 ```
 
 TypeScript will see the merged declarations in all modules, making it difficult to find `rxjs/add/...` imports that are missing from modules in which patched observables and operators are used.
