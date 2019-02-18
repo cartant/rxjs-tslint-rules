@@ -1,0 +1,30 @@
+import * as Rx from "rxjs";
+import { publishReplay, shareReplay } from "rxjs/operators";
+
+const a = new Rx.ReplaySubject<string>(1);
+const b = new Rx.ReplaySubject<string>();
+                 ~~~~~~~~~~~~~                 [no-ignored-replay-buffer]
+
+const c = Rx.of(42).pipe(publishReplay(1));
+const d = Rx.of(42).pipe(publishReplay());
+                         ~~~~~~~~~~~~~         [no-ignored-replay-buffer]
+
+const e = Rx.of(42).pipe(shareReplay(1));
+const f = Rx.of(42).pipe(shareReplay());
+                         ~~~~~~~~~~~           [no-ignored-replay-buffer]
+
+
+const g = new Thing(new Rx.ReplaySubject<number>(1));
+const g = new Thing(new Rx.ReplaySubject<number>());
+                           ~~~~~~~~~~~~~        [no-ignored-replay-buffer]
+class Mock {
+    private valid: Rx.ReplaySubject<number>;
+    private invalid: Rx.ReplaySubject<number>
+
+    constructor(){
+        this.valid = new Rx.ReplaySubject<number>(1);
+        this.invalid = new Rx.ReplaySubject<number>();
+                              ~~~~~~~~~~~~~    [no-ignored-replay-buffer]
+    }
+}
+[no-ignored-replay-buffer]: Ignoring the buffer size is forbidden
