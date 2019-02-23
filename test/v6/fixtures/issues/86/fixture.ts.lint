@@ -1,0 +1,11 @@
+const a = () => { throw "error"; };
+                        ~~~~~~~                 [throw-error]
+const b = () => { throw new Error("error"); };
+const c = () => {
+    throw Object.assign(
+        new Error("Not Found"),
+        { code: "NOT_FOUND" }
+    );
+};
+
+[throw-error]: Passing non-Error values is forbidden
