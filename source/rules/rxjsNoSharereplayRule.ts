@@ -23,10 +23,10 @@ export class Rule extends Lint.Rules.TypedRule {
             An optional object with an optional \`allowConfig\` property.
             If \`allowConfig\` is \`true\`, calls to \`shareReplay\` are allowed if a
             config object is passed - instead of separate parameters`,
-        requiresTypeInfo: true,
+        requiresTypeInfo: false,
         ruleName: "rxjs-no-sharereplay",
         type: "functionality",
-        typescriptOnly: true
+        typescriptOnly: false
     };
 
     public static FAILURE_STRING = "shareReplay is forbidden";
