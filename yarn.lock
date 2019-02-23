@@ -377,6 +377,10 @@ tslint@^5.1.0:
     tslib "^1.8.0"
     tsutils "^2.27.2"
 
+tsutils-etc@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/tsutils-etc/-/tsutils-etc-1.0.0.tgz#0e98230aad1e5d488556b67312b7b395b74de7a5"
+
 tsutils@^2.27.2:
   version "2.29.0"
   resolved "https://registry.yarnpkg.com/tsutils/-/tsutils-2.29.0.tgz#32b488501467acbedd4b85498673a0812aca0b99"
