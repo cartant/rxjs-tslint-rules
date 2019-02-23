@@ -1,3 +1,14 @@
+<a name="4.17.1"></a>
+## [4.17.1](https://github.com/cartant/rxjs-tslint-rules/compare/v4.17.0...v4.17.1) (2019-02-23)
+
+## Changes
+
+* Replaced `util.ts` with `tsutils-etc`.
+
+## Fixes
+
+* Throwing a type that is an intersection with `Error` no longer effects a failure. See [issue 86](https://github.com/cartant/rxjs-tslint-rules/issues/86).
+
 <a name="4.17.0"></a>
 ## [4.17.0](https://github.com/cartant/rxjs-tslint-rules/compare/v4.16.2...v4.17.0) (2019-02-08)
 
