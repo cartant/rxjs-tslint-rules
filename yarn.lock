@@ -17,12 +17,16 @@
   resolved "https://registry.yarnpkg.com/@types/decamelize/-/decamelize-1.2.0.tgz#aabc2306e6c229356636cab7fcb823cfe170f056"
 
 "@types/mocha@^5.0.0":
-  version "5.2.5"
-  resolved "https://registry.yarnpkg.com/@types/mocha/-/mocha-5.2.5.tgz#8a4accfc403c124a0bafe8a9fc61a05ec1032073"
+  version "5.2.6"
+  resolved "https://registry.yarnpkg.com/@types/mocha/-/mocha-5.2.6.tgz#b8622d50557dd155e9f2f634b7d68fd38de5e94b"
 
-"@types/node@*", "@types/node@^10.0.0":
-  version "10.12.24"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-10.12.24.tgz#b13564af612a22a20b5d95ca40f1bffb3af315cf"
+"@types/node@*":
+  version "11.9.5"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-11.9.5.tgz#011eece9d3f839a806b63973e228f85967b79ed3"
+
+"@types/node@^10.0.0":
+  version "10.12.27"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-10.12.27.tgz#eb3843f15d0ba0986cc7e4d734d2ee8b50709ef8"
 
 "@types/resolve@^0.0.8":
   version "0.0.8"
@@ -378,8 +382,8 @@ tslint@^5.1.0:
     tsutils "^2.27.2"
 
 tsutils-etc@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/tsutils-etc/-/tsutils-etc-1.0.0.tgz#0e98230aad1e5d488556b67312b7b395b74de7a5"
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/tsutils-etc/-/tsutils-etc-1.0.1.tgz#2114f1b41a1d7ad5498690f011a18fa989ebffad"
 
 tsutils@^2.27.2:
   version "2.29.0"
@@ -398,8 +402,8 @@ type-detect@^4.0.0, type-detect@^4.0.5:
   resolved "https://registry.yarnpkg.com/type-detect/-/type-detect-4.0.8.tgz#7646fb5f18871cfbb7749e69bd39a6388eb7450c"
 
 typescript@~3.3.1:
-  version "3.3.3"
-  resolved "https://registry.yarnpkg.com/typescript/-/typescript-3.3.3.tgz#f1657fc7daa27e1a8930758ace9ae8da31403221"
+  version "3.3.3333"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-3.3.3333.tgz#171b2c5af66c59e9431199117a3bcadc66fdcfd6"
 
 wrappy@1:
   version "1.0.2"

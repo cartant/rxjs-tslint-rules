@@ -8,7 +8,7 @@ import * as Lint from "tslint";
 import * as ts from "typescript";
 import * as tsutils from "tsutils";
 
-import { couldBeType, isReferenceType } from "../support/util";
+import { couldBeType, isAny, isReferenceType } from "../support/util";
 
 export class Rule extends Lint.Rules.TypedRule {
 
@@ -37,15 +37,24 @@ export class Walker extends Lint.ProgramAwareRuleWalker {
         const { arguments: [argument], expression } = node;
         const typeChecker = this.getTypeChecker();
 
+        const validate = (argument: ts.Node) => {
+            let fail = true;
+            if (argument) {
+                const type = typeChecker.getTypeAtLocation(argument);
+                fail = !(isAny(type) || couldBeType(type, "Error"));
+            }
+            if (fail) {
+                this.addFailureAtNode(argument, Rule.FAILURE_STRING);
+            }
+        };
+
         if (tsutils.isPropertyAccessExpression(expression)) {
 
             const name = expression.name.getText();
             const type = typeChecker.getTypeAtLocation(expression.expression);
 
             if ((name === "throw") && couldBeType(type, "Observable")) {
-                if (!argument || !couldBeType(typeChecker.getTypeAtLocation(argument), "Error")) {
-                    this.addFailureAtNode(argument, Rule.FAILURE_STRING);
-                }
+                validate(argument);
             }
 
         } else if (tsutils.isIdentifier(expression)) {
@@ -56,9 +65,7 @@ export class Walker extends Lint.ProgramAwareRuleWalker {
             if (signature) {
                 const returnType = typeChecker.getReturnTypeOfSignature(signature);
                 if (((name === "_throw") || (name === "throwError")) && couldBeType(returnType, "Observable")) {
-                    if (!argument || !couldBeType(typeChecker.getTypeAtLocation(argument), "Error")) {
-                        this.addFailureAtNode(argument, Rule.FAILURE_STRING);
-                    }
+                    validate(argument);
                 }
             }
         }
@@ -71,7 +78,7 @@ export class Walker extends Lint.ProgramAwareRuleWalker {
         const typeChecker = this.getTypeChecker();
         const type = typeChecker.getTypeAtLocation(node.expression);
 
-        if (!couldBeType(type, "Error")) {
+        if (!isAny(type) && !couldBeType(type, "Error")) {
             this.addFailureAtNode(node.expression, Rule.FAILURE_STRING);
         }
 
