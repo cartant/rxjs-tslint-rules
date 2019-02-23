@@ -1,0 +1,7 @@
+try {
+    throw new Error("error");
+} catch (error: any) {
+    throw error;
+}
+
+[throw-error]: Passing non-Error values is forbidden
