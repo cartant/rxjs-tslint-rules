@@ -1,3 +1,11 @@
+<a name="4.17.2"></a>
+## [4.17.2](https://github.com/cartant/rxjs-tslint-rules/compare/v4.17.1...v4.17.2) (2019-02-23)
+
+## Fixes
+
+* Allow throwing and rethrowing `any`. ([709f5f1](https://github.com/cartant/rxjs-tslint-rules/commit/709f5f1))
+* Support using namespace-style imports with the `rxjs-no-ignored-replay-buffer` rule - thanks, [maggie-x](https://github.com/maggie-x)! ([a3aae92](https://github.com/cartant/rxjs-tslint-rules/commit/a3aae92))
+
 <a name="4.17.1"></a>
 ## [4.17.1](https://github.com/cartant/rxjs-tslint-rules/compare/v4.17.0...v4.17.1) (2019-02-23)
 
