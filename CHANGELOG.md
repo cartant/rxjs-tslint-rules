@@ -1,3 +1,10 @@
+<a name="4.18.0"></a>
+## [4.18.0](https://github.com/cartant/rxjs-tslint-rules/compare/v4.17.2...v4.18.0) (2019-02-28)
+
+## Features
+
+* Add the `rxjs-no-connectable` rule. ([6b87900](https://github.com/cartant/rxjs-tslint-rules/commit/6b87900))
+
 <a name="4.17.2"></a>
 ## [4.17.2](https://github.com/cartant/rxjs-tslint-rules/compare/v4.17.1...v4.17.2) (2019-02-23)
 
