@@ -12,7 +12,7 @@ import { couldBeFunction } from "../support/util";
 export class Rule extends Lint.Rules.TypedRule {
 
     public static metadata: Lint.IRuleMetadata = {
-        description: "Disallows using `publish` operators without selectors.",
+        description: "Disallows calling the `publish` and `publishReplay` operators without selectors.",
         options: null,
         optionsDescription: "Not configurable.",
         requiresTypeInfo: false,
