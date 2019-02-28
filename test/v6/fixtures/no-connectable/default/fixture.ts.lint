@@ -1,0 +1,12 @@
+import { of } from "rxjs";
+import { publish, publishReplay } from "rxjs/operators";
+
+const a = of(42).pipe(publish());
+                      ~~~~~~~                               [no-connectable]
+const b = of(42).pipe(publishReplay(1));
+                      ~~~~~~~~~~~~~                         [no-connectable]
+
+const c = of(42).pipe(publish(p => p));
+const d = of(42).pipe(publishReplay(1, undefined, p => p));
+
+[no-connectable]: Calling publish without a selector is forbidden
