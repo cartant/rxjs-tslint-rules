@@ -20,7 +20,7 @@ The package includes the following rules (none of which are enabled by default):
 | `rxjs-just` | Enforces the use of a `just` alias for `of`. Some other Rx implementations use `just` and if that's your preference, this is the rule for you. (There was [some discussion](https://github.com/ReactiveX/rxjs/issues/3747) about deprecating `of` in favour of `just`, but it was decided to stick with `of`.) This rule includes a fixer. | None |
 | `rxjs-no-add` | Disallows the importation of patched observables and operators. | [See below](#rxjs-no-add) |
 | `rxjs-no-compat` | Disallows importation from locations that depend upon `rxjs-compat`. | None |
-| `rxjs-no-connectable` | Disallows calling the `publish` and `publishReplay` operators without selectors. | None |
+| `rxjs-no-connectable` | Disallows operators that return connectable observables. | None |
 | `rxjs-no-create` | Disallows the calling of `Observable.create`. Use `new Observable` instead. | None |
 | `rxjs-no-deep-operators` | Disallows deep importation from `rxjs/operators`. Deep imports won't be in available in RxJS v6. | None |
 | `rxjs-no-do` | I do without `do` operators. [Do you not?](https://youtu.be/spG-Yj0zEyc) Well, `do` isn't always a code smell, but this rule can be useful as a warning. | None |
