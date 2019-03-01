@@ -1,3 +1,10 @@
+<a name="4.18.1"></a>
+## [4.18.1](https://github.com/cartant/rxjs-tslint-rules/compare/v4.18.0...v4.18.1) (2019-03-01)
+
+## Fixes
+
+* Enforce the `rxjs-no-connectable` rule for all operators that can return `ConnectableObservable`. ([1a2fa98](https://github.com/cartant/rxjs-tslint-rules/commit/1a2fa98))
+
 <a name="4.18.0"></a>
 ## [4.18.0](https://github.com/cartant/rxjs-tslint-rules/compare/v4.17.2...v4.18.0) (2019-02-28)
 
