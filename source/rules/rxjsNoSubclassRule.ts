@@ -36,6 +36,9 @@ export class Rule extends Lint.Rules.TypedRule {
             "Subject",
             "Subscriber"
         ];
+
+        // Subject extends Observable, so there's no need to explicitly check
+        // for it and the classes that extend it.
         const couldBeNames = [
             "Observable",
             "Scheduler",
