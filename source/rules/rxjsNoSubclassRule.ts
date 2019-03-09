@@ -56,7 +56,10 @@ export class Rule extends Lint.Rules.TypedRule {
                 if (heritageClause.token === ts.SyntaxKind.ExtendsKeyword) {
                     heritageClause.types.forEach(heritageType => {
                         const type = typeChecker.getTypeAtLocation(heritageType);
-                        if (couldBeNames.some(name => couldBeType(type, name))) {
+                        if (couldBeNames.some(name => couldBeType(type, name, {
+                            name: /rxjs/,
+                            typeChecker
+                        }))) {
                             failures.push(new Lint.RuleFailure(
                                 sourceFile,
                                 heritageType.getStart(),

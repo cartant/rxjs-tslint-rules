@@ -1,8 +1,5 @@
-class Observable<T> {
-    t: T;
-}
+class Observable<T> { t: T; }
 
-class StringObservable extends Observable<string> {
-}
+class StringObservable extends Observable<string> {}
 
 [no-subclass]: Subclassing RxJS classes is forbidden
