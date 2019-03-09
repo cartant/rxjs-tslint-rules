@@ -1,3 +1,10 @@
+<a name="4.18.2"></a>
+## [4.18.2](https://github.com/cartant/rxjs-tslint-rules/compare/v4.18.1...v4.18.2) (2019-03-09)
+
+## Fixes
+
+* The `rxjs-no-subclass` now allows the subclassing of non-RxJS classes named `Observable`. ([31d00c0](https://github.com/cartant/rxjs-tslint-rules/commit/31d00c0))
+
 <a name="4.18.1"></a>
 ## [4.18.1](https://github.com/cartant/rxjs-tslint-rules/compare/v4.18.0...v4.18.1) (2019-03-01)
 
