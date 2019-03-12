@@ -25,9 +25,9 @@
   integrity sha512-1axi39YdtBI7z957vdqXI4Ac25e7YihYQtJa+Clnxg1zTJEaIRbndt71O3sP4GAMgiAm0pY26/b9BrY4MR/PMw==
 
 "@types/node@*", "@types/node@^11.0.0":
-  version "11.10.4"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-11.10.4.tgz#3f5fc4f0f322805f009e00ab35a2ff3d6b778e42"
-  integrity sha512-wa09itaLE8L705aXd8F80jnFpxz3Y1/KRHfKsYL2bPc0XF+wEWu8sR9n5bmeu8Ba1N9z2GRNzm/YdHcghLkLKg==
+  version "11.11.1"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-11.11.1.tgz#9ee55ffce20f72e141863b0036a6e51c6fc09a1f"
+  integrity sha512-2azXFP9n4aA2QNLkKm/F9pzKxgYj1SMawZ5Eh9iC21RH3XNcFsivLVU2NhpMgQm7YobSByvIol4c42ZFusXFHQ==
 
 "@types/resolve@^0.0.8":
   version "0.0.8"
@@ -187,9 +187,9 @@ cache-base@^1.0.1:
     unset-value "^1.0.0"
 
 camelcase@^5.0.0:
-  version "5.0.0"
-  resolved "https://registry.yarnpkg.com/camelcase/-/camelcase-5.0.0.tgz#03295527d58bd3cd4aa75363f35b2e8d97be2f42"
-  integrity sha512-faqwZqnWxbxn+F1d399ygeamQNy3lPp/H9H6rNrqYh4FSVCtcY+3cub1MxA8o9mDd55mM8Aghuu/kuyYA6VTsA==
+  version "5.2.0"
+  resolved "https://registry.yarnpkg.com/camelcase/-/camelcase-5.2.0.tgz#e7522abda5ed94cc0489e1b8466610e88404cf45"
+  integrity sha512-IXFsBS2pC+X0j0N/GE7Dm7j3bsEBp+oTpb7F50dwEVX7rf3IgwO9XatnegTsDtniKCUtEJH4fSU6Asw7uoVLfQ==
 
 chai@^4.0.0:
   version "4.2.0"
@@ -1173,9 +1173,9 @@ p-is-promise@^2.0.0:
   integrity sha512-pzQPhYMCAgLAKPWD2jC3Se9fEfrD9npNos0y150EeqZll7akhEgGhTW/slB6lHku8AvYGiJ+YJ5hfHKePPgFWg==
 
 p-limit@^2.0.0:
-  version "2.1.0"
-  resolved "https://registry.yarnpkg.com/p-limit/-/p-limit-2.1.0.tgz#1d5a0d20fb12707c758a655f6bbc4386b5930d68"
-  integrity sha512-NhURkNcrVB+8hNfLuysU8enY5xn2KXphsHBaC2YmRNTZRc7RWusw6apSpdEj3jo4CMb6W9nrF6tTnsJsJeyu6g==
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/p-limit/-/p-limit-2.2.0.tgz#417c9941e6027a9abcba5092dd2904e255b5fbc2"
+  integrity sha512-pZbTJpoUsCzV48Mc9Nh51VbwO0X9cuPFE8gYwx9BTCt9SF8/b7Zljd2fVgOxhIF/HDTKgpVzs+GPhyKfjLLFRQ==
   dependencies:
     p-try "^2.0.0"
 
@@ -1553,9 +1553,9 @@ tsutils@^2.27.2:
     tslib "^1.8.1"
 
 tsutils@^3.0.0:
-  version "3.8.0"
-  resolved "https://registry.yarnpkg.com/tsutils/-/tsutils-3.8.0.tgz#7a3dbadc88e465596440622b65c04edc8e187ae5"
-  integrity sha512-XQdPhgcoTbCD8baXC38PQ0vpTZ8T3YrE+vR66YIj/xvDt1//8iAhafpIT/4DmvzzC1QFapEImERu48Pa01dIUA==
+  version "3.9.0"
+  resolved "https://registry.yarnpkg.com/tsutils/-/tsutils-3.9.0.tgz#fb8b6943f654a0857f17b538236d7f811c5bc5ce"
+  integrity sha512-XSrxkIRB/7YPWfqgGgkl5YHlzZqmq3NQzb36s+GD7TdYMVvmWqWQyUCzuT7tqnoPoTIBQ+npTNgl9ymgyhfR4Q==
   dependencies:
     tslib "^1.8.1"
 
