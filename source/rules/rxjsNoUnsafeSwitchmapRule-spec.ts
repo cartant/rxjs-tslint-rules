@@ -4,7 +4,7 @@
  */
 
 import { expect } from "chai";
-import * as decamelize from "decamelize";
+import decamelize from "decamelize";
 import { Walker } from "./rxjsNoUnsafeSwitchmapRule";
 
 describe("rxjs-no-unsafe-switchmap", () => {

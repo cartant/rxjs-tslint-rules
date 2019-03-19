@@ -7,7 +7,7 @@
 import * as Lint from "tslint";
 import * as ts from "typescript";
 import * as tsutils from "tsutils";
-import * as decamelize from "decamelize";
+import decamelize from "decamelize";
 
 import { couldBeType, isReferenceType } from "../support/util";
 
