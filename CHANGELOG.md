@@ -1,3 +1,10 @@
+<a name="4.19.0"></a>
+## [4.19.0](https://github.com/cartant/rxjs-tslint-rules/compare/v4.18.2...v4.19.0) (2019-03-20)
+
+## Features
+
+* Added the `rxjs-no-ignored-observable` rule. ([d27ff0d](https://github.com/cartant/rxjs-tslint-rules/commit/d27ff0d))
+
 <a name="4.18.2"></a>
 ## [4.18.2](https://github.com/cartant/rxjs-tslint-rules/compare/v4.18.1...v4.18.2) (2019-03-09)
 
