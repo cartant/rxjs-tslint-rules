@@ -1,0 +1,23 @@
+import { Observable, of } from "rxjs";
+
+function functionSource() {
+    return of(42);
+}
+
+const arrowSource = () => of(42);
+
+function sink(source: Observable<number>) {
+}
+
+const a = functionSource();
+const b = arrowSource();
+sink(functionSource());
+sink(arrowSource());
+
+functionSource();
+~~~~~~~~~~~~~~~~                [no-ignored-observable]
+
+arrowSource();
+~~~~~~~~~~~~~                   [no-ignored-observable]
+
+[no-ignored-observable]: Ignoring a returned Observable is forbidden
