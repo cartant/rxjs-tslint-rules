@@ -1,3 +1,10 @@
+<a name="4.19.1"></a>
+## [4.19.1](https://github.com/cartant/rxjs-tslint-rules/compare/v4.19.0...v4.19.1) (2019-03-26)
+
+## Fixes
+
+* Fix [#88](https://github.com/cartant/rxjs-tslint-rules/issues/88). ([e5ff225](https://github.com/cartant/rxjs-tslint-rules/commit/e5ff225))
+
 <a name="4.19.0"></a>
 ## [4.19.0](https://github.com/cartant/rxjs-tslint-rules/compare/v4.18.2...v4.19.0) (2019-03-20)
 
