@@ -98,7 +98,7 @@ export class Rule extends Lint.Rules.TypedRule {
     }
 
     identifiers.forEach(identifier => {
-      const type = typeChecker.getTypeAtLocation(identifier.parent);
+      const type = typeChecker.getTypeAtLocation(identifier);
       const text = identifier.getText();
       if (!suffixRegex.test(text) && couldBeType(type, "Subject")) {
         for (let i = 0; i < types.length; ++i) {
