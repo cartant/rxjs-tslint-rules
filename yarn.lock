@@ -28,9 +28,9 @@
   integrity sha512-1axi39YdtBI7z957vdqXI4Ac25e7YihYQtJa+Clnxg1zTJEaIRbndt71O3sP4GAMgiAm0pY26/b9BrY4MR/PMw==
 
 "@types/node@*", "@types/node@^11.0.0":
-  version "11.11.5"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-11.11.5.tgz#0c57e12eb44d44e5b6735593925286553ee7cebf"
-  integrity sha512-pz6wNe/XwyesgfVX7P6B0hY3TnTAYXk6KSTLdpQfbuq3be+hnMoCuFzE+yLTskPdBwmNiGRL2TAsnF09aRugvQ==
+  version "11.11.7"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-11.11.7.tgz#f1c35a906b82adae76ede5ab0d2088e58fa37843"
+  integrity sha512-bHbRcyD6XpXVLg42QYaQCjvDXaCFkvb3WbCIxSDmhGbJYVroxvYzekk9QGg1beeIawfvSLkdZpP0h7jxE4ihnA==
 
 "@types/resolve@^0.0.8":
   version "0.0.8"
@@ -331,9 +331,9 @@ decamelize@^1.2.0:
   integrity sha1-9lNNFRSCabIDUue+4m9QH5oZEpA=
 
 decamelize@^3.0.0:
-  version "3.1.0"
-  resolved "https://registry.yarnpkg.com/decamelize/-/decamelize-3.1.0.tgz#81cd3f2e9911b8874e290d249da2c366453641d4"
-  integrity sha512-fgHaR077tSDdzV2ExQwtJ8Kx8LYOvnf1cm5JaQ1ESeGgO8CTH7wv3202zJEg1YND0Fx7WQDxeuDPdAPMERXBEg==
+  version "3.1.1"
+  resolved "https://registry.yarnpkg.com/decamelize/-/decamelize-3.1.1.tgz#ebf473c6f8607bd70fd9ed6d892da27c5eb8539e"
+  integrity sha512-pSJTQCBDZxv8siK5p/M42ZdhThhTtx3JU/OKli0yQSKebfM9q92op6zF7krYrWVKRtsE/RwTDiZLliMV3ECkXQ==
   dependencies:
     xregexp "^4.2.4"
 
