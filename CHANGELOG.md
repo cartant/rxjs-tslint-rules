@@ -1,3 +1,10 @@
+<a name="4.20.0"></a>
+## [4.20.0](https://github.com/cartant/rxjs-tslint-rules/compare/v4.19.1...v4.20.0) (2019-04-13)
+
+## Features
+
+* Added the `rxjs-no-explicit-generics` rule. ([8c51cf5](https://github.com/cartant/rxjs-tslint-rules/commit/8c51cf5))
+
 <a name="4.19.1"></a>
 ## [4.19.1](https://github.com/cartant/rxjs-tslint-rules/compare/v4.19.0...v4.19.1) (2019-03-26)
 
