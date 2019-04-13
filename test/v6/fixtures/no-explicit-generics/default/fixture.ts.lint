@@ -1,0 +1,13 @@
+import { of } from "rxjs";
+import { scan } from "rxjs/operators";
+
+const a = of(1, 2, 3);
+const b = a.pipe(
+    scan<number, string>((acc, value) => `${acc},${value}`, "")
+    ~~~~                                                            [no-explicit-generics]
+);
+const c = a.pipe(
+    scan((acc: string, value: number) => `${acc},${value}`, "")
+);
+
+[no-explicit-generics]: Explicit generic type arguments are forbidden
