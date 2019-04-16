@@ -13,8 +13,14 @@ const defaultAllowedTypesRegExp = /^EventEmitter$/;
 export class Rule extends Lint.Rules.TypedRule {
   public static metadata: Lint.IRuleMetadata = {
     description: "Disallows exposed subjects.",
-    options: null,
-    optionsDescription: "Not configurable.",
+    options: {
+        properties: {
+            allowProtected: { type: "boolean" }
+        },
+        type: "object"
+    },
+    optionsDescription: Lint.Utils.dedent`
+        An optional object with optional \`allowProtected\` property - which defaults to \`false\`.`,
     requiresTypeInfo: true,
     ruleName: "rxjs-no-exposed-subjects",
     type: "functionality",
@@ -32,21 +38,26 @@ export class Rule extends Lint.Rules.TypedRule {
 }
 
 class RxjsNoExposedSubjects extends Lint.ProgramAwareRuleWalker {
+
+  private allowProtected = false;
+
   constructor(
     sourceFile: ts.SourceFile,
     rawOptions: Lint.IOptions,
     program: ts.Program
   ) {
     super(sourceFile, rawOptions, program);
+    const [options] = this.getOptions();
+    if (options) {
+      this.allowProtected = options.allowProtected;
+    }
   }
 
-  // CASE: Properties of classes declared in constructor
   protected visitConstructorDeclaration(node: ts.ConstructorDeclaration): void {
     node.parameters.forEach(param => this.validateNode(param));
     super.visitConstructorDeclaration(node);
   }
 
-  // CASE: Standard properties of Classes.
   protected visitPropertyDeclaration(node: ts.PropertyDeclaration): void {
     this.validateNode(node);
     super.visitPropertyDeclaration(node);
@@ -76,6 +87,12 @@ class RxjsNoExposedSubjects extends Lint.ProgramAwareRuleWalker {
     const { name } = node as any;
     if (name) {
       const text = name.getText();
+      const { allowProtected } = this;
+      const protectedModifier = allowProtected && node.modifiers
+        ? node.modifiers.find(
+            modifier => modifier.kind === ts.SyntaxKind.ProtectedKeyword
+          )
+        : null;
       const privateModifier = node.modifiers
         ? node.modifiers.find(
             modifier => modifier.kind === ts.SyntaxKind.PrivateKeyword
@@ -83,8 +100,12 @@ class RxjsNoExposedSubjects extends Lint.ProgramAwareRuleWalker {
         : null;
       const type = this.getTypeChecker().getTypeAtLocation(typeNode || node);
 
-      if (!privateModifier && couldBeType(type, "Subject") && !couldBeType(type, defaultAllowedTypesRegExp)) {
-        this.addFailureAtNode(name, `Subject '${text}' must be private.`);
+      if (
+        !(protectedModifier || privateModifier) &&
+        couldBeType(type, "Subject") &&
+        !couldBeType(type, defaultAllowedTypesRegExp)
+      ) {
+        this.addFailureAtNode(name, `Subject '${text}' must be private${allowProtected ? " or protected" : ""}.`);
       }
     }
   }

@@ -20,7 +20,6 @@ class Mock {
     public i: Subject<any>,
            ~                                    [no-exposed % ("i")]
     protected j: Subject<any>,
-              ~                                 [no-exposed % ("j")]
     private k: Subject<any>,
     l: Subject<any>,
     ~                                           [no-exposed % ("l")]
