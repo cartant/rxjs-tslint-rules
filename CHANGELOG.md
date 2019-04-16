@@ -1,3 +1,10 @@
+<a name="4.21.0"></a>
+## [4.21.0](https://github.com/cartant/rxjs-tslint-rules/compare/v4.20.0...v4.21.0) (2019-04-17)
+
+## Features
+
+* Added an `allowProtected` option for the `rxjs-no-exposed-subjects` rule. ([977ecf3](https://github.com/cartant/rxjs-tslint-rules/commit/977ecf3))
+
 <a name="4.20.0"></a>
 ## [4.20.0](https://github.com/cartant/rxjs-tslint-rules/compare/v4.19.1...v4.20.0) (2019-04-13)
 
