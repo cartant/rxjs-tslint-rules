@@ -9,7 +9,6 @@ class Mock {
   public d = new Subject<void>();
          ~                                      [no-exposed % ("d")]
   protected e = new Subject<void>();
-            ~                                   [no-exposed % ("e")]
   f = new Subject<any>();
   ~                                             [no-exposed % ("f")]
   public readonly g = new Subject<void>();
@@ -67,4 +66,4 @@ function foo(a$: Subject<any>): Subject<any> {
   return a$;
 }
 
-[no-exposed]: Subject '%s' must be private.
+[no-exposed]: Subject '%s' must be private or protected.
