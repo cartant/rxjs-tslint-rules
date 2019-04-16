@@ -1,82 +1,74 @@
-import * as Rx from 'rxjs';
-
-const variable = new Rx.Subject<void>();
+import { Observable, Subject } from 'rxjs';
 
 class Mock {
 
-  // valid properties
-  private _submitSubject$ = new Rx.Subject<void>();
-  private readonly rSubmitSubject$ = new Rx.Subject<void>();
-  private _age: number;
+  private a = new Subject<void>();
+  private readonly b = new Subject<void>();
+  private c: number;
 
-  // invalid properties
-  public property$ = new Rx.Subject<void>();
-         ~~~~~~~~~                                              [no-exposed % ("property$")]
+  public d = new Subject<void>();
+         ~                                      [no-exposed % ("d")]
 
-  protected property2$ = new Rx.Subject<void>();
-            ~~~~~~~~~~                                          [no-exposed % ("property2$")]
+  protected e = new Subject<void>();
+            ~                                   [no-exposed % ("e")]
 
-  qualitySubject$ = new Rx.Subject<any>();
-  ~~~~~~~~~~~~~~~                                               [no-exposed % ("qualitySubject$")]
+  f = new Subject<any>();
+  ~                                             [no-exposed % ("f")]
 
-  public readonly rPropertySubject$ = new Rx.Subject<void>();
-                  ~~~~~~~~~~~~~~~~~                             [no-exposed % ("rPropertySubject$")]
+  public readonly g = new Subject<void>();
+                  ~                             [no-exposed % ("g")]
 
-  readonly rSubject$ = new Rx.Subject<void>();
-           ~~~~~~~~~                                            [no-exposed % ("rSubject$")]
+  readonly h = new Subject<void>();
+           ~                                    [no-exposed % ("h")]
 
   constructor(
-    public streamSubject$: Rx.Subject<any>,
-           ~~~~~~~~~~~~~~                                       [no-exposed % ("streamSubject$")]
-    protected pSubject$: Rx.Subject<any>,
-              ~~~~~~~~~                                         [no-exposed % ("pSubject$")]
-    private secondParamSubject$: Rx.Subject<any>,
-    anySubject$: Rx.Subject<any>,
-    ~~~~~~~~~~~                                                 [no-exposed % ("anySubject$")]
-    observable: Rx.Observable<any>,
-  ) {
+    public i: Subject<any>,
+           ~                                    [no-exposed % ("i")]
+    protected j: Subject<any>,
+              ~                                 [no-exposed % ("j")]
+    private k: Subject<any>,
+    l: Subject<any>,
+    ~                                           [no-exposed % ("l")]
+    m: Observable<any>,
+  ) {}
 
-    console.log(this.submitSubject$);
-    console.log(this.property$);
-    console.log(this.propertySubject$);
-  }
-
-  get submitSubject$(): Rx.Subject<any> {
-      ~~~~~~~~~~~~~~                                            [no-exposed % ("submitSubject$")]
+  get n(): Subject<any> {
+      ~                                         [no-exposed % ("n")]
     return this._submitSubject$;
   }
 
-  set submitSubject$(set$: Rx.Subject<any>) {
-      ~~~~~~~~~~~~~~                                            [no-exposed % ("submitSubject$")]
+  set n(a: Subject<any>) {
+      ~                                         [no-exposed % ("n")]
     this._submitSubject$ = set$;
   }
 
-  get age(): number {
+  get o(): number {
     return this.age;
   }
 
-  set age(newNum: number) {
+  set o(newNum: number) {
     this._age = newNum;
   }
 
-  public invalidMethod(): Rx.Subject<any> {
-         ~~~~~~~~~~~~~                                          [no-exposed % ("invalidMethod")]
-    return new Rx.Subject<any>();
+  public p(): Subject<any> {
+         ~                                      [no-exposed % ("p")]
+    return new Subject<any>();
   }
 
-  invalidMethod2(): Rx.Subject<any> {
-  ~~~~~~~~~~~~~~                                                [no-exposed % ("invalidMethod2")]
-    return new Rx.Subject<any>();
+  q(): Subject<any> {
+  ~                                             [no-exposed % ("q")]
+    return new Subject<any>();
   }
 
-  private validMethod(): Rx.Subject<any> {
-    return new Rx.Subject<any>();
+  private r(): Subject<any> {
+    return new Subject<any>();
   }
-
 }
 
-function foo(xSubject$: Rx.Subject<any>): Rx.Subject<any> {
-  return xSubject$;
+const variable = new Subject<void>();
+
+function foo(a$: Subject<any>): Subject<any> {
+  return a$;
 }
 
 [no-exposed]: Subject '%s' must be private.
