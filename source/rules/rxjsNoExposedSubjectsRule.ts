@@ -6,6 +6,7 @@
 
 import * as Lint from "tslint";
 import * as ts from "typescript";
+import * as tsutils from "tsutils";
 import { couldBeType } from "../support/util";
 
 const defaultAllowedTypesRegExp = /^EventEmitter$/;
@@ -88,16 +89,8 @@ class RxjsNoExposedSubjects extends Lint.ProgramAwareRuleWalker {
     if (name) {
       const text = name.getText();
       const { allowProtected } = this;
-      const protectedModifier = allowProtected && node.modifiers
-        ? node.modifiers.find(
-            modifier => modifier.kind === ts.SyntaxKind.ProtectedKeyword
-          )
-        : null;
-      const privateModifier = node.modifiers
-        ? node.modifiers.find(
-            modifier => modifier.kind === ts.SyntaxKind.PrivateKeyword
-          )
-        : null;
+      const protectedModifier = allowProtected && tsutils.getModifier(node, ts.SyntaxKind.ProtectedKeyword);
+      const privateModifier = tsutils.getModifier(node, ts.SyntaxKind.PrivateKeyword);
       const type = this.getTypeChecker().getTypeAtLocation(typeNode || node);
 
       if (
