@@ -1,3 +1,11 @@
+<a name="4.22.0"></a>
+## [4.22.0](https://github.com/cartant/rxjs-tslint-rules/compare/v4.21.0...v4.22.0) (2019-04-19)
+
+## Features
+
+* Added an `rxjs-no-async-subscribe` rule. ([212a847](https://github.com/cartant/rxjs-tslint-rules/commit/212a847))
+* Added an `rxjs-no-ignored-subscriptions` rule. ([79eda84](https://github.com/cartant/rxjs-tslint-rules/commit/79eda84))
+
 <a name="4.21.0"></a>
 ## [4.21.0](https://github.com/cartant/rxjs-tslint-rules/compare/v4.20.0...v4.21.0) (2019-04-17)
 
