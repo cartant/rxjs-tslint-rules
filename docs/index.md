@@ -19,6 +19,7 @@ The package includes the following rules (none of which are enabled by default):
 | `rxjs-finnish` | Enforces the use of [Finnish notation](https://medium.com/@benlesh/observables-and-finnish-notation-df8356ed1c9b). | [See below](#rxjs-finnish) |
 | `rxjs-just` | Enforces the use of a `just` alias for `of`. Some other Rx implementations use `just` and if that's your preference, this is the rule for you. (There was [some discussion](https://github.com/ReactiveX/rxjs/issues/3747) about deprecating `of` in favour of `just`, but it was decided to stick with `of`.) This rule includes a fixer. | None |
 | `rxjs-no-add` | Disallows the importation of patched observables and operators. | [See below](#rxjs-no-add) |
+| `rxjs-no-async-subscribe` | Disallows passing async functions to subscribe. | None |
 | `rxjs-no-compat` | Disallows importation from locations that depend upon `rxjs-compat`. | None |
 | `rxjs-no-connectable` | Disallows operators that return connectable observables. | None |
 | `rxjs-no-create` | Disallows the calling of `Observable.create`. Use `new Observable` instead. | None |
@@ -32,6 +33,7 @@ The package includes the following rules (none of which are enabled by default):
 | `rxjs-no-ignored-observable` | Disallows the ignoring of observables returned by functions. | None. |
 | `rxjs-no-ignored-replay-buffer` | Disallows using `ReplaySubject`, `publishReplay` or `shareReplay` without specifying the buffer size. | None |
 | `rxjs-no-ignored-subscribe` | Disallows the calling of subscribe without specifying arguments. | None |
+| `rxjs-no-ignored-subscription` | Disallows ignoring the subscription returned by subscribe. | None |
 | `rxjs-no-internal` | Disallows importation from `rxjs/internal`. | None |
 | `rxjs-no-nested-subscribe` | Disallows the calling of `subscribe` within a `subscribe` callback. | None |
 | `rxjs-no-operator` | Disallows importation from `rxjs/operator`. Useful if you prefer ['pipeable' operators](https://github.com/ReactiveX/rxjs/blob/master/doc/pipeable-operators.md) - which are located in the `operators` directory. | None |

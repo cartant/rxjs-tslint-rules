@@ -12,7 +12,7 @@ import { couldBeType } from "../support/util";
 export class Rule extends Lint.Rules.TypedRule {
 
     public static metadata: Lint.IRuleMetadata = {
-        description: "Disallows async functions to subscribe.",
+        description: "Disallows passing async functions to subscribe.",
         options: null,
         optionsDescription: "Not configurable.",
         requiresTypeInfo: false,

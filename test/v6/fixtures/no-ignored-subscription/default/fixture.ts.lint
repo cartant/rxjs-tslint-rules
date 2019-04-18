@@ -1,0 +1,12 @@
+import { of, Subscription } from "rxjs";
+
+of(42).subscribe();
+       ~~~~~~~~~                            [no-ignored-subscription]
+const a = of(42).subscribe();
+a.add(of(42).subscribe());
+let b: Subscription;
+b = of(42).subscribe();
+const c = [of(42).subscribe()];
+const d = { subscription: of(42).subscribe() };
+
+[no-ignored-subscription]: Ignoring returned subscriptions is forbidden
