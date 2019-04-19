@@ -48,9 +48,6 @@
     "tslint": "^5.0.0",
     "typescript": "^2.3.0 || ^3.0.0"
   },
-  "prettier": {
-    "tabWidth": 2
-  },
   "private": false,
   "publishConfig": {
     "tag": "latest"
