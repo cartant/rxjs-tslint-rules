@@ -10,155 +10,163 @@ import * as tsutils from "tsutils";
 import { couldBeType, isReferenceType } from "../support/util";
 
 export class Rule extends Lint.Rules.TypedRule {
-
-    public static metadata: Lint.IRuleMetadata = {
-        description: "Disallows the application of operators after takeUntil.",
-        options: {
-            properties: {
-                allow: { type: "array", items: { type: "string" } }
-            },
-            type: "object"
-        },
-        optionsDescription: Lint.Utils.dedent`
+  public static metadata: Lint.IRuleMetadata = {
+    description: "Disallows the application of operators after takeUntil.",
+    options: {
+      properties: {
+        allow: { type: "array", items: { type: "string" } }
+      },
+      type: "object"
+    },
+    optionsDescription: Lint.Utils.dedent`
             An optional object with optional \`allow\` property.
             The property is an array containing the names of the operators that are allowed to follow \`takeUntil\`.`,
-        requiresTypeInfo: true,
-        ruleName: "rxjs-no-unsafe-takeuntil",
-        type: "functionality",
-        typescriptOnly: true
-    };
+    requiresTypeInfo: true,
+    ruleName: "rxjs-no-unsafe-takeuntil",
+    type: "functionality",
+    typescriptOnly: true
+  };
 
-    public static FAILURE_STRING = "Applying operators after takeUntil is forbidden";
+  public static FAILURE_STRING =
+    "Applying operators after takeUntil is forbidden";
 
-    public applyWithProgram(sourceFile: ts.SourceFile, program: ts.Program): Lint.RuleFailure[] {
-
-        return this.applyWithWalker(new Walker(sourceFile, this.getOptions(), program));
-    }
+  public applyWithProgram(
+    sourceFile: ts.SourceFile,
+    program: ts.Program
+  ): Lint.RuleFailure[] {
+    return this.applyWithWalker(
+      new Walker(sourceFile, this.getOptions(), program)
+    );
+  }
 }
 
 class Walker extends Lint.ProgramAwareRuleWalker {
+  private allow: string[] = [
+    "count",
+    "defaultIfEmpty",
+    "endWith",
+    "every",
+    "finalize",
+    "finally",
+    "isEmpty",
+    "last",
+    "max",
+    "min",
+    "publish",
+    "publishBehavior",
+    "publishLast",
+    "publishReplay",
+    "reduce",
+    "share",
+    "shareReplay",
+    "skipLast",
+    "takeLast",
+    "throwIfEmpty",
+    "toArray"
+  ];
 
-    private allow: string[] = [
-        "count",
-        "defaultIfEmpty",
-        "endWith",
-        "every",
-        "finalize",
-        "finally",
-        "isEmpty",
-        "last",
-        "max",
-        "min",
-        "publish",
-        "publishBehavior",
-        "publishLast",
-        "publishReplay",
-        "reduce",
-        "share",
-        "shareReplay",
-        "skipLast",
-        "takeLast",
-        "throwIfEmpty",
-        "toArray"
-    ];
+  constructor(
+    sourceFile: ts.SourceFile,
+    options: Lint.IOptions,
+    program: ts.Program
+  ) {
+    super(sourceFile, options, program);
 
-    constructor(sourceFile: ts.SourceFile, options: Lint.IOptions, program: ts.Program) {
+    const [ruleOptions] = this.getOptions();
+    if (ruleOptions) {
+      if (ruleOptions.hasOwnProperty("allow")) {
+        this.allow = ruleOptions.allow;
+      }
+    }
+  }
 
-        super(sourceFile, options, program);
+  protected visitCallExpression(node: ts.CallExpression): void {
+    const { expression: propertyAccessExpression } = node;
+    if (tsutils.isPropertyAccessExpression(propertyAccessExpression)) {
+      const { expression } = propertyAccessExpression;
+      const propertyName = propertyAccessExpression.name.getText();
+      const typeChecker = this.getTypeChecker();
+      const type = typeChecker.getTypeAtLocation(expression);
 
-        const [ruleOptions] = this.getOptions();
-        if (ruleOptions) {
-            if (ruleOptions.hasOwnProperty("allow")) {
-                this.allow = ruleOptions.allow;
-            }
+      if (isReferenceType(type) && couldBeType(type.target, "Observable")) {
+        switch (propertyName) {
+          case "takeUntil":
+            this.walkPatchedOperators(node, propertyAccessExpression.name);
+            break;
+          case "pipe":
+            this.walkPipedOperators(node);
+            break;
+          default:
+            break;
         }
+      }
     }
 
-    protected visitCallExpression(node: ts.CallExpression): void {
+    super.visitCallExpression(node);
+  }
 
-        const { expression: propertyAccessExpression } = node;
-        if (tsutils.isPropertyAccessExpression(propertyAccessExpression)) {
-
-            const { expression } = propertyAccessExpression;
-            const propertyName = propertyAccessExpression.name.getText();
+  private walkPatchedOperators(node: ts.Node, identifier: ts.Identifier): void {
+    let name: ts.Identifier | undefined = undefined;
+    for (let parent = node.parent; parent; parent = parent.parent) {
+      if (tsutils.isCallExpression(parent)) {
+        if (name) {
+          if (name.getText() === "pipe") {
+            this.walkPipedOperators(parent, identifier);
+          } else if (this.allow.indexOf(name.getText()) === -1) {
             const typeChecker = this.getTypeChecker();
-            const type = typeChecker.getTypeAtLocation(expression);
-
-            if (isReferenceType(type) && couldBeType(type.target, "Observable")) {
-
-                switch (propertyName) {
-                case "takeUntil":
-                    this.walkPatchedOperators(node, propertyAccessExpression.name);
-                    break;
-                case "pipe":
-                    this.walkPipedOperators(node);
-                    break;
-                default:
-                    break;
-                }
-            }
-        }
-
-        super.visitCallExpression(node);
-    }
-
-    private walkPatchedOperators(node: ts.Node, identifier: ts.Identifier): void {
-
-        let name: ts.Identifier | undefined = undefined;
-        for (let parent = node.parent; parent; parent = parent.parent) {
-            if (tsutils.isCallExpression(parent)) {
-                if (name) {
-                    if (name.getText() === "pipe") {
-                        this.walkPipedOperators(parent, identifier);
-                    } else if (this.allow.indexOf(name.getText()) === -1) {
-                        const typeChecker = this.getTypeChecker();
-                        const type = typeChecker.getTypeAtLocation(parent);
-                        if (isReferenceType(type) && couldBeType(type.target, "Observable")) {
-                            this.addFailureAtNode(identifier, Rule.FAILURE_STRING);
-                            return;
-                        }
-                    }
-                }
-            } else if (tsutils.isPropertyAccessExpression(parent)) {
-                name = parent.name;
-            } else {
-                break;
-            }
-        }
-    }
-
-    private walkPipedOperators(node: ts.CallExpression, identifier: ts.Identifier | null = null): void {
-
-        const some = (args: {
-            some(callback: (arg: ts.Expression) => boolean): boolean
-        }) => args.some(arg => {
+            const type = typeChecker.getTypeAtLocation(parent);
             if (
-                tsutils.isCallExpression(arg) &&
-                tsutils.isIdentifier(arg.expression) &&
-                (this.allow.indexOf(arg.expression.getText()) !== -1)
+              isReferenceType(type) &&
+              couldBeType(type.target, "Observable")
             ) {
-                return false;
+              this.addFailureAtNode(identifier, Rule.FAILURE_STRING);
+              return;
             }
-            return true;
-        });
-
-        if (identifier) {
-            if (some(node.arguments.slice(0))) {
-                this.addFailureAtNode(identifier, Rule.FAILURE_STRING);
-            }
-        } else {
-            node.arguments.forEach((arg, index) => {
-                if (
-                    tsutils.isCallExpression(arg) &&
-                    tsutils.isIdentifier(arg.expression) &&
-                    (arg.expression.getText() === "takeUntil")
-                ) {
-                    const after = node.arguments.slice(index + 1);
-                    if (some(after)) {
-                        this.addFailureAtNode(arg.expression, Rule.FAILURE_STRING);
-                    }
-                }
-            });
+          }
         }
+      } else if (tsutils.isPropertyAccessExpression(parent)) {
+        name = parent.name;
+      } else {
+        break;
+      }
     }
+  }
+
+  private walkPipedOperators(
+    node: ts.CallExpression,
+    identifier: ts.Identifier | null = null
+  ): void {
+    const some = (args: {
+      some(callback: (arg: ts.Expression) => boolean): boolean;
+    }) =>
+      args.some(arg => {
+        if (
+          tsutils.isCallExpression(arg) &&
+          tsutils.isIdentifier(arg.expression) &&
+          this.allow.indexOf(arg.expression.getText()) !== -1
+        ) {
+          return false;
+        }
+        return true;
+      });
+
+    if (identifier) {
+      if (some(node.arguments.slice(0))) {
+        this.addFailureAtNode(identifier, Rule.FAILURE_STRING);
+      }
+    } else {
+      node.arguments.forEach((arg, index) => {
+        if (
+          tsutils.isCallExpression(arg) &&
+          tsutils.isIdentifier(arg.expression) &&
+          arg.expression.getText() === "takeUntil"
+        ) {
+          const after = node.arguments.slice(index + 1);
+          if (some(after)) {
+            this.addFailureAtNode(arg.expression, Rule.FAILURE_STRING);
+          }
+        }
+      });
+    }
+  }
 }

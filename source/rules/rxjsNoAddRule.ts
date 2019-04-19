@@ -9,89 +9,87 @@ import * as ts from "typescript";
 import * as peer from "../support/peer";
 
 export class Rule extends Lint.Rules.AbstractRule {
-
-    public static metadata: Lint.IRuleMetadata = {
-        deprecationMessage: (peer.v6 && !peer.compat) ? "Rule not needed for v6." : undefined,
-        description: "Disallows the importation of patched observables and operators.",
-        options: {
-            properties: {
-                allowObservables: {
-                    oneOf: [
-                        { type: "boolean" },
-                        { type: "array", items: { type: "string" } }
-                    ]
-                },
-                allowOperators: {
-                    oneOf: [
-                        { type: "boolean" },
-                        { type: "array", items: { type: "string" } }
-                    ]
-                }
-            },
-            type: "object"
+  public static metadata: Lint.IRuleMetadata = {
+    deprecationMessage:
+      peer.v6 && !peer.compat ? "Rule not needed for v6." : undefined,
+    description:
+      "Disallows the importation of patched observables and operators.",
+    options: {
+      properties: {
+        allowObservables: {
+          oneOf: [
+            { type: "boolean" },
+            { type: "array", items: { type: "string" } }
+          ]
         },
-        optionsDescription: Lint.Utils.dedent`
+        allowOperators: {
+          oneOf: [
+            { type: "boolean" },
+            { type: "array", items: { type: "string" } }
+          ]
+        }
+      },
+      type: "object"
+    },
+    optionsDescription: Lint.Utils.dedent`
             An optional object with optional \`allowObservables\` and \`allowOperators\` properties.
             The properties can be specifed as booleans (they default to \`false\`) or as arrays containing
             the names of the observables or operators that are allowed.`,
-        requiresTypeInfo: false,
-        ruleName: "rxjs-no-add",
-        type: "functionality",
-        typescriptOnly: false
-    };
+    requiresTypeInfo: false,
+    ruleName: "rxjs-no-add",
+    type: "functionality",
+    typescriptOnly: false
+  };
 
-    public static FAILURE_STRING = "RxJS add import is forbidden";
+  public static FAILURE_STRING = "RxJS add import is forbidden";
 
-    public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
-        return this.applyWithWalker(new Walker(sourceFile, this.getOptions()));
-    }
+  public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
+    return this.applyWithWalker(new Walker(sourceFile, this.getOptions()));
+  }
 }
 
 class Walker extends Lint.RuleWalker {
+  private allowAllObservables = false;
+  private allowAllOperators = false;
+  private allowedObservables: string[] = [];
+  private allowedOperators: string[] = [];
 
-    private allowAllObservables = false;
-    private allowAllOperators = false;
-    private allowedObservables: string[] = [];
-    private allowedOperators: string[] = [];
+  constructor(sourceFile: ts.SourceFile, options: Lint.IOptions) {
+    super(sourceFile, options);
 
-    constructor(sourceFile: ts.SourceFile, options: Lint.IOptions) {
-
-        super(sourceFile, options);
-
-        const [ruleOptions] = this.getOptions();
-        if (ruleOptions) {
-            if (ruleOptions.hasOwnProperty("allowObservables")) {
-                if (typeof ruleOptions.allowObservables.length === "number") {
-                    this.allowedObservables = ruleOptions.allowObservables;
-                } else {
-                    this.allowAllObservables = Boolean(ruleOptions.allowObservables);
-                }
-            }
-            if (ruleOptions.hasOwnProperty("allowOperators")) {
-                if (typeof ruleOptions.allowOperators.length === "number") {
-                    this.allowedOperators = ruleOptions.allowOperators;
-                } else {
-                    this.allowAllOperators = Boolean(ruleOptions.allowOperators);
-                }
-            }
+    const [ruleOptions] = this.getOptions();
+    if (ruleOptions) {
+      if (ruleOptions.hasOwnProperty("allowObservables")) {
+        if (typeof ruleOptions.allowObservables.length === "number") {
+          this.allowedObservables = ruleOptions.allowObservables;
+        } else {
+          this.allowAllObservables = Boolean(ruleOptions.allowObservables);
         }
-    }
-
-    public visitImportDeclaration(node: ts.ImportDeclaration): void {
-
-        const moduleSpecifier = node.moduleSpecifier.getText();
-        const match = moduleSpecifier.match(/^['"]rxjs\/add\/(\w+)\/(\w+)/);
-        if (match) {
-            if ((match[1] === "observable") && !this.allowAllObservables) {
-                if (this.allowedObservables.indexOf(match[2]) === -1) {
-                    this.addFailureAtNode(node.moduleSpecifier, Rule.FAILURE_STRING);
-                }
-            } else if ((match[1] === "operator") && !this.allowAllOperators) {
-                if (this.allowedOperators.indexOf(match[2]) === -1) {
-                    this.addFailureAtNode(node.moduleSpecifier, Rule.FAILURE_STRING);
-                }
-            }
+      }
+      if (ruleOptions.hasOwnProperty("allowOperators")) {
+        if (typeof ruleOptions.allowOperators.length === "number") {
+          this.allowedOperators = ruleOptions.allowOperators;
+        } else {
+          this.allowAllOperators = Boolean(ruleOptions.allowOperators);
         }
-        super.visitImportDeclaration(node);
+      }
     }
+  }
+
+  public visitImportDeclaration(node: ts.ImportDeclaration): void {
+    const moduleSpecifier = node.moduleSpecifier.getText();
+    const match = moduleSpecifier.match(/^['"]rxjs\/add\/(\w+)\/(\w+)/);
+    if (match) {
+      if (match[1] === "observable" && !this.allowAllObservables) {
+        if (this.allowedObservables.indexOf(match[2]) === -1) {
+          this.addFailureAtNode(node.moduleSpecifier, Rule.FAILURE_STRING);
+        }
+      } else if (match[1] === "operator" && !this.allowAllOperators) {
+        if (this.allowedOperators.indexOf(match[2]) === -1) {
+          this.addFailureAtNode(node.moduleSpecifier, Rule.FAILURE_STRING);
+        }
+      }
+    }
+    super.visitImportDeclaration(node);
+  }
 }

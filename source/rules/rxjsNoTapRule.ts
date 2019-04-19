@@ -10,8 +10,11 @@ import * as ts from "typescript";
 import { Rule as NoDoRule } from "./rxjsNoDoRule";
 
 export class Rule extends NoDoRule {
-
-    public static metadata: Lint.IRuleMetadata = Object.assign({}, NoDoRule.metadata, {
-        ruleName: "rxjs-no-tap"
-    });
+  public static metadata: Lint.IRuleMetadata = Object.assign(
+    {},
+    NoDoRule.metadata,
+    {
+      ruleName: "rxjs-no-tap"
+    }
+  );
 }

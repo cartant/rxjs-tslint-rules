@@ -10,52 +10,60 @@ import { tsquery } from "@phenomnomnominal/tsquery";
 import { couldBeType } from "../support/util";
 
 export class Rule extends Lint.Rules.TypedRule {
+  public static metadata: Lint.IRuleMetadata = {
+    description:
+      "Disallows the calling of `subscribe` within a `subscribe` callback.",
+    options: null,
+    optionsDescription: "Not configurable.",
+    requiresTypeInfo: true,
+    ruleName: "rxjs-no-nested-subscribe",
+    type: "style",
+    typescriptOnly: true
+  };
 
-    public static metadata: Lint.IRuleMetadata = {
-        description: "Disallows the calling of `subscribe` within a `subscribe` callback.",
-        options: null,
-        optionsDescription: "Not configurable.",
-        requiresTypeInfo: true,
-        ruleName: "rxjs-no-nested-subscribe",
-        type: "style",
-        typescriptOnly: true
-    };
+  public static FAILURE_STRING = "Nested subscribe calls are forbidden";
 
-    public static FAILURE_STRING = "Nested subscribe calls are forbidden";
+  public applyWithProgram(
+    sourceFile: ts.SourceFile,
+    program: ts.Program
+  ): Lint.RuleFailure[] {
+    const failures: Lint.RuleFailure[] = [];
+    const typeChecker = program.getTypeChecker();
 
-    public applyWithProgram(sourceFile: ts.SourceFile, program: ts.Program): Lint.RuleFailure[] {
-
-        const failures: Lint.RuleFailure[] = [];
-        const typeChecker = program.getTypeChecker();
-
-        const subscribeQuery = `CallExpression PropertyAccessExpression[name.name="subscribe"]`;
-        const propertyAccessExpressions = tsquery(sourceFile, subscribeQuery);
-        propertyAccessExpressions.forEach(node => {
-            const propertyAccessExpression = node as ts.PropertyAccessExpression;
-            const { parent: callExpression } = propertyAccessExpression;
-            if (tsutils.isCallExpression(callExpression)) {
-                const type = typeChecker.getTypeAtLocation(propertyAccessExpression.expression);
-                if (couldBeType(type, "Observable")) {
-                    callExpression.arguments.forEach(arg => {
-                        const propertyAccessExpressions = tsquery(arg, subscribeQuery);
-                        propertyAccessExpressions.forEach(node => {
-                            const propertyAccessExpression = node as ts.PropertyAccessExpression;
-                            const type = typeChecker.getTypeAtLocation(propertyAccessExpression.expression);
-                            if (couldBeType(type, "Observable")) {
-                                const { name } = propertyAccessExpression;
-                                failures.push(new Lint.RuleFailure(
-                                    sourceFile,
-                                    name.getStart(),
-                                    name.getStart() + name.getWidth(),
-                                    Rule.FAILURE_STRING,
-                                    this.ruleName
-                                ));
-                            }
-                        });
-                    });
-                }
-            }
-        });
-        return failures;
-    }
+    const subscribeQuery = `CallExpression PropertyAccessExpression[name.name="subscribe"]`;
+    const propertyAccessExpressions = tsquery(sourceFile, subscribeQuery);
+    propertyAccessExpressions.forEach(node => {
+      const propertyAccessExpression = node as ts.PropertyAccessExpression;
+      const { parent: callExpression } = propertyAccessExpression;
+      if (tsutils.isCallExpression(callExpression)) {
+        const type = typeChecker.getTypeAtLocation(
+          propertyAccessExpression.expression
+        );
+        if (couldBeType(type, "Observable")) {
+          callExpression.arguments.forEach(arg => {
+            const propertyAccessExpressions = tsquery(arg, subscribeQuery);
+            propertyAccessExpressions.forEach(node => {
+              const propertyAccessExpression = node as ts.PropertyAccessExpression;
+              const type = typeChecker.getTypeAtLocation(
+                propertyAccessExpression.expression
+              );
+              if (couldBeType(type, "Observable")) {
+                const { name } = propertyAccessExpression;
+                failures.push(
+                  new Lint.RuleFailure(
+                    sourceFile,
+                    name.getStart(),
+                    name.getStart() + name.getWidth(),
+                    Rule.FAILURE_STRING,
+                    this.ruleName
+                  )
+                );
+              }
+            });
+          });
+        }
+      }
+    });
+    return failures;
+  }
 }

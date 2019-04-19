@@ -11,34 +11,35 @@ import * as ts from "typescript";
 import { UsedWalker } from "../support/used-walker";
 
 export class Rule extends Lint.Rules.TypedRule {
+  public static metadata: Lint.IRuleMetadata = {
+    description: "Disallows the calling of Observable.create.",
+    options: null,
+    optionsDescription: "Not configurable.",
+    requiresTypeInfo: true,
+    ruleName: "rxjs-no-create",
+    type: "functionality",
+    typescriptOnly: true
+  };
 
-    public static metadata: Lint.IRuleMetadata = {
-        description: "Disallows the calling of Observable.create.",
-        options: null,
-        optionsDescription: "Not configurable.",
-        requiresTypeInfo: true,
-        ruleName: "rxjs-no-create",
-        type: "functionality",
-        typescriptOnly: true
-    };
+  public static FAILURE_STRING =
+    "Observable.create is forbidden; use new Observable.";
 
-    public static FAILURE_STRING = "Observable.create is forbidden; use new Observable.";
-
-    public applyWithProgram(sourceFile: ts.SourceFile, program: ts.Program): Lint.RuleFailure[] {
-
-        return this.applyWithWalker(new Walker(sourceFile, this.getOptions(), program));
-    }
+  public applyWithProgram(
+    sourceFile: ts.SourceFile,
+    program: ts.Program
+  ): Lint.RuleFailure[] {
+    return this.applyWithWalker(
+      new Walker(sourceFile, this.getOptions(), program)
+    );
+  }
 }
 
 class Walker extends UsedWalker {
-
-    protected onSourceFileEnd(): void {
-
-        if (this.usedStaticMethods["create"]) {
-            this.usedStaticMethods["create"].forEach((node) => this.addFailureAtNode(
-                node,
-                Rule.FAILURE_STRING
-            ));
-        }
+  protected onSourceFileEnd(): void {
+    if (this.usedStaticMethods["create"]) {
+      this.usedStaticMethods["create"].forEach(node =>
+        this.addFailureAtNode(node, Rule.FAILURE_STRING)
+      );
     }
+  }
 }

@@ -11,101 +11,104 @@ import * as tsutils from "tsutils";
 import { UsedWalker } from "../support/used-walker";
 
 export class Rule extends Lint.Rules.TypedRule {
-
-    public static metadata: Lint.IRuleMetadata = {
-        description: "Disallows the use of banned observables.",
-        options: {
-            type: "object"
-        },
-        optionsDescription: Lint.Utils.dedent`
+  public static metadata: Lint.IRuleMetadata = {
+    description: "Disallows the use of banned observables.",
+    options: {
+      type: "object"
+    },
+    optionsDescription: Lint.Utils.dedent`
             An object containing keys that are names of observable factory functions
             and values that are either booleans or strings containing the explanation for the ban.`,
-        requiresTypeInfo: true,
-        ruleName: "rxjs-ban-observables",
-        type: "functionality",
-        typescriptOnly: true
-    };
+    requiresTypeInfo: true,
+    ruleName: "rxjs-ban-observables",
+    type: "functionality",
+    typescriptOnly: true
+  };
 
-    public static FAILURE_STRING = "RxJS observable is banned";
+  public static FAILURE_STRING = "RxJS observable is banned";
 
-    public applyWithProgram(sourceFile: ts.SourceFile, program: ts.Program): Lint.RuleFailure[] {
-
-        return this.applyWithWalker(new Walker(sourceFile, this.getOptions(), program));
-    }
+  public applyWithProgram(
+    sourceFile: ts.SourceFile,
+    program: ts.Program
+  ): Lint.RuleFailure[] {
+    return this.applyWithWalker(
+      new Walker(sourceFile, this.getOptions(), program)
+    );
+  }
 }
 
 class Walker extends UsedWalker {
+  private _bans: { explanation: string; regExp: RegExp }[] = [];
 
-    private _bans: { explanation: string, regExp: RegExp }[] = [];
+  constructor(
+    sourceFile: ts.SourceFile,
+    rawOptions: Lint.IOptions,
+    program: ts.Program
+  ) {
+    super(sourceFile, rawOptions, program);
 
-    constructor(sourceFile: ts.SourceFile, rawOptions: Lint.IOptions, program: ts.Program) {
-
-        super(sourceFile, rawOptions, program);
-
-        const [options] = this.getOptions();
-        if (options) {
-            Object.entries(options).forEach(([key, value]) => {
-                if (value !== false) {
-                    this._bans.push({
-                        explanation: (typeof value === "string") ? value : "",
-                        regExp: new RegExp(`^${key}$`)
-                    });
-                }
-            });
+    const [options] = this.getOptions();
+    if (options) {
+      Object.entries(options).forEach(([key, value]) => {
+        if (value !== false) {
+          this._bans.push({
+            explanation: typeof value === "string" ? value : "",
+            regExp: new RegExp(`^${key}$`)
+          });
         }
+      });
     }
+  }
 
-    public visitImportDeclaration(node: ts.ImportDeclaration): void {
+  public visitImportDeclaration(node: ts.ImportDeclaration): void {
+    const moduleSpecifier = node.moduleSpecifier.getText();
 
-        const moduleSpecifier = node.moduleSpecifier.getText();
-
-        if (/^['"]rxjs['"]/.test(moduleSpecifier)) {
-            if (tsutils.isNamedImports(node.importClause.namedBindings)) {
-                node.importClause.namedBindings.elements.forEach(binding => {
-                    this.validateNode(binding.propertyName || binding.name);
-                });
-            }
-        } else {
-            const match = moduleSpecifier.match(/^['"]rxjs(?:\/add)?\/observable\/(\w+)['"]/);
-            if (match) {
-                const failure = this.getFailure(match[1]);
-                if (failure) {
-                    this.addFailureAtNode(node.moduleSpecifier, failure);
-                }
-            }
-        }
-
-        super.visitImportDeclaration(node);
-    }
-
-    protected onSourceFileEnd(): void {
-
-        Object.entries(this.usedObservables).forEach(([key, value]) => {
-            const failure = this.getFailure(key);
-            if (failure) {
-                value.forEach(node => this.addFailureAtNode(node, failure));
-            }
+    if (/^['"]rxjs['"]/.test(moduleSpecifier)) {
+      if (tsutils.isNamedImports(node.importClause.namedBindings)) {
+        node.importClause.namedBindings.elements.forEach(binding => {
+          this.validateNode(binding.propertyName || binding.name);
         });
-    }
-
-    private getFailure(name: string): string | undefined {
-
-        const { _bans } = this;
-        for (let b = 0, length = _bans.length; b < length; ++b) {
-            const ban = _bans[b];
-            if (ban.regExp.test(name)) {
-                const explanation = ban.explanation ? `: ${ban.explanation}` : "";
-                return `${Rule.FAILURE_STRING}: ${name}${explanation}`;
-            }
-        }
-        return undefined;
-    }
-
-    private validateNode(name: ts.Node): void {
-
-        const failure = this.getFailure(name.getText());
+      }
+    } else {
+      const match = moduleSpecifier.match(
+        /^['"]rxjs(?:\/add)?\/observable\/(\w+)['"]/
+      );
+      if (match) {
+        const failure = this.getFailure(match[1]);
         if (failure) {
-            this.addFailureAtNode(name, failure);
+          this.addFailureAtNode(node.moduleSpecifier, failure);
         }
+      }
     }
+
+    super.visitImportDeclaration(node);
+  }
+
+  protected onSourceFileEnd(): void {
+    Object.entries(this.usedObservables).forEach(([key, value]) => {
+      const failure = this.getFailure(key);
+      if (failure) {
+        value.forEach(node => this.addFailureAtNode(node, failure));
+      }
+    });
+  }
+
+  private getFailure(name: string): string | undefined {
+    const { _bans } = this;
+    for (let b = 0, length = _bans.length; b < length; ++b) {
+      const ban = _bans[b];
+      if (ban.regExp.test(name)) {
+        const explanation = ban.explanation ? `: ${ban.explanation}` : "";
+        return `${Rule.FAILURE_STRING}: ${name}${explanation}`;
+      }
+    }
+    return undefined;
+  }
+
+  private validateNode(name: ts.Node): void {
+    const failure = this.getFailure(name.getText());
+    if (failure) {
+      this.addFailureAtNode(name, failure);
+    }
+  }
 }

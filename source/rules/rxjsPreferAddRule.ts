@@ -10,9 +10,13 @@ import * as ts from "typescript";
 import { Rule as NoWholesaleRule } from "./rxjsNoWholesaleRule";
 
 export class Rule extends NoWholesaleRule {
-
-    public static metadata: Lint.IRuleMetadata = Object.assign({}, NoWholesaleRule.metadata, {
-        deprecationMessage: "rxjs-prefer-add has been renamed to rxjs-no-wholesale.",
-        ruleName: "rxjs-prefer-add"
-    });
+  public static metadata: Lint.IRuleMetadata = Object.assign(
+    {},
+    NoWholesaleRule.metadata,
+    {
+      deprecationMessage:
+        "rxjs-prefer-add has been renamed to rxjs-no-wholesale.",
+      ruleName: "rxjs-prefer-add"
+    }
+  );
 }

@@ -9,51 +9,49 @@ import * as tsutils from "tsutils";
 import { knownOperators, knownPipeableOperators } from "./knowns";
 
 export class ScopeWalker extends Lint.ProgramAwareRuleWalker {
+  protected callbackMap: Map<ts.Node, string> = new Map<ts.Node, string>();
+  protected callbackStack: (ts.ArrowFunction | ts.FunctionExpression)[] = [];
 
-    protected callbackMap: Map<ts.Node, string> = new Map<ts.Node, string>();
-    protected callbackStack: (ts.ArrowFunction | ts.FunctionExpression)[] = [];
+  protected visitArrowFunction(node: ts.ArrowFunction): void {
+    if (this.callbackMap.has(node)) {
+      this.callbackStack.push(node);
+      super.visitArrowFunction(node);
+      this.callbackStack.pop();
+    } else {
+      super.visitArrowFunction(node);
+    }
+  }
 
-    protected visitArrowFunction(node: ts.ArrowFunction): void {
+  protected visitCallExpression(node: ts.CallExpression): void {
+    const { arguments: args, expression } = node;
+    let name: string;
 
-        if (this.callbackMap.has(node)) {
-            this.callbackStack.push(node);
-            super.visitArrowFunction(node);
-            this.callbackStack.pop();
-        } else {
-            super.visitArrowFunction(node);
-        }
+    if (tsutils.isIdentifier(expression)) {
+      name = expression.getText();
+    } else if (tsutils.isPropertyAccessExpression(expression)) {
+      const { name: propertyName } = expression;
+      name = propertyName.getText();
     }
 
-    protected visitCallExpression(node: ts.CallExpression): void {
-
-        const { arguments: args, expression } = node;
-        let name: string;
-
-        if (tsutils.isIdentifier(expression)) {
-            name = expression.getText();
-        } else if (tsutils.isPropertyAccessExpression(expression)) {
-            const { name: propertyName } = expression;
-            name = propertyName.getText();
-        }
-
-        if (name && (knownOperators[name] || knownPipeableOperators[name])) {
-            const callbacks = args.filter(arg => tsutils.isArrowFunction(arg) || tsutils.isFunctionExpression(arg));
-            callbacks.forEach(callback => this.callbackMap.set(callback, name));
-            super.visitCallExpression(node);
-            callbacks.forEach(callback => this.callbackMap.delete(callback));
-        } else {
-            super.visitCallExpression(node);
-        }
+    if (name && (knownOperators[name] || knownPipeableOperators[name])) {
+      const callbacks = args.filter(
+        arg => tsutils.isArrowFunction(arg) || tsutils.isFunctionExpression(arg)
+      );
+      callbacks.forEach(callback => this.callbackMap.set(callback, name));
+      super.visitCallExpression(node);
+      callbacks.forEach(callback => this.callbackMap.delete(callback));
+    } else {
+      super.visitCallExpression(node);
     }
+  }
 
-    protected visitFunctionExpression(node: ts.FunctionExpression): void {
-
-        if (this.callbackMap.has(node)) {
-            this.callbackStack.push(node);
-            super.visitFunctionExpression(node);
-            this.callbackStack.pop();
-        } else {
-            super.visitFunctionExpression(node);
-        }
+  protected visitFunctionExpression(node: ts.FunctionExpression): void {
+    if (this.callbackMap.has(node)) {
+      this.callbackStack.push(node);
+      super.visitFunctionExpression(node);
+      this.callbackStack.pop();
+    } else {
+      super.visitFunctionExpression(node);
     }
+  }
 }

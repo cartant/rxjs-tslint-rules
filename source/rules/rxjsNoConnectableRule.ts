@@ -9,46 +9,51 @@ import { tsquery } from "@phenomnomnominal/tsquery";
 import { couldBeFunction } from "../support/util";
 
 export class Rule extends Lint.Rules.TypedRule {
+  public static metadata: Lint.IRuleMetadata = {
+    description: "Disallows operators that return connectable observables.",
+    options: null,
+    optionsDescription: "Not configurable.",
+    requiresTypeInfo: false,
+    ruleName: "rxjs-no-connectable",
+    type: "functionality",
+    typescriptOnly: false
+  };
 
-    public static metadata: Lint.IRuleMetadata = {
-        description: "Disallows operators that return connectable observables.",
-        options: null,
-        optionsDescription: "Not configurable.",
-        requiresTypeInfo: false,
-        ruleName: "rxjs-no-connectable",
-        type: "functionality",
-        typescriptOnly: false
-    };
+  public static FAILURE_STRING = "Connectable observables are forbidden";
 
-    public static FAILURE_STRING = "Connectable observables are forbidden";
+  public applyWithProgram(
+    sourceFile: ts.SourceFile,
+    program: ts.Program
+  ): Lint.RuleFailure[] {
+    const failures: Lint.RuleFailure[] = [];
+    const typeChecker = program.getTypeChecker();
 
-    public applyWithProgram(sourceFile: ts.SourceFile, program: ts.Program): Lint.RuleFailure[] {
-
-        const failures: Lint.RuleFailure[] = [];
-        const typeChecker = program.getTypeChecker();
-
-        const callIdentifiers = tsquery(
-            sourceFile,
-            `CallExpression Identifier[name=/^(multicast|publish|publishBehavior|publishLast|publishReplay)$/]`
+    const callIdentifiers = tsquery(
+      sourceFile,
+      `CallExpression Identifier[name=/^(multicast|publish|publishBehavior|publishLast|publishReplay)$/]`
+    );
+    callIdentifiers.forEach(identifier => {
+      const callExpression = identifier.parent as ts.CallExpression;
+      let fail = false;
+      if (identifier.getText() === "multicast") {
+        fail = callExpression.arguments.length === 1;
+      } else {
+        fail = !callExpression.arguments.some(arg =>
+          couldBeFunction(typeChecker.getTypeAtLocation(arg))
         );
-        callIdentifiers.forEach(identifier => {
-            const callExpression = identifier.parent as ts.CallExpression;
-            let fail = false;
-            if (identifier.getText() === "multicast") {
-                fail = callExpression.arguments.length === 1;
-            } else {
-                fail = !callExpression.arguments.some(arg => couldBeFunction(typeChecker.getTypeAtLocation(arg)));
-            }
-            if (fail) {
-                failures.push(new Lint.RuleFailure(
-                    sourceFile,
-                    identifier.getStart(),
-                    identifier.getStart() + identifier.getWidth(),
-                    Rule.FAILURE_STRING,
-                    this.ruleName
-                ));
-            }
-        });
-        return failures;
-    }
+      }
+      if (fail) {
+        failures.push(
+          new Lint.RuleFailure(
+            sourceFile,
+            identifier.getStart(),
+            identifier.getStart() + identifier.getWidth(),
+            Rule.FAILURE_STRING,
+            this.ruleName
+          )
+        );
+      }
+    });
+    return failures;
+  }
 }

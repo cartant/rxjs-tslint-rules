@@ -9,50 +9,46 @@ import * as tsutils from "tsutils";
 import { knownObservables, knownOperators } from "./knowns";
 
 export class AddedWalker extends Lint.ProgramAwareRuleWalker {
+  public addedObservables: { [key: string]: ts.Node[] } = {};
+  public addedOperators: { [key: string]: ts.Node[] } = {};
+  public sourceFilePath: string;
 
-    public addedObservables: { [key: string]: ts.Node[] } = {};
-    public addedOperators: { [key: string]: ts.Node[] } = {};
-    public sourceFilePath: string;
+  static add(
+    map: { [key: string]: ts.Node[] },
+    key: string,
+    node: ts.Node
+  ): void {
+    let nodes = map[key];
+    if (nodes === undefined) {
+      map[key] = nodes = [];
+    }
+    nodes.push(node);
+  }
 
-    static add(
-        map: { [key: string]: ts.Node[] },
-        key: string,
-        node: ts.Node
-    ): void {
+  protected onSourceFileEnd(): void {}
 
-        let nodes = map[key];
-        if (nodes === undefined) {
-            map[key] = nodes = [];
-        }
-        nodes.push(node);
+  protected visitImportDeclaration(node: ts.ImportDeclaration): void {
+    const moduleSpecifier = node.moduleSpecifier.getText();
+
+    let match = moduleSpecifier.match(/["']rxjs\/add\/observable\/(\w+)["']/);
+    if (match && knownObservables[match[1]]) {
+      AddedWalker.add(this.addedObservables, match[1], node);
+    } else {
+      match = moduleSpecifier.match(/["']rxjs\/add\/operator\/(\w+)["']/);
+      if (match && knownOperators[match[1]]) {
+        AddedWalker.add(this.addedOperators, match[1], node);
+      }
     }
 
-    protected onSourceFileEnd(): void {}
+    super.visitImportDeclaration(node);
+  }
 
-    protected visitImportDeclaration(node: ts.ImportDeclaration): void {
+  protected visitNode(node: ts.Node): void {
+    super.visitNode(node);
 
-        const moduleSpecifier = node.moduleSpecifier.getText();
-
-        let match = moduleSpecifier.match(/["']rxjs\/add\/observable\/(\w+)["']/);
-        if (match && knownObservables[match[1]]) {
-            AddedWalker.add(this.addedObservables, match[1], node);
-        } else {
-            match = moduleSpecifier.match(/["']rxjs\/add\/operator\/(\w+)["']/);
-            if (match && knownOperators[match[1]]) {
-                AddedWalker.add(this.addedOperators, match[1], node);
-            }
-        }
-
-        super.visitImportDeclaration(node);
+    if (tsutils.isSourceFile(node)) {
+      this.sourceFilePath = node["path"];
+      this.onSourceFileEnd();
     }
-
-    protected visitNode(node: ts.Node): void {
-
-        super.visitNode(node);
-
-        if (tsutils.isSourceFile(node)) {
-            this.sourceFilePath = node["path"];
-            this.onSourceFileEnd();
-        }
-    }
+  }
 }

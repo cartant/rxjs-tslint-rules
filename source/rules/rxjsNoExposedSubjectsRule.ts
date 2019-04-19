@@ -15,10 +15,10 @@ export class Rule extends Lint.Rules.TypedRule {
   public static metadata: Lint.IRuleMetadata = {
     description: "Disallows exposed subjects.",
     options: {
-        properties: {
-            allowProtected: { type: "boolean" }
-        },
-        type: "object"
+      properties: {
+        allowProtected: { type: "boolean" }
+      },
+      type: "object"
     },
     optionsDescription: Lint.Utils.dedent`
         An optional object with optional \`allowProtected\` property - which defaults to \`false\`.`,
@@ -39,7 +39,6 @@ export class Rule extends Lint.Rules.TypedRule {
 }
 
 class RxjsNoExposedSubjects extends Lint.ProgramAwareRuleWalker {
-
   private allowProtected = false;
 
   constructor(
@@ -89,8 +88,13 @@ class RxjsNoExposedSubjects extends Lint.ProgramAwareRuleWalker {
     if (name) {
       const text = name.getText();
       const { allowProtected } = this;
-      const protectedModifier = allowProtected && tsutils.getModifier(node, ts.SyntaxKind.ProtectedKeyword);
-      const privateModifier = tsutils.getModifier(node, ts.SyntaxKind.PrivateKeyword);
+      const protectedModifier =
+        allowProtected &&
+        tsutils.getModifier(node, ts.SyntaxKind.ProtectedKeyword);
+      const privateModifier = tsutils.getModifier(
+        node,
+        ts.SyntaxKind.PrivateKeyword
+      );
       const type = this.getTypeChecker().getTypeAtLocation(typeNode || node);
 
       if (
@@ -98,7 +102,12 @@ class RxjsNoExposedSubjects extends Lint.ProgramAwareRuleWalker {
         couldBeType(type, "Subject") &&
         !couldBeType(type, defaultAllowedTypesRegExp)
       ) {
-        this.addFailureAtNode(name, `Subject '${text}' must be private${allowProtected ? " or protected" : ""}.`);
+        this.addFailureAtNode(
+          name,
+          `Subject '${text}' must be private${
+            allowProtected ? " or protected" : ""
+          }.`
+        );
       }
     }
   }
