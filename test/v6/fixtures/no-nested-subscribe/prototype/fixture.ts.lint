@@ -1,0 +1,6 @@
+import { Observable } from "rxjs";
+
+const observableSubscribe = Observable.prototype.subscribe;
+expect(Observable.prototype.subscribe).to.equal(observableSubscribe);
+
+[no-nested-subscribe]: Nested subscribe calls are forbidden
