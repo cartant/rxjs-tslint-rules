@@ -1,3 +1,10 @@
+<a name="4.22.1"></a>
+## [4.22.1](https://github.com/cartant/rxjs-tslint-rules/compare/v4.22.0...v4.22.1) (2019-04-20)
+
+## Fixes
+
+* Fix a false positive from the `rxjs-no-nested-subscribe` rule. ([a57f938](https://github.com/cartant/rxjs-tslint-rules/commit/a57f938))
+
 <a name="4.22.0"></a>
 ## [4.22.0](https://github.com/cartant/rxjs-tslint-rules/compare/v4.21.0...v4.22.0) (2019-04-19)
 
