@@ -7,7 +7,7 @@ import * as Lint from "tslint";
 import * as ts from "typescript";
 import { tsquery } from "@phenomnomnominal/tsquery";
 
-export class Rule extends Lint.Rules.TypedRule {
+export class Rule extends Lint.Rules.AbstractRule {
   public static metadata: Lint.IRuleMetadata = {
     description: "Disallows explicit generic type arguments.",
     options: null,
@@ -15,24 +15,38 @@ export class Rule extends Lint.Rules.TypedRule {
     requiresTypeInfo: false,
     ruleName: "rxjs-no-explicit-generics",
     type: "functionality",
-    typescriptOnly: false
+    typescriptOnly: true
   };
 
   public static FAILURE_STRING =
     "Explicit generic type arguments are forbidden";
 
-  public applyWithProgram(
-    sourceFile: ts.SourceFile,
-    program: ts.Program
-  ): Lint.RuleFailure[] {
-    const failures: Lint.RuleFailure[] = [];
-    const callIdentifiers = tsquery(
-      sourceFile,
-      `CallExpression[expression.name.text="pipe"] > CallExpression[typeArguments.length>0] > Identifier`
+  public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
+    const identifiers: ts.Identifier[] = [];
+
+    identifiers.push(
+      ...(tsquery(
+        sourceFile,
+        `CallExpression[expression.name.text="pipe"] > CallExpression[typeArguments.length>0] > Identifier`
+      ) as ts.Identifier[])
     );
 
-    callIdentifiers.forEach(identifier => {
-      failures.push(
+    identifiers.push(
+      ...(tsquery(
+        sourceFile,
+        `CallExpression[typeArguments.length>0] > Identifier[name=/^(from|of)$/]`
+      ) as ts.Identifier[])
+    );
+
+    identifiers.push(
+      ...(tsquery(
+        sourceFile,
+        `NewExpression[typeArguments.length > 0] > Identifier[name="BehaviorSubject"]`
+      ) as ts.Identifier[])
+    );
+
+    return identifiers.map(
+      identifier =>
         new Lint.RuleFailure(
           sourceFile,
           identifier.getStart(),
@@ -40,8 +54,6 @@ export class Rule extends Lint.Rules.TypedRule {
           Rule.FAILURE_STRING,
           this.ruleName
         )
-      );
-    });
-    return failures;
+    );
   }
 }
