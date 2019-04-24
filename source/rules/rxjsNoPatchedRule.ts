@@ -5,7 +5,6 @@
 /*tslint:disable:no-use-before-declare*/
 
 import * as Lint from "tslint";
-import * as path from "path";
 import * as ts from "typescript";
 import * as peer from "../support/peer";
 

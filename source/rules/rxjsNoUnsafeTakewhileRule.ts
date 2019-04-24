@@ -46,9 +46,7 @@ class Walker extends ScopeWalker {
   }
 
   private isUnsafe(node: ts.Node): boolean {
-    const { callbackMap, callbackStack } = this;
-    const leafCallback = callbackStack[callbackStack.length - 1];
-    const leafOperator = callbackMap.get(leafCallback);
+    const { callbackStack } = this;
     const rootCallback = callbackStack[0];
 
     const typeChecker = this.getTypeChecker();

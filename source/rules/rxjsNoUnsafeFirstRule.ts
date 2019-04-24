@@ -7,8 +7,6 @@
 import * as Lint from "tslint";
 import * as ts from "typescript";
 import * as tsutils from "tsutils";
-import * as decamelize from "decamelize";
-
 import { couldBeType, isReferenceType } from "../support/util";
 
 export class Rule extends Lint.Rules.TypedRule {
@@ -53,19 +51,6 @@ export class Walker extends Lint.ProgramAwareRuleWalker {
 
   private observableRegExp: RegExp;
 
-  public static createRegExp(value: any): RegExp | null {
-    if (!value || !value.length) {
-      return null;
-    }
-    const flags = "i";
-    if (typeof value === "string") {
-      return new RegExp(value, flags);
-    }
-    const words = value as string[];
-    const joined = words.map(word => `(\\b|_)${word}(\\b|_)`).join("|");
-    return new RegExp(`(${joined})`, flags);
-  }
-
   constructor(
     sourceFile: ts.SourceFile,
     rawOptions: Lint.IOptions,
@@ -100,7 +85,6 @@ export class Walker extends Lint.ProgramAwareRuleWalker {
         this.observableRegExp.test(observableIdentifier.getText())
       ) {
         const propertyName = propertyAccessExpression.name.getText();
-        const identifierText = observableIdentifier.getText();
         const typeChecker = this.getTypeChecker();
         const type = typeChecker.getTypeAtLocation(observableExpression);
 

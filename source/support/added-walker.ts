@@ -9,10 +9,6 @@ import * as tsutils from "tsutils";
 import { knownObservables, knownOperators } from "./knowns";
 
 export class AddedWalker extends Lint.ProgramAwareRuleWalker {
-  public addedObservables: { [key: string]: ts.Node[] } = {};
-  public addedOperators: { [key: string]: ts.Node[] } = {};
-  public sourceFilePath: string;
-
   static add(
     map: { [key: string]: ts.Node[] },
     key: string,
@@ -25,6 +21,9 @@ export class AddedWalker extends Lint.ProgramAwareRuleWalker {
     nodes.push(node);
   }
 
+  public addedObservables: { [key: string]: ts.Node[] } = {};
+  public addedOperators: { [key: string]: ts.Node[] } = {};
+  public sourceFilePath: string;
   protected onSourceFileEnd(): void {}
 
   protected visitImportDeclaration(node: ts.ImportDeclaration): void {

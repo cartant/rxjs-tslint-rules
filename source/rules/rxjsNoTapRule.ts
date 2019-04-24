@@ -5,8 +5,6 @@
 /*tslint:disable:no-use-before-declare*/
 
 import * as Lint from "tslint";
-import * as ts from "typescript";
-
 import { Rule as NoDoRule } from "./rxjsNoDoRule";
 
 export class Rule extends NoDoRule {

@@ -7,8 +7,7 @@
 import * as Lint from "tslint";
 import * as ts from "typescript";
 import * as tsutils from "tsutils";
-
-import { couldBeType, isAny, isReferenceType } from "../support/util";
+import { couldBeType, isAny } from "../support/util";
 
 export class Rule extends Lint.Rules.TypedRule {
   public static metadata: Lint.IRuleMetadata = {

@@ -5,7 +5,6 @@
 
 import * as Lint from "tslint";
 import * as ts from "typescript";
-import * as tsutils from "tsutils";
 import { tsquery } from "@phenomnomnominal/tsquery";
 import { couldBeType } from "../support/util";
 

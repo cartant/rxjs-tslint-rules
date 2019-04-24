@@ -76,10 +76,6 @@ export class Walker extends Lint.ProgramAwareRuleWalker {
   ];
   public static DEFAULT_OBSERVABLE = "action(s|\\$)?";
 
-  private allowRegExp: RegExp | null;
-  private disallowRegExp: RegExp | null;
-  private observableRegExp: RegExp;
-
   public static createRegExp(value: any): RegExp | null {
     if (!value || !value.length) {
       return null;
@@ -92,6 +88,10 @@ export class Walker extends Lint.ProgramAwareRuleWalker {
     const joined = words.map(word => `(\\b|_)${word}(\\b|_)`).join("|");
     return new RegExp(`(${joined})`, flags);
   }
+
+  private allowRegExp: RegExp | null;
+  private disallowRegExp: RegExp | null;
+  private observableRegExp: RegExp;
 
   constructor(
     sourceFile: ts.SourceFile,
