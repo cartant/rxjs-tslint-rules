@@ -1,3 +1,10 @@
+<a name="4.23.0"></a>
+## [4.23.0](https://github.com/cartant/rxjs-tslint-rules/compare/v4.22.1...v4.23.0) (2019-04-24)
+
+## Features
+
+* Add checking of `BehaviorSubject`, `from` and `of` with the `rxjs-no-explicit-generics` rule. ([0a8e162](https://github.com/cartant/rxjs-tslint-rules/commit/0a8e162))
+
 <a name="4.22.1"></a>
 ## [4.22.1](https://github.com/cartant/rxjs-tslint-rules/compare/v4.22.0...v4.22.1) (2019-04-20)
 
