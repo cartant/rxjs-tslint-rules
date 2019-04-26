@@ -19,9 +19,9 @@
     js-tokens "^4.0.0"
 
 "@babel/runtime-corejs2@^7.2.0":
-  version "7.4.3"
-  resolved "https://registry.yarnpkg.com/@babel/runtime-corejs2/-/runtime-corejs2-7.4.3.tgz#40271fc260e570fb356da984e42e5990bd275860"
-  integrity sha512-anTLTF7IK8Hd5f73zpPzt875I27UaaTWARJlfMGgnmQhvEe1uNHQRKBUbXL0Gc0VEYiVzsHsTPso5XdK8NGvFg==
+  version "7.4.4"
+  resolved "https://registry.yarnpkg.com/@babel/runtime-corejs2/-/runtime-corejs2-7.4.4.tgz#4d4519a4c85e9d98fdff59f5371758a34ae07923"
+  integrity sha512-hE7oVwVsRws84u5/nkaWWdN2J4SXEGuXKjrAsP0E4nkYImjSbpdHfGTS2nvFc82aDGIuG6OzhAQMpIzTHuZeKA==
   dependencies:
     core-js "^2.6.5"
     regenerator-runtime "^0.13.2"
@@ -68,9 +68,9 @@
   integrity sha512-1axi39YdtBI7z957vdqXI4Ac25e7YihYQtJa+Clnxg1zTJEaIRbndt71O3sP4GAMgiAm0pY26/b9BrY4MR/PMw==
 
 "@types/node@*", "@types/node@^11.0.0":
-  version "11.13.7"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-11.13.7.tgz#85dbb71c510442d00c0631f99dae957ce44fd104"
-  integrity sha512-suFHr6hcA9mp8vFrZTgrmqW2ZU3mbWsryQtQlY/QvwTISCw7nw/j+bCQPPohqmskhmqa5wLNuMHTTsc+xf1MQg==
+  version "11.13.8"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-11.13.8.tgz#e5d71173c95533be9842b2c798978f095f912aab"
+  integrity sha512-szA3x/3miL90ZJxUCzx9haNbK5/zmPieGraZEe4WI+3srN0eGLiT22NXeMHmyhNEopn+IrxqMc7wdVwvPl8meg==
 
 "@types/resolve@^0.0.8":
   version "0.0.8"
@@ -1769,9 +1769,9 @@ resolve-url@^0.2.1:
   integrity sha1-LGN/53yJOv0qZj/iGqkIAGjiBSo=
 
 resolve@^1.10.0, resolve@^1.3.2, resolve@^1.4.0:
-  version "1.10.0"
-  resolved "https://registry.yarnpkg.com/resolve/-/resolve-1.10.0.tgz#3bdaaeaf45cc07f375656dfd2e54ed0810b101ba"
-  integrity sha512-3sUr9aq5OfSg2S9pNtPA9hL1FVEAjvfOC4leW0SNf/mpnaakz2a9femSd6LqAww2RaFctwyf1lCqnTHuF1rxDg==
+  version "1.10.1"
+  resolved "https://registry.yarnpkg.com/resolve/-/resolve-1.10.1.tgz#664842ac960795bbe758221cdccda61fb64b5f18"
+  integrity sha512-KuIe4mf++td/eFb6wkaPbMDnP6kObCaEtIDuHOUED6MNUo4K670KZUHuuvYPZDxNF0WVLw49n06M2m2dXphEzA==
   dependencies:
     path-parse "^1.0.6"
 
@@ -2126,9 +2126,9 @@ tslib@^1.8.0, tslib@^1.8.1, tslib@^1.9.0:
   integrity sha512-4krF8scpejhaOgqzBEcGM7yDIEfi0/8+8zDRZhNZZ2kjmHJ4hv3zCbQWxoJGz1iw5U0Jl0nma13xzHXcncMavQ==
 
 tslint-etc@^1.5.1:
-  version "1.5.1"
-  resolved "https://registry.yarnpkg.com/tslint-etc/-/tslint-etc-1.5.1.tgz#6ce68f0a7894703e5bc4351baa5ac2065974a884"
-  integrity sha512-XkVRP4dUZ7a5/8grP3BHFCan8f8ZWHoSSNXLC9Hw9vflHOwEHNuW2ltm6EqHKI7s9b6QHE4U5Jk19ntWmqIE0w==
+  version "1.5.2"
+  resolved "https://registry.yarnpkg.com/tslint-etc/-/tslint-etc-1.5.2.tgz#02b15c3633bf9a558e7ed6d1afd07c75f034d9de"
+  integrity sha512-GhroqSFTpA0+FUQf951cS4ld8nkD83JuNR8m3c4hIGkF2Jo1mJNADg/6iNK6MggsVCJxGNK5fVVNP3dzO8tShg==
   dependencies:
     "@phenomnomnominal/tsquery" "^3.0.0"
     tslib "^1.8.0"
