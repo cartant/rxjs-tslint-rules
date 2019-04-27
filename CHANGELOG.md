@@ -1,3 +1,10 @@
+<a name="4.23.1"></a>
+## [4.23.1](https://github.com/cartant/rxjs-tslint-rules/compare/v4.23.0...v4.23.1) (2019-04-27)
+
+## Fixes
+
+* Consider use of the `caught` argument within `catchError` to be safe. ([86211bb](https://github.com/cartant/rxjs-tslint-rules/commit/86211bb))
+
 <a name="4.23.0"></a>
 ## [4.23.0](https://github.com/cartant/rxjs-tslint-rules/compare/v4.22.1...v4.23.0) (2019-04-24)
 
