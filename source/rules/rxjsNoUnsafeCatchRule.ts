@@ -117,7 +117,9 @@ export class Walker extends Lint.ProgramAwareRuleWalker {
         if (name) {
           switch (name.getText()) {
             case "catch":
-              this.addFailureAtNode(name, Rule.FAILURE_STRING);
+              if (isUnsafe(parent.arguments)) {
+                this.addFailureAtNode(name, Rule.FAILURE_STRING);
+              }
               break;
             case "pipe":
               this.walkPipedOperators(parent);
@@ -141,8 +143,9 @@ export class Walker extends Lint.ProgramAwareRuleWalker {
   private walkPipedOperators(node: ts.CallExpression): void {
     node.arguments.forEach(arg => {
       if (tsutils.isCallExpression(arg)) {
-        const { expression } = arg;
+        const { arguments: args, expression } = arg;
         if (
+          isUnsafe(args) &&
           tsutils.isIdentifier(expression) &&
           expression.getText() === "catchError"
         ) {
@@ -165,4 +168,11 @@ export class Walker extends Lint.ProgramAwareRuleWalker {
       }
     });
   }
+}
+
+function isUnsafe([arg]: ts.NodeArray<ts.Expression>): boolean {
+  if (tsutils.isFunctionDeclaration(arg) || tsutils.isArrowFunction(arg)) {
+    return arg.parameters.length < 2;
+  }
+  return false;
 }
