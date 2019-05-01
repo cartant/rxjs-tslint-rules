@@ -39,9 +39,9 @@
   integrity sha512-5KfYtlxMWEAwj6RLyfxCScS/qqLVqQTDARKbaZVZy5Ydd1r98oL9oXS5vrxzPXQt6OjYC8UeDh6GUvi3Aak6Cg==
 
 "@cartant/tslint-config@^2.0.0":
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/@cartant/tslint-config/-/tslint-config-2.0.0.tgz#2016f19d65399f41600b3f2d2393990977c2cc29"
-  integrity sha512-RZJxMfFRDeUwKCZPVBmjWKYQJqYrmbJbJInba/y2YvBIM9TJRfPJqv9ySGq/seHsnHawwGAgjeKleY0gM8xe3Q==
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/@cartant/tslint-config/-/tslint-config-2.0.1.tgz#92a777107676f8f685a1b83c4d965270a02822dd"
+  integrity sha512-pMS590b3wW/TTPnrcNmbryCTCZOThivY6T9kLhOcs8tctG8iddKgSXufNCiOxKO3E9kK7PvWKDk65JVb0zuYuw==
 
 "@phenomnomnominal/tsquery@^3.0.0":
   version "3.0.0"
