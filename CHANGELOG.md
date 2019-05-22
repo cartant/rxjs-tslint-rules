@@ -1,3 +1,10 @@
+<a name="4.23.2"></a>
+## [4.23.2](https://github.com/cartant/rxjs-tslint-rules/compare/v4.23.1...v4.23.2) (2019-05-22)
+
+## Fixes
+
+* Fixes a problem with `rxjs-no-unsafe-catch` and operators that are class methods. ([f5a737c](https://github.com/cartant/rxjs-tslint-rules/commit/f5a737c))
+
 <a name="4.23.1"></a>
 ## [4.23.1](https://github.com/cartant/rxjs-tslint-rules/compare/v4.23.0...v4.23.1) (2019-04-27)
 
