@@ -246,7 +246,7 @@ The rule has an optional `allowProtected` property that can be specified - it de
 
 ```json
 "rules": {
-  "rxjs-no-sharereplay": {
+  "rxjs-no-exposed-subjects": {
     "options": [{
       "allowProtected": true
     }],
