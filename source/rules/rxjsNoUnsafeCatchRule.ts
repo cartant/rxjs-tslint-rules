@@ -171,7 +171,10 @@ export class Walker extends Lint.ProgramAwareRuleWalker {
 }
 
 function isUnsafe([arg]: ts.NodeArray<ts.Expression>): boolean {
-  if (tsutils.isFunctionDeclaration(arg) || tsutils.isArrowFunction(arg)) {
+  if (
+    arg &&
+    (tsutils.isFunctionDeclaration(arg) || tsutils.isArrowFunction(arg))
+  ) {
     return arg.parameters.length < 2;
   }
   return false;
