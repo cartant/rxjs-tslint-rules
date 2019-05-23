@@ -175,6 +175,9 @@ function isUnsafe([arg]: ts.NodeArray<ts.Expression>): boolean {
     arg &&
     (tsutils.isFunctionDeclaration(arg) || tsutils.isArrowFunction(arg))
   ) {
+    // It's only unsafe if it receives a single function argument. If the
+    // source argument is received, assume that it's used to effect a
+    // resubscription to the source and that the effect won't complete.
     return arg.parameters.length < 2;
   }
   return false;
