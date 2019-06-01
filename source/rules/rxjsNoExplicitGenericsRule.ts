@@ -45,15 +45,28 @@ export class Rule extends Lint.Rules.AbstractRule {
       ) as ts.Identifier[])
     );
 
-    return identifiers.map(
-      identifier =>
-        new Lint.RuleFailure(
-          sourceFile,
-          identifier.getStart(),
-          identifier.getStart() + identifier.getWidth(),
-          Rule.FAILURE_STRING,
-          this.ruleName
-        )
-    );
+    return identifiers.map(identifier => {
+      const identifierLoc = identifier.parent.getChildren().indexOf(identifier);
+      const typeArgumentStart = identifier.parent
+        .getChildAt(identifierLoc + 1)
+        .getStart();
+      const typeArgumentEnd = identifier.parent
+        .getChildAt(identifierLoc + 3)
+        .getEnd();
+      const fix = Lint.Replacement.replaceFromTo(
+        typeArgumentStart,
+        typeArgumentEnd,
+        ""
+      );
+
+      return new Lint.RuleFailure(
+        sourceFile,
+        identifier.getStart(),
+        identifier.getStart() + identifier.getWidth(),
+        Rule.FAILURE_STRING,
+        this.ruleName,
+        fix
+      );
+    });
   }
 }

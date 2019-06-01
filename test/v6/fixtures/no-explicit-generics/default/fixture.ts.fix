@@ -1,0 +1,23 @@
+import { BehaviorSubject, from, of } from "rxjs";
+import { scan } from "rxjs/operators";
+
+const a = of(42, 54);
+const b = a.pipe(
+    scan((acc, value) => `${acc},${value}`, "")
+);
+const c = a.pipe(
+    scan((acc: string, value: number) => `${acc},${value}`, "")
+);
+const c2 = a.pipe(
+    scan((acc, value): string => `${acc},${value}`, "")
+);
+
+const d = new BehaviorSubject(42);
+const e = new BehaviorSubject(42);
+
+const f = from([42, 54]);
+const g = from([42, 54]);
+
+const h = of(42, 54);
+const i = of(42, 54);
+
