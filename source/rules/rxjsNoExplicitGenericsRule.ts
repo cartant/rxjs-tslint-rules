@@ -4,6 +4,7 @@
  */
 
 import * as Lint from "tslint";
+import * as tsutils from "tsutils";
 import * as ts from "typescript";
 import { tsquery } from "@phenomnomnominal/tsquery";
 
@@ -41,8 +42,20 @@ export class Rule extends Lint.Rules.AbstractRule {
     identifiers.push(
       ...(tsquery(
         sourceFile,
-        `NewExpression[typeArguments.length > 0] > Identifier[name="BehaviorSubject"]`
+        `NewExpression[typeArguments.length>0] > Identifier[name="BehaviorSubject"]`
       ) as ts.Identifier[])
+    );
+
+    const notificationIdentifiers = tsquery(
+      sourceFile,
+      `NewExpression[typeArguments.length>0] > Identifier[name="Notification"]`
+    ) as ts.Identifier[];
+    identifiers.push(
+      ...notificationIdentifiers.filter(identifier => {
+        const newExpression = identifier.parent as ts.NewExpression;
+        const [arg] = newExpression.arguments;
+        return tsutils.isStringLiteral(arg) && arg.text === "N";
+      })
     );
 
     return identifiers.map(

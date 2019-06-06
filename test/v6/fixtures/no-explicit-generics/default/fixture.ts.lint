@@ -1,4 +1,4 @@
-import { BehaviorSubject, from, of } from "rxjs";
+import { BehaviorSubject, from, of, Notification } from "rxjs";
 import { scan } from "rxjs/operators";
 
 const a = of(42, 54);
@@ -24,5 +24,11 @@ const g = from([42, 54]);
 const h = of<number>(42, 54);
           ~~                                                        [no-explicit-generics]
 const i = of(42, 54);
+
+const j = new Notification<number>("N", 42);
+              ~~~~~~~~~~~~                                          [no-explicit-generics]
+const k = new Notification("N", 42);
+const l = new Notification<number>("E", undefined, "Kaboom!");
+const m = new Notification<number>("C");
 
 [no-explicit-generics]: Explicit generic type arguments are forbidden
