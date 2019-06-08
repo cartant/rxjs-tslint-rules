@@ -1,3 +1,10 @@
+<a name="4.23.3"></a>
+## [4.23.3](https://github.com/cartant/rxjs-tslint-rules/compare/v4.23.2...v4.23.3) (2019-06-08)
+
+## Fixes
+
+* Check `Notification` usage in `rxjs-no-explicit-generics`. ([115a0ba](https://github.com/cartant/rxjs-tslint-rules/commit/115a0ba))
+
 <a name="4.23.2"></a>
 ## [4.23.2](https://github.com/cartant/rxjs-tslint-rules/compare/v4.23.1...v4.23.2) (2019-05-22)
 
