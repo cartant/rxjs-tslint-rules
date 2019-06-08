@@ -3,9 +3,9 @@
  * can be found in the LICENSE file at https://github.com/cartant/rxjs-tslint-rules
  */
 
+import { tsquery } from "@phenomnomnominal/tsquery";
 import * as Lint from "tslint";
 import * as ts from "typescript";
-import { tsquery } from "@phenomnomnominal/tsquery";
 import { couldBeType } from "../support/util";
 
 export class Rule extends Lint.Rules.TypedRule {

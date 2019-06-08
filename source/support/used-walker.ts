@@ -3,8 +3,8 @@
  * can be found in the LICENSE file at https://github.com/cartant/rxjs-tslint-rules
  */
 
-import * as ts from "typescript";
 import * as tsutils from "tsutils";
+import * as ts from "typescript";
 import { AddedWalker } from "./added-walker";
 import {
   knownObservables,

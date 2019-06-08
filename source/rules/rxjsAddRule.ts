@@ -5,10 +5,10 @@
 /*tslint:disable:no-use-before-declare*/
 
 import * as fs from "fs";
-import * as Lint from "tslint";
 import * as path from "path";
-import * as ts from "typescript";
+import * as Lint from "tslint";
 import * as tsutils from "tsutils";
+import * as ts from "typescript";
 import * as peer from "../support/peer";
 
 import { AddedWalker } from "../support/added-walker";
@@ -149,9 +149,7 @@ class Walker extends UsedWalker {
             this.addedObservables[key].forEach(node =>
               this.addFailureAtNode(
                 tsutils.isImportDeclaration(node) ? node.moduleSpecifier : node,
-                `Patched observables are forbidden outside of ${
-                  options.file
-                }: ${key}`
+                `Patched observables are forbidden outside of ${options.file}: ${key}`
               )
             );
           });
@@ -160,9 +158,7 @@ class Walker extends UsedWalker {
             this.addedOperators[key].forEach(node =>
               this.addFailureAtNode(
                 tsutils.isImportDeclaration(node) ? node.moduleSpecifier : node,
-                `Patched operators are forbidden outside of ${
-                  options.file
-                }: ${key}`
+                `Patched operators are forbidden outside of ${options.file}: ${key}`
               )
             );
           });

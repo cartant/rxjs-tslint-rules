@@ -4,10 +4,10 @@
  */
 /*tslint:disable:no-use-before-declare*/
 
-import * as Lint from "tslint";
-import * as ts from "typescript";
-import * as tsutils from "tsutils";
 import decamelize from "decamelize";
+import * as Lint from "tslint";
+import * as tsutils from "tsutils";
+import * as ts from "typescript";
 
 import { couldBeType, isReferenceType } from "../support/util";
 

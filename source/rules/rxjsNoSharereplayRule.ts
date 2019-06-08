@@ -3,10 +3,10 @@
  * can be found in the LICENSE file at https://github.com/cartant/rxjs-tslint-rules
  */
 
-import * as Lint from "tslint";
-import * as ts from "typescript";
-import * as tsutils from "tsutils";
 import { tsquery } from "@phenomnomnominal/tsquery";
+import * as Lint from "tslint";
+import * as tsutils from "tsutils";
+import * as ts from "typescript";
 
 export class Rule extends Lint.Rules.TypedRule {
   public static metadata: Lint.IRuleMetadata = {

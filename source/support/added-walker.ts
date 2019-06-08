@@ -4,8 +4,8 @@
  */
 
 import * as Lint from "tslint";
-import * as ts from "typescript";
 import * as tsutils from "tsutils";
+import * as ts from "typescript";
 import { knownObservables, knownOperators } from "./knowns";
 
 export class AddedWalker extends Lint.ProgramAwareRuleWalker {

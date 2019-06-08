@@ -4,8 +4,8 @@
  */
 
 import * as Lint from "tslint";
-import * as ts from "typescript";
 import * as tsutils from "tsutils";
+import * as ts from "typescript";
 import * as peer from "../support/peer";
 
 import { tsquery } from "@phenomnomnominal/tsquery";

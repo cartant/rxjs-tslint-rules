@@ -5,7 +5,6 @@
 
 import { expect } from "chai";
 import * as semver from "semver";
-import * as peer from "./peer";
 import {
   knownObservables,
   knownOperators,
@@ -13,6 +12,7 @@ import {
   knownPrototypeMethods,
   knownStaticMethods
 } from "./knowns";
+import * as peer from "./peer";
 
 describe("knowns", () => {
   it("should determine the observable factories", () => {

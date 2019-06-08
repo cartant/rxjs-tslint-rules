@@ -5,8 +5,8 @@
 /*tslint:disable:no-use-before-declare*/
 
 import * as Lint from "tslint";
-import * as ts from "typescript";
 import * as tsutils from "tsutils";
+import * as ts from "typescript";
 import { ScopeWalker } from "../support/scope-walker";
 import { isConstDeclaration, isThis } from "../support/util";
 
