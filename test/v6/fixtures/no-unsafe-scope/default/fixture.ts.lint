@@ -1,5 +1,5 @@
 import { Observable, of } from "rxjs";
-import { map } from "rxjs/operators";
+import { map, tap } from "rxjs/operators";
 import { THOUSAND } from "./constants";
 import { Vertical } from "./enums";
 
@@ -11,25 +11,22 @@ enum Horizontal {
 const HUNDRED = 100;
 let outer: any;
 
+of(1).pipe(map(value => outer)).subscribe();
+                        ~~~~~                                                           [no-unsafe-scope]
 of(1).pipe(map(value => outer = value)).subscribe();
                         ~~~~~                                                           [no-unsafe-scope]
-
 of(1).pipe(map(function (value) { return outer = value; })).subscribe();
                                          ~~~~~                                          [no-unsafe-scope]
-
 of(1).pipe(map(value => value * HUNDRED * THOUSAND)).subscribe();
-
 of(1).pipe(tap(value => outer = value)).subscribe();
 
 of(1).pipe(
     map(() => Horizontal.Left),
     map(() => Vertical.Up)
 ).subscribe();
-
 of("1").pipe(map(value => parseInt(value, 10))).subscribe();
 of("1").pipe(map(value => window.parseInt(value, 10))).subscribe();
 of("1").pipe(map(value => window.window.parseInt(value, 10))).subscribe();
-
 of(1).pipe(map(value => Math.ceil(value))).subscribe();
 
 function piped(outer: number): Observable<number> {
@@ -53,6 +50,8 @@ class User {
         ).subscribe();
         of("Hello").pipe(map(value => `${value}, ${this.name}.`)).subscribe();
                                                    ~~~~                                 [no-unsafe-scope]
+        of("Hello").pipe(tap(value => this.name = value)).subscribe();
+                                           ~~~~                                         [no-unsafe-scope]
         of("Hello").pipe(map(value => `${value}, ${this.foo()}.`)).subscribe();
         of("Hello").pipe(map(value => `${value}, ${this.service.bar()}.`)).subscribe();
     }
