@@ -1,3 +1,10 @@
+<a name="4.24.0"></a>
+## [4.24.0](https://github.com/cartant/rxjs-tslint-rules/compare/v4.23.3...v4.24.0) (2019-06-11)
+
+## Features
+
+* Add an `allowSubscribe` option to the `rxjs-no-unsafe-scope` rule. ([8caa4db](https://github.com/cartant/rxjs-tslint-rules/commit/8caa4db))
+
 <a name="4.23.3"></a>
 ## [4.23.3](https://github.com/cartant/rxjs-tslint-rules/compare/v4.23.2...v4.23.3) (2019-06-08)
 
