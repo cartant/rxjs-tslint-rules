@@ -50,8 +50,8 @@ class User {
         ).subscribe();
         of("Hello").pipe(map(value => `${value}, ${this.name}.`)).subscribe();
                                                    ~~~~                                 [no-unsafe-scope]
-        of("Hello").pipe(tap(value => this.name = value)).subscribe();
-                                           ~~~~                                         [no-unsafe-scope]
+        of("Hello").pipe(map(value => this.name = value)).subscribe();
+                                      ~~~~                                              [no-unsafe-scope]
         of("Hello").pipe(map(value => `${value}, ${this.foo()}.`)).subscribe();
         of("Hello").pipe(map(value => `${value}, ${this.service.bar()}.`)).subscribe();
     }
