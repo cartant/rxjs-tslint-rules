@@ -19,6 +19,7 @@ of(1).pipe(map(function (value) { return outer = value; })).subscribe();
                                          ~~~~~                                          [no-unsafe-scope]
 of(1).pipe(map(value => value * HUNDRED * THOUSAND)).subscribe();
 of(1).pipe(tap(value => outer = value)).subscribe();
+of(1).subscribe(value => outer = value);
 
 of(1).pipe(
     map(() => Horizontal.Left),
@@ -54,6 +55,7 @@ class User {
                                       ~~~~                                              [no-unsafe-scope]
         of("Hello").pipe(map(value => `${value}, ${this.foo()}.`)).subscribe();
         of("Hello").pipe(map(value => `${value}, ${this.service.bar()}.`)).subscribe();
+        of("Hello").subscribe(value => this.name = value);
     }
     foo(): string { return "foo"; }
 }

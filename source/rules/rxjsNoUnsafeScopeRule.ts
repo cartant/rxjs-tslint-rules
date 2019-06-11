@@ -27,16 +27,18 @@ export class Rule extends Lint.Rules.TypedRule {
         allowMethods: { type: "boolean" },
         allowParameters: { type: "boolean" },
         allowProperties: { type: "boolean" },
+        allowSubscribe: { type: "boolean" },
         allowTap: { type: "boolean" }
       },
       type: "object"
     },
     optionsDescription: Lint.Utils.dedent`
-            An optional object with optional \`allowDo\`, \`allowParameters\` and \`allowTap\` properties all of which default to \`true\`.
-            If the \`allowDo\` and \`allowTap\` options are \`true\`, the rule is not applied within \`do\` and \`tap\` operators respectively.
-            If the \`allowParameters\` option is \`true\`, referencing function parameters from outer scopes is allowed.
-            If the \`allowMethods\` option is \`true\`, calling methods via \`this\` is allowed.
-            If the \`allowProperties\` option is \`true\`, accessing properties via \`this\` is allowed.`,
+      An optional object with optional \`allowDo\`, \`allowParameters\` and \`allowTap\` properties all of which default to \`true\`.
+      If the \`allowDo\` and \`allowTap\` options are \`true\`, the rule is not applied within \`do\` and \`tap\` operators respectively.
+      If the \`allowParameters\` option is \`true\`, referencing function parameters from outer scopes is allowed.
+      If the \`allowMethods\` option is \`true\`, calling methods via \`this\` is allowed.
+      If the \`allowProperties\` option is \`true\`, accessing properties via \`this\` is allowed.
+      If the \`allowSubscribe\` option is \`true\`, the rule is not applied within \`subscribe\` callbacks.`,
     requiresTypeInfo: true,
     ruleName: "rxjs-no-unsafe-scopes",
     type: "functionality",
@@ -60,6 +62,7 @@ class Walker extends ScopeWalker {
   private allowMethods = true;
   private allowParameters = true;
   private allowProperties = false;
+  private allowSubscribe = true;
   private allowTap = true;
 
   constructor(

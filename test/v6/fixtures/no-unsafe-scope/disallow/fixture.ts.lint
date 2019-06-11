@@ -5,6 +5,8 @@ let outer: any;
 
 of(1).pipe(tap(value => outer = value)).subscribe();
                         ~~~~~                                                           [no-unsafe-scope]
+of(1).subscribe(value => outer = value);
+                         ~~~~~                                                          [no-unsafe-scope]
 
 function piped(outer: number): Observable<number> {
     return of(1).pipe(map(value => outer + value));
@@ -12,11 +14,14 @@ function piped(outer: number): Observable<number> {
 }
 
 class User {
+    value: string;
     constructor(private name: string, private service: { bar(): string }) {
         of("Hello").pipe(map(value => `${value}, ${this.foo()}.`)).subscribe();
                                                    ~~~~                                 [no-unsafe-scope]
         of("Hello").pipe(map(value => `${value}, ${this.service.bar()}.`)).subscribe();
                                                    ~~~~                                 [no-unsafe-scope]
+        of("Hello").subscribe(value => this.value = value);
+                                       ~~~~                                             [no-unsafe-scope]
     }
     foo(): string { return "foo"; }
 }
