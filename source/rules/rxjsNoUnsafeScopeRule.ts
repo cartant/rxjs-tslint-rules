@@ -88,9 +88,14 @@ class Walker extends ScopeWalker {
         options.allowProperties !== undefined
           ? options.allowProperties
           : this.allowProperties;
+      this.allowSubscribe =
+        options.allowSubscribe !== undefined
+          ? options.allowSubscribe
+          : this.allowSubscribe;
       this.allowTap =
         options.allowTap !== undefined ? options.allowTap : this.allowTap;
     }
+    this.knownNames = this.allowSubscribe ? {} : { subscribe: true };
   }
 
   protected visitNode(node: ts.Node): void {

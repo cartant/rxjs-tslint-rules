@@ -11,6 +11,7 @@ import { knownOperators, knownPipeableOperators } from "./knowns";
 export class ScopeWalker extends Lint.ProgramAwareRuleWalker {
   protected callbackMap: Map<ts.Node, string> = new Map<ts.Node, string>();
   protected callbackStack: (ts.ArrowFunction | ts.FunctionExpression)[] = [];
+  protected knownNames: Record<string, boolean> = {};
 
   protected visitArrowFunction(node: ts.ArrowFunction): void {
     if (this.callbackMap.has(node)) {
@@ -33,7 +34,12 @@ export class ScopeWalker extends Lint.ProgramAwareRuleWalker {
       name = propertyName.getText();
     }
 
-    if (name && (knownOperators[name] || knownPipeableOperators[name])) {
+    if (
+      name &&
+      (this.knownNames[name] ||
+        knownOperators[name] ||
+        knownPipeableOperators[name])
+    ) {
       const callbacks = args.filter(
         arg => tsutils.isArrowFunction(arg) || tsutils.isFunctionExpression(arg)
       );
