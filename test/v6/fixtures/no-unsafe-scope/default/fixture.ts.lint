@@ -41,6 +41,16 @@ of(1).pipe(
 ).subscribe();
 
 of(new Date()).pipe(
+    map(date => outer.getTime())
+                ~~~~~                                                                   [no-unsafe-scope]
+).subscribe();
+
+of(new Date()).pipe(
+    map(date => outer.foo)
+                ~~~~~                                                                   [no-unsafe-scope]
+).subscribe();
+
+of(new Date()).pipe(
     map(date => date.getTime())
 ).subscribe();
 
