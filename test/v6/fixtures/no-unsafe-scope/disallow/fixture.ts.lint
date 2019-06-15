@@ -13,6 +13,10 @@ function piped(outer: number): Observable<number> {
                                    ~~~~~                                                [no-unsafe-scope]
 }
 
+of(new Date()).pipe(
+    map(date => date.getTime())
+).subscribe();
+
 class User {
     value: string;
     constructor(private name: string, private service: { bar(): string }) {

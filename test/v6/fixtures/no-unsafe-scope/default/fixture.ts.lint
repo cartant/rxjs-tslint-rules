@@ -40,6 +40,10 @@ of(1).pipe(
     ))
 ).subscribe();
 
+of(new Date()).pipe(
+    map(date => date.getTime())
+).subscribe();
+
 class User {
     constructor(private name: string, private service: { bar(): string }) {
         of("Hello").pipe(
