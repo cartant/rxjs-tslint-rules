@@ -29,6 +29,8 @@ of("1").pipe(map(value => parseInt(value, 10))).subscribe();
 of("1").pipe(map(value => window.parseInt(value, 10))).subscribe();
 of("1").pipe(map(value => window.window.parseInt(value, 10))).subscribe();
 of(1).pipe(map(value => Math.ceil(value))).subscribe();
+of(1).pipe(map(value => Math.PI)).subscribe();
+of(1).pipe(map(value => Number.MAX_SAFE_INTEGER)).subscribe();
 
 function piped(outer: number): Observable<number> {
     return of(1).pipe(map(value => outer + value));
