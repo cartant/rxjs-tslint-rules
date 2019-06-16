@@ -42,36 +42,42 @@ of(1).pipe(
     ))
 ).subscribe();
 
-of(new Date()).pipe(
-    map(date => outer.getTime())
-                ~~~~~                                                                   [no-unsafe-scope]
+let outerArray = [];
+
+of([]).pipe(
+    map(array => array.slice())
 ).subscribe();
 
-of(new Date()).pipe(
-    map(date => outer.foo)
-                ~~~~~                                                                   [no-unsafe-scope]
+of([]).pipe(
+    map(array => outerArray.slice())
+                 ~~~~~~~~~~                                                             [no-unsafe-scope]
 ).subscribe();
 
-of(new Date()).pipe(
-    map(date => date.getTime())
+of([]).pipe(
+    map(array => array.length)
+).subscribe();
+
+of([]).pipe(
+    map(array => outerArray.length)
+                 ~~~~~~~~~~                                                             [no-unsafe-scope]
 ).subscribe();
 
 class User {
     constructor(private name: string, private service: { bar(): string }) {
-        of("Hello").pipe(
-            map(value => {
-                console.log(this.name);
-                            ~~~~                                                        [no-unsafe-scope]
-                return  value;
-            })
-        ).subscribe();
-        of("Hello").pipe(map(value => `${value}, ${this.name}.`)).subscribe();
-                                                   ~~~~                                 [no-unsafe-scope]
-        of("Hello").pipe(map(value => this.name = value)).subscribe();
-                                      ~~~~                                              [no-unsafe-scope]
-        of("Hello").pipe(map(value => `${value}, ${this.foo()}.`)).subscribe();
-        of("Hello").pipe(map(value => `${value}, ${this.service.bar()}.`)).subscribe();
-        of("Hello").subscribe(value => this.name = value);
+      of("Hello").pipe(
+        map(value => {
+          console.log(this.name);
+                      ~~~~                                                              [no-unsafe-scope]
+          return  value;
+        })
+      ).subscribe();
+      of("Hello").pipe(map(value => `${value}, ${this.name}.`)).subscribe();
+                                                 ~~~~                                   [no-unsafe-scope]
+      of("Hello").pipe(map(value => this.name = value)).subscribe();
+                                    ~~~~                                                [no-unsafe-scope]
+      of("Hello").pipe(map(value => `${value}, ${this.foo()}.`)).subscribe();
+      of("Hello").pipe(map(value => `${value}, ${this.service.bar()}.`)).subscribe();
+      of("Hello").subscribe(value => this.name = value);
     }
     foo(): string { return "foo"; }
 }

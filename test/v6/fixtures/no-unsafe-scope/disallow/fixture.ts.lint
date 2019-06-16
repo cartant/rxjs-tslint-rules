@@ -13,18 +13,24 @@ function piped(outer: number): Observable<number> {
                                    ~~~~~                                                [no-unsafe-scope]
 }
 
-of(new Date()).pipe(
-    map(date => outer.getTime())
-                ~~~~~                                                                   [no-unsafe-scope]
+let outerArray = [];
+
+of([]).pipe(
+    map(array => array.slice())
 ).subscribe();
 
-of(new Date()).pipe(
-    map(date => outer.foo)
-                ~~~~~                                                                   [no-unsafe-scope]
+of([]).pipe(
+    map(array => outerArray.slice())
+                 ~~~~~~~~~~                                                             [no-unsafe-scope]
 ).subscribe();
 
-of(new Date()).pipe(
-    map(date => date.getTime())
+of([]).pipe(
+    map(array => array.length)
+).subscribe();
+
+of([]).pipe(
+    map(array => outerArray.length)
+                 ~~~~~~~~~~                                                             [no-unsafe-scope]
 ).subscribe();
 
 class User {
