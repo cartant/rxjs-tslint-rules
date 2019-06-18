@@ -1,3 +1,10 @@
+<a name="4.24.1"></a>
+## [4.24.1](https://github.com/cartant/rxjs-tslint-rules/compare/v4.24.0...v4.24.1) (2019-06-19)
+
+## Fixes
+
+* Fixed problems with `rxjs-no-unsafe-scope` and property-access expressions. ([4a365f9](https://github.com/cartant/rxjs-tslint-rules/commit/4a365f9))
+
 <a name="4.24.0"></a>
 ## [4.24.0](https://github.com/cartant/rxjs-tslint-rules/compare/v4.23.3...v4.24.0) (2019-06-11)
 
