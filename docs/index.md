@@ -242,9 +242,9 @@ If the `allowParameters` option is `true`, referencing function parameters from 
 
 If the `allowMethods` option is `true`, calling methods via `this` is allowed.
 
-If the `allowProperties` option is `true`, accessing properties via `this` is allowed.`,
+If the `allowProperties` option is `true`, accessing properties via `this` is allowed.
 
-If the `allowSubscribe` option is `true`, the rule is not applied within `subscribe` callbacks.`
+If the `allowSubscribe` option is `true`, the rule is not applied within `subscribe` callbacks.
 
 The following options are equivalent to the rule's default configuration:
 
