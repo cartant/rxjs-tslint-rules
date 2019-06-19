@@ -60,7 +60,7 @@ export class Rule extends Lint.Rules.TypedRule {
             if (
               couldBeNames.some(name =>
                 couldBeType(type, name, {
-                  name: /rxjs/,
+                  name: /[\/\\]rxjs[\/\\]/,
                   typeChecker
                 })
               )
