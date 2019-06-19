@@ -17,7 +17,7 @@ import {
   isWithinParameterDeclaration
 } from "../support/util";
 
-const knownGlobalRegExp = /^(Array|BigInt|Date|Intl|JSON|Math|Number|Object|Promise|Proxy|Reflect|String|Symbol)$/;
+const knownGlobalRegExp = /^(Array|BigInt|Date|Intl|JSON|Math|Number|Object|Promise|Proxy|Reflect|String|Symbol|console)$/;
 
 export class Rule extends Lint.Rules.TypedRule {
   public static metadata: Lint.IRuleMetadata = {
