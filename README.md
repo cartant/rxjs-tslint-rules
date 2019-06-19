@@ -299,7 +299,7 @@ The following options are equivalent to the rule's default configuration:
 
 #### rxjs-no-unsafe-scope
 
-The rule takes an optional object with optional `allowDo`, `allowParameters` and `allowTap` properties all of which default to `true`.
+The rule takes an optional object with optional `allowDo`, `allowMethods`, `allowParameters`, `allowProperties`, `allowSubscribe` and `allowTap` properties.
 
 If the `allowDo` and `allowTap` options are `true`, the rule is not applied within `do` and `tap` operators respectively.
 
