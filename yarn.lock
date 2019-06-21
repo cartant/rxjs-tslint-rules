@@ -85,9 +85,9 @@
     "@types/node" "*"
 
 "@types/semver@^6.0.0":
-  version "6.0.0"
-  resolved "https://registry.yarnpkg.com/@types/semver/-/semver-6.0.0.tgz#86ba89f02a414e39c68d02b351872e4ed31bd773"
-  integrity sha512-OO0srjOGH99a4LUN2its3+r6CBYcplhJ466yLqs+zvAWgphCpS8hYZEZ797tRDP/QKcqTdb/YCN6ifASoAWkrQ==
+  version "6.0.1"
+  resolved "https://registry.yarnpkg.com/@types/semver/-/semver-6.0.1.tgz#a984b405c702fa5a7ec6abc56b37f2ba35ef5af6"
+  integrity sha512-ffCdcrEE5h8DqVxinQjo+2d1q+FV5z7iNtPofw3JsrltSoSVlOGaW0rY8XxtO9XukdTn8TaCGWmk2VFGhI70mg==
 
 ansi-colors@3.2.3:
   version "3.2.3"
@@ -919,9 +919,9 @@ inflight@^1.0.4:
     wrappy "1"
 
 inherits@2:
-  version "2.0.3"
-  resolved "https://registry.yarnpkg.com/inherits/-/inherits-2.0.3.tgz#633c2c83e3da42a502f52466022480f4208261de"
-  integrity sha1-Yzwsg+PaQqUC9SRmAiSA9CCCYd4=
+  version "2.0.4"
+  resolved "https://registry.yarnpkg.com/inherits/-/inherits-2.0.4.tgz#0fa2c64f932917c3433a0ded55363aae37416b7c"
+  integrity sha512-k/vGaX4/Yla3WzyMCvTQOXYeIHvqOKtnqBduzTHpzpQZzAskKMhZ2K+EnBiSM9zGSoIFeMpXKxa4dYeZIQqewQ==
 
 invert-kv@^2.0.0:
   version "2.0.0"
@@ -1911,9 +1911,9 @@ signal-exit@^3.0.0, signal-exit@^3.0.2:
   integrity sha1-tf3AjxKH6hF4Yo5BXiUTK3NkbG0=
 
 simple-git@^1.85.0:
-  version "1.115.0"
-  resolved "https://registry.yarnpkg.com/simple-git/-/simple-git-1.115.0.tgz#159a49cf95c5126d5903e36df67504a8c634e817"
-  integrity sha512-PXcDVDgXifUE7/M2xUfQQ8uG3r73+kYRyPmsbc/iWwUrPbOASHt8p+HEbu85k546qmXixbcSPDg83kegw1vqcA==
+  version "1.116.0"
+  resolved "https://registry.yarnpkg.com/simple-git/-/simple-git-1.116.0.tgz#ea6e533466f1e0152186e306e004d4eefa6e3e00"
+  integrity sha512-Pbo3tceqMYy0j3U7jzMKabOWcx5+67GdgQUjpK83XUxGhA+1BX93UPvlWNzbCRoFwd7EJTyDSCC2XCoT4NTLYQ==
   dependencies:
     debug "^4.0.1"
 
@@ -2165,9 +2165,9 @@ tslib@^1.8.0, tslib@^1.8.1, tslib@^1.9.0:
   integrity sha512-qOebF53frne81cf0S9B41ByenJ3/IuH8yJKngAX35CmiZySA0khhkovshKK+jGCaMnVomla7gVlIcc3EvKPbTQ==
 
 tslint-etc@^1.5.1:
-  version "1.5.4"
-  resolved "https://registry.yarnpkg.com/tslint-etc/-/tslint-etc-1.5.4.tgz#252c72d99a0928d32f0d3acc48d387f33b051569"
-  integrity sha512-M3aSmJ9GdWatoiqoK0YbiHi2uuUZvktBxzAsmzYi2clUextwwjckld3T195Y/ujyvb29X0yM/go9q15p2uAeyg==
+  version "1.5.5"
+  resolved "https://registry.yarnpkg.com/tslint-etc/-/tslint-etc-1.5.5.tgz#b11a023fb076b6d47ec8e09b53c9c78be63f3652"
+  integrity sha512-k++PMTfqtM9BslHutxOXBX7cNj7zX2nZ4mQH22mzcw1xPQdeVopCS198ldrXazoaQLlBmTk+FQWY1jgkdI6cYQ==
   dependencies:
     "@phenomnomnominal/tsquery" "^3.0.0"
     tslib "^1.8.0"
