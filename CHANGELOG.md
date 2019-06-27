@@ -1,9 +1,16 @@
+<a name="4.24.3"></a>
+## [4.24.3](https://github.com/cartant/rxjs-tslint-rules/compare/v4.24.2...v4.24.3) (2019-06-28)
+
+## Fixes
+
+* Ignore qualified names in `rxjs-no-unsafe-scope`. ([76f020e](https://github.com/cartant/rxjs-tslint-rules/commit/76f020e))
+
 <a name="4.24.2"></a>
 ## [4.24.2](https://github.com/cartant/rxjs-tslint-rules/compare/v4.24.1...v4.24.2) (2019-06-19)
 
 ## Fixes
 
-* Add `console` to whitelist for `rxjs-no-unsafe-scope` . ([8dec947](https://github.com/cartant/rxjs-tslint-rules/commit/8dec947))
+* Add `console` to whitelist for `rxjs-no-unsafe-scope`. ([8dec947](https://github.com/cartant/rxjs-tslint-rules/commit/8dec947))
 
 <a name="4.24.1"></a>
 ## [4.24.1](https://github.com/cartant/rxjs-tslint-rules/compare/v4.24.0...v4.24.1) (2019-06-19)
