@@ -186,6 +186,10 @@ class Walker extends ScopeWalker {
   private isUnsafeRoot(node: ts.Node, callback: ts.Node): ts.Node | undefined {
     const typeChecker = this.getTypeChecker();
 
+    if (ts.isQualifiedName(node.parent)) {
+      return undefined;
+    }
+
     if (isInstanceofCtor(node)) {
       return undefined;
     }
