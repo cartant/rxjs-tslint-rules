@@ -8,7 +8,7 @@ import * as Lint from "tslint";
 import * as tsutils from "tsutils";
 import * as ts from "typescript";
 
-export class Rule extends Lint.Rules.TypedRule {
+export class Rule extends Lint.Rules.AbstractRule {
   public static metadata: Lint.IRuleMetadata = {
     description: "Disallows using the `shareReplay` operator.",
     options: {
@@ -29,10 +29,7 @@ export class Rule extends Lint.Rules.TypedRule {
 
   public static FAILURE_STRING = "shareReplay is forbidden";
 
-  public applyWithProgram(
-    sourceFile: ts.SourceFile,
-    program: ts.Program
-  ): Lint.RuleFailure[] {
+  public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
     const {
       ruleArguments: [options]
     } = this.getOptions();

@@ -13,10 +13,10 @@ export class Rule extends Lint.Rules.TypedRule {
     description: "Disallows operators that return connectable observables.",
     options: null,
     optionsDescription: "Not configurable.",
-    requiresTypeInfo: false,
+    requiresTypeInfo: true,
     ruleName: "rxjs-no-connectable",
     type: "functionality",
-    typescriptOnly: false
+    typescriptOnly: true
   };
 
   public static FAILURE_STRING = "Connectable observables are forbidden";

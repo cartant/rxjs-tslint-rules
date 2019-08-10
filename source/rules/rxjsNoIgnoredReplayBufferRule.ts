@@ -7,24 +7,21 @@ import { tsquery } from "@phenomnomnominal/tsquery";
 import * as Lint from "tslint";
 import * as ts from "typescript";
 
-export class Rule extends Lint.Rules.TypedRule {
+export class Rule extends Lint.Rules.AbstractRule {
   public static metadata: Lint.IRuleMetadata = {
     description:
       "Disallows using `ReplaySubject`, `publishReplay` or `shareReplay` without specifying the buffer size.",
     options: null,
     optionsDescription: "Not configurable.",
-    requiresTypeInfo: true,
+    requiresTypeInfo: false,
     ruleName: "rxjs-no-ignored-replay-buffer",
     type: "functionality",
-    typescriptOnly: true
+    typescriptOnly: false
   };
 
   public static FAILURE_STRING = "Ignoring the buffer size is forbidden";
 
-  public applyWithProgram(
-    sourceFile: ts.SourceFile,
-    program: ts.Program
-  ): Lint.RuleFailure[] {
+  public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
     const failures: Lint.RuleFailure[] = [];
 
     const newIdentifiers = tsquery(

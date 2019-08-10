@@ -14,10 +14,10 @@ export class Rule extends Lint.Rules.TypedRule {
     description: "Disallows ignoring the subscription returned by subscribe.",
     options: null,
     optionsDescription: "Not configurable.",
-    requiresTypeInfo: false,
+    requiresTypeInfo: true,
     ruleName: "rxjs-no-ignored-subscription",
     type: "functionality",
-    typescriptOnly: false
+    typescriptOnly: true
   };
 
   public static FAILURE_STRING = "Ignoring returned subscriptions is forbidden";
