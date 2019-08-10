@@ -38,11 +38,11 @@ export class Rule extends Lint.Rules.TypedRule {
       type: "object"
     },
     optionsDescription: Lint.Utils.dedent`
-            An optional object with optional \`allow\`, \`disallow\` and \`observable\` properties.
-            The properties can be specifed as regular expression strings or as arrays of words.
-            The \`allow\` or \`disallow\` properties are mutually exclusive. Whether or not
-            \`switchMap\` is allowed will depend upon the matching of action types with \`allow\` or \`disallow\`.
-            The \`observable\` property is used to identify the action observables from which effects and epics are composed.`,
+      An optional object with optional \`allow\`, \`disallow\` and \`observable\` properties.
+      The properties can be specifed as regular expression strings or as arrays of words.
+      The \`allow\` or \`disallow\` properties are mutually exclusive. Whether or not
+      \`switchMap\` is allowed will depend upon the matching of action types with \`allow\` or \`disallow\`.
+      The \`observable\` property is used to identify the action observables from which effects and epics are composed.`,
     requiresTypeInfo: true,
     ruleName: "rxjs-no-unsafe-switchmap",
     type: "functionality",

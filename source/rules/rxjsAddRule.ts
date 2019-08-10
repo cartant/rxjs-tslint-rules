@@ -29,12 +29,12 @@ export class Rule extends Lint.Rules.TypedRule {
       type: "object"
     },
     optionsDescription: Lint.Utils.dedent`
-            An optional object with the property \`file\`.
-            This the path of the module - relative to the \`tsconfig.json\` - that imports the patched observables and operators.
-            If \`file\` is specified, the \`allowElsewhere\` and \`allowUnused\` options can be used to configure whether or not
-            patched imports are allowed in other files and whether or not unused patched imports are allowed.
-            Both \`allowElsewhere\` and \`allowUnused\` default to \`false\`.
-            If not specified, patched observables and operators must be imported in the modules in which they are used.`,
+      An optional object with the property \`file\`.
+      This the path of the module - relative to the \`tsconfig.json\` - that imports the patched observables and operators.
+      If \`file\` is specified, the \`allowElsewhere\` and \`allowUnused\` options can be used to configure whether or not
+      patched imports are allowed in other files and whether or not unused patched imports are allowed.
+      Both \`allowElsewhere\` and \`allowUnused\` default to \`false\`.
+      If not specified, patched observables and operators must be imported in the modules in which they are used.`,
     requiresTypeInfo: true,
     ruleName: "rxjs-add",
     type: "functionality",

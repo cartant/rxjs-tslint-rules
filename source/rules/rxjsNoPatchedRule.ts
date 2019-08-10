@@ -33,9 +33,9 @@ export class Rule extends Lint.Rules.TypedRule {
       type: "object"
     },
     optionsDescription: Lint.Utils.dedent`
-            An optional object with the optional properties \`allowObservables\` and \`allowOperators\`.
-            The properties can be specifed as booleans (they default to \`false\`) or as arrays containing
-            the names of the observables or operators that are allowed.`,
+      An optional object with the optional properties \`allowObservables\` and \`allowOperators\`.
+      The properties can be specifed as booleans (they default to \`false\`) or as arrays containing
+      the names of the observables or operators that are allowed.`,
     requiresTypeInfo: true,
     ruleName: "rxjs-no-patched",
     type: "functionality",

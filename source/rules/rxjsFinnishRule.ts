@@ -28,13 +28,13 @@ export class Rule extends Lint.Rules.TypedRule {
       type: "object"
     },
     optionsDescription: Lint.Utils.dedent`
-            An optional object with optional \`functions\`, \`methods\`, \`parameters\`,
-            \`properties\` and \`variables\` properties.
-            The properties are booleans and determine whether or not Finnish notation is enforced.
-            All properties default to \`true\`.
-            The object also has optional \`names\` and \`types\` properties which are themselves
-            objects containing keys that are regular expressions and values that are booleans -
-            indicating whether Finnish notation is required for particular names or types.`,
+      An optional object with optional \`functions\`, \`methods\`, \`parameters\`,
+      \`properties\` and \`variables\` properties.
+      The properties are booleans and determine whether or not Finnish notation is enforced.
+      All properties default to \`true\`.
+      The object also has optional \`names\` and \`types\` properties which are themselves
+      objects containing keys that are regular expressions and values that are booleans -
+      indicating whether Finnish notation is required for particular names or types.`,
     requiresTypeInfo: true,
     ruleName: "rxjs-finnish",
     type: "style",

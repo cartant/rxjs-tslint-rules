@@ -21,7 +21,7 @@ export class Rule extends Lint.Rules.TypedRule {
       type: "object"
     },
     optionsDescription: Lint.Utils.dedent`
-            An optional object with optional \`allowNext\` property - which defaults to \`true\`.`,
+      An optional object with optional \`allowNext\` property - which defaults to \`true\`.`,
     requiresTypeInfo: true,
     ruleName: "rxjs-prefer-observer",
     type: "style",

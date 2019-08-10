@@ -19,8 +19,8 @@ export class Rule extends Lint.Rules.TypedRule {
       type: "object"
     },
     optionsDescription: Lint.Utils.dedent`
-            An optional object with optional \`allow\` property.
-            The property is an array containing the names of the operators that are allowed to follow \`takeUntil\`.`,
+      An optional object with optional \`allow\` property.
+      The property is an array containing the names of the operators that are allowed to follow \`takeUntil\`.`,
     requiresTypeInfo: true,
     ruleName: "rxjs-no-unsafe-takeuntil",
     type: "functionality",

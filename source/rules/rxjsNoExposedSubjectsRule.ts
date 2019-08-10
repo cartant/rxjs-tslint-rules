@@ -21,7 +21,7 @@ export class Rule extends Lint.Rules.TypedRule {
       type: "object"
     },
     optionsDescription: Lint.Utils.dedent`
-        An optional object with optional \`allowProtected\` property - which defaults to \`false\`.`,
+      An optional object with optional \`allowProtected\` property - which defaults to \`false\`.`,
     requiresTypeInfo: true,
     ruleName: "rxjs-no-exposed-subjects",
     type: "functionality",

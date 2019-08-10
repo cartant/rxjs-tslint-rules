@@ -17,8 +17,8 @@ export class Rule extends Lint.Rules.TypedRule {
       type: "object"
     },
     optionsDescription: Lint.Utils.dedent`
-            An object containing keys that are names of observable factory functions
-            and values that are either booleans or strings containing the explanation for the ban.`,
+      An object containing keys that are names of observable factory functions
+      and values that are either booleans or strings containing the explanation for the ban.`,
     requiresTypeInfo: true,
     ruleName: "rxjs-ban-observables",
     type: "functionality",

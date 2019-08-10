@@ -24,8 +24,8 @@ export class Rule extends Lint.Rules.TypedRule {
       type: "object"
     },
     optionsDescription: Lint.Utils.dedent`
-            An optional object with an optional \`observable\` property.
-            The property can be specifed as a regular expression string or as an array of words and is used to identify the action observables from which effects and epics are composed.`,
+      An optional object with an optional \`observable\` property.
+      The property can be specifed as a regular expression string or as an array of words and is used to identify the action observables from which effects and epics are composed.`,
     requiresTypeInfo: true,
     ruleName: "rxjs-no-unsafe-catch",
     type: "functionality",

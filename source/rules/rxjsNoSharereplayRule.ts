@@ -18,9 +18,9 @@ export class Rule extends Lint.Rules.TypedRule {
       type: "object"
     },
     optionsDescription: Lint.Utils.dedent`
-            An optional object with an optional \`allowConfig\` property.
-            If \`allowConfig\` is \`true\`, calls to \`shareReplay\` are allowed if a
-            config object is passed - instead of separate parameters`,
+      An optional object with an optional \`allowConfig\` property.
+      If \`allowConfig\` is \`true\`, calls to \`shareReplay\` are allowed if a
+      config object is passed - instead of separate parameters`,
     requiresTypeInfo: false,
     ruleName: "rxjs-no-sharereplay",
     type: "functionality",
