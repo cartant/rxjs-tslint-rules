@@ -26,7 +26,7 @@ export class Rule extends Lint.Rules.AbstractRule {
 
     const callExpressions = tsquery(
       sourceFile,
-      `CallExpression[expression.name.text="pipe"] > CallExpression[expression.text=/^(filter|find|first|last|map|skipWhile|takeWhile)$/]`
+      `CallExpression[expression.name.text="pipe"] > CallExpression[expression.text=/^(filter|find|first|last)$/]`
     ) as ts.CallExpression[];
     callExpressions.forEach(callExpression => {
       const [arg] = callExpression.arguments;
