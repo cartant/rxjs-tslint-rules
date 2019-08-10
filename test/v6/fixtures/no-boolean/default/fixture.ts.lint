@@ -1,0 +1,29 @@
+import { of } from "rxjs";
+import { filter, find, first, last, map, skipWhile, takeWhile } from "rxjs/operators";
+
+const n: number | undefined = 42;
+
+of(n).pipe(filter(value => Boolean(value)));
+of(n).pipe(find(value => Boolean(value)));
+of(n).pipe(first(value => Boolean(value)));
+of(n).pipe(last(value => Boolean(value)));
+of(n).pipe(map(value => Boolean(value)));
+of(n).pipe(skipWhile(value => Boolean(value)));
+of(n).pipe(takeWhile(value => Boolean(value)));
+
+of(n).pipe(filter(Boolean));
+                  ~~~~~~~           [no-boolean]
+of(n).pipe(find(Boolean));
+                ~~~~~~~             [no-boolean]
+of(n).pipe(first(Boolean));
+                 ~~~~~~~            [no-boolean]
+of(n).pipe(last(Boolean));
+                ~~~~~~~             [no-boolean]
+of(n).pipe(map(Boolean));
+               ~~~~~~~              [no-boolean]
+of(n).pipe(skipWhile(Boolean));
+                     ~~~~~~~        [no-boolean]
+of(n).pipe(takeWhile(Boolean));
+                     ~~~~~~~        [no-boolean]
+
+[no-boolean]: Using Boolean as a predicate or projector is forbidden
