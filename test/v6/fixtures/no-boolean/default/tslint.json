@@ -1,8 +1,0 @@
-{
-  "defaultSeverity": "error",
-  "jsRules": {},
-  "rules": {
-    "rxjs-no-boolean": { "severity": "error" }
-  },
-  "rulesDirectory": "../../../../../build/rules"
-}
