@@ -30,7 +30,7 @@
     "rxjs": "^6.0.0",
     "tslint": "^5.1.0",
     "tslint-etc": "^1.5.1",
-    "typescript": "~3.5.1"
+    "typescript": "~3.6.2s"
   },
   "homepage": "https://github.com/cartant/rxjs-tslint-rules",
   "husky": {
