@@ -1,3 +1,10 @@
+<a name="4.25.0"></a>
+## [4.25.0](https://github.com/cartant/rxjs-tslint-rules/compare/v4.24.3...v4.25.0) (2019-09-07)
+
+## Features
+
+* Added the `rxjs-no-index` rule. ([9db9385](https://github.com/cartant/rxjs-tslint-rules/commit/9db9385))
+
 <a name="4.24.3"></a>
 ## [4.24.3](https://github.com/cartant/rxjs-tslint-rules/compare/v4.24.2...v4.24.3) (2019-06-28)
 
