@@ -99,6 +99,7 @@ The package includes the following rules (none of which are enabled by default):
 | `rxjs-no-ignored-replay-buffer` | Disallows using `ReplaySubject`, `publishReplay` or `shareReplay` without specifying the buffer size. | None |
 | `rxjs-no-ignored-subscribe` | Disallows the calling of subscribe without specifying arguments. | None |
 | `rxjs-no-ignored-subscription` | Disallows ignoring the subscription returned by subscribe. | None |
+| `rxjs-no-index` | Disallows importation from `rxjs/index`, etc. - for the reason, see [this issue](https://github.com/ReactiveX/rxjs/issues/4230). | None |
 | `rxjs-no-internal` | Disallows importation from `rxjs/internal`. | None |
 | `rxjs-no-nested-subscribe` | Disallows the calling of `subscribe` within a `subscribe` callback. | None |
 | `rxjs-no-operator` | Disallows importation from `rxjs/operator`. Useful if you prefer ['pipeable' operators](https://github.com/ReactiveX/rxjs/blob/master/doc/pipeable-operators.md) - which are located in the `operators` directory. | None |
