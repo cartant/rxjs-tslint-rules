@@ -1,0 +1,8 @@
+{
+  "defaultSeverity": "error",
+  "jsRules": {},
+  "rules": {
+    "rxjs-no-index": { "severity": "error" }
+  },
+  "rulesDirectory": "../../../../../build/rules"
+}
