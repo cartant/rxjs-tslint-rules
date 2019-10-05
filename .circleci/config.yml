@@ -7,7 +7,9 @@ jobs:
       - checkout
       - run:
           name: Install Greenkeeper Lockfile
-          command: "yarn global add greenkeeper-lockfile@1"
+          command: |
+            export PATH=$PATH:$(yarn global bin)
+            yarn global add greenkeeper-lockfile@1
       - run:
           name: Update Greenkeeper Lockfile
           command: "greenkeeper-lockfile-update"
