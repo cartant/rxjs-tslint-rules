@@ -1,0 +1,31 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: circleci/node:12.11.1
+    steps:
+      - checkout
+      - run:
+          name: Install Greenkeeper Lockfile
+          command: "yarn global add greenkeeper-lockfile@1"
+      - run:
+          name: Update Greenkeeper Lockfile
+          command: "yarn greenkeeper-lockfile-update"
+      - restore_cache:
+          name: Restore Yarn Package Cache
+          keys:
+            - yarn-packages-{{ checksum "yarn.lock" }}
+      - run:
+          name: Install Packages
+          command: yarn install
+      - save_cache:
+          name: Save Yarn Package Cache
+          key: yarn-packages-{{ checksum "yarn.lock" }}
+          paths:
+            - ~/.cache/yarn
+      - run:
+          name: Test
+          command: yarn test
+      - run:
+          name: Upload Greenkeeper Lockfile
+          command: "yarn greenkeeper-lockfile-upload"
