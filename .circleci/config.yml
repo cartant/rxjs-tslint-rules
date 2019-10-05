@@ -10,7 +10,7 @@ jobs:
           command: "yarn global add greenkeeper-lockfile@1"
       - run:
           name: Update Greenkeeper Lockfile
-          command: "yarn greenkeeper-lockfile-update"
+          command: "greenkeeper-lockfile-update"
       - restore_cache:
           name: Restore Yarn Package Cache
           keys:
@@ -28,4 +28,4 @@ jobs:
           command: yarn test
       - run:
           name: Upload Greenkeeper Lockfile
-          command: "yarn greenkeeper-lockfile-upload"
+          command: "greenkeeper-lockfile-upload"
