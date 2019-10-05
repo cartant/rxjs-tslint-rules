@@ -8,7 +8,8 @@ jobs:
       - run:
           name: Install Greenkeeper Lockfile
           command: |
-            export PATH=$PATH:$(yarn global bin)
+            echo 'export PATH=$(yarn global bin):$PATH' >> $BASH_ENV
+            source $BASH_ENV
             yarn global add greenkeeper-lockfile@1
       - run:
           name: Update Greenkeeper Lockfile
