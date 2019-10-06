@@ -2,6 +2,7 @@ version: 2
 jobs:
   build:
     docker:
+      # https://circleci.com/docs/2.0/docker-image-tags.json
       - image: circleci/node:current
     steps:
       - checkout
