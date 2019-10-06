@@ -6,9 +6,6 @@ jobs:
     steps:
       - checkout
       - run:
-          name: Lint Lockfile
-          command: "npx lockfile-lint --path yarn.lock --type yarn --validate-https --allowed-hosts yarnpkg.org"
-      - run:
           name: Install Greenkeeper Lockfile
           command: |
             echo 'export PATH=$(yarn global bin):$PATH' >> $BASH_ENV
