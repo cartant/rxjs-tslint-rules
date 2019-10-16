@@ -1,0 +1,6 @@
+import "rxjs/add/observable/of";
+       ~~~~~~~~~~~~~~~~~~~~~~~~   [no-compat]
+import "rxjs/add/operator/map";
+       ~~~~~~~~~~~~~~~~~~~~~~~    [no-compat]
+
+[no-compat]: 'rxjs-compat' dependent import locations are forbidden
