@@ -6,15 +6,6 @@ jobs:
       - image: circleci/node:current
     steps:
       - checkout
-      - run:
-          name: Install Greenkeeper Lockfile
-          command: |
-            echo 'export PATH=$(yarn global bin):$PATH' >> $BASH_ENV
-            source $BASH_ENV
-            yarn global add greenkeeper-lockfile@1
-      - run:
-          name: Update Greenkeeper Lockfile
-          command: "greenkeeper-lockfile-update"
       - restore_cache:
           name: Restore Yarn Package Cache
           keys:
@@ -30,6 +21,3 @@ jobs:
       - run:
           name: Test
           command: yarn test
-      - run:
-          name: Upload Greenkeeper Lockfile
-          command: "greenkeeper-lockfile-upload"
