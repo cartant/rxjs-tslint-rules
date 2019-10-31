@@ -57,13 +57,6 @@
     "@nodelib/fs.scandir" "2.1.3"
     fastq "^1.6.0"
 
-"@phenomnomnominal/tsquery@^3.0.0":
-  version "3.0.0"
-  resolved "https://registry.yarnpkg.com/@phenomnomnominal/tsquery/-/tsquery-3.0.0.tgz#6f2f4dbf6304ff52b12cc7a5b979f20c3794a22a"
-  integrity sha512-SW8lKitBHWJ9fAYkJ9kJivuctwNYCh3BUxLdH0+XiR1GPBiu+7qiZzh8p8jqlj1LgVC1TbvfNFroaEsmYlL8Iw==
-  dependencies:
-    esquery "^1.0.1"
-
 "@phenomnomnominal/tsquery@^4.0.0":
   version "4.0.0"
   resolved "https://registry.yarnpkg.com/@phenomnomnominal/tsquery/-/tsquery-4.0.0.tgz#610e8ac968137e4a0f98c842c919bb8ad0e85718"
@@ -108,9 +101,9 @@
   integrity sha512-NYrtPht0wGzhwe9+/idPaBB+TqkY9AhTvOLMkThm0IoEfLaiVQZwBwyJ5puCkO3AUCWrmcoePjp2mbFocKy4SQ==
 
 "@types/node@*", "@types/node@^12.0.0":
-  version "12.11.7"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-12.11.7.tgz#57682a9771a3f7b09c2497f28129a0462966524a"
-  integrity sha512-JNbGaHFCLwgHn/iCckiGSOZ1XYHsKFwREtzPwSGCVld1SGhOlmZw2D4ZI94HQCrBHbADzW9m4LER/8olJTRGHA==
+  version "12.12.3"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-12.12.3.tgz#ebfe83507ac506bc3486314a8aa395be66af8d23"
+  integrity sha512-opgSsy+cEF9N8MgaVPnWVtdJ3o4mV2aMHvDq7thkQUFt0EuOHJon4rQpJfhjmNHB+ikl0Cd6WhWIErOyQ+f7tw==
 
 "@types/normalize-package-data@^2.4.0":
   version "2.4.0"
@@ -1691,11 +1684,11 @@ tslib@^1.8.0, tslib@^1.8.1, tslib@^1.9.0:
   integrity sha512-qOebF53frne81cf0S9B41ByenJ3/IuH8yJKngAX35CmiZySA0khhkovshKK+jGCaMnVomla7gVlIcc3EvKPbTQ==
 
 tslint-etc@^1.5.1:
-  version "1.7.0"
-  resolved "https://registry.yarnpkg.com/tslint-etc/-/tslint-etc-1.7.0.tgz#7cd5b500bca458067c7061aad6f53e352d0872d5"
-  integrity sha512-8NOGfr4zRquMNugz8D9gr0Tz8xxNA1Zrd2OFqURaWNKV779GO4LhqHjFL572m3MusUwSxPkUOMSmsqAwkvu6qQ==
+  version "1.7.1"
+  resolved "https://registry.yarnpkg.com/tslint-etc/-/tslint-etc-1.7.1.tgz#6f84d6b94f46b9867e65cee3dd2a1921073eb39a"
+  integrity sha512-5hG/ywGf9xCdi4Rb/wv5jTNs/L3izav+LYYE0Rp1A7WBsxyzGDlOmhfnHDYLf9sodVv1TWj9Su7IxErea0xGDA==
   dependencies:
-    "@phenomnomnominal/tsquery" "^3.0.0"
+    "@phenomnomnominal/tsquery" "^4.0.0"
     tslib "^1.8.0"
     tsutils "^3.0.0"
     tsutils-etc "^1.0.0"
