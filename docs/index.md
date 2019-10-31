@@ -41,6 +41,7 @@ The package includes the following rules (none of which are enabled by default):
 | `rxjs-no-patched` | Disallows the calling of patched methods. Methods must be imported and called explicitly - not via `Observable` or `Observable.prototype`. | [See below](#rxjs-no-add) |
 | `rxjs-no-redundant-notify` | Disallows redundant notifications from completed or errored observables. | None |
 | `rxjs-no-sharereplay` | Disallows using the `shareReplay` operator. Prior to version 6.4.0, that operator had [some surprising behaviour](https://github.com/ReactiveX/rxjs/pull/4059). | [See below](#rxjs-no-sharereplay) |
+| `rxjs-no-subclass` | Disallows subclassing RxJS classes. | None |
 | `rxjs-no-subject-unsubscribe` | Disallows calling the `unsubscribe` method of a `Subject` instance. For an explanation of why this can be a problem, see [this](https://stackoverflow.com/a/45112125/6680611) Stack Overflow answer. | None |
 | `rxjs-no-subject-value` | Disallows accessing the `value` property of a `BehaviorSubject` instance. | None |
 | `rxjs-no-tap` | An alias for `rxjs-no-do`. | None |
