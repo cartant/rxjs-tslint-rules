@@ -5,9 +5,7 @@
 
 import { tsquery } from "@phenomnomnominal/tsquery";
 import * as Lint from "tslint";
-import * as tsutils from "tsutils";
 import * as ts from "typescript";
-import { couldBeType } from "../support/util";
 
 export class Rule extends Lint.Rules.TypedRule {
   public static metadata: Lint.IRuleMetadata = {
@@ -28,8 +26,6 @@ export class Rule extends Lint.Rules.TypedRule {
     program: ts.Program
   ): Lint.RuleFailure[] {
     const failures: Lint.RuleFailure[] = [];
-    const typeChecker = program.getTypeChecker();
-
     const query = `ExpressionStatement[expression.expression.name.text=/(complete|error)/] ~ ExpressionStatement[expression.expression.name.text=/(next|complete|error)/]`;
     const expressionStatements = tsquery(sourceFile, query);
     expressionStatements.forEach(node => {
