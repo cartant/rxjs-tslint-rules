@@ -26,7 +26,7 @@ export class Rule extends Lint.Rules.TypedRule {
     program: ts.Program
   ): Lint.RuleFailure[] {
     const failures: Lint.RuleFailure[] = [];
-    const query = `ExpressionStatement[expression.expression.name.text=/(complete|error)/] ~ ExpressionStatement[expression.expression.name.text=/(next|complete|error)/]`;
+    const query = `ExpressionStatement[expression.expression.name.text=/^(complete|error)$/] ~ ExpressionStatement[expression.expression.name.text=/^(next|complete|error)$/]`;
     const expressionStatements = tsquery(sourceFile, query);
     expressionStatements.forEach(node => {
       const expressionStatement = node as ts.ExpressionStatement;
