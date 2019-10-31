@@ -1,3 +1,10 @@
+<a name="4.26.0"></a>
+## [4.26.0](https://github.com/cartant/rxjs-tslint-rules/compare/v4.25.0...v4.26.0) (2019-10-31)
+
+## Features
+
+* Added the `rxjs-no-redundant-notify` rule. ([2305cf3](https://github.com/cartant/rxjs-tslint-rules/commit/2305cf3))
+
 <a name="4.25.0"></a>
 ## [4.25.0](https://github.com/cartant/rxjs-tslint-rules/compare/v4.24.3...v4.25.0) (2019-09-07)
 
