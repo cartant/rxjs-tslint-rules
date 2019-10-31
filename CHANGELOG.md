@@ -1,3 +1,10 @@
+<a name="4.26.1"></a>
+## [4.26.1](https://github.com/cartant/rxjs-tslint-rules/compare/v4.26.0...v4.26.1) (2019-10-31)
+
+## Fixes
+
+* Use tighter regular expressions in `rxjs-no-redundant-notify` rule. ([c3cbb93](https://github.com/cartant/rxjs-tslint-rules/commit/c3cbb93))
+
 <a name="4.26.0"></a>
 ## [4.26.0](https://github.com/cartant/rxjs-tslint-rules/compare/v4.25.0...v4.26.0) (2019-10-31)
 
