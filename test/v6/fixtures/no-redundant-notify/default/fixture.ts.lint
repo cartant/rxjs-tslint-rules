@@ -1,0 +1,90 @@
+import { Observable, Subject } from "rxjs";
+
+const examples = [
+  new Observable<number>(observer => {
+    observer.next(42);
+    observer.complete();
+  }),
+  new Observable<number>(observer => {
+    observer.next(42);
+    observer.error(new Error("Kaboom!"));
+  }),
+  new Observable<number>(observer => {
+    observer.complete();
+    observer.next(42);
+             ~~~~                               [no-redundant-notify]
+  }),
+  new Observable<number>(observer => {
+    observer.complete();
+    observer.complete();
+             ~~~~~~~~                           [no-redundant-notify]
+  }),
+  new Observable<number>(observer => {
+    observer.complete();
+    observer.error(new Error("Kaboom!"));
+             ~~~~~                              [no-redundant-notify]
+  }),
+  new Observable<number>(observer => {
+    observer.error(new Error("Kaboom!"));
+    observer.next(42);
+             ~~~~                               [no-redundant-notify]
+  }),
+  new Observable<number>(observer => {
+    observer.error(new Error("Kaboom!"));
+    observer.complete();
+             ~~~~~~~~                           [no-redundant-notify]
+  }),
+  new Observable<number>(observer => {
+    observer.error(new Error("Kaboom!"));
+    observer.error(new Error("Kaboom!"));
+             ~~~~~                              [no-redundant-notify]
+  }
+  () => {
+    const subject = new Subject<number>();
+    subject.next(42);
+    subject.complete();
+  },
+  () => {
+    const subject = new Subject<number>();
+    subject.next(42);
+    subject.error(new Error("Kaboom!"));
+  },
+  () => {
+    const subject = new Subject<number>();
+    subject.complete();
+    subject.next(42);
+            ~~~~                                [no-redundant-notify]
+  },
+  () => {
+    const subject = new Subject<number>();
+    subject.complete();
+    subject.complete();
+            ~~~~~~~~                            [no-redundant-notify]
+  },
+  () => {
+    const subject = new Subject<number>();
+    subject.complete();
+    subject.error(new Error("Kaboom!"));
+            ~~~~~                               [no-redundant-notify]
+  },
+  () => {
+    const subject = new Subject<number>();
+    subject.error(new Error("Kaboom!"));
+    subject.next(42);
+            ~~~~                                [no-redundant-notify]
+  },
+  () => {
+    const subject = new Subject<number>();
+    subject.error(new Error("Kaboom!"));
+    subject.complete();
+            ~~~~~~~~                            [no-redundant-notify]
+  },
+  () => {
+    const subject = new Subject<number>();
+    subject.error(new Error("Kaboom!"));
+    subject.error(new Error("Kaboom!"));
+            ~~~~~                               [no-redundant-notify]
+  }
+];
+
+[no-redundant-notify]: Redundant notifications are forbidden
