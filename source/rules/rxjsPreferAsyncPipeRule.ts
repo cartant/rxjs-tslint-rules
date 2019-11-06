@@ -29,12 +29,11 @@ export class Rule extends Lint.Rules.TypedRule {
     const failures: Lint.RuleFailure[] = [];
     const typeChecker = program.getTypeChecker();
 
-    const componentIdentifiers = tsquery(
+    const classDeclarations = tsquery(
       sourceFile,
-      `ClassDeclaration Identifier[name=/Component$/]`
+      `ClassDeclaration:has(Decorator[expression.expression.name="Component"])`
     );
-    componentIdentifiers.forEach(componentIdentifier => {
-      const { parent: classDeclaration } = componentIdentifier;
+    classDeclarations.forEach(classDeclaration => {
       const propertyAccessExpressions = tsquery(
         classDeclaration,
         `CallExpression PropertyAccessExpression[name.name="subscribe"]`
