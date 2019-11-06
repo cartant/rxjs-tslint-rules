@@ -2,7 +2,7 @@
   "defaultSeverity": "error",
   "jsRules": {},
   "rules": {
-    "rxjs-prefer-async-pipe": { "severity": "error" }
+    "rxjs-prefer-angular-async-pipe": { "severity": "error" }
   },
   "rulesDirectory": "../../../../../build/rules"
 }
