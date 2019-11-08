@@ -403,6 +403,7 @@ The following options are equivalent to the rule's default configuration:
 
 This rule tries to avoid memory leaks in angular components when calling `.subscribe()` without properly unsubscribing 
 by enforcing the application of the `takeUntil` operator before the `.subscribe()` 
+as well as before certain operators (`publish`, `publishBehavior`, `publishLast`, `publishReplay`, `shareReplay`)
 and ensuring the component implements the `ngOnDestroy` 
 method invoking `this.destroy$.next()` and `this.destroy$.complete()`.
 
@@ -427,6 +428,11 @@ This should trigger an error:
 
 class MyComponent {
 //    ~~~~~~~~~~~    component containing subscribe must implement the ngOnDestroy() method
+
+    
+    k$ = a.pipe(shareReplay(1));
+//              ~~~~~~~~~~~~~~   the shareReplay operator used within a component must be preceded by takeUntil
+
     someMethod() {
         const e = a.pipe(switchMap(_ => b)).subscribe();
 //                                          ~~~~~~~~~      subscribe within a component must be preceded by takeUntil
@@ -438,6 +444,8 @@ while this should be fine:
 ```typescript
 class MyComponent implements SomeInterface, OnDestroy {
     private destroy$: Subject<void> = new Subject<void>();
+
+    k$ = a.pipe(takeUntil(this.destroy$), shareReplay(1));
 
     someMethod() {
         const e = a.pipe(switchMap(_ => b), takeUntil(this.destroy$)).subscribe();
