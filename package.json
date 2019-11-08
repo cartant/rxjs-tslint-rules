@@ -83,6 +83,7 @@
     "test:mocha": "mocha \"./build/**/*-spec.js\"",
     "test:tslint-v5": "yarn --cwd ./test/v5 install && yarn --cwd ./test/v5 upgrade && tslint --test \"./test/v5/fixtures/**/tslint.json\"",
     "test:tslint-v6": "yarn --cwd ./test/v6 install && yarn --cwd ./test/v6 upgrade && tslint --test \"./test/v6/fixtures/**/tslint.json\"",
+    "special-takeuntil": "npm run test:build && tslint --test \"test/v6/fixtures/prefer-angular-takeuntil-before-unsubscribe/**/tslint.json\"",
     "test:tslint-v6-compat": "yarn --cwd ./test/v6-compat install && yarn --cwd ./test/v6-compat upgrade && tslint --test \"./test/v6-compat/fixtures/**/tslint.json\""
   },
   "version": "4.26.1"

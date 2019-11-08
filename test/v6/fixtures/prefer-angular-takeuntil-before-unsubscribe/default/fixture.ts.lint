@@ -1,5 +1,5 @@
 import { combineLatest, of, Subject } from "rxjs";
-import { switchMap, takeUntil } from "rxjs/operators";
+import { switchMap, takeUntil, shareReplay, tap } from "rxjs/operators";
 
 const a = of("a");
 const b = of("b");
@@ -30,6 +30,9 @@ class MyComponent {
 
     private destroy$: Subject<void> = new Subject<void>();
 
+    k$ = a.pipe(shareReplay(1));
+                ~~~~~~~~~~~~~~            [enforce-takeuntil-before-operator-sharereplay]
+
     someMethod() {
         const d = a.subscribe();
                     ~~~~~~~~~                               [enforce-takeuntil-before-unsubscribe]
@@ -39,11 +42,24 @@ class MyComponent {
 
         const f = a.pipe(switchMap(_ => b), takeUntil(this.destroy$)).subscribe();
 
-        const g = a.pipe(takeUntil(d), s => switchMap(_ => b)).subscribe();
-                                                               ~~~~~~~~~            [enforce-takeuntil-before-unsubscribe]
+        const g = a.pipe(takeUntil(this.destroy$), switchMap(_ => b)).subscribe();
+                                                                      ~~~~~~~~~            [enforce-takeuntil-before-unsubscribe]
 
-        const f = a.pipe(switchMap(_ => b), takeUntil(d)).subscribe();
+        const h = a.pipe(switchMap(_ => b), takeUntil(d)).subscribe();
                                                       ~            [enforce-takeuntil-before-unsubscribe-subject-name]
+
+        const k1 = a.pipe(takeUntil(this.destroy$), shareReplay(1)).subscribe();
+                                                                    ~~~~~~~~~            [enforce-takeuntil-before-unsubscribe]
+
+        const k = a.pipe(shareReplay(1), takeUntil(this.destroy$)).subscribe();
+                         ~~~~~~~~~~~~~~            [enforce-takeuntil-before-operator-sharereplay]
+
+        const m = a.pipe(tap(), shareReplay(1), takeUntil(this.destroy$)).subscribe();
+                                ~~~~~~~~~~~~~~            [enforce-takeuntil-before-operator-sharereplay]
+
+        const n = a.pipe(takeUntil(d), shareReplay(1), takeUntil(this.destroy$)).subscribe();
+                                   ~            [enforce-takeuntil-before-unsubscribe-subject-name]
+
     }
 }
 
@@ -70,8 +86,12 @@ class MyComponent implements OnDestroy {
 class MyComponent implements SomeInterface, OnDestroy {
     private destroy$: Subject<void> = new Subject<void>();
 
+    k$ = a.pipe(takeUntil(this.destroy$), shareReplay(1));
+
     someMethod() {
         const e = a.pipe(switchMap(_ => b), takeUntil(this.destroy$)).subscribe();
+
+        const k = a.pipe(takeUntil(this.destroy$), shareReplay(1), takeUntil(this.destroy$)).subscribe();
     }
 
     ngOnDestroy() {
@@ -86,3 +106,4 @@ class MyComponent implements SomeInterface, OnDestroy {
 [enforce-takeuntil-before-unsubscribe-ondestroy]: component containing subscribe must implement the ngOnDestroy() method
 [enforce-takeuntil-before-unsubscribe-next-missing]: there must be an invocation of this._destroy$.next() in ngOnDestroy()
 [enforce-takeuntil-before-unsubscribe-complete-missing]: there must be an invocation of this._destroy$.complete() in ngOnDestroy()
+[enforce-takeuntil-before-operator-sharereplay]: the shareReplay operator used within a component must be preceded by takeUntil

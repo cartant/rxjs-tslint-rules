@@ -36,6 +36,9 @@ export class Rule extends Lint.Rules.TypedRule {
   public static FAILURE_STRING_SUBJECT_NAME =
     "takeUntil argument must be one of {allowedDestroySubjectNames}";
 
+  public static FAILURE_STRING_OPERATOR =
+    "the {operator} operator used within a component must be preceded by takeUntil";
+
   public static FAILURE_STRING_NG_ON_DESTROY =
     "component containing subscribe must implement the ngOnDestroy() method";
 
@@ -43,6 +46,14 @@ export class Rule extends Lint.Rules.TypedRule {
     "there must be an invocation of {destroySubjectName}.{methodName}() in ngOnDestroy()";
 
   private allowedDestroySubjectNames: string[] = ["destroy$", "_destroy$"];
+
+  private operatorsRequiringPrecedingTakeuntil: string[] = [
+    "publish",
+    "publishBehavior",
+    "publishLast",
+    "publishReplay",
+    "shareReplay"
+  ];
 
   public applyWithProgram(
     sourceFile: ts.SourceFile,
@@ -100,34 +111,59 @@ export class Rule extends Lint.Rules.TypedRule {
     /** whether there is at least one observable.subscribe() expression */
     let hasSubscribeInComponent = false;
     /** list of destroy subjects used in takeUntil() operators */
-    const destroySubjectNamesUsed: string[] = [];
+    const destroySubjectNamesUsed: {
+      [destroySubjectName: string]: boolean;
+    } = {};
 
     // find observable.subscribe() call expressions
-    const propertyAccessExpressions = tsquery(
+    const subscribePropertyAccessExpressions = tsquery(
       componentClassDeclaration,
       `CallExpression > PropertyAccessExpression[name.name="subscribe"]`
     );
 
     // check whether it is an observable and check the takeUntil before the subscribe
-    propertyAccessExpressions.forEach(node => {
+    subscribePropertyAccessExpressions.forEach(node => {
       const propertyAccessExpression = node as ts.PropertyAccessExpression;
       const type = typeChecker.getTypeAtLocation(
         propertyAccessExpression.expression
       );
       if (couldBeType(type, "Observable")) {
-        const subscribeFailures = this.ensureTakeuntilBeforeSubscribe(
+        const subscribeFailures = this.checkTakeuntilBeforeSubscribe(
           sourceFile,
           propertyAccessExpression
         );
         failures.push(...subscribeFailures.failures);
-        if (
-          subscribeFailures.destroySubjectName &&
-          !destroySubjectNamesUsed.includes(
-            subscribeFailures.destroySubjectName
-          )
-        ) {
-          destroySubjectNamesUsed.push(subscribeFailures.destroySubjectName);
+        if (subscribeFailures.destroySubjectName) {
+          destroySubjectNamesUsed[subscribeFailures.destroySubjectName] = true;
         }
+        hasSubscribeInComponent = true;
+      }
+    });
+
+    // find observable.pipe() call expressions
+    const pipePropertyAccessExpressions = tsquery(
+      componentClassDeclaration,
+      `CallExpression > PropertyAccessExpression[name.name="pipe"]`
+    );
+
+    // check whether it is an observable and check the takeUntil before operators requiring it
+    pipePropertyAccessExpressions.forEach(node => {
+      const propertyAccessExpression = node as ts.PropertyAccessExpression;
+      const pipeCallExpression = node.parent as ts.CallExpression;
+      const type = typeChecker.getTypeAtLocation(
+        propertyAccessExpression.expression
+      );
+      if (couldBeType(type, "Observable")) {
+        const pipeFailures = this.checkTakeuntilBeforeOperatorsInPipe(
+          sourceFile,
+          pipeCallExpression.arguments
+        );
+        failures.push(...pipeFailures.failures);
+        pipeFailures.destroySubjectNames.forEach(destroySubjectName => {
+          if (destroySubjectName) {
+            destroySubjectNamesUsed[destroySubjectName] = true;
+          }
+        });
         hasSubscribeInComponent = true;
       }
     });
@@ -137,7 +173,7 @@ export class Rule extends Lint.Rules.TypedRule {
       const ngOnDestroyFailures = this.checkNgOnDestroy(
         sourceFile,
         componentClassDeclaration as ts.ClassDeclaration,
-        destroySubjectNamesUsed
+        Object.keys(destroySubjectNamesUsed)
       );
       failures.push(...ngOnDestroyFailures);
     }
@@ -148,7 +184,7 @@ export class Rule extends Lint.Rules.TypedRule {
   /**
    * Checks whether a .subscribe() is preceded by a .pipe(<...>, takeUntil(<...>))
    */
-  private ensureTakeuntilBeforeSubscribe(
+  private checkTakeuntilBeforeSubscribe(
     sourceFile: ts.SourceFile,
     node: ts.PropertyAccessExpression
   ): { failures: Lint.RuleFailure[]; destroySubjectName: string } {
@@ -170,19 +206,16 @@ export class Rule extends Lint.Rules.TypedRule {
       if (pipedOperators.length > 0) {
         const lastPipedOperator = pipedOperators[pipedOperators.length - 1];
         // check whether the last operator in the .pipe() call is takeUntil()
-        if (
-          tsutils.isCallExpression(lastPipedOperator) &&
-          tsutils.isIdentifier(lastPipedOperator.expression) &&
-          lastPipedOperator.expression.text === "takeUntil"
-        ) {
-          lastTakeUntilFound = true;
-          // check the argument of takeUntil()
-          const destroySubjectNameCheck = this.checkDestroySubjectName(
+        if (tsutils.isCallExpression(lastPipedOperator)) {
+          const lastPipedOperatorFailures = this.checkTakeuntilOperator(
             sourceFile,
             lastPipedOperator
           );
-          failures.push(...destroySubjectNameCheck.failures);
-          destroySubjectName = destroySubjectNameCheck.destroySubjectName;
+          if (lastPipedOperatorFailures.isTakeUntil) {
+            lastTakeUntilFound = true;
+            destroySubjectName = lastPipedOperatorFailures.destroySubjectName;
+            failures.push(...lastPipedOperatorFailures.failures);
+          }
         }
       }
     }
@@ -201,6 +234,101 @@ export class Rule extends Lint.Rules.TypedRule {
     }
 
     return { failures, destroySubjectName: destroySubjectName };
+  }
+
+  /**
+   * Checks whether there is a takeUntil() operator before operators like shareReplay()
+   */
+  private checkTakeuntilBeforeOperatorsInPipe(
+    sourceFile: ts.SourceFile,
+    pipeArguments: ts.NodeArray<ts.Expression>
+  ): { failures: Lint.RuleFailure[]; destroySubjectNames: string[] } {
+    const failures: Lint.RuleFailure[] = [];
+    const destroySubjectNames: string[] = [];
+
+    // go though all pipe arguments, i.e. rxjs operators
+    pipeArguments.forEach((pipeArgument, i) => {
+      // check whether the operator requires a preceding takeuntil
+      if (
+        tsutils.isCallExpression(pipeArgument) &&
+        tsutils.isIdentifier(pipeArgument.expression) &&
+        this.operatorsRequiringPrecedingTakeuntil.includes(
+          pipeArgument.expression.getText()
+        )
+      ) {
+        let precedingTakeUntilOperatorFound = false;
+        // check the preceding operator to be takeuntil
+        if (
+          i > 0 &&
+          pipeArguments[i - 1] &&
+          tsutils.isCallExpression(pipeArguments[i - 1])
+        ) {
+          const precedingOperator = pipeArguments[i - 1] as ts.CallExpression;
+          const precedingOperatorFailures = this.checkTakeuntilOperator(
+            sourceFile,
+            precedingOperator
+          );
+          if (precedingOperatorFailures.isTakeUntil) {
+            precedingTakeUntilOperatorFound = true;
+            failures.push(...precedingOperatorFailures.failures);
+            if (precedingOperatorFailures.destroySubjectName) {
+              destroySubjectNames.push(
+                precedingOperatorFailures.destroySubjectName
+              );
+            }
+          }
+        }
+
+        if (!precedingTakeUntilOperatorFound) {
+          failures.push(
+            new Lint.RuleFailure(
+              sourceFile,
+              pipeArgument.getStart(),
+              pipeArgument.getStart() + pipeArgument.getWidth(),
+              Rule.FAILURE_STRING_OPERATOR.replace(
+                "{operator}",
+                pipeArgument.expression.getText()
+              ),
+              this.ruleName
+            )
+          );
+        }
+      }
+    });
+
+    return { failures, destroySubjectNames: destroySubjectNames };
+  }
+
+  /**
+   * Checks whether the operator given is takeUntil and uses an allowed destroy subject name
+   */
+  private checkTakeuntilOperator(
+    sourceFile: ts.SourceFile,
+    operator: ts.CallExpression
+  ): {
+    failures: Lint.RuleFailure[];
+    destroySubjectName: string;
+    isTakeUntil: boolean;
+  } {
+    const failures: Lint.RuleFailure[] = [];
+    let destroySubjectName: string;
+    let isTakeUntil: boolean = false;
+
+    if (
+      tsutils.isIdentifier(operator.expression) &&
+      operator.expression.text === "takeUntil"
+    ) {
+      isTakeUntil = true;
+      // check the argument of takeUntil()
+      const destroySubjectNameCheck = this.checkDestroySubjectName(
+        sourceFile,
+        operator
+      );
+      failures.push(...destroySubjectNameCheck.failures);
+      destroySubjectName = destroySubjectNameCheck.destroySubjectName;
+    }
+
+    return { failures, destroySubjectName, isTakeUntil };
   }
 
   /**
@@ -310,7 +438,7 @@ export class Rule extends Lint.Rules.TypedRule {
   }
 
   /**
-   * Checks whether all >destroySubjectNameUsed>.<methodName>() are invoked in the ngOnDestroyMethod
+   * Checks whether all <destroySubjectNameUsed>.<methodName>() are invoked in the ngOnDestroyMethod
    */
   private checkDestroySubjectMethodInvocation(
     sourceFile: ts.SourceFile,
