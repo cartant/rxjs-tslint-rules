@@ -25,7 +25,7 @@ export class Rule extends Lint.Rules.TypedRule {
       An optional object with optional \`destroySubjectNames\` property.
       The property is an array containing the allowed subject names expected as argument of \`takeUntil\`, defaults to ['destroy$', '_destroy$', 'destroyed$', '_destroyed$'].`,
     requiresTypeInfo: true,
-    ruleName: "rxjs-prefer-angular-takeuntil-before-unsubscribe",
+    ruleName: "rxjs-prefer-angular-takeuntil-before-subscribe",
     type: "functionality",
     typescriptOnly: true
   };

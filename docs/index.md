@@ -53,7 +53,7 @@ The package includes the following rules (none of which are enabled by default):
 | `rxjs-no-unsafe-takeuntil` | Disallows the application of operators after `takeUntil`. Operators placed after `takeUntil` can effect [subscription leaks](https://medium.com/@cartant/rxjs-avoiding-takeuntil-leaks-fb5182d047ef). | [See below](#rxjs-no-unsafe-takeuntil) |
 | `rxjs-no-unused-add` | Disallows the importation of patched observables or operators that are not used in the module. | None |
 | `rxjs-no-wholesale` | Disallows the wholesale importation of `rxjs` or `rxjs/Rx`. | None |
-| `rxjs-prefer-angular-takeuntil-before-subscribe` | Enforces the application of the `takeUntil` operator when calling of `subscribe` within an Angular component. | [See below](#rxjs-angular-prefer-takeuntil-before-subscribe) |
+| `rxjs-prefer-angular-takeuntil-before-subscribe` | Enforces the application of the `takeUntil` operator when calling of `subscribe` within an Angular component. | [See below](#rxjs-prefer-angular-takeuntil-before-subscribe) |
 | `rxjs-prefer-angular-async-pipe` | Disallows the calling of `subscribe` within an Angular component. | None |
 | `rxjs-prefer-angular-composition` | Enforces the composition of subscriptions within an Angular component. | None |
 | `rxjs-prefer-observer` | Enforces the passing of observers to `subscribe` and `tap`. See [this RxJS issue](https://github.com/ReactiveX/rxjs/issues/4159). | [See below](#rxjs-prefer-observer) |
@@ -335,7 +335,10 @@ The following options are equivalent to the rule's default configuration:
 
 <a name="rxjs-angular-prefer-takeuntil-before-subscribe"></a>
 
-#### rxjs-angular-prefer-takeuntil-before-subscribe
+
+<a name="rxjs-prefer-angular-takeuntil-before-subscribe"></a>
+
+#### rxjs-prefer-angular-takeuntil-before-subscribe
 
 This rule tries to avoid memory leaks in angular components when calling `.subscribe()` without properly unsubscribing 
 by enforcing the application of the `takeUntil` operator before the `.subscribe()` 
@@ -350,7 +353,7 @@ The following options are equivalent to the rule's default configuration:
 
 ```json
 "rules": {
-  "rxjs-angular-prefer-takeuntil-before-subscribe": {
+  "rxjs-prefer-angular-takeuntil-before-subscribe": {
     "options": [{
       "allowedDestroySubjectNames": ["destroy$", "_destroy$", "destroyed$", "_destroyed$"]
     }],
@@ -361,23 +364,30 @@ The following options are equivalent to the rule's default configuration:
 ##### Example
 This should trigger an error:
 ```typescript
-
+@Component({
+  selector: 'app-my',
+  template: '<div>{{k$ | async}}</div>'
+})
 class MyComponent {
-//    ~~~~~~~~~~~    component containing subscribe must implement the ngOnDestroy() method
+      ~~~~~~~~~~~    component containing subscribe must implement the ngOnDestroy() method
 
     
     k$ = a.pipe(shareReplay(1));
-//              ~~~~~~~~~~~~~~   the shareReplay operator used within a component must be preceded by takeUntil
+                ~~~~~~~~~~~~~~   the shareReplay operator used within a component must be preceded by takeUntil
 
     someMethod() {
         const e = a.pipe(switchMap(_ => b)).subscribe();
-//                                          ~~~~~~~~~      subscribe within a component must be preceded by takeUntil
+                                            ~~~~~~~~~      subscribe within a component must be preceded by takeUntil
     }
 }
 ```
 
 while this should be fine:
 ```typescript
+@Component({
+  selector: 'app-my',
+  template: '<div>{{k$ | async}}</div>'
+})
 class MyComponent implements SomeInterface, OnDestroy {
     private destroy$: Subject<void> = new Subject<void>();
 
@@ -393,6 +403,7 @@ class MyComponent implements SomeInterface, OnDestroy {
     }
 }
 ```
+
 
 <a name="rxjs-prefer-observer"></a>
 

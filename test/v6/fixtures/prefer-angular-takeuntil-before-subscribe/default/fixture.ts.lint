@@ -26,7 +26,7 @@ class MyClass {
   selector: 'app-my'
 })
 class MyComponent {
-      ~~~~~~~~~~~                               [enforce-takeuntil-before-unsubscribe-ondestroy]
+      ~~~~~~~~~~~                               [enforce-takeuntil-before-subscribe-ondestroy]
 
     private destroy$: Subject<void> = new Subject<void>();
 
@@ -35,21 +35,21 @@ class MyComponent {
 
     someMethod() {
         const d = a.subscribe();
-                    ~~~~~~~~~                               [enforce-takeuntil-before-unsubscribe]
+                    ~~~~~~~~~                               [enforce-takeuntil-before-subscribe]
 
         const e = a.pipe(switchMap(_ => b)).subscribe();
-                                            ~~~~~~~~~                               [enforce-takeuntil-before-unsubscribe]
+                                            ~~~~~~~~~                               [enforce-takeuntil-before-subscribe]
 
         const f = a.pipe(switchMap(_ => b), takeUntil(this.destroy$)).subscribe();
 
         const g = a.pipe(takeUntil(this.destroy$), switchMap(_ => b)).subscribe();
-                                                                      ~~~~~~~~~            [enforce-takeuntil-before-unsubscribe]
+                                                                      ~~~~~~~~~            [enforce-takeuntil-before-subscribe]
 
         const h = a.pipe(switchMap(_ => b), takeUntil(d)).subscribe();
-                                                      ~            [enforce-takeuntil-before-unsubscribe-subject-name]
+                                                      ~            [enforce-takeuntil-before-subscribe-subject-name]
 
         const k1 = a.pipe(takeUntil(this.destroy$), shareReplay(1)).subscribe();
-                                                                    ~~~~~~~~~            [enforce-takeuntil-before-unsubscribe]
+                                                                    ~~~~~~~~~            [enforce-takeuntil-before-subscribe]
 
         const k = a.pipe(shareReplay(1), takeUntil(this.destroy$)).subscribe();
                          ~~~~~~~~~~~~~~            [enforce-takeuntil-before-operator-sharereplay]
@@ -58,7 +58,7 @@ class MyComponent {
                                 ~~~~~~~~~~~~~~            [enforce-takeuntil-before-operator-sharereplay]
 
         const n = a.pipe(takeUntil(d), shareReplay(1), takeUntil(this.destroy$)).subscribe();
-                                   ~            [enforce-takeuntil-before-unsubscribe-subject-name]
+                                   ~            [enforce-takeuntil-before-subscribe-subject-name]
 
     }
 }
@@ -72,8 +72,8 @@ class MyComponent implements OnDestroy {
     }
 
     ngOnDestroy() {
-    ~~~~~~~~~~~            [enforce-takeuntil-before-unsubscribe-next-missing]
-    ~~~~~~~~~~~            [enforce-takeuntil-before-unsubscribe-complete-missing]
+    ~~~~~~~~~~~            [enforce-takeuntil-before-subscribe-next-missing]
+    ~~~~~~~~~~~            [enforce-takeuntil-before-subscribe-complete-missing]
       // this._destroy$.next() is missing
       this.destroy$.next();
       this.destroy$.complete();
@@ -101,9 +101,9 @@ class MyComponent implements SomeInterface, OnDestroy {
 }
 
 
-[enforce-takeuntil-before-unsubscribe]: subscribe within a component must be preceded by takeUntil
-[enforce-takeuntil-before-unsubscribe-subject-name]: takeUntil argument must be one of [this.destroy$, this._destroy$]
-[enforce-takeuntil-before-unsubscribe-ondestroy]: component containing subscribe must implement the ngOnDestroy() method
-[enforce-takeuntil-before-unsubscribe-next-missing]: there must be an invocation of this._destroy$.next() in ngOnDestroy()
-[enforce-takeuntil-before-unsubscribe-complete-missing]: there must be an invocation of this._destroy$.complete() in ngOnDestroy()
+[enforce-takeuntil-before-subscribe]: subscribe within a component must be preceded by takeUntil
+[enforce-takeuntil-before-subscribe-subject-name]: takeUntil argument must be one of [this.destroy$, this._destroy$]
+[enforce-takeuntil-before-subscribe-ondestroy]: component containing subscribe must implement the ngOnDestroy() method
+[enforce-takeuntil-before-subscribe-next-missing]: there must be an invocation of this._destroy$.next() in ngOnDestroy()
+[enforce-takeuntil-before-subscribe-complete-missing]: there must be an invocation of this._destroy$.complete() in ngOnDestroy()
 [enforce-takeuntil-before-operator-sharereplay]: the shareReplay operator used within a component must be preceded by takeUntil
