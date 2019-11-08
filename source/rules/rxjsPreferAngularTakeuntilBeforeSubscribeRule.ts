@@ -108,8 +108,6 @@ export class Rule extends Lint.Rules.TypedRule {
     const failures: Lint.RuleFailure[] = [];
 
     const typeChecker = program.getTypeChecker();
-    /** whether there is at least one observable.subscribe() expression */
-    let hasSubscribeInComponent = false;
     /** list of destroy subjects used in takeUntil() operators */
     const destroySubjectNamesUsed: {
       [destroySubjectName: string]: boolean;
@@ -136,7 +134,6 @@ export class Rule extends Lint.Rules.TypedRule {
         if (subscribeFailures.destroySubjectName) {
           destroySubjectNamesUsed[subscribeFailures.destroySubjectName] = true;
         }
-        hasSubscribeInComponent = true;
       }
     });
 
@@ -164,16 +161,16 @@ export class Rule extends Lint.Rules.TypedRule {
             destroySubjectNamesUsed[destroySubjectName] = true;
           }
         });
-        hasSubscribeInComponent = true;
       }
     });
 
     // check the ngOnDestroyMethod
-    if (hasSubscribeInComponent) {
+    const destroySubjectNamesUsedList = Object.keys(destroySubjectNamesUsed);
+    if (destroySubjectNamesUsedList.length > 0) {
       const ngOnDestroyFailures = this.checkNgOnDestroy(
         sourceFile,
         componentClassDeclaration as ts.ClassDeclaration,
-        Object.keys(destroySubjectNamesUsed)
+        destroySubjectNamesUsedList
       );
       failures.push(...ngOnDestroyFailures);
     }
@@ -401,7 +398,7 @@ export class Rule extends Lint.Rules.TypedRule {
   ): Lint.RuleFailure[] {
     const failures: Lint.RuleFailure[] = [];
     const ngOnDestroyMethod = classDeclaration.members.find(
-      member => member.name.getText() === "ngOnDestroy"
+      member => member.name && member.name.getText() === "ngOnDestroy"
     );
 
     // check whether the ngOnDestroy method is implemented
