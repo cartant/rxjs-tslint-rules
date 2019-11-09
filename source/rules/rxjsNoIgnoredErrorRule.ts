@@ -46,8 +46,8 @@ export class Walker extends Lint.ProgramAwareRuleWalker {
         name === "subscribe" &&
         isReferenceType(type) &&
         couldBeType(type, "Observable") &&
-        (node.arguments.length &&
-          this.nodeIsLikelyAFunction(node.arguments[0])) &&
+        node.arguments.length &&
+        this.nodeIsLikelyAFunction(node.arguments[0]) &&
         node.arguments.length < 2
       ) {
         this.addFailureAtNode(expression.name, Rule.FAILURE_STRING);
