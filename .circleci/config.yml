@@ -20,4 +20,7 @@ jobs:
             - ~/.cache/yarn
       - run:
           name: Test
+          command: yarn prettier:ci
+      - run:
+          name: Test
           command: yarn test
