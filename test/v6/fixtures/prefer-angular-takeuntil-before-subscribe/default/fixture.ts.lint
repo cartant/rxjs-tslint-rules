@@ -102,7 +102,7 @@ class MyComponent implements SomeInterface, OnDestroy {
 
 
 [enforce-takeuntil-before-subscribe]: subscribe within a component must be preceded by takeUntil
-[enforce-takeuntil-before-subscribe-subject-name]: takeUntil argument must be one of [this.destroy$, this._destroy$]
+[enforce-takeuntil-before-subscribe-subject-name]: takeUntil argument must be a property of the class, e.g. takeUntil(this.destroy$)
 [enforce-takeuntil-before-subscribe-ondestroy]: component containing subscribe must implement the ngOnDestroy() method
 [enforce-takeuntil-before-subscribe-next-missing]: there must be an invocation of this._destroy$.next() in ngOnDestroy()
 [enforce-takeuntil-before-subscribe-complete-missing]: there must be an invocation of this._destroy$.complete() in ngOnDestroy()

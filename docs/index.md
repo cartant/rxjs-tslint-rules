@@ -341,26 +341,11 @@ The following options are equivalent to the rule's default configuration:
 #### rxjs-prefer-angular-takeuntil-before-subscribe
 
 This rule tries to avoid memory leaks in angular components when calling `.subscribe()` without properly unsubscribing 
-by enforcing the application of the `takeUntil` operator before the `.subscribe()` 
+by enforcing the application of the `takeUntil(this.destroy$)` operator before the `.subscribe()` 
 as well as before certain operators (`publish`, `publishBehavior`, `publishLast`, `publishReplay`, `shareReplay`)
 and ensuring the component implements the `ngOnDestroy` 
 method invoking `this.destroy$.next()` and `this.destroy$.complete()`.
 
-The rule takes an optional object with an optional `allowedDestroySubjectNames` property,
-which is an array containing the allowed subject names expected as argument of `takeUntil`, defaults to ['destroy$', '_destroy$', 'destroyed$', '_destroyed$']. 
-
-The following options are equivalent to the rule's default configuration:
-
-```json
-"rules": {
-  "rxjs-prefer-angular-takeuntil-before-subscribe": {
-    "options": [{
-      "allowedDestroySubjectNames": ["destroy$", "_destroy$", "destroyed$", "_destroyed$"]
-    }],
-    "severity": "error"
-  }
-}
-```
 ##### Example
 This should trigger an error:
 ```typescript
@@ -403,7 +388,6 @@ class MyComponent implements SomeInterface, OnDestroy {
     }
 }
 ```
-
 
 <a name="rxjs-prefer-observer"></a>
 
