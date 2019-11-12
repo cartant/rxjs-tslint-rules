@@ -15,15 +15,8 @@ export class Rule extends Lint.Rules.TypedRule {
   public static metadata: Lint.IRuleMetadata = {
     description: dedent`Enforces the application of the takeUntil operator
                         when calling of subscribe within an Angular component.`,
-    options: {
-      properties: {
-        allowedDestroySubjectNames: { type: "array", items: { type: "string" } }
-      },
-      type: "object"
-    },
-    optionsDescription: Lint.Utils.dedent`
-      An optional object with optional \`destroySubjectNames\` property.
-      The property is an array containing the allowed subject names expected as argument of \`takeUntil\`, defaults to ['destroy$', '_destroy$', 'destroyed$', '_destroyed$'].`,
+    options: null,
+    optionsDescription: "",
     requiresTypeInfo: true,
     ruleName: "rxjs-prefer-angular-takeuntil-before-subscribe",
     type: "functionality",
@@ -34,7 +27,7 @@ export class Rule extends Lint.Rules.TypedRule {
     "subscribe within a component must be preceded by takeUntil";
 
   public static FAILURE_STRING_SUBJECT_NAME =
-    "takeUntil argument must be one of {allowedDestroySubjectNames}";
+    "takeUntil argument must be a property of the class, e.g. takeUntil(this.destroy$)";
 
   public static FAILURE_STRING_OPERATOR =
     "the {operator} operator used within a component must be preceded by takeUntil";
@@ -44,8 +37,6 @@ export class Rule extends Lint.Rules.TypedRule {
 
   public static FAILURE_STRING_NG_ON_DESTROY_SUBJECT_METHOD_NOT_CALLED =
     "there must be an invocation of {destroySubjectName}.{methodName}() in ngOnDestroy()";
-
-  private allowedDestroySubjectNames: string[] = ["destroy$", "_destroy$"];
 
   private operatorsRequiringPrecedingTakeuntil: string[] = [
     "publish",
@@ -60,24 +51,6 @@ export class Rule extends Lint.Rules.TypedRule {
     program: ts.Program
   ): Lint.RuleFailure[] {
     const failures: Lint.RuleFailure[] = [];
-
-    // initialize the options
-    const options = this.getOptions();
-    if (options.ruleArguments) {
-      const allowedDestroySubjectNamesOption = options.ruleArguments.find(
-        ruleArgument =>
-          ruleArgument.hasOwnProperty("allowedDestroySubjectNames")
-      );
-      if (
-        allowedDestroySubjectNamesOption &&
-        Array.isArray(
-          allowedDestroySubjectNamesOption["allowedDestroySubjectNames"]
-        )
-      ) {
-        this.allowedDestroySubjectNames =
-          allowedDestroySubjectNamesOption["allowedDestroySubjectNames"];
-      }
-    }
 
     // find all classes with an @Component() decorator
     const componentClassDeclarations = tsquery(
@@ -330,7 +303,7 @@ export class Rule extends Lint.Rules.TypedRule {
 
   /**
    * Checks whether the argument of the given takeUntil(this.destroy$) expression
-   * is among the list of allowedDestroySubjectNames
+   * is a property of the class
    */
   private checkDestroySubjectName(
     sourceFile: ts.SourceFile,
@@ -357,12 +330,7 @@ export class Rule extends Lint.Rules.TypedRule {
         takeUntilOperatorArgument = takeUntilOperator
           .arguments[0] as ts.PropertyAccessExpression;
         destroySubjectName = takeUntilOperatorArgument.name.getText();
-
-        isAllowedDestroySubject = this.allowedDestroySubjectNames.some(
-          allowedDestroySubjectName =>
-            takeUntilOperatorArgument.name.getText() ===
-            allowedDestroySubjectName
-        );
+        isAllowedDestroySubject = true;
       }
     }
 
@@ -372,14 +340,7 @@ export class Rule extends Lint.Rules.TypedRule {
           sourceFile,
           highlightedNode.getStart(),
           highlightedNode.getStart() + highlightedNode.getWidth(),
-          Rule.FAILURE_STRING_SUBJECT_NAME.replace(
-            "{allowedDestroySubjectNames}",
-            "[" +
-              this.allowedDestroySubjectNames
-                .map(name => "this." + name)
-                .join(", ") +
-              "]"
-          ),
+          Rule.FAILURE_STRING_SUBJECT_NAME,
           this.ruleName
         )
       );
