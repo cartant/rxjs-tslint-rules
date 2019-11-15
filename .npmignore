@@ -1,3 +1,4 @@
+/.circleci
 /build
 /fixtures
 /node_modules
