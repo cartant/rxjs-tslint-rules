@@ -39,8 +39,8 @@ export class Rule extends Lint.Rules.TypedRule {
       const index = statements.indexOf(node);
       const sibling = statements[index - 1] as ts.ExpressionStatement;
       if (
-        !isExpressionObservable(sibling, typeChecker) ||
-        !isExpressionObservable(node, typeChecker)
+        !isExpressionObserver(sibling, typeChecker) ||
+        !isExpressionObserver(node, typeChecker)
       ) {
         return;
       }
@@ -82,7 +82,7 @@ function getExpressionText(
   return expression.getText();
 }
 
-function isExpressionObservable(
+function isExpressionObserver(
   expressionStatement: ts.ExpressionStatement,
   typeChecker: ts.TypeChecker
 ): boolean {
