@@ -84,6 +84,23 @@ const examples = [
     subject.error(new Error("Kaboom!"));
     subject.error(new Error("Kaboom!"));
             ~~~~~                               [no-redundant-notify]
+  },
+  () => {
+    const a = new Subject<number>();
+    const b = new Subject<number>();
+    a.error(new Error("Kaboom!"));
+    b.error(new Error("Kaboom!"));
+  },
+  () => {
+    const a = new Subject<number>();
+    const b = new Subject<number>();
+    a.complete();
+    b.complete();
+  },
+  () => {
+    const subject = new Subject<number>();
+    subject.error(new Error("Kaboom!"));
+    console.error(new Error("Kaboom!"));
   }
 ];
 
