@@ -1,3 +1,10 @@
+<a name="4.26.2"></a>
+## [4.26.2](https://github.com/cartant/rxjs-tslint-rules/compare/v4.26.1...v4.26.2) (2019-11-15)
+
+## Fixes
+
+* Fix false positives with `rxjs-no-redundant-notify` rule. ([c08c919](https://github.com/cartant/rxjs-tslint-rules/commit/c08c919))
+
 <a name="4.26.1"></a>
 ## [4.26.1](https://github.com/cartant/rxjs-tslint-rules/compare/v4.26.0...v4.26.1) (2019-10-31)
 
