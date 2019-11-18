@@ -101,6 +101,17 @@ const examples = [
     const subject = new Subject<number>();
     subject.error(new Error("Kaboom!"));
     console.error(new Error("Kaboom!"));
+  },
+  () => {
+    class SomeClass {
+      private a = new Subject<number>();
+      private b = new Subject<number>();
+      someMethod() {
+        this.a.complete();
+        this.b.next();
+        this.b.complete();
+      }
+    }
   }
 ];
 
