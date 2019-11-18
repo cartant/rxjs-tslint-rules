@@ -28,7 +28,7 @@ export class Rule extends Lint.Rules.TypedRule {
   ): Lint.RuleFailure[] {
     const failures: Lint.RuleFailure[] = [];
     const typeChecker = program.getTypeChecker();
-    const query = `ExpressionStatement[expression.expression.name.text=/^(complete|error)$/] ~ ExpressionStatement[expression.expression.name.text=/^(next|complete|error)$/]`;
+    const query = `ExpressionStatement[expression.expression.name.text=/^(complete|error)$/] + ExpressionStatement[expression.expression.name.text=/^(next|complete|error)$/]`;
     const expressionStatements = tsquery(sourceFile, query);
     expressionStatements.forEach((node: ts.ExpressionStatement) => {
       const { parent } = node;
@@ -38,13 +38,13 @@ export class Rule extends Lint.Rules.TypedRule {
       const { statements } = parent;
       const index = statements.indexOf(node);
       const sibling = statements[index - 1] as ts.ExpressionStatement;
+      if (getExpressionText(sibling) !== getExpressionText(node)) {
+        return;
+      }
       if (
         !isExpressionObserver(sibling, typeChecker) ||
         !isExpressionObserver(node, typeChecker)
       ) {
-        return;
-      }
-      if (getExpressionText(sibling) !== getExpressionText(node)) {
         return;
       }
       const expressionStatement = node;
