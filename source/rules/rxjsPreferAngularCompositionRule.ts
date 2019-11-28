@@ -20,6 +20,13 @@ export class Rule extends Lint.Rules.TypedRule {
     typescriptOnly: true
   };
 
+  public static FAILURE_STRING_NOT_COMPOSED = "Subscription not composed";
+  public static FAILURE_STRING_NOT_IMPLEMENTED = "ngOnDestroy not implemented";
+  public static FAILURE_STRING_NOT_UNSUBSCRIBED =
+    "Composed subscription not unsubscribed";
+  public static FAILURE_MESSAGE_NOT_DECLARED = (name: string) =>
+    `Composed subscription '${name}' not declared`;
+
   public applyWithProgram(
     sourceFile: ts.SourceFile,
     program: ts.Program
@@ -53,7 +60,7 @@ export class Rule extends Lint.Rules.TypedRule {
               sourceFile,
               property.getStart(),
               property.getStart() + property.getWidth(),
-              "Subscription not composed",
+              Rule.FAILURE_STRING_NOT_COMPOSED,
               this.ruleName
             )
           );
@@ -74,7 +81,7 @@ export class Rule extends Lint.Rules.TypedRule {
             sourceFile,
             name.getStart(),
             name.getStart() + name.getWidth(),
-            "ngOnDestroy not implemented",
+            Rule.FAILURE_STRING_NOT_IMPLEMENTED,
             this.ruleName
           )
         );
@@ -94,7 +101,7 @@ export class Rule extends Lint.Rules.TypedRule {
               sourceFile,
               name.getStart(),
               name.getStart() + name.getWidth(),
-              `Composed subscription '${subscription}' not declared`,
+              Rule.FAILURE_MESSAGE_NOT_DECLARED(subscription),
               this.ruleName
             )
           );
@@ -113,7 +120,7 @@ export class Rule extends Lint.Rules.TypedRule {
               sourceFile,
               name.getStart(),
               name.getStart() + name.getWidth(),
-              `Composed subscription not unsubscribed`,
+              Rule.FAILURE_STRING_NOT_UNSUBSCRIBED,
               this.ruleName
             )
           );
