@@ -10,9 +10,23 @@ export class ComposedComponent implements OnInit, OnDestroy {
   private subscription = new Subscription();
   ngOnInit() {
     this.subscription.add(of("foo").subscribe(value => this.value = value));
-    let subscription = of("bar").subscribe(value => this.value = value);
-    this.subscription.add(subscription);
-    subscription = of("baz").subscribe(value => this.value = value);
+  }
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
+  }
+}
+
+@Component({
+  selector: "variable-composed-component",
+  template: "<span>{{ value }}</span>"
+})
+export class VariableComposedComponent implements OnInit, OnDestroy {
+  value: string;
+  private subscription = new Subscription();
+  ngOnInit() {
+    let subscription = of("foo").subscribe(value => this.value = value);
+    this.subscription.add(subscription);1
+    subscription = of("bar").subscribe(value => this.value = value);
     this.subscription.add(subscription);
   }
   ngOnDestroy() {
