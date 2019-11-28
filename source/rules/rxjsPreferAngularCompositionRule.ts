@@ -24,8 +24,10 @@ export class Rule extends Lint.Rules.TypedRule {
   public static FAILURE_STRING_NOT_IMPLEMENTED = "ngOnDestroy not implemented";
   public static FAILURE_STRING_NOT_UNSUBSCRIBED =
     "Composed subscription not unsubscribed";
+  /*tslint:disable:semicolon*/
   public static FAILURE_MESSAGE_NOT_DECLARED = (name: string) =>
     `Composed subscription '${name}' not declared`;
+  /*tslint:enable:semicolon*/
 
   public applyWithProgram(
     sourceFile: ts.SourceFile,
