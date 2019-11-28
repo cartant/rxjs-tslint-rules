@@ -10,7 +10,8 @@ import { couldBeType, isThis } from "../support/util";
 
 export class Rule extends Lint.Rules.TypedRule {
   public static metadata: Lint.IRuleMetadata = {
-    description: "? within an Angular component.",
+    description:
+      "Enforces the composition of subscriptions within an Angular component.",
     options: null,
     optionsDescription: "Not configurable.",
     requiresTypeInfo: true,
