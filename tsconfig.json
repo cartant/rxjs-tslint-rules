@@ -1,6 +1,7 @@
 {
   "compilerOptions": {
     "declaration": false,
+    "downlevelIteration": true,
     "importHelpers": true,
     "lib": ["dom", "es2017"],
     "module": "commonjs",

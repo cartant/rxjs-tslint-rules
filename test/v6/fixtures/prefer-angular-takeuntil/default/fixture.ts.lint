@@ -64,14 +64,18 @@ class NoTakeUntilComponent {
 @Component({
   selector: "no-subject-component"
 })
-class NoSubjectComponent {
-      ~~~~~~~~~~~~~~~~~~                      [prefer-takeuntil-no-subject]
+class NoSubjectComponent implements OnDestroy {
+      ~~~~~~~~~~~~~~~~~~                      [prefer-takeuntil-no-subject % ('d')]
   someMethod() {
     const { destroy } = this;
     a.pipe(
       switchMap(_ => b),
       takeUntil(d)
     ).subscribe();
+  }
+  ngOnDestroy() {
+  ~~~~~~~~~~~                                 [prefer-takeuntil-no-next % ('d')]
+  ~~~~~~~~~~~                                 [prefer-takeuntil-no-complete % ('d')]
   }
 }
 
@@ -120,7 +124,7 @@ class NoNextComponent implements OnDestroy {
     ).subscribe();
   }
   ngOnDestroy() {
-  ~~~~~~~~~~~                                 [prefer-takeuntil-no-next]
+  ~~~~~~~~~~~                                 [prefer-takeuntil-no-next % ('destroy')]
     this.destroy.complete();
   }
 }
@@ -137,13 +141,13 @@ class NoCompleteComponent implements OnDestroy {
     ).subscribe();
   }
   ngOnDestroy() {
-  ~~~~~~~~~~~                                 [prefer-takeuntil-no-complete]
+  ~~~~~~~~~~~                                 [prefer-takeuntil-no-complete % ('destroy')]
     this.destroy.next();
   }
 }
 
-[prefer-takeuntil]: subscribe within a component must be preceded by takeUntil
-[prefer-takeuntil-no-subject]: takeUntil argument must be a property of the class, e.g. takeUntil(this.destroy$)
-[prefer-takeuntil-no-destroy]: component containing subscribe must implement the ngOnDestroy() method
-[prefer-takeuntil-no-next]: there must be an invocation of this._destroy$.next() in ngOnDestroy()
-[prefer-takeuntil-no-complete]: there must be an invocation of this._destroy$.complete() in ngOnDestroy()
+[prefer-takeuntil]: Subscribing without takeUntil is forbidden
+[prefer-takeuntil-no-subject]: Subject '%s' not a class property
+[prefer-takeuntil-no-destroy]: ngOnDestroy not implemented
+[prefer-takeuntil-no-next]: '%s.next()' not called
+[prefer-takeuntil-no-complete]: '%s.complete()' not called

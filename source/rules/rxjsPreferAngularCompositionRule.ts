@@ -26,7 +26,7 @@ export class Rule extends Lint.Rules.TypedRule {
     "Composed subscription not unsubscribed";
   /*tslint:disable:semicolon*/
   public static FAILURE_MESSAGE_NOT_DECLARED = (name: string) =>
-    `Composed subscription '${name}' not declared`;
+    `Composed subscription '${name}' not a class property`;
   /*tslint:enable:semicolon*/
 
   public applyWithProgram(
