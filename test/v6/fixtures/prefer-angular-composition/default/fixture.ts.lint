@@ -59,9 +59,9 @@ export class NotComposedComponent implements OnInit, OnDestroy {
   value: string;
   ngOnInit() {
     of("foo").subscribe(value => this.value = value);
-              ~~~~~~~~~                                                     [prefer-composition % ("Subscription not composed")]
+              ~~~~~~~~~                                                     [prefer-composition-not-composed]
     const subscription = of("bar").subscribe(value => this.value = value);
-                                   ~~~~~~~~~                                [prefer-composition % ("Subscription not composed")]
+                                   ~~~~~~~~~                                [prefer-composition-not-composed]
 
   }
   ngOnDestroy() {
@@ -75,7 +75,7 @@ export class NotComposedComponent implements OnInit, OnDestroy {
 export class NotUnsubscribedComponent implements OnInit, OnDestroy {
   value: string;
   private subscription = new Subscription();
-          ~~~~~~~~~~~~                                                      [prefer-composition % ("Composed subscription not unsubscribed")]
+          ~~~~~~~~~~~~                                                      [prefer-composition-not-unsubscribed]
   ngOnInit() {
     this.subscription.add(of("foo").subscribe(value => this.value = value));
   }
@@ -88,7 +88,7 @@ export class NotUnsubscribedComponent implements OnInit, OnDestroy {
   template: "<span>{{ value }}</span>"
 })
 export class NotDestroyedComponent implements OnInit {
-             ~~~~~~~~~~~~~~~~~~~~~                                          [prefer-composition % ("ngOnDestroy not implemented")]
+             ~~~~~~~~~~~~~~~~~~~~~                                          [prefer-composition-not-implemented]
   value: string;
   private subscription = new Subscription();
   ngOnInit() {
@@ -96,4 +96,6 @@ export class NotDestroyedComponent implements OnInit {
   }
 }
 
-[prefer-composition]: %s
+[prefer-composition-not-composed]: Subscription not composed
+[prefer-composition-not-unsubscribed]: Composed subscription not unsubscribed
+[prefer-composition-not-implemented]: ngOnDestroy not implemented
