@@ -2,7 +2,7 @@
   "defaultSeverity": "error",
   "jsRules": {},
   "rules": {
-    "rxjs-prefer-angular-takeuntil-before-subscribe": { "severity": "error" }
+    "rxjs-prefer-angular-takeuntil": { "severity": "error" }
   },
   "rulesDirectory": "../../../../../build/rules"
 }

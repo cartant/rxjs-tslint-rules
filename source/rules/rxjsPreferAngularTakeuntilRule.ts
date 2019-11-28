@@ -4,17 +4,17 @@
  */
 /*tslint:disable:no-use-before-declare*/
 
+import { tsquery } from "@phenomnomnominal/tsquery";
 import * as Lint from "tslint";
 import * as tsutils from "tsutils";
 import * as ts from "typescript";
 import { couldBeType } from "../support/util";
-import { tsquery } from "@phenomnomnominal/tsquery";
-import { dedent } from "tslint/lib/utils";
 
 export class Rule extends Lint.Rules.TypedRule {
   public static metadata: Lint.IRuleMetadata = {
-    description: dedent`Enforces the application of the takeUntil operator
-                        when calling of subscribe within an Angular component.`,
+    description: Lint.Utils
+      .dedent`Enforces the application of the takeUntil operator
+      when calling of subscribe within an Angular component.`,
     options: null,
     optionsDescription: "",
     requiresTypeInfo: true,
