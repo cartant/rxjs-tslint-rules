@@ -131,6 +131,25 @@ function getBlock(node: ts.Node): ts.Block | undefined {
   return parent as ts.Block | undefined;
 }
 
+function getCalledName(node: ts.Node): ts.Identifier | undefined {
+  if (ts.isIdentifier(node)) {
+    return node;
+  } else if (ts.isPropertyAccessExpression(node) && isThis(node.expression)) {
+    return node.name;
+  }
+  return undefined;
+}
+
+function getCalledObject(
+  callExpression: ts.CallExpression
+): ts.Node | undefined {
+  const { expression } = callExpression;
+  if (ts.isPropertyAccessExpression(expression)) {
+    return expression.expression;
+  }
+  return undefined;
+}
+
 function isComposed(
   callExpression: ts.CallExpression,
   typeChecker: ts.TypeChecker,
@@ -149,13 +168,11 @@ function isComposed(
     if (!couldBeType(typeChecker.getTypeAtLocation(object), "Subscription")) {
       return false;
     }
-    // TODO: Need a general mechanism to get the subscription name from either
-    // an identifier or a this-accessed property:
-    if (ts.isPropertyAccessExpression(object)) {
-      subscriptions.add((object as any).name.text);
-    } else {
-      subscriptions.add((object as any).text);
+    const name = getCalledName(object);
+    if (!name) {
+      return false;
     }
+    subscriptions.add(name.text);
     return true;
   }
   if (ts.isVariableDeclaration(parent) && ts.isIdentifier(parent.name)) {
@@ -185,18 +202,15 @@ function isVariableComposed(
     )
       .map(identifier => identifier.parent)
       .filter((callExpression: ts.CallExpression) => {
-        const { expression } = callExpression;
-        if (!ts.isPropertyAccessExpression(expression)) {
-          return false;
-        }
         if (callExpression.end < identifier.pos) {
           return false;
         }
+        const object = getCalledObject(callExpression);
+        if (!object) {
+          return false;
+        }
         if (
-          !couldBeType(
-            typeChecker.getTypeAtLocation(expression.expression),
-            "Subscription"
-          )
+          !couldBeType(typeChecker.getTypeAtLocation(object), "Subscription")
         ) {
           return false;
         }
@@ -210,18 +224,13 @@ function isVariableComposed(
     if (!ts.isPropertyAccessExpression(expression)) {
       return false;
     }
-    if (ts.isIdentifier(expression.expression)) {
-      subscriptions.add(expression.expression.text);
-      return true;
+    const { expression: object } = expression;
+    const name = getCalledName(object);
+    if (!name) {
+      return false;
     }
-    if (
-      ts.isPropertyAccessExpression(expression.expression) &&
-      isThis(expression.expression.expression)
-    ) {
-      subscriptions.add(expression.expression.name.text);
-      return true;
-    }
-    return false;
+    subscriptions.add(name.text);
+    return true;
   }
   return false;
 }
