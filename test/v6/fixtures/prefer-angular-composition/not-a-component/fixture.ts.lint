@@ -2,7 +2,7 @@ import { of } from "rxjs";
 
 class SomeClass {
   value: string;
-  something() {
+  someMethod() {
     of("foo").subscribe(value => this.value = value);
   }
 }

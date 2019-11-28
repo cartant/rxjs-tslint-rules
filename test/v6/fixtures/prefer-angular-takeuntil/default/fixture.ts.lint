@@ -1,109 +1,149 @@
-import { combineLatest, of, Subject } from "rxjs";
-import { switchMap, takeUntil, shareReplay, tap } from "rxjs/operators";
+import { Component, OnDestroy } from "@angular/core";
+import { of, Subject } from "rxjs";
+import { switchMap, takeUntil } from "rxjs/operators";
 
 const a = of("a");
 const b = of("b");
 const c = of("c");
 const d = of("d");
 
-const e = a.pipe(switchMap(_ => b)).subscribe();
-
-const f = a.pipe(switchMap(_ => b), takeUntil(d)).subscribe();
-
-const g = a.pipe(takeUntil(d), s => switchMap(_ => b)).subscribe();
-
-class MyClass {
-    someMethod() {
-        const e = a.pipe(switchMap(_ => b)).subscribe();
-
-        const f = a.pipe(switchMap(_ => b), takeUntil(d)).subscribe();
-
-        const g = a.pipe(takeUntil(d), s => switchMap(_ => b)).subscribe();
-    }
+@Component({
+  selector: "correct-component"
+})
+class CorrectComponent implements OnDestroy {
+  private destroy = new Subject<void>();
+  someMethod() {
+    a.pipe(
+      switchMap(_ => b),
+      takeUntil(this.destroy)
+    ).subscribe();
+  }
+  ngOnDestroy() {
+    this.destroy.next();
+    this.destroy.complete();
+  }
 }
 
 @Component({
-  selector: 'app-my'
+  selector: "destructured-component"
 })
-class MyComponent {
-      ~~~~~~~~~~~                               [enforce-takeuntil-before-subscribe-ondestroy]
-
-    private destroy$: Subject<void> = new Subject<void>();
-
-    k$ = a.pipe(shareReplay(1));
-                ~~~~~~~~~~~~~~            [enforce-takeuntil-before-operator-sharereplay]
-
-    someMethod() {
-        const d = a.subscribe();
-                    ~~~~~~~~~                               [enforce-takeuntil-before-subscribe]
-
-        const e = a.pipe(switchMap(_ => b)).subscribe();
-                                            ~~~~~~~~~                               [enforce-takeuntil-before-subscribe]
-
-        const f = a.pipe(switchMap(_ => b), takeUntil(this.destroy$)).subscribe();
-
-        const g = a.pipe(takeUntil(this.destroy$), switchMap(_ => b)).subscribe();
-                                                                      ~~~~~~~~~            [enforce-takeuntil-before-subscribe]
-
-        const h = a.pipe(switchMap(_ => b), takeUntil(d)).subscribe();
-                                                      ~            [enforce-takeuntil-before-subscribe-subject-name]
-
-        const k1 = a.pipe(takeUntil(this.destroy$), shareReplay(1)).subscribe();
-                                                                    ~~~~~~~~~            [enforce-takeuntil-before-subscribe]
-
-        const k = a.pipe(shareReplay(1), takeUntil(this.destroy$)).subscribe();
-                         ~~~~~~~~~~~~~~            [enforce-takeuntil-before-operator-sharereplay]
-
-        const m = a.pipe(tap(), shareReplay(1), takeUntil(this.destroy$)).subscribe();
-                                ~~~~~~~~~~~~~~            [enforce-takeuntil-before-operator-sharereplay]
-
-        const n = a.pipe(takeUntil(d), shareReplay(1), takeUntil(this.destroy$)).subscribe();
-                                   ~            [enforce-takeuntil-before-subscribe-subject-name]
-
-    }
+class DestructuredComponent implements OnDestroy {
+  private destroy = new Subject<void>();
+  someMethod() {
+    const { destroy } = this;
+    a.pipe(
+      switchMap(_ => b),
+      takeUntil(destroy)
+    ).subscribe();
+  }
+  ngOnDestroy() {
+    const { destroy } = this;
+    destroy.next();
+    destroy.complete();
+  }
 }
 
 @Component({
-  selector: 'app-my'
+  selector: "no-takeuntil-component"
 })
-class MyComponent implements OnDestroy {
-    someMethod() {
-        const f = a.pipe(switchMap(_ => b), takeUntil(this._destroy$)).subscribe();
-    }
-
-    ngOnDestroy() {
-    ~~~~~~~~~~~            [enforce-takeuntil-before-subscribe-next-missing]
-    ~~~~~~~~~~~            [enforce-takeuntil-before-subscribe-complete-missing]
-      // this._destroy$.next() is missing
-      this.destroy$.next();
-      this.destroy$.complete();
-    }
+class NoTakeUntilComponent {
+  private destroy = new Subject<void>();
+  someMethod() {
+    const { destroy } = this;
+    a.pipe(
+      switchMap(_ => b)
+    ).subscribe();
+      ~~~~~~~~~                               [prefer-takeuntil]
+  }
+  ngOnDestroy() {
+    this.destroy.next();
+    this.destroy.complete();
+  }
 }
 
 @Component({
-  selector: 'app-my'
+  selector: "no-subject-component"
 })
-class MyComponent implements SomeInterface, OnDestroy {
-    private destroy$: Subject<void> = new Subject<void>();
-
-    k$ = a.pipe(takeUntil(this.destroy$), shareReplay(1));
-
-    someMethod() {
-        const e = a.pipe(switchMap(_ => b), takeUntil(this.destroy$)).subscribe();
-
-        const k = a.pipe(takeUntil(this.destroy$), shareReplay(1), takeUntil(this.destroy$)).subscribe();
-    }
-
-    ngOnDestroy() {
-      this.destroy$.next();
-      this.destroy$.complete();
-    }
+class NoSubjectComponent {
+      ~~~~~~~~~~~~~~~~~~                      [prefer-takeuntil-no-subject]
+  someMethod() {
+    const { destroy } = this;
+    a.pipe(
+      switchMap(_ => b),
+      takeUntil(d)
+    ).subscribe();
+  }
 }
 
+@Component({
+  selector: "secondary-takeuntil-component"
+})
+class SecondaryTakeUntilComponent implements OnDestroy {
+  private destroy = new Subject<void>();
+  someMethod() {
+    a.pipe(
+      takeUntil(c),
+      switchMap(_ => b),
+      takeUntil(this.destroy)
+    ).subscribe();
+  }
+  ngOnDestroy() {
+    this.destroy.next();
+    this.destroy.complete();
+  }
+}
 
-[enforce-takeuntil-before-subscribe]: subscribe within a component must be preceded by takeUntil
-[enforce-takeuntil-before-subscribe-subject-name]: takeUntil argument must be a property of the class, e.g. takeUntil(this.destroy$)
-[enforce-takeuntil-before-subscribe-ondestroy]: component containing subscribe must implement the ngOnDestroy() method
-[enforce-takeuntil-before-subscribe-next-missing]: there must be an invocation of this._destroy$.next() in ngOnDestroy()
-[enforce-takeuntil-before-subscribe-complete-missing]: there must be an invocation of this._destroy$.complete() in ngOnDestroy()
-[enforce-takeuntil-before-operator-sharereplay]: the shareReplay operator used within a component must be preceded by takeUntil
+@Component({
+  selector: "no-destroy-component"
+})
+class NoDestroyComponent {
+      ~~~~~~~~~~~~~~~~~~                      [prefer-takeuntil-no-destroy]
+  private destroy = new Subject<void>();
+  someMethod() {
+    const { destroy } = this;
+    a.pipe(
+      switchMap(_ => b),
+      takeUntil(destroy)
+    ).subscribe();
+  }
+}
+
+@Component({
+  selector: "no-next-component"
+})
+class NoNextComponent implements OnDestroy {
+  private destroy = new Subject<void>();
+  someMethod() {
+    a.pipe(
+      switchMap(_ => b),
+      takeUntil(this.destroy)
+    ).subscribe();
+  }
+  ngOnDestroy() {
+  ~~~~~~~~~~~                                 [prefer-takeuntil-no-next]
+    this.destroy.complete();
+  }
+}
+
+@Component({
+  selector: "no-complete-component"
+})
+class NoCompleteComponent implements OnDestroy {
+  private destroy = new Subject<void>();
+  someMethod() {
+    a.pipe(
+      switchMap(_ => b),
+      takeUntil(this.destroy)
+    ).subscribe();
+  }
+  ngOnDestroy() {
+  ~~~~~~~~~~~                                 [prefer-takeuntil-no-complete]
+    this.destroy.next();
+  }
+}
+
+[prefer-takeuntil]: subscribe within a component must be preceded by takeUntil
+[prefer-takeuntil-no-subject]: takeUntil argument must be a property of the class, e.g. takeUntil(this.destroy$)
+[prefer-takeuntil-no-destroy]: component containing subscribe must implement the ngOnDestroy() method
+[prefer-takeuntil-no-next]: there must be an invocation of this._destroy$.next() in ngOnDestroy()
+[prefer-takeuntil-no-complete]: there must be an invocation of this._destroy$.complete() in ngOnDestroy()
