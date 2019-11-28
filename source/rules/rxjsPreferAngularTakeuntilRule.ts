@@ -14,11 +14,11 @@ export class Rule extends Lint.Rules.TypedRule {
   public static metadata: Lint.IRuleMetadata = {
     description: Lint.Utils
       .dedent`Enforces the application of the takeUntil operator
-      when calling of subscribe within an Angular component.`,
+      when calling subscribe within an Angular component.`,
     options: null,
     optionsDescription: "",
     requiresTypeInfo: true,
-    ruleName: "rxjs-prefer-angular-takeuntil-before-subscribe",
+    ruleName: "rxjs-prefer-angular-takeuntil",
     type: "functionality",
     typescriptOnly: true
   };
@@ -56,13 +56,13 @@ export class Rule extends Lint.Rules.TypedRule {
     const componentClassDeclarations = tsquery(
       sourceFile,
       `ClassDeclaration:has(Decorator[expression.expression.name='Component'])`
-    );
+    ) as ts.ClassDeclaration[];
     componentClassDeclarations.forEach(componentClassDeclaration => {
       failures.push(
         ...this.checkComponentClassDeclaration(
           sourceFile,
           program,
-          componentClassDeclaration as ts.ClassDeclaration
+          componentClassDeclaration
         )
       );
     });
@@ -90,11 +90,10 @@ export class Rule extends Lint.Rules.TypedRule {
     const subscribePropertyAccessExpressions = tsquery(
       componentClassDeclaration,
       `CallExpression > PropertyAccessExpression[name.name="subscribe"]`
-    );
+    ) as ts.PropertyAccessExpression[];
 
     // check whether it is an observable and check the takeUntil before the subscribe
-    subscribePropertyAccessExpressions.forEach(node => {
-      const propertyAccessExpression = node as ts.PropertyAccessExpression;
+    subscribePropertyAccessExpressions.forEach(propertyAccessExpression => {
       const type = typeChecker.getTypeAtLocation(
         propertyAccessExpression.expression
       );
@@ -114,12 +113,11 @@ export class Rule extends Lint.Rules.TypedRule {
     const pipePropertyAccessExpressions = tsquery(
       componentClassDeclaration,
       `CallExpression > PropertyAccessExpression[name.name="pipe"]`
-    );
+    ) as ts.PropertyAccessExpression[];
 
     // check whether it is an observable and check the takeUntil before operators requiring it
-    pipePropertyAccessExpressions.forEach(node => {
-      const propertyAccessExpression = node as ts.PropertyAccessExpression;
-      const pipeCallExpression = node.parent as ts.CallExpression;
+    pipePropertyAccessExpressions.forEach(propertyAccessExpression => {
+      const pipeCallExpression = propertyAccessExpression.parent as ts.CallExpression;
       const type = typeChecker.getTypeAtLocation(
         propertyAccessExpression.expression
       );
@@ -142,7 +140,7 @@ export class Rule extends Lint.Rules.TypedRule {
     if (destroySubjectNamesUsedList.length > 0) {
       const ngOnDestroyFailures = this.checkNgOnDestroy(
         sourceFile,
-        componentClassDeclaration as ts.ClassDeclaration,
+        componentClassDeclaration,
         destroySubjectNamesUsedList
       );
       failures.push(...ngOnDestroyFailures);
@@ -413,9 +411,9 @@ export class Rule extends Lint.Rules.TypedRule {
       // check whether there is one invocation of <destroySubjectName>.<methodName>()
       if (
         !destroySubjectMethodInvocations.some(
-          nextInvocation =>
-            tsutils.isPropertyAccessExpression(nextInvocation.expression) &&
-            nextInvocation.expression.name.getText() === destroySubjectName
+          methodInvocation =>
+            tsutils.isPropertyAccessExpression(methodInvocation.expression) &&
+            methodInvocation.expression.name.getText() === destroySubjectName
         )
       ) {
         failures.push(
