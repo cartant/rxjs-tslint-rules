@@ -1,3 +1,10 @@
+<a name="4.27.1"></a>
+## [4.27.1](https://github.com/cartant/rxjs-tslint-rules/compare/v4.27.0...v4.27.1) (2019-11-29)
+
+## Changes
+
+* Fix up rule deprecations and deprecation messages. ([392106c](https://github.com/cartant/rxjs-tslint-rules/commit/392106c))
+
 <a name="4.27.0"></a>
 ## [4.27.0](https://github.com/cartant/rxjs-tslint-rules/compare/v4.26.3...v4.27.0) (2019-11-29)
 
