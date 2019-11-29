@@ -7,12 +7,14 @@
 import * as Lint from "tslint";
 import * as tsutils from "tsutils";
 import * as ts from "typescript";
+import * as peer from "../support/peer";
 import { couldBeType } from "../support/util";
 
 const defaultAllowedTypesRegExp = /^EventEmitter$/;
 
 export class Rule extends Lint.Rules.TypedRule {
   public static metadata: Lint.IRuleMetadata = {
+    deprecationMessage: peer.v5 ? peer.v5NotSupportedMessage : undefined,
     description: "Disallows exposed subjects.",
     options: {
       properties: {

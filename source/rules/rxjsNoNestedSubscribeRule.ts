@@ -7,10 +7,12 @@ import { tsquery } from "@phenomnomnominal/tsquery";
 import * as Lint from "tslint";
 import * as tsutils from "tsutils";
 import * as ts from "typescript";
+import * as peer from "../support/peer";
 import { couldBeType } from "../support/util";
 
 export class Rule extends Lint.Rules.TypedRule {
   public static metadata: Lint.IRuleMetadata = {
+    deprecationMessage: peer.v5 ? peer.v5NotSupportedMessage : undefined,
     description:
       "Disallows the calling of `subscribe` within a `subscribe` callback.",
     options: null,

@@ -6,10 +6,11 @@
 
 import * as Lint from "tslint";
 import * as ts from "typescript";
+import * as peer from "../support/peer";
 
 export class Rule extends Lint.Rules.AbstractRule {
   public static metadata: Lint.IRuleMetadata = {
-    deprecationMessage: undefined,
+    deprecationMessage: peer.v5 ? peer.v6OnlyMessage : undefined,
     description: "Disallows the importation of internals.",
     options: null,
     optionsDescription: "Not configurable.",

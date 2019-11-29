@@ -6,12 +6,14 @@
 import { tsquery } from "@phenomnomnominal/tsquery";
 import * as Lint from "tslint";
 import * as ts from "typescript";
+import * as peer from "../support/peer";
 import { couldBeType } from "../support/util";
 
 const defaultTypesRegExp = /^EventEmitter$/;
 
 export class Rule extends Lint.Rules.TypedRule {
   public static metadata: Lint.IRuleMetadata = {
+    deprecationMessage: peer.v5 ? peer.v5NotSupportedMessage : undefined,
     description:
       "Disalllows subjects that don't end with the specified `suffix` option.",
     options: {

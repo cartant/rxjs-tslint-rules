@@ -6,10 +6,12 @@
 import { tsquery } from "@phenomnomnominal/tsquery";
 import * as Lint from "tslint";
 import * as ts from "typescript";
+import * as peer from "../support/peer";
 import { couldBeType } from "../support/util";
 
 export class Rule extends Lint.Rules.TypedRule {
   public static metadata: Lint.IRuleMetadata = {
+    deprecationMessage: peer.v5 ? peer.v5NotSupportedMessage : undefined,
     description: "Disallows subclassing RxJS classes.",
     options: null,
     optionsDescription: "Not configurable.",

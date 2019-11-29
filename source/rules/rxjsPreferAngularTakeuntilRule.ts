@@ -8,10 +8,12 @@ import { tsquery } from "@phenomnomnominal/tsquery";
 import * as Lint from "tslint";
 import * as tsutils from "tsutils";
 import * as ts from "typescript";
+import * as peer from "../support/peer";
 import { couldBeType, isThis } from "../support/util";
 
 export class Rule extends Lint.Rules.TypedRule {
   public static metadata: Lint.IRuleMetadata = {
+    deprecationMessage: peer.v5 ? peer.v5NotSupportedMessage : undefined,
     description: Lint.Utils
       .dedent`Enforces the application of the takeUntil operator
       when calling subscribe within an Angular component.`,

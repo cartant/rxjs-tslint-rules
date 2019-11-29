@@ -12,7 +12,7 @@ import { couldBeFunction, couldBeType } from "../support/util";
 
 export class Rule extends Lint.Rules.TypedRule {
   public static metadata: Lint.IRuleMetadata = {
-    deprecationMessage: peer.v5 || peer.compat ? "Rule is v6-only." : undefined,
+    deprecationMessage: peer.v5 ? peer.v5NotSupportedMessage : undefined,
     description: "Enforces the passing of observers to `subscribe` and `tap`.",
     options: {
       properties: {

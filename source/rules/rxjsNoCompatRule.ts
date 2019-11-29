@@ -6,10 +6,11 @@
 import { tsquery } from "@phenomnomnominal/tsquery";
 import * as Lint from "tslint";
 import * as ts from "typescript";
+import * as peer from "../support/peer";
 
 export class Rule extends Lint.Rules.AbstractRule {
   public static metadata: Lint.IRuleMetadata = {
-    deprecationMessage: undefined,
+    deprecationMessage: peer.v5 ? peer.v5NotSupportedMessage : undefined,
     description:
       "Disallows importation from locations that depend upon 'rxjs-compat'.",
     options: null,

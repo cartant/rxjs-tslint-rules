@@ -13,7 +13,7 @@ import { couldBeType } from "../support/util";
 
 export class Rule extends Lint.Rules.TypedRule {
   public static metadata: Lint.IRuleMetadata = {
-    deprecationMessage: peer.v5 || peer.compat ? "Rule is v6-only." : undefined,
+    deprecationMessage: peer.v5 ? peer.v6OnlyMessage : undefined,
     description: "Disallows the passing of unbound methods.",
     options: null,
     optionsDescription: "Not configurable.",
