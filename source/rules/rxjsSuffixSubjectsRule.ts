@@ -74,7 +74,7 @@ export class Rule extends Lint.Rules.TypedRule {
     } else {
       types.push({ regExp: defaultTypesRegExp, validate: false });
     }
-    const suffixRegex = new RegExp(`${suffix}\\$?$`, "i");
+    const suffixRegex = new RegExp(String.raw`${suffix}\$?$`, "i");
     let identifiers: ts.Node[] = [];
 
     if (validateOptions.parameters) {

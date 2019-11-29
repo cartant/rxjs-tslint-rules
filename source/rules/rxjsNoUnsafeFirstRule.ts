@@ -47,7 +47,7 @@ export class Rule extends Lint.Rules.TypedRule {
 
 export class Walker extends Lint.ProgramAwareRuleWalker {
   public static METHODS_REGEXP = /(ofType|pipe)/;
-  public static DEFAULT_OBSERVABLE = "action(s|\\$)?";
+  public static DEFAULT_OBSERVABLE = String.raw`action(s|\$)?`;
 
   private observableRegExp: RegExp;
 

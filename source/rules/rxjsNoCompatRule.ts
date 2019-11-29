@@ -28,7 +28,7 @@ export class Rule extends Lint.Rules.AbstractRule {
     const failures: Lint.RuleFailure[] = [];
     const importDeclarations = tsquery(
       sourceFile,
-      `ImportDeclaration:has(StringLiteral[value=/^rxjs\\u002f/])`
+      String.raw`ImportDeclaration:has(StringLiteral[value=/^rxjs\u002f/])`
     );
     importDeclarations.forEach(node => {
       const importDeclaration = node as ts.ImportDeclaration;
