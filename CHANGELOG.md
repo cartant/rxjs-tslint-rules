@@ -1,3 +1,15 @@
+<a name="4.27.0"></a>
+## [4.27.0](https://github.com/cartant/rxjs-tslint-rules/compare/v4.26.3...v4.27.0) (2019-11-29)
+
+## Features
+
+* Add `rxjs-angular-prefer-takeuntil` rule. ([7489079](https://github.com/cartant/rxjs-tslint-rules/commit/7489079))
+* Add `rxjs-angular-prefer-composition` rule. ([c145b6b](https://github.com/cartant/rxjs-tslint-rules/commit/c145b6b))
+
+## Changes
+
+* Rename `rxjs-prefer-async-pipe` rule to `rxjs-angular-prefer-async-pipe` and deprecate the old name. ([33fdd80](https://github.com/cartant/rxjs-tslint-rules/commit/33fdd80))
+
 <a name="4.26.3"></a>
 ## [4.26.3](https://github.com/cartant/rxjs-tslint-rules/compare/v4.26.2...v4.26.3) (2019-11-19)
 
