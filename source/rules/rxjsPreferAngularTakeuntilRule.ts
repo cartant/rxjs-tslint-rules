@@ -31,7 +31,7 @@ export class Rule extends Lint.Rules.TypedRule {
   public static FAILURE_STRING_NO_DESTROY = "ngOnDestroy not implemented";
 
   /*tslint:disable:semicolon*/
-  public static FAILURE_STRING_NOT_CALLED = (name: string, method: string) =>
+  public static FAILURE_MESSAGE_NOT_CALLED = (name: string, method: string) =>
     `'${name}.${method}()' not called`;
 
   public static FAILURE_MESSAGE_NOT_DECLARED = (name: string) =>
@@ -323,7 +323,7 @@ export class Rule extends Lint.Rules.TypedRule {
           sourceFile,
           ngOnDestroyMethod.name.getStart(),
           ngOnDestroyMethod.name.getStart() + ngOnDestroyMethod.name.getWidth(),
-          Rule.FAILURE_STRING_NOT_CALLED(destroySubjectName, methodName),
+          Rule.FAILURE_MESSAGE_NOT_CALLED(destroySubjectName, methodName),
           this.ruleName
         )
       );
