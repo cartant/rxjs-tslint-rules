@@ -14,6 +14,7 @@ export class Rule extends Lint.Rules.TypedRule {
     description: "Disallows the application of operators after takeUntil.",
     options: {
       properties: {
+        alias: { type: "array", items: { type: "string" } },
         allow: { type: "array", items: { type: "string" } }
       },
       type: "object"
