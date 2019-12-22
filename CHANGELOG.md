@@ -1,3 +1,10 @@
+<a name="4.28.0"></a>
+## [4.28.0](https://github.com/cartant/rxjs-tslint-rules/compare/v4.27.1...v4.28.0) (2019-12-23)
+
+## Features
+
+* Add an `alias` option to the `rxjs-no-unsafe-takeuntil` rule - see [#112](https://github.com/cartant/rxjs-tslint-rules/issues/112). ([85063b7](https://github.com/cartant/rxjs-tslint-rules/commit/85063b7))
+
 <a name="4.27.1"></a>
 ## [4.27.1](https://github.com/cartant/rxjs-tslint-rules/compare/v4.27.0...v4.27.1) (2019-11-29)
 
