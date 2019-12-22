@@ -20,8 +20,9 @@ export class Rule extends Lint.Rules.TypedRule {
       type: "object"
     },
     optionsDescription: Lint.Utils.dedent`
-      An optional object with optional \`allow\` property.
-      The property is an array containing the names of the operators that are allowed to follow \`takeUntil\`.`,
+      An optional object with optional \`alias\` and \`allow\` properties.
+      The \`alias\` property is an array containing the names of operators that aliases for \`takeUntil\`.
+      The \`allow\` property is an array containing the names of the operators that are allowed to follow \`takeUntil\`.`,
     requiresTypeInfo: true,
     ruleName: "rxjs-no-unsafe-takeuntil",
     type: "functionality",
@@ -65,6 +66,7 @@ class Walker extends Lint.ProgramAwareRuleWalker {
     "throwIfEmpty",
     "toArray"
   ];
+  private match = /^takeUntil$/;
 
   constructor(
     sourceFile: ts.SourceFile,
@@ -75,6 +77,11 @@ class Walker extends Lint.ProgramAwareRuleWalker {
 
     const [ruleOptions] = this.getOptions();
     if (ruleOptions) {
+      if (ruleOptions.hasOwnProperty("alias")) {
+        this.match = new RegExp(
+          `^(${ruleOptions.alias.concat("takeUntil").join("|")})$`
+        );
+      }
       if (ruleOptions.hasOwnProperty("allow")) {
         this.allow = ruleOptions.allow;
       }
@@ -90,15 +97,10 @@ class Walker extends Lint.ProgramAwareRuleWalker {
       const type = typeChecker.getTypeAtLocation(expression);
 
       if (isReferenceType(type) && couldBeType(type.target, "Observable")) {
-        switch (propertyName) {
-          case "takeUntil":
-            this.walkPatchedOperators(node, propertyAccessExpression.name);
-            break;
-          case "pipe":
-            this.walkPipedOperators(node);
-            break;
-          default:
-            break;
+        if (this.match.test(propertyName)) {
+          this.walkPatchedOperators(node, propertyAccessExpression.name);
+        } else if (propertyName === "pipe") {
+          this.walkPipedOperators(node);
         }
       }
     }
@@ -160,7 +162,7 @@ class Walker extends Lint.ProgramAwareRuleWalker {
         if (
           tsutils.isCallExpression(arg) &&
           tsutils.isIdentifier(arg.expression) &&
-          arg.expression.getText() === "takeUntil"
+          this.match.test(arg.expression.text)
         ) {
           const after = node.arguments.slice(index + 1);
           if (some(after)) {

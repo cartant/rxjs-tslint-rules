@@ -318,7 +318,11 @@ To disallow or warn about all uses of `switchMap` within effects or epics, use a
 
 #### rxjs-no-unsafe-takeuntil
 
-The rule takes an optional object with an optional `allow` property. The property is an array containing the names of the operators that are allowed to follow `takeUntil`.
+The rule takes an optional object with an optional `allow` property. 
+
+The `alias` property is an array containing the names of operators that aliases for `takeUntil`.
+      
+The `allow` property is an array containing the names of the operators that are allowed to follow `takeUntil`.
 
 The following options are equivalent to the rule's default configuration:
 
