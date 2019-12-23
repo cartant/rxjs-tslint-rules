@@ -16,12 +16,12 @@ const g = a.pipe(takeUntil(d), s => combineLatest(s, b, c)).subscribe();
                  ~~~~~~~~~                                                      [no-unsafe-takeuntil]
 const h = a.pipe(s => combineLatest(s, b, c), takeUntil(d)).subscribe();
 
-const i = a.pipe(untilDestroyed(d), switchMap(_ => b)).subscribe();
+const i = a.pipe(untilDestroyed(), switchMap(_ => b)).subscribe();
                  ~~~~~~~~~~~~~~                                                 [no-unsafe-takeuntil]
-const j = a.pipe(switchMap(_ => b), untilDestroyed(d)).subscribe();
+const j = a.pipe(switchMap(_ => b), untilDestroyed()).subscribe();
 
-const k = a.pipe(untilDestroyed(d), s => combineLatest(s, b, c)).subscribe();
+const k = a.pipe(untilDestroyed(), s => combineLatest(s, b, c)).subscribe();
                  ~~~~~~~~~~~~~~                                                 [no-unsafe-takeuntil]
-const l = a.pipe(s => combineLatest(s, b, c), untilDestroyed(d)).subscribe();
+const l = a.pipe(s => combineLatest(s, b, c), untilDestroyed()).subscribe();
 
 [no-unsafe-takeuntil]: Applying operators after takeUntil is forbidden
