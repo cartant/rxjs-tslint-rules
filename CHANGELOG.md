@@ -1,3 +1,10 @@
+<a name="4.28.1"></a>
+## [4.28.1](https://github.com/cartant/rxjs-tslint-rules/compare/v4.28.0...v4.28.1) (2020-01-18)
+
+## Changes
+
+* Allow explicit type arguments (generics) to be used with literal values. ([9a98c19](https://github.com/cartant/rxjs-tslint-rules/commit/9a98c19))
+
 <a name="4.28.0"></a>
 ## [4.28.0](https://github.com/cartant/rxjs-tslint-rules/compare/v4.27.1...v4.28.0) (2019-12-23)
 
