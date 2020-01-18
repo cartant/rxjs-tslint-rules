@@ -1,0 +1,11 @@
+import { BehaviorSubject } from "rxjs";
+
+const a = new BehaviorSubject(42);
+const b = new BehaviorSubject<number>(42);
+              ~~~~~~~~~~~~~~~                                       [no-explicit-generics]
+const c = new BehaviorSubject<number[]>([42]);
+const d = new BehaviorSubject<number[]>([]);
+const e = new BehaviorSubject<{ answer: number }>({ answer: 42 });
+const f = new BehaviorSubject<{ answer?: number }>({});
+
+[no-explicit-generics]: Explicit generic type arguments are forbidden
