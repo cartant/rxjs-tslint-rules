@@ -41,11 +41,19 @@ export class Rule extends Lint.Rules.AbstractRule {
       ) as ts.Identifier[])
     );
 
+    const behaviourSubjectIdentifiers = tsquery(
+      sourceFile,
+      `NewExpression[typeArguments.length>0] > Identifier[name="BehaviorSubject"]`
+    ) as ts.Identifier[];
     identifiers.push(
-      ...(tsquery(
-        sourceFile,
-        `NewExpression[typeArguments.length>0] > Identifier[name="BehaviorSubject"]`
-      ) as ts.Identifier[])
+      ...behaviourSubjectIdentifiers.filter(identifier => {
+        const newExpression = identifier.parent as ts.NewExpression;
+        const [arg] = newExpression.arguments;
+        return (
+          !tsutils.isArrayLiteralExpression(arg) &&
+          !tsutils.isObjectLiteralExpression(arg)
+        );
+      })
     );
 
     const notificationIdentifiers = tsquery(
@@ -55,8 +63,13 @@ export class Rule extends Lint.Rules.AbstractRule {
     identifiers.push(
       ...notificationIdentifiers.filter(identifier => {
         const newExpression = identifier.parent as ts.NewExpression;
-        const [arg] = newExpression.arguments;
-        return tsutils.isStringLiteral(arg) && arg.text === "N";
+        const [kind, value] = newExpression.arguments;
+        return (
+          tsutils.isStringLiteral(kind) &&
+          kind.text === "N" &&
+          !tsutils.isArrayLiteralExpression(value) &&
+          !tsutils.isObjectLiteralExpression(value)
+        );
       })
     );
 
