@@ -1,3 +1,10 @@
+<a name="4.28.2"></a>
+## [4.28.2](https://github.com/cartant/rxjs-tslint-rules/compare/v4.28.1...v4.28.2) (2020-02-09)
+
+## Fixes
+
+* `rxjs/fetch` is a valid import location. ([cb12a7f](https://github.com/cartant/rxjs-tslint-rules/commit/cb12a7f))
+
 <a name="4.28.1"></a>
 ## [4.28.1](https://github.com/cartant/rxjs-tslint-rules/compare/v4.28.0...v4.28.1) (2020-01-18)
 
