@@ -1,3 +1,10 @@
+<a name="4.28.3"></a>
+## [4.28.3](https://github.com/cartant/rxjs-tslint-rules/compare/v4.28.2...v4.28.3) (2020-02-09)
+
+## Fixes
+
+* Revert to `decamelize` version 3. ([782b4b1](https://github.com/cartant/rxjs-tslint-rules/commit/782b4b1))
+
 <a name="4.28.2"></a>
 ## [4.28.2](https://github.com/cartant/rxjs-tslint-rules/compare/v4.28.1...v4.28.2) (2020-02-09)
 
