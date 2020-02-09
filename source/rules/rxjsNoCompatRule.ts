@@ -34,7 +34,7 @@ export class Rule extends Lint.Rules.AbstractRule {
       const importDeclaration = node as ts.ImportDeclaration;
       const { moduleSpecifier } = importDeclaration;
       if (
-        !/^['"]rxjs\/(ajax|operators|testing|webSocket)['"]$/.test(
+        !/^['"]rxjs\/(ajax|fetch|operators|testing|webSocket)['"]$/.test(
           moduleSpecifier.getText()
         )
       ) {
