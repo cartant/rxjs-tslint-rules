@@ -1,3 +1,10 @@
+<a name="4.29.0"></a>
+## [4.29.0](https://github.com/cartant/rxjs-tslint-rules/compare/v4.28.3...v4.29.0) (2020-02-18)
+
+## Features
+
+* Add an `rxjs-no-topromise` rule. ([0a8eac7](https://github.com/cartant/rxjs-tslint-rules/commit/0a8eac7))
+
 <a name="4.28.3"></a>
 ## [4.28.3](https://github.com/cartant/rxjs-tslint-rules/compare/v4.28.2...v4.28.3) (2020-02-09)
 
