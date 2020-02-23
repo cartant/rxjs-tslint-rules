@@ -143,7 +143,9 @@ function getBlock(node: ts.Node): ts.Block | undefined {
   return parent as ts.Block | undefined;
 }
 
-function getCalledName(node: ts.Node): ts.Identifier | undefined {
+function getCalledName(
+  node: ts.Node
+): ts.Identifier | ts.PrivateIdentifier | undefined {
   if (ts.isIdentifier(node)) {
     return node;
   } else if (ts.isPropertyAccessExpression(node) && isThis(node.expression)) {

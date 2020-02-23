@@ -108,8 +108,11 @@ class Walker extends Lint.ProgramAwareRuleWalker {
     super.visitCallExpression(node);
   }
 
-  private walkPatchedOperators(node: ts.Node, identifier: ts.Identifier): void {
-    let name: ts.Identifier | undefined = undefined;
+  private walkPatchedOperators(
+    node: ts.Node,
+    identifier: ts.Identifier | ts.PrivateIdentifier
+  ): void {
+    let name: ts.Identifier | ts.PrivateIdentifier | undefined = undefined;
     for (let parent = node.parent; parent; parent = parent.parent) {
       if (tsutils.isCallExpression(parent)) {
         if (name) {
@@ -137,7 +140,7 @@ class Walker extends Lint.ProgramAwareRuleWalker {
 
   private walkPipedOperators(
     node: ts.CallExpression,
-    identifier: ts.Identifier | null = null
+    identifier: ts.Identifier | ts.PrivateIdentifier | null = null
   ): void {
     const some = (args: {
       some(callback: (arg: ts.Expression) => boolean): boolean;

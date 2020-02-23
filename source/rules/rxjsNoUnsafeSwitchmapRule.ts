@@ -119,7 +119,10 @@ export class Walker extends Lint.ProgramAwareRuleWalker {
     const { expression: propertyAccessExpression } = node;
     if (tsutils.isPropertyAccessExpression(propertyAccessExpression)) {
       const { expression: observableExpression } = propertyAccessExpression;
-      let observableIdentifier: ts.Identifier | undefined = undefined;
+      let observableIdentifier:
+        | ts.Identifier
+        | ts.PrivateIdentifier
+        | undefined = undefined;
       if (tsutils.isIdentifier(observableExpression)) {
         observableIdentifier = observableExpression;
       } else if (tsutils.isPropertyAccessExpression(observableExpression)) {
@@ -168,7 +171,7 @@ export class Walker extends Lint.ProgramAwareRuleWalker {
   }
 
   private walkPatchedOperators(node: ts.Node): void {
-    let name: ts.Identifier | undefined = undefined;
+    let name: ts.Identifier | ts.PrivateIdentifier | undefined = undefined;
     for (let parent = node.parent; parent; parent = parent.parent) {
       if (tsutils.isCallExpression(parent)) {
         if (name) {

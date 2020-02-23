@@ -73,7 +73,7 @@ export class Rule extends Lint.Rules.TypedRule {
     const failures: Lint.RuleFailure[] = [];
     const typeChecker = program.getTypeChecker();
     const destroySubjectNamesBySubscribes = new Map<
-      ts.Identifier,
+      ts.Identifier | ts.PrivateIdentifier,
       Set<string>
     >();
 
@@ -190,7 +190,10 @@ export class Rule extends Lint.Rules.TypedRule {
   private checkNgOnDestroy(
     sourceFile: ts.SourceFile,
     classDeclaration: ts.ClassDeclaration,
-    destroySubjectNamesBySubscribes: Map<ts.Identifier, Set<string>>
+    destroySubjectNamesBySubscribes: Map<
+      ts.Identifier | ts.PrivateIdentifier,
+      Set<string>
+    >
   ): Lint.RuleFailure[] {
     const failures: Lint.RuleFailure[] = [];
     const ngOnDestroyMethod = classDeclaration.members.find(
