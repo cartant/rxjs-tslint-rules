@@ -1,3 +1,10 @@
+<a name="4.29.1"></a>
+## [4.29.1](https://github.com/cartant/rxjs-tslint-rules/compare/v4.29.0...v4.29.1) (2020-02-29)
+
+## Fixes
+
+* Widen the `tslint` peer dependency. ([6c5afda](https://github.com/cartant/rxjs-tslint-rules/commit/6c5afda)
+
 <a name="4.29.0"></a>
 ## [4.29.0](https://github.com/cartant/rxjs-tslint-rules/compare/v4.28.3...v4.29.0) (2020-02-18)
 
