@@ -10,7 +10,7 @@
     "semver": "^7.0.0",
     "tslib": "^1.8.0",
     "tsutils": "^3.0.0",
-    "tsutils-etc": "^1.1.0"
+    "tsutils-etc": "^1.2.2"
   },
   "description": "TSLint rules for RxJS",
   "devDependencies": {
