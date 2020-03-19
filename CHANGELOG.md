@@ -1,3 +1,10 @@
+<a name="4.29.2"></a>
+## [4.29.2](https://github.com/cartant/rxjs-tslint-rules/compare/v4.29.1...v4.29.2) (2020-03-20)
+
+## Changes
+
+* Bump the `tsutils-etc` peer dependency. ([0d67aa8](https://github.com/cartant/rxjs-tslint-rules/commit/0d67aa8)
+
 <a name="4.29.1"></a>
 ## [4.29.1](https://github.com/cartant/rxjs-tslint-rules/compare/v4.29.0...v4.29.1) (2020-02-29)
 
