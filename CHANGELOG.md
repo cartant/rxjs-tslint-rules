@@ -1,3 +1,10 @@
+<a name="4.30.0"></a>
+## [4.30.0](https://github.com/cartant/rxjs-tslint-rules/compare/v4.29.2...v4.30.0) (2020-03-28)
+
+## Features
+
+* Add `alias` and `checkDestroy` options to the `rxjs-prefer-angular-takeuntil` rule. ([6a8180a](https://github.com/cartant/rxjs-tslint-rules/commit/6a8180a))
+
 <a name="4.29.2"></a>
 ## [4.29.2](https://github.com/cartant/rxjs-tslint-rules/compare/v4.29.1...v4.29.2) (2020-03-20)
 
