@@ -11,14 +11,28 @@ import * as ts from "typescript";
 import * as peer from "../support/peer";
 import { couldBeType, isThis } from "../support/util";
 
+type Options = {
+  alias: string[];
+  checkDestroy: boolean;
+};
+
 export class Rule extends Lint.Rules.TypedRule {
   public static metadata: Lint.IRuleMetadata = {
     deprecationMessage: peer.v5 ? peer.v5NotSupportedMessage : undefined,
     description: Lint.Utils
       .dedent`Enforces the application of the takeUntil operator
       when calling subscribe within an Angular component.`,
-    options: null,
-    optionsDescription: "",
+    options: {
+      properties: {
+        alias: { type: "array", items: { type: "string" } },
+        checkDestroy: { type: "boolean" }
+      },
+      type: "object"
+    },
+    optionsDescription: Lint.Utils.dedent`
+        An optional object with optional \`alias\` and \`checkDestroy\` properties.
+        The \`alias\` property is an array containing the names of operators that aliases for \`takeUntil\`.
+        The \`checkDestroy\` property is a boolean that determines whether or not a \`Subject\`-based \`ngOnDestroy\` must be implemented.`,
     requiresTypeInfo: true,
     ruleName: "rxjs-prefer-angular-takeuntil",
     type: "functionality",
@@ -43,6 +57,10 @@ export class Rule extends Lint.Rules.TypedRule {
     program: ts.Program
   ): Lint.RuleFailure[] {
     const failures: Lint.RuleFailure[] = [];
+    const {
+      ruleArguments: [options]
+    } = this.getOptions();
+    const { alias = [], checkDestroy = true }: Options = options || {};
 
     // find all classes with a @Component() decorator
     const componentClassDeclarations = tsquery(
@@ -54,6 +72,7 @@ export class Rule extends Lint.Rules.TypedRule {
         ...this.checkComponentClassDeclaration(
           sourceFile,
           program,
+          { alias, checkDestroy },
           componentClassDeclaration
         )
       );
@@ -68,6 +87,7 @@ export class Rule extends Lint.Rules.TypedRule {
   private checkComponentClassDeclaration(
     sourceFile: ts.SourceFile,
     program: ts.Program,
+    options: Options,
     componentClassDeclaration: ts.ClassDeclaration
   ): Lint.RuleFailure[] {
     const failures: Lint.RuleFailure[] = [];
@@ -90,25 +110,30 @@ export class Rule extends Lint.Rules.TypedRule {
       );
       if (couldBeType(type, "Observable")) {
         failures.push(
-          ...this.checkSubscribe(sourceFile, propertyAccessExpression, name => {
-            let names = destroySubjectNamesBySubscribes.get(
-              propertyAccessExpression.name
-            );
-            if (!names) {
-              names = new Set<string>();
-              destroySubjectNamesBySubscribes.set(
-                propertyAccessExpression.name,
-                names
+          ...this.checkSubscribe(
+            sourceFile,
+            options,
+            propertyAccessExpression,
+            name => {
+              let names = destroySubjectNamesBySubscribes.get(
+                propertyAccessExpression.name
               );
+              if (!names) {
+                names = new Set<string>();
+                destroySubjectNamesBySubscribes.set(
+                  propertyAccessExpression.name,
+                  names
+                );
+              }
+              names.add(name);
             }
-            names.add(name);
-          })
+          )
         );
       }
     });
 
     // check the ngOnDestroyMethod
-    if (destroySubjectNamesBySubscribes.size > 0) {
+    if (options.checkDestroy && destroySubjectNamesBySubscribes.size > 0) {
       failures.push(
         ...this.checkNgOnDestroy(
           sourceFile,
@@ -126,6 +151,7 @@ export class Rule extends Lint.Rules.TypedRule {
    */
   private checkSubscribe(
     sourceFile: ts.SourceFile,
+    options: Options,
     subscribe: ts.PropertyAccessExpression,
     addDestroySubjectName: (name: string) => void
   ): Lint.RuleFailure[] {
@@ -142,7 +168,7 @@ export class Rule extends Lint.Rules.TypedRule {
       const pipedOperators = subscribeContext.arguments;
       pipedOperators.forEach(pipedOperator => {
         if (tsutils.isCallExpression(pipedOperator)) {
-          const destroySubjectName = this.checkOperator(pipedOperator);
+          const destroySubjectName = this.checkOperator(options, pipedOperator);
           if (destroySubjectName) {
             takeUntilFound = true;
             addDestroySubjectName(destroySubjectName);
@@ -169,10 +195,14 @@ export class Rule extends Lint.Rules.TypedRule {
   /**
    * Checks whether the operator given is takeUntil and uses an expected destroy subject name
    */
-  private checkOperator(operator: ts.CallExpression): string | undefined {
+  private checkOperator(
+    options: Options,
+    operator: ts.CallExpression
+  ): string | undefined {
     if (
       tsutils.isIdentifier(operator.expression) &&
-      operator.expression.text === "takeUntil"
+      (operator.expression.text === "takeUntil" ||
+        options.alias.includes(operator.expression.text))
     ) {
       const [arg] = operator.arguments;
       if (ts.isPropertyAccessExpression(arg) && isThis(arg.expression)) {

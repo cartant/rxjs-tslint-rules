@@ -1,0 +1,35 @@
+import { Component } from "@angular/core";
+import { NEVER, of, Subject } from "rxjs";
+import { switchMap, takeUntil } from "rxjs/operators";
+
+const a = of("a");
+const b = of("b");
+const c = of("c");
+const d = of("d");
+
+@Component({
+  selector: "correct-component"
+})
+class CorrectComponent implements OnDestroy {
+  someMethod() {
+    a.pipe(
+      switchMap(_ => b),
+      takeUntil(NEVER)
+    ).subscribe();
+  }
+}
+
+@Component({
+  selector: "no-takeuntil-component"
+})
+class NoTakeUntilComponent {
+  someMethod() {
+    const { destroy } = this;
+    a.pipe(
+      switchMap(_ => b)
+    ).subscribe();
+      ~~~~~~~~~                               [prefer-takeuntil]
+  }
+}
+
+[prefer-takeuntil]: Subscribing without takeUntil is forbidden
