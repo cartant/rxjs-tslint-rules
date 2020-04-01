@@ -1,3 +1,10 @@
+<a name="4.30.1"></a>
+## [4.30.1](https://github.com/cartant/rxjs-tslint-rules/compare/v4.30.0...v4.30.1) (2020-04-01)
+
+## Fixes
+
+* Don't check the `takeUntil` argument if `checkDestroy` is `false` in the `rxjs-prefer-angular-takeuntil` rule (and default `checkDestroy` to `false` if an alias is specified). ([8c4cc72](https://github.com/cartant/rxjs-tslint-rules/commit/8c4cc72))
+
 <a name="4.30.0"></a>
 ## [4.30.0](https://github.com/cartant/rxjs-tslint-rules/compare/v4.29.2...v4.30.0) (2020-03-28)
 
