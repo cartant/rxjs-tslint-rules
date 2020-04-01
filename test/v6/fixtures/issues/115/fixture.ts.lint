@@ -1,0 +1,24 @@
+import { Component } from "@angular/core";
+import { Subject } from "rxjs";
+import { switchMap, takeUntil } from "rxjs/operators";
+
+const someAlias = (cmp) => takeUntil(cmp.destroy);
+
+@Component({
+  selector: "component-with-alias"
+})
+class CorrectComponent implements OnDestroy {
+  private destroy = new Subject<void>();
+  someMethod() {
+    a.pipe(
+      switchMap(_ => b),
+      someAlias(this)
+    ).subscribe();
+  }
+  ngOnDestroy() {
+    this.destroy.next();
+    this.destroy.complete();
+  }
+}
+
+[prefer-takeuntil]: Subscribing without takeUntil is forbidden
