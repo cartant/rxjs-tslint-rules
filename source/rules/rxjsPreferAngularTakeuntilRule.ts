@@ -60,7 +60,11 @@ export class Rule extends Lint.Rules.TypedRule {
     const {
       ruleArguments: [options]
     } = this.getOptions();
-    const { alias = [], checkDestroy = true }: Options = options || {};
+    // If an alias is specified, check for the subject-based destroy only if
+    // it's explicitly configured. It's extremely unlikely a subject-based
+    // destroy mechanism will be used in conjunction with an alias.
+    const { alias = [], checkDestroy = alias.length === 0 }: Options =
+      options || {};
 
     // find all classes with a @Component() decorator
     const componentClassDeclarations = tsquery(
@@ -168,10 +172,10 @@ export class Rule extends Lint.Rules.TypedRule {
       const pipedOperators = subscribeContext.arguments;
       pipedOperators.forEach(pipedOperator => {
         if (tsutils.isCallExpression(pipedOperator)) {
-          const destroySubjectName = this.checkOperator(options, pipedOperator);
-          if (destroySubjectName) {
-            takeUntilFound = true;
-            addDestroySubjectName(destroySubjectName);
+          const { found, name } = this.checkOperator(options, pipedOperator);
+          takeUntilFound = found;
+          if (name) {
+            addDestroySubjectName(name);
           }
         }
       });
@@ -198,20 +202,30 @@ export class Rule extends Lint.Rules.TypedRule {
   private checkOperator(
     options: Options,
     operator: ts.CallExpression
-  ): string | undefined {
+  ): {
+    found: boolean;
+    name?: string;
+  } {
+    if (!tsutils.isIdentifier(operator.expression)) {
+      return { found: false };
+    }
     if (
-      tsutils.isIdentifier(operator.expression) &&
-      (operator.expression.text === "takeUntil" ||
-        options.alias.includes(operator.expression.text))
+      operator.expression.text === "takeUntil" ||
+      options.alias.includes(operator.expression.text)
     ) {
       const [arg] = operator.arguments;
-      if (ts.isPropertyAccessExpression(arg) && isThis(arg.expression)) {
-        return arg.name.text;
-      } else if (ts.isIdentifier(arg)) {
-        return arg.text;
+      if (arg) {
+        if (ts.isPropertyAccessExpression(arg) && isThis(arg.expression)) {
+          return { found: true, name: arg.name.text };
+        } else if (arg && ts.isIdentifier(arg)) {
+          return { found: true, name: arg.text };
+        }
+      }
+      if (!options.checkDestroy) {
+        return { found: true };
       }
     }
-    return undefined;
+    return { found: false };
   }
 
   /**

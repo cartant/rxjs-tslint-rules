@@ -1,6 +1,11 @@
 import { Component } from "@angular/core";
-import { Subject } from "rxjs";
+import { of, Subject } from "rxjs";
 import { switchMap, takeUntil } from "rxjs/operators";
+
+const a = of("a");
+const b = of("b");
+const c = of("c");
+const d = of("d");
 
 const someAlias = (cmp) => takeUntil(cmp.destroy);
 
