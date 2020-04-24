@@ -1,3 +1,10 @@
+<a name="4.31.0"></a>
+## [4.31.0](https://github.com/cartant/rxjs-tslint-rules/compare/v4.30.1...v4.31.0) (2020-04-25)
+
+## Features
+
+* Add the `rxjs-no-unsafe-subject-next` rule. ([4af5d45](https://github.com/cartant/rxjs-tslint-rules/commit/4af5d45))
+
 <a name="4.30.1"></a>
 ## [4.30.1](https://github.com/cartant/rxjs-tslint-rules/compare/v4.30.0...v4.30.1) (2020-04-01)
 
