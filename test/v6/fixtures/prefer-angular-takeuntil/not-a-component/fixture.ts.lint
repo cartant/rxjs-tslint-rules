@@ -17,3 +17,34 @@ class SomeFunction {
   a.pipe(switchMap(_ => b)).subscribe();
   a.pipe(switchMap(_ => b), takeUntil(d)).subscribe();
 }
+
+@Injectable()
+class NoTakeUntilService {
+  someMethod() {
+    a.pipe(
+      switchMap(_ => b)
+    ).subscribe();
+  }
+}
+
+@Pipe({
+  name: 'controlByName',
+})
+class NoTakeUntilPipe {
+  someMethod() {
+    a.pipe(
+      switchMap(_ => b)
+    ).subscribe();
+  }
+}
+
+@Directive({
+  selector: 'my-directive'
+})
+class NoTakeUntilDirective {
+  someMethod() {
+    a.pipe(
+      switchMap(_ => b)
+    ).subscribe();
+  }
+}
