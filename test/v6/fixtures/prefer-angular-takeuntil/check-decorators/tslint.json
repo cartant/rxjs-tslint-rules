@@ -1,0 +1,18 @@
+{
+  "defaultSeverity": "error",
+  "jsRules": {},
+  "rules": {
+    "rxjs-prefer-angular-takeuntil": {
+      "options": [{
+        "checkDecorators": [
+          "Component",
+          "Pipe",
+          "Injectable",
+          "Directive"
+        ]
+      }],
+      "severity": "error"
+    }
+  },
+  "rulesDirectory": "../../../../../build/rules"
+}

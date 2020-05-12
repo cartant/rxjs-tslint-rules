@@ -14,6 +14,7 @@ import { couldBeType, isThis } from "../support/util";
 type Options = {
   alias: string[];
   checkDestroy: boolean;
+  checkDecorators: string[];
 };
 
 export class Rule extends Lint.Rules.TypedRule {
@@ -21,17 +22,19 @@ export class Rule extends Lint.Rules.TypedRule {
     deprecationMessage: peer.v5 ? peer.v5NotSupportedMessage : undefined,
     description: Lint.Utils
       .dedent`Enforces the application of the takeUntil operator
-      when calling subscribe within an Angular component.`,
+      when calling subscribe within an Angular component (optionally within services, directives, pipes).`,
     options: {
       properties: {
         alias: { type: "array", items: { type: "string" } },
+        checkDecorators: { type: "array", items: { type: "string" } },
         checkDestroy: { type: "boolean" }
       },
       type: "object"
     },
     optionsDescription: Lint.Utils.dedent`
-        An optional object with optional \`alias\` and \`checkDestroy\` properties.
+        An optional object with optional \`alias\`, \`checkDecorators\` and \`checkDestroy\` properties.
         The \`alias\` property is an array containing the names of operators that aliases for \`takeUntil\`.
+        The \`checkDecorators\` property is an array containing the names of decorators, when using which it is necessary to check the class.
         The \`checkDestroy\` property is a boolean that determines whether or not a \`Subject\`-based \`ngOnDestroy\` must be implemented.`,
     requiresTypeInfo: true,
     ruleName: "rxjs-prefer-angular-takeuntil",
@@ -63,21 +66,25 @@ export class Rule extends Lint.Rules.TypedRule {
     // If an alias is specified, check for the subject-based destroy only if
     // it's explicitly configured. It's extremely unlikely a subject-based
     // destroy mechanism will be used in conjunction with an alias.
-    const { alias = [], checkDestroy = alias.length === 0 }: Options =
-      options || {};
+    const {
+      alias = [],
+      checkDestroy = alias.length === 0,
+      checkDecorators = ["Component"]
+    }: Options = options || {};
 
-    // find all classes with a @Component() decorator
-    const componentClassDeclarations = tsquery(
+    // find all classes with given decorators
+    const decoratorQuery = `/^(${checkDecorators.join("|")})$/`;
+    const classDeclarations = tsquery(
       sourceFile,
-      `ClassDeclaration:has(Decorator[expression.expression.name='Component'])`
+      `ClassDeclaration:has(Decorator[expression.expression.name=${decoratorQuery}])`
     ) as ts.ClassDeclaration[];
-    componentClassDeclarations.forEach(componentClassDeclaration => {
+    classDeclarations.forEach(classDeclaration => {
       failures.push(
-        ...this.checkComponentClassDeclaration(
+        ...this.checkClassDeclaration(
           sourceFile,
           program,
-          { alias, checkDestroy },
-          componentClassDeclaration
+          { alias, checkDestroy, checkDecorators },
+          classDeclaration
         )
       );
     });
@@ -86,13 +93,13 @@ export class Rule extends Lint.Rules.TypedRule {
   }
 
   /**
-   * Checks a component class for occurrences of .subscribe() and corresponding takeUntil() requirements
+   * Checks a class for occurrences of .subscribe() and corresponding takeUntil() requirements
    */
-  private checkComponentClassDeclaration(
+  private checkClassDeclaration(
     sourceFile: ts.SourceFile,
     program: ts.Program,
     options: Options,
-    componentClassDeclaration: ts.ClassDeclaration
+    classDeclaration: ts.ClassDeclaration
   ): Lint.RuleFailure[] {
     const failures: Lint.RuleFailure[] = [];
     const typeChecker = program.getTypeChecker();
@@ -103,7 +110,7 @@ export class Rule extends Lint.Rules.TypedRule {
 
     // find observable.subscribe() call expressions
     const subscribePropertyAccessExpressions = tsquery(
-      componentClassDeclaration,
+      classDeclaration,
       `CallExpression > PropertyAccessExpression[name.name="subscribe"]`
     ) as ts.PropertyAccessExpression[];
 
@@ -141,7 +148,7 @@ export class Rule extends Lint.Rules.TypedRule {
       failures.push(
         ...this.checkNgOnDestroy(
           sourceFile,
-          componentClassDeclaration,
+          classDeclaration,
           destroySubjectNamesBySubscribes
         )
       );
