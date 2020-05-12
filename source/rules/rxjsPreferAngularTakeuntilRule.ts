@@ -14,7 +14,7 @@ import { couldBeType, isThis } from "../support/util";
 type Options = {
   alias: string[];
   checkDestroy: boolean;
-  checkAllClasses: boolean;
+  checkDecorators: string[];
 };
 
 export class Rule extends Lint.Rules.TypedRule {
@@ -26,15 +26,15 @@ export class Rule extends Lint.Rules.TypedRule {
     options: {
       properties: {
         alias: { type: "array", items: { type: "string" } },
-        checkAllClasses: { type: "boolean" },
+        checkDecorators: { type: "array", items: { type: "string" } },
         checkDestroy: { type: "boolean" }
       },
       type: "object"
     },
     optionsDescription: Lint.Utils.dedent`
-        An optional object with optional \`alias\`, \`checkAllClasses\` and \`checkDestroy\` properties.
+        An optional object with optional \`alias\`, \`checkDecorators\` and \`checkDestroy\` properties.
         The \`alias\` property is an array containing the names of operators that aliases for \`takeUntil\`.
-        The \`checkAllClasses\` property is a boolean that determines whether to check all classes (services, components, directives, pipes) or only component classes.
+        The \`checkDecorators\` property is an array containing the names of decorators, when using which it is necessary to check the class.
         The \`checkDestroy\` property is a boolean that determines whether or not a \`Subject\`-based \`ngOnDestroy\` must be implemented.`,
     requiresTypeInfo: true,
     ruleName: "rxjs-prefer-angular-takeuntil",
@@ -69,13 +69,11 @@ export class Rule extends Lint.Rules.TypedRule {
     const {
       alias = [],
       checkDestroy = alias.length === 0,
-      checkAllClasses = false
+      checkDecorators = ["Component"]
     }: Options = options || {};
 
     // find all classes with given decorators
-    const decoratorQuery = checkAllClasses
-      ? "/^(Component|Directive|Injectable|Pipe)$/"
-      : "'Component'";
+    const decoratorQuery = `/^(${checkDecorators.join("|")})$/`;
     const classDeclarations = tsquery(
       sourceFile,
       `ClassDeclaration:has(Decorator[expression.expression.name=${decoratorQuery}])`
@@ -85,7 +83,7 @@ export class Rule extends Lint.Rules.TypedRule {
         ...this.checkClassDeclaration(
           sourceFile,
           program,
-          { alias, checkDestroy, checkAllClasses },
+          { alias, checkDestroy, checkDecorators },
           classDeclaration
         )
       );

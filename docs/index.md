@@ -56,7 +56,7 @@ The package includes the following rules (none of which are enabled by default):
 | `rxjs-no-wholesale` | Disallows the wholesale importation of `rxjs` or `rxjs/Rx`. | None |
 | `rxjs-prefer-angular-async-pipe` | Disallows the calling of `subscribe` within an Angular component. | None |
 | `rxjs-prefer-angular-composition` | Enforces the composition of subscriptions within an Angular component. The rule ensures that subscriptions are composed into a class-property `Subscription` and that the `Subscription` is unsubscribed in `ngOnDestroy`. (For an example, see [the tests](https://github.com/cartant/rxjs-tslint-rules/blob/0f53f9258bfe573c9e8948b1381bd446664cf5f9/test/v6/fixtures/prefer-angular-composition/default/fixture.ts.lint#L4-L17).) | None |
-| `rxjs-prefer-angular-takeuntil` | Enforces the application of the `takeUntil` operator when calling `subscribe` within an Angular component (optionally within services, directives, pipes). The rule (optionally) ensures that `takeUntil` is passed a class-property `Subject` and that the `Subject` is notified in `ngOnDestroy`. (For an example, see [the tests](https://github.com/cartant/rxjs-tslint-rules/blob/0f53f9258bfe573c9e8948b1381bd446664cf5f9/test/v6/fixtures/prefer-angular-takeuntil/default/fixture.ts.lint#L10-L25).) | [See below](#rxjs-prefer-angular-takeuntil) |
+| `rxjs-prefer-angular-takeuntil` | Enforces the application of the `takeUntil` operator when calling `subscribe` within an Angular component (optionally within classes with one of specified decorators). The rule (optionally) ensures that `takeUntil` is passed a class-property `Subject` and that the `Subject` is notified in `ngOnDestroy`. (For an example, see [the tests](https://github.com/cartant/rxjs-tslint-rules/blob/0f53f9258bfe573c9e8948b1381bd446664cf5f9/test/v6/fixtures/prefer-angular-takeuntil/default/fixture.ts.lint#L10-L25).) | [See below](#rxjs-prefer-angular-takeuntil) |
 | `rxjs-prefer-observer` | Enforces the passing of observers to `subscribe` and `tap`. See [this RxJS issue](https://github.com/ReactiveX/rxjs/issues/4159). | [See below](#rxjs-prefer-observer) |
 | `rxjs-suffix-subjects` | Disalllows subjects that don't end with the specified `suffix` option. | [See below](#rxjs-suffix-subjects) |
 | `rxjs-throw-error` | Enforces the passing of `Error` values to `error` notifications. | None |
@@ -342,7 +342,7 @@ The following options are equivalent to the rule's default configuration:
 
 #### rxjs-prefer-angular-takeuntil
 
-The rule takes an optional object with optional `alias` and `checkDestroy` properties. The `alias` property is an array containing the names of operators that aliases for `takeUntil`. The `checkAllClasses` property is a boolean that determines whether to check all classes (services, components, directives, pipes) or only component classes. And the `checkDestroy` property is a boolean that determines whether or not a `Subject`-based `ngOnDestroy` must be implemented.
+The rule takes an optional object with optional `alias` and `checkDestroy` properties. The `alias` property is an array containing the names of operators that aliases for `takeUntil`. The `checkDecorators` property is an array containing the names of decorators, when using which it is necessary to check the class. And the `checkDestroy` property is a boolean that determines whether or not a `Subject`-based `ngOnDestroy` must be implemented.
 
 <a name="rxjs-prefer-observer"></a>
 

@@ -4,7 +4,12 @@
   "rules": {
     "rxjs-prefer-angular-takeuntil": {
       "options": [{
-        "checkAllClasses": true
+        "checkDecorators": [
+          "Component",
+          "Pipe",
+          "Injectable",
+          "Directive"
+        ]
       }],
       "severity": "error"
     }
