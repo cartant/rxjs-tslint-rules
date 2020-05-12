@@ -1,3 +1,10 @@
+<a name="4.32.0"></a>
+## [4.32.0](https://github.com/cartant/rxjs-tslint-rules/compare/v4.31.0...v4.32.0) (2020-05-12)
+
+## Features
+
+* Add a `checkDecorators` option to the `rxjs-prefer-angular-takeuntil` rule. ([533eb63](https://github.com/cartant/rxjs-tslint-rules/commit/533eb63))
+
 <a name="4.31.0"></a>
 ## [4.31.0](https://github.com/cartant/rxjs-tslint-rules/compare/v4.30.1...v4.31.0) (2020-04-25)
 
