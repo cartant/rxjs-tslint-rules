@@ -20,9 +20,10 @@ type Options = {
 export class Rule extends Lint.Rules.TypedRule {
   public static metadata: Lint.IRuleMetadata = {
     deprecationMessage: peer.v5 ? peer.v5NotSupportedMessage : undefined,
-    description: Lint.Utils
-      .dedent`Enforces the application of the takeUntil operator
-      when calling subscribe within an Angular component (optionally within services, directives, pipes).`,
+    description: Lint.Utils.dedent`
+      Enforces the application of the takeUntil operator
+      when calling subscribe within Angular components
+      (and, optionally, within services, directives, and pipes).`,
     options: {
       properties: {
         alias: { type: "array", items: { type: "string" } },
@@ -34,7 +35,7 @@ export class Rule extends Lint.Rules.TypedRule {
     optionsDescription: Lint.Utils.dedent`
         An optional object with optional \`alias\`, \`checkDecorators\` and \`checkDestroy\` properties.
         The \`alias\` property is an array containing the names of operators that aliases for \`takeUntil\`.
-        The \`checkDecorators\` property is an array containing the names of decorators, when using which it is necessary to check the class.
+        The \`checkDecorators\` property is an array containing the names of the decorators that determine whether or not a class is checked.
         The \`checkDestroy\` property is a boolean that determines whether or not a \`Subject\`-based \`ngOnDestroy\` must be implemented.`,
     requiresTypeInfo: true,
     ruleName: "rxjs-prefer-angular-takeuntil",
