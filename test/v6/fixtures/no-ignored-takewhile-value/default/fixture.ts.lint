@@ -1,0 +1,46 @@
+import { Observable } from "rxjs";
+import { takeWhile } from "rxjs/operators";
+
+class Something {
+  private _alive = true;
+  constructor(private _source: Observable<string>) {
+
+    _source.pipe(
+      takeWhile(value => value)
+    ).subscribe();
+
+    _source.pipe(
+      takeWhile(value => value !== "42")
+    ).subscribe();
+
+    _source.pipe(
+      takeWhile(value => { return false; })
+                ~~~~~~~~~~~~~~~~~~~~~~~~~~          [no-ignored-takewhile-value]
+    ).subscribe();
+
+    _source.pipe(
+      takeWhile(function (value) { return false; })
+                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  [no-ignored-takewhile-value]
+    ).subscribe();
+
+    _source.pipe(
+      takeWhile(() => alive)
+                ~~~~~~~~~~~                         [no-ignored-takewhile-value]
+    ).subscribe();
+
+    _source.pipe(
+      takeWhile(() => this._alive)
+                ~~~~~~~~~~~~~~~~~                   [no-ignored-takewhile-value]
+    ).subscribe();
+
+    _source.pipe(
+      takeWhile(() => this.alive())
+                ~~~~~~~~~~~~~~~~~~                  [no-ignored-takewhile-value]
+    ).subscribe();
+  }
+  alive(): boolean {
+    return this._alive;
+  }
+}
+
+[no-ignored-takewhile-value]: Ignoring the takeWhile value is forbidden

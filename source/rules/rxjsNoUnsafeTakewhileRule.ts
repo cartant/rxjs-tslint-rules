@@ -12,6 +12,7 @@ import { isConstDeclaration, isThis } from "../support/util";
 
 export class Rule extends Lint.Rules.TypedRule {
   public static metadata: Lint.IRuleMetadata = {
+    deprecationMessage: "Use rxjs-no-ignored-takewhile instead.",
     description:
       "Disallows the use of variables/properties from outer scopes in takeWhile.",
     options: null,
