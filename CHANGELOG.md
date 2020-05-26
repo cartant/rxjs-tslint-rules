@@ -1,3 +1,10 @@
+<a name="4.33.0"></a>
+## [4.33.0](https://github.com/cartant/rxjs-tslint-rules/compare/v4.32.0...v4.33.0) (2020-05-26)
+
+## Features
+
+* Add `rxjs-no-ignored-takewhile-value` to replace the `rxjs-no-unsafe-takewhile` rule - which is now deprecated. ([9d23be9](https://github.com/cartant/rxjs-tslint-rules/commit/9d23be9))
+
 <a name="4.32.0"></a>
 ## [4.32.0](https://github.com/cartant/rxjs-tslint-rules/compare/v4.31.0...v4.32.0) (2020-05-12)
 
