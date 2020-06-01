@@ -18,7 +18,7 @@ export class Rule extends Lint.Rules.TypedRule {
     requiresTypeInfo: true,
     ruleName: "rxjs-no-subclass",
     type: "functionality",
-    typescriptOnly: true
+    typescriptOnly: true,
   };
 
   public static FAILURE_STRING = "Subclassing RxJS classes is forbidden";
@@ -37,7 +37,7 @@ export class Rule extends Lint.Rules.TypedRule {
       "ReplaySubject",
       "Scheduler",
       "Subject",
-      "Subscriber"
+      "Subscriber",
     ];
 
     // Subject extends Observable, so there's no need to explicitly check
@@ -50,20 +50,20 @@ export class Rule extends Lint.Rules.TypedRule {
         "|"
       )})$/])`
     );
-    classDeclarations.forEach(node => {
+    classDeclarations.forEach((node) => {
       const classDeclaration = node as ts.ClassDeclaration;
       const heritageClauses = classDeclaration.heritageClauses as ts.NodeArray<
         ts.HeritageClause
       >;
-      heritageClauses.forEach(heritageClause => {
+      heritageClauses.forEach((heritageClause) => {
         if (heritageClause.token === ts.SyntaxKind.ExtendsKeyword) {
-          heritageClause.types.forEach(heritageType => {
+          heritageClause.types.forEach((heritageType) => {
             const type = typeChecker.getTypeAtLocation(heritageType);
             if (
-              couldBeNames.some(name =>
+              couldBeNames.some((name) =>
                 couldBeType(type, name, {
                   name: /[\/\\]rxjs[\/\\]/,
-                  typeChecker
+                  typeChecker,
                 })
               )
             ) {

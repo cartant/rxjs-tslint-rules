@@ -20,7 +20,7 @@ export class Rule extends Lint.Rules.TypedRule {
     requiresTypeInfo: true,
     ruleName: "rxjs-no-ignored-notifier",
     type: "functionality",
-    typescriptOnly: true
+    typescriptOnly: true,
   };
 
   public static FAILURE_STRING = "Ignoring the notifier is forbidden";
@@ -36,7 +36,7 @@ export class Rule extends Lint.Rules.TypedRule {
       sourceFile,
       `CallExpression Identifier[name=/(repeatWhen|retryWhen)/]`
     );
-    identifiers.forEach(identifier => {
+    identifiers.forEach((identifier) => {
       const callExpression = identifier.parent as ts.CallExpression;
       if (callExpression.arguments.length > 0) {
         const type = typeChecker.getTypeAtLocation(callExpression);

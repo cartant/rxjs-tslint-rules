@@ -20,17 +20,17 @@ export class Rule extends Lint.Rules.TypedRule {
         allowObservables: {
           oneOf: [
             { type: "boolean" },
-            { type: "array", items: { type: "string" } }
-          ]
+            { type: "array", items: { type: "string" } },
+          ],
         },
         allowOperators: {
           oneOf: [
             { type: "boolean" },
-            { type: "array", items: { type: "string" } }
-          ]
-        }
+            { type: "array", items: { type: "string" } },
+          ],
+        },
       },
-      type: "object"
+      type: "object",
     },
     optionsDescription: Lint.Utils.dedent`
       An optional object with the optional properties \`allowObservables\` and \`allowOperators\`.
@@ -39,7 +39,7 @@ export class Rule extends Lint.Rules.TypedRule {
     requiresTypeInfo: true,
     ruleName: "rxjs-no-patched",
     type: "functionality",
-    typescriptOnly: true
+    typescriptOnly: true,
   };
 
   public static FAILURE_STRING = "RxJS patched methods are forbidden";
@@ -80,9 +80,9 @@ class Walker extends UsedWalker {
     }
 
     if (!allowAllObservables) {
-      Object.keys(this.usedObservables).forEach(key => {
+      Object.keys(this.usedObservables).forEach((key) => {
         if (allowedObservables.indexOf(key) === -1) {
-          this.usedObservables[key].forEach(node =>
+          this.usedObservables[key].forEach((node) =>
             this.addFailureAtNode(node, `${Rule.FAILURE_STRING}: ${key}`)
           );
         }
@@ -90,9 +90,9 @@ class Walker extends UsedWalker {
     }
 
     if (!allowAllOperators) {
-      Object.keys(this.usedOperators).forEach(key => {
+      Object.keys(this.usedOperators).forEach((key) => {
         if (allowedOperators.indexOf(key) === -1) {
-          this.usedOperators[key].forEach(node =>
+          this.usedOperators[key].forEach((node) =>
             this.addFailureAtNode(node, `${Rule.FAILURE_STRING}: ${key}`)
           );
         }

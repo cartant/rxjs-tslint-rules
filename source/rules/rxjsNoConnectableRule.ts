@@ -18,7 +18,7 @@ export class Rule extends Lint.Rules.TypedRule {
     requiresTypeInfo: true,
     ruleName: "rxjs-no-connectable",
     type: "functionality",
-    typescriptOnly: true
+    typescriptOnly: true,
   };
 
   public static FAILURE_STRING = "Connectable observables are forbidden";
@@ -34,13 +34,13 @@ export class Rule extends Lint.Rules.TypedRule {
       sourceFile,
       `CallExpression Identifier[name=/^(multicast|publish|publishBehavior|publishLast|publishReplay)$/]`
     );
-    callIdentifiers.forEach(identifier => {
+    callIdentifiers.forEach((identifier) => {
       const callExpression = identifier.parent as ts.CallExpression;
       let fail = false;
       if (identifier.getText() === "multicast") {
         fail = callExpression.arguments.length === 1;
       } else {
-        fail = !callExpression.arguments.some(arg =>
+        fail = !callExpression.arguments.some((arg) =>
           couldBeFunction(typeChecker.getTypeAtLocation(arg))
         );
       }

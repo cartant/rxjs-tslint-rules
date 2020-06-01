@@ -17,7 +17,7 @@ export class Rule extends Lint.Rules.TypedRule {
     requiresTypeInfo: true,
     ruleName: "rxjs-throw-error",
     type: "functionality",
-    typescriptOnly: true
+    typescriptOnly: true,
   };
 
   public static FAILURE_STRING = "Passing non-Error values is forbidden";
@@ -36,7 +36,7 @@ export class Walker extends Lint.ProgramAwareRuleWalker {
   protected visitCallExpression(node: ts.CallExpression): void {
     const {
       arguments: [argument],
-      expression
+      expression,
     } = node;
     const typeChecker = this.getTypeChecker();
 

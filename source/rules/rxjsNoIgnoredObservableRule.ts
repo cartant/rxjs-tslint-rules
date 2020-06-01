@@ -18,7 +18,7 @@ export class Rule extends Lint.Rules.TypedRule {
     requiresTypeInfo: true,
     ruleName: "rxjs-no-ignored-observable",
     type: "functionality",
-    typescriptOnly: true
+    typescriptOnly: true,
   };
 
   public static FAILURE_STRING = "Ignoring a returned Observable is forbidden";
@@ -34,7 +34,7 @@ export class Rule extends Lint.Rules.TypedRule {
       sourceFile,
       `ExpressionStatement > CallExpression`
     );
-    callExpressions.forEach(callExpression => {
+    callExpressions.forEach((callExpression) => {
       const type = typeChecker.getTypeAtLocation(callExpression);
       if (couldBeType(type, "Observable")) {
         failures.push(

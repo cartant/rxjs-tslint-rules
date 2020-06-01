@@ -17,7 +17,7 @@ export class Rule extends Lint.Rules.TypedRule {
     requiresTypeInfo: true,
     ruleName: "rxjs-no-create",
     type: "functionality",
-    typescriptOnly: true
+    typescriptOnly: true,
   };
 
   public static FAILURE_STRING =
@@ -36,7 +36,7 @@ export class Rule extends Lint.Rules.TypedRule {
 class Walker extends UsedWalker {
   protected onSourceFileEnd(): void {
     if (this.usedStaticMethods["create"]) {
-      this.usedStaticMethods["create"].forEach(node =>
+      this.usedStaticMethods["create"].forEach((node) =>
         this.addFailureAtNode(node, Rule.FAILURE_STRING)
       );
     }

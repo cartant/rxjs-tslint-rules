@@ -10,7 +10,7 @@ import {
   knownOperators,
   knownPipeableOperators,
   knownPrototypeMethods,
-  knownStaticMethods
+  knownStaticMethods,
 } from "./knowns";
 import * as peer from "./peer";
 

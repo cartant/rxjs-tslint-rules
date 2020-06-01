@@ -17,7 +17,7 @@ export class Rule extends Lint.Rules.TypedRule {
     requiresTypeInfo: true,
     ruleName: "rxjs-no-finnish",
     type: "style",
-    typescriptOnly: true
+    typescriptOnly: true,
   };
 
   public static FAILURE_STRING = "Finnish notation is forbidden";
@@ -61,7 +61,7 @@ class Walker extends Lint.ProgramAwareRuleWalker {
   protected visitObjectLiteralExpression(
     node: ts.ObjectLiteralExpression
   ): void {
-    node.properties.forEach(property => {
+    node.properties.forEach((property) => {
       if (property.name && !tsutils.isComputedPropertyName(property.name)) {
         this.validateNode(property);
       }
@@ -92,7 +92,7 @@ class Walker extends Lint.ProgramAwareRuleWalker {
   protected visitVariableDeclarationList(
     node: ts.VariableDeclarationList
   ): void {
-    tsutils.forEachDeclaredVariable(node, variable => {
+    tsutils.forEachDeclaredVariable(node, (variable) => {
       this.validateNode(variable);
     });
     super.visitVariableDeclarationList(node);

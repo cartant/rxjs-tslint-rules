@@ -16,6 +16,6 @@ export class Rule extends PreferAngularAsyncPipeRule {
     requiresTypeInfo: true,
     ruleName: "rxjs-prefer-async-pipe",
     type: "style",
-    typescriptOnly: true
+    typescriptOnly: true,
   };
 }

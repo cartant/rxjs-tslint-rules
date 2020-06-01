@@ -16,16 +16,16 @@ export class Rule extends Lint.Rules.TypedRule {
     description: "Enforces the passing of observers to `subscribe` and `tap`.",
     options: {
       properties: {
-        allowNext: { type: "boolean" }
+        allowNext: { type: "boolean" },
       },
-      type: "object"
+      type: "object",
     },
     optionsDescription: Lint.Utils.dedent`
       An optional object with optional \`allowNext\` property - which defaults to \`true\`.`,
     requiresTypeInfo: true,
     ruleName: "rxjs-prefer-observer",
     type: "style",
-    typescriptOnly: true
+    typescriptOnly: true,
   };
 
   public static FAILURE_STRING = "Prefer an observer over callbacks";
@@ -41,7 +41,7 @@ export class Rule extends Lint.Rules.TypedRule {
       sourceFile,
       `CallExpression PropertyAccessExpression[name.name=/^(pipe|subscribe)$/]`
     );
-    propertyAccessExpressions.forEach(node => {
+    propertyAccessExpressions.forEach((node) => {
       const propertyAccessExpression = node as ts.PropertyAccessExpression;
       const { parent: callExpression } = propertyAccessExpression;
       if (tsutils.isCallExpression(callExpression)) {
@@ -79,13 +79,13 @@ export class Rule extends Lint.Rules.TypedRule {
     const failures: Lint.RuleFailure[] = [];
     const args = callExpression.arguments;
     const {
-      ruleArguments: [options]
+      ruleArguments: [options],
     } = this.getOptions();
     const allowNext =
       options && options.hasOwnProperty("allowNext") ? options.allowNext : true;
 
     if (args.length > 1) {
-      args.forEach(arg => {
+      args.forEach((arg) => {
         failures.push(
           new Lint.RuleFailure(
             sourceFile,
@@ -129,7 +129,7 @@ export class Rule extends Lint.Rules.TypedRule {
       callExpression,
       `CallExpression Identifier[name="tap"]`
     );
-    tapIdentifiers.forEach(tapIdentifier => {
+    tapIdentifiers.forEach((tapIdentifier) => {
       const { parent: callExpression } = tapIdentifier;
       if (tsutils.isCallExpression(callExpression)) {
         failures.push(

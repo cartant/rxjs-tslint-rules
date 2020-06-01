@@ -12,7 +12,7 @@ export class Rule extends NoDoRule {
     {},
     NoDoRule.metadata,
     {
-      ruleName: "rxjs-no-tap"
+      ruleName: "rxjs-no-tap",
     }
   );
 }

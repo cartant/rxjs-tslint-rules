@@ -23,9 +23,9 @@ export class Rule extends Lint.Rules.TypedRule {
         parameters: { type: "boolean" },
         properties: { type: "boolean" },
         types: { type: "object" },
-        variables: { type: "boolean" }
+        variables: { type: "boolean" },
       },
-      type: "object"
+      type: "object",
     },
     optionsDescription: Lint.Utils.dedent`
       An optional object with optional \`functions\`, \`methods\`, \`parameters\`,
@@ -38,7 +38,7 @@ export class Rule extends Lint.Rules.TypedRule {
     requiresTypeInfo: true,
     ruleName: "rxjs-finnish",
     type: "style",
-    typescriptOnly: true
+    typescriptOnly: true,
   };
 
   public applyWithProgram(
@@ -59,7 +59,7 @@ class Walker extends Lint.ProgramAwareRuleWalker {
     methods: true,
     parameters: true,
     properties: true,
-    variables: true
+    variables: true,
   };
 
   constructor(
@@ -135,7 +135,7 @@ class Walker extends Lint.ProgramAwareRuleWalker {
     node: ts.ObjectLiteralExpression
   ): void {
     if (this.validate.properties) {
-      node.properties.forEach(property => {
+      node.properties.forEach((property) => {
         if (property.name && !tsutils.isComputedPropertyName(property.name)) {
           this.validateNode(property);
         }
@@ -176,7 +176,7 @@ class Walker extends Lint.ProgramAwareRuleWalker {
     node: ts.VariableDeclarationList
   ): void {
     if (this.validate.variables) {
-      tsutils.forEachDeclaredVariable(node, variable => {
+      tsutils.forEachDeclaredVariable(node, (variable) => {
         this.validateNode(variable);
       });
     }

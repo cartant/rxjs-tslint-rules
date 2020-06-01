@@ -14,7 +14,7 @@ export class Rule extends NoWholesaleRule {
     {
       deprecationMessage:
         "rxjs-prefer-add has been renamed to rxjs-no-wholesale.",
-      ruleName: "rxjs-prefer-add"
+      ruleName: "rxjs-prefer-add",
     }
   );
 }

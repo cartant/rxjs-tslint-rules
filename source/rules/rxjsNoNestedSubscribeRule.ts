@@ -20,7 +20,7 @@ export class Rule extends Lint.Rules.TypedRule {
     requiresTypeInfo: true,
     ruleName: "rxjs-no-nested-subscribe",
     type: "style",
-    typescriptOnly: true
+    typescriptOnly: true,
   };
 
   public static FAILURE_STRING = "Nested subscribe calls are forbidden";
@@ -34,7 +34,7 @@ export class Rule extends Lint.Rules.TypedRule {
 
     const subscribeQuery = `CallExpression > PropertyAccessExpression[name.name="subscribe"]`;
     const propertyAccessExpressions = tsquery(sourceFile, subscribeQuery);
-    propertyAccessExpressions.forEach(node => {
+    propertyAccessExpressions.forEach((node) => {
       const propertyAccessExpression = node as ts.PropertyAccessExpression;
       const { parent: callExpression } = propertyAccessExpression;
       if (tsutils.isCallExpression(callExpression)) {
@@ -42,9 +42,9 @@ export class Rule extends Lint.Rules.TypedRule {
           propertyAccessExpression.expression
         );
         if (couldBeType(type, "Observable")) {
-          callExpression.arguments.forEach(arg => {
+          callExpression.arguments.forEach((arg) => {
             const innerPropertyAccessExpressions = tsquery(arg, subscribeQuery);
-            innerPropertyAccessExpressions.forEach(node => {
+            innerPropertyAccessExpressions.forEach((node) => {
               const innerPropertyAccessExpression = node as ts.PropertyAccessExpression;
               if (innerPropertyAccessExpression !== propertyAccessExpression) {
                 const type = typeChecker.getTypeAtLocation(

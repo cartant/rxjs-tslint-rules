@@ -22,9 +22,9 @@ export class Rule extends Lint.Rules.TypedRule {
         properties: { type: "boolean" },
         suffix: { type: "string" },
         types: { type: "object" },
-        variables: { type: "boolean" }
+        variables: { type: "boolean" },
       },
-      type: "object"
+      type: "object",
     },
     optionsDescription: Lint.Utils.dedent`
       An optional object with optional \`parameters\`, \`properties\` and \`variables\` properties.
@@ -36,7 +36,7 @@ export class Rule extends Lint.Rules.TypedRule {
     requiresTypeInfo: true,
     ruleName: "rxjs-suffix-subjects",
     type: "style",
-    typescriptOnly: true
+    typescriptOnly: true,
   };
 
   public applyWithProgram(
@@ -51,7 +51,7 @@ export class Rule extends Lint.Rules.TypedRule {
     let validateOptions = {
       parameters: true,
       properties: true,
-      variables: true
+      variables: true,
     };
     const message = (identifier: string) =>
       `Subject '${identifier}' must be suffixed with '${suffix}'.`;
@@ -98,7 +98,7 @@ export class Rule extends Lint.Rules.TypedRule {
       );
     }
 
-    identifiers.forEach(identifier => {
+    identifiers.forEach((identifier) => {
       const type = typeChecker.getTypeAtLocation(identifier);
       const text = identifier.getText();
       if (!suffixRegex.test(text) && couldBeType(type, "Subject")) {

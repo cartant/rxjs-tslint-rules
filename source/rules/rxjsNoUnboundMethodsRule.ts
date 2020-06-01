@@ -20,7 +20,7 @@ export class Rule extends Lint.Rules.TypedRule {
     requiresTypeInfo: true,
     ruleName: "rxjs-no-unbound-methods",
     type: "maintainability",
-    typescriptOnly: true
+    typescriptOnly: true,
   };
 
   public static FAILURE_STRING = "Unbound methods are forbidden";
@@ -36,7 +36,7 @@ export class Rule extends Lint.Rules.TypedRule {
       sourceFile,
       `CallExpression PropertyAccessExpression[name.name=/^(add|pipe|subscribe)$/]`
     );
-    propertyAccessExpressions.forEach(node => {
+    propertyAccessExpressions.forEach((node) => {
       const propertyAccessExpression = node as ts.PropertyAccessExpression;
       const { parent: callExpression } = propertyAccessExpression;
       if (tsutils.isCallExpression(callExpression)) {
@@ -47,7 +47,7 @@ export class Rule extends Lint.Rules.TypedRule {
           const { arguments: args } = callExpression;
           const { name } = propertyAccessExpression;
           if (name.getText() === "pipe") {
-            args.forEach(arg => {
+            args.forEach((arg) => {
               if (tsutils.isCallExpression(arg)) {
                 this.validateArgs(
                   arg.arguments,
@@ -68,7 +68,7 @@ export class Rule extends Lint.Rules.TypedRule {
       sourceFile,
       `NewExpression Identifier[escapedText="Subscription"]`
     );
-    subscriptionIdentifiers.forEach(subscriptionIdentifier => {
+    subscriptionIdentifiers.forEach((subscriptionIdentifier) => {
       const { parent: newExpression } = subscriptionIdentifier;
       if (tsutils.isNewExpression(newExpression)) {
         this.validateArgs(
@@ -89,7 +89,7 @@ export class Rule extends Lint.Rules.TypedRule {
     typeChecker: ts.TypeChecker,
     failures: Lint.RuleFailure[]
   ): void {
-    args.forEach(arg => {
+    args.forEach((arg) => {
       if (tsutils.isPropertyAccessExpression(arg)) {
         const type = typeChecker.getTypeAtLocation(arg);
         if (type.getCallSignatures().length > 0) {

@@ -17,7 +17,7 @@ export class Rule extends Lint.Rules.TypedRule {
     requiresTypeInfo: true,
     ruleName: "rxjs-just",
     type: "style",
-    typescriptOnly: true
+    typescriptOnly: true,
   };
 
   public static FAILURE_STRING = "Use just alias";
@@ -34,12 +34,12 @@ export class Rule extends Lint.Rules.TypedRule {
       sourceFile,
       `ImportDeclaration:has(StringLiteral[value="rxjs"]),ImportDeclaration:has(StringLiteral[value="rxjs/observable/of"])`
     );
-    importDeclarations.forEach(importDeclaration => {
+    importDeclarations.forEach((importDeclaration) => {
       let importSpecifiers = tsquery(
         importDeclaration,
         `ImportSpecifier:has(Identifier[escapedText="of"])`
       );
-      importSpecifiers.forEach(node => {
+      importSpecifiers.forEach((node) => {
         const importSpecifier = node as ts.ImportSpecifier;
         if (
           !importSpecifier.propertyName &&
@@ -70,7 +70,7 @@ export class Rule extends Lint.Rules.TypedRule {
         sourceFile,
         `CallExpression Identifier[escapedText="of"]`
       );
-      ofIdentifiers.forEach(ofIdentifier => {
+      ofIdentifiers.forEach((ofIdentifier) => {
         const { parent: callExpression } = ofIdentifier;
         if (tsutils.isCallExpression(callExpression)) {
           const expression = callExpression.expression;

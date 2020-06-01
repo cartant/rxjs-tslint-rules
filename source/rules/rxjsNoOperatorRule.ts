@@ -18,7 +18,7 @@ export class Rule extends Lint.Rules.AbstractRule {
     requiresTypeInfo: false,
     ruleName: "rxjs-no-operator",
     type: "functionality",
-    typescriptOnly: false
+    typescriptOnly: false,
   };
 
   public static FAILURE_STRING =

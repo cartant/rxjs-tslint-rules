@@ -28,9 +28,9 @@ export class Rule extends Lint.Rules.TypedRule {
       properties: {
         alias: { type: "array", items: { type: "string" } },
         checkDecorators: { type: "array", items: { type: "string" } },
-        checkDestroy: { type: "boolean" }
+        checkDestroy: { type: "boolean" },
       },
-      type: "object"
+      type: "object",
     },
     optionsDescription: Lint.Utils.dedent`
         An optional object with optional \`alias\`, \`checkDecorators\` and \`checkDestroy\` properties.
@@ -40,7 +40,7 @@ export class Rule extends Lint.Rules.TypedRule {
     requiresTypeInfo: true,
     ruleName: "rxjs-prefer-angular-takeuntil",
     type: "functionality",
-    typescriptOnly: true
+    typescriptOnly: true,
   };
 
   public static FAILURE_STRING_NO_TAKEUNTIL =
@@ -62,7 +62,7 @@ export class Rule extends Lint.Rules.TypedRule {
   ): Lint.RuleFailure[] {
     const failures: Lint.RuleFailure[] = [];
     const {
-      ruleArguments: [options]
+      ruleArguments: [options],
     } = this.getOptions();
     // If an alias is specified, check for the subject-based destroy only if
     // it's explicitly configured. It's extremely unlikely a subject-based
@@ -70,7 +70,7 @@ export class Rule extends Lint.Rules.TypedRule {
     const {
       alias = [],
       checkDestroy = alias.length === 0,
-      checkDecorators = ["Component"]
+      checkDecorators = ["Component"],
     }: Options = options || {};
 
     // find all classes with given decorators
@@ -79,7 +79,7 @@ export class Rule extends Lint.Rules.TypedRule {
       sourceFile,
       `ClassDeclaration:has(Decorator[expression.expression.name=${decoratorQuery}])`
     ) as ts.ClassDeclaration[];
-    classDeclarations.forEach(classDeclaration => {
+    classDeclarations.forEach((classDeclaration) => {
       failures.push(
         ...this.checkClassDeclaration(
           sourceFile,
@@ -116,7 +116,7 @@ export class Rule extends Lint.Rules.TypedRule {
     ) as ts.PropertyAccessExpression[];
 
     // check whether it is an observable and check the takeUntil is applied
-    subscribePropertyAccessExpressions.forEach(propertyAccessExpression => {
+    subscribePropertyAccessExpressions.forEach((propertyAccessExpression) => {
       const type = typeChecker.getTypeAtLocation(
         propertyAccessExpression.expression
       );
@@ -126,7 +126,7 @@ export class Rule extends Lint.Rules.TypedRule {
             sourceFile,
             options,
             propertyAccessExpression,
-            name => {
+            (name) => {
               let names = destroySubjectNamesBySubscribes.get(
                 propertyAccessExpression.name
               );
@@ -178,7 +178,7 @@ export class Rule extends Lint.Rules.TypedRule {
       subscribeContext.expression.name.text === "pipe"
     ) {
       const pipedOperators = subscribeContext.arguments;
-      pipedOperators.forEach(pipedOperator => {
+      pipedOperators.forEach((pipedOperator) => {
         if (tsutils.isCallExpression(pipedOperator)) {
           const { found, name } = this.checkOperator(options, pipedOperator);
           takeUntilFound = found;
@@ -249,7 +249,7 @@ export class Rule extends Lint.Rules.TypedRule {
   ): Lint.RuleFailure[] {
     const failures: Lint.RuleFailure[] = [];
     const ngOnDestroyMethod = classDeclaration.members.find(
-      member => member.name && member.name.getText() === "ngOnDestroy"
+      (member) => member.name && member.name.getText() === "ngOnDestroy"
     );
 
     // check whether the ngOnDestroy method is implemented
@@ -260,15 +260,15 @@ export class Rule extends Lint.Rules.TypedRule {
       // secondary takUntil operators. However, there must be at least one
       // takeUntil operator that conforms to the pattern that this rule enforces.
       const destroySubjectNames = new Set<string>();
-      destroySubjectNamesBySubscribes.forEach(names =>
-        names.forEach(name => destroySubjectNames.add(name))
+      destroySubjectNamesBySubscribes.forEach((names) =>
+        names.forEach((name) => destroySubjectNames.add(name))
       );
 
       const destroySubjectResultsByName = new Map<
         string,
         { failures: Lint.RuleFailure[]; report: boolean }
       >();
-      destroySubjectNames.forEach(name => {
+      destroySubjectNames.forEach((name) => {
         destroySubjectResultsByName.set(name, {
           failures: [
             ...this.checkDestroySubjectDeclaration(
@@ -287,24 +287,24 @@ export class Rule extends Lint.Rules.TypedRule {
               ngOnDestroyMethod,
               name,
               "complete"
-            )
+            ),
           ],
-          report: false
+          report: false,
         });
       });
 
-      destroySubjectNamesBySubscribes.forEach(names => {
+      destroySubjectNamesBySubscribes.forEach((names) => {
         const report = [...names].every(
-          name => destroySubjectResultsByName.get(name).failures.length > 0
+          (name) => destroySubjectResultsByName.get(name).failures.length > 0
         );
         if (report) {
           names.forEach(
-            name => (destroySubjectResultsByName.get(name).report = true)
+            (name) => (destroySubjectResultsByName.get(name).report = true)
           );
         }
       });
 
-      destroySubjectResultsByName.forEach(result => {
+      destroySubjectResultsByName.forEach((result) => {
         if (result.report) {
           failures.push(...result.failures);
         }
@@ -365,7 +365,7 @@ export class Rule extends Lint.Rules.TypedRule {
     // check whether there is one invocation of <destroySubjectName>.<methodName>()
     if (
       !destroySubjectMethodInvocations.some(
-        methodInvocation =>
+        (methodInvocation) =>
           (tsutils.isPropertyAccessExpression(methodInvocation.expression) &&
             isThis(methodInvocation.expression.expression) &&
             methodInvocation.expression.name.text === destroySubjectName) ||

@@ -18,7 +18,7 @@ export class Rule extends Lint.Rules.AbstractRule {
     requiresTypeInfo: false,
     ruleName: "rxjs-no-compat",
     type: "functionality",
-    typescriptOnly: false
+    typescriptOnly: false,
   };
 
   public static FAILURE_STRING =
@@ -30,7 +30,7 @@ export class Rule extends Lint.Rules.AbstractRule {
       sourceFile,
       String.raw`ImportDeclaration:has(StringLiteral[value=/^rxjs\u002f/])`
     );
-    importDeclarations.forEach(node => {
+    importDeclarations.forEach((node) => {
       const importDeclaration = node as ts.ImportDeclaration;
       const { moduleSpecifier } = importDeclaration;
       if (

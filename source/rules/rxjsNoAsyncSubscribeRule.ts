@@ -19,7 +19,7 @@ export class Rule extends Lint.Rules.TypedRule {
     requiresTypeInfo: true,
     ruleName: "rxjs-no-async-subscribe",
     type: "functionality",
-    typescriptOnly: true
+    typescriptOnly: true,
   };
 
   public static FAILURE_STRING =
@@ -36,13 +36,13 @@ export class Rule extends Lint.Rules.TypedRule {
       sourceFile,
       `CallExpression[expression.name.text="subscribe"]`
     );
-    callExpressions.forEach(node => {
+    callExpressions.forEach((node) => {
       const callExpression = node as ts.CallExpression;
       if (tsutils.isPropertyAccessExpression(callExpression.expression)) {
         const propertyAccessExpression = callExpression.expression;
         const { arguments: args } = callExpression;
         let observable: boolean | undefined = undefined;
-        args.forEach(arg => {
+        args.forEach((arg) => {
           if (
             tsutils.isArrowFunction(arg) ||
             tsutils.isFunctionExpression(arg)

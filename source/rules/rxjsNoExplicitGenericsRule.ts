@@ -18,7 +18,7 @@ export class Rule extends Lint.Rules.AbstractRule {
     requiresTypeInfo: false,
     ruleName: "rxjs-no-explicit-generics",
     type: "functionality",
-    typescriptOnly: true
+    typescriptOnly: true,
   };
 
   public static FAILURE_STRING =
@@ -46,7 +46,7 @@ export class Rule extends Lint.Rules.AbstractRule {
       `NewExpression[typeArguments.length>0] > Identifier[name="BehaviorSubject"]`
     ) as ts.Identifier[];
     identifiers.push(
-      ...behaviourSubjectIdentifiers.filter(identifier => {
+      ...behaviourSubjectIdentifiers.filter((identifier) => {
         const newExpression = identifier.parent as ts.NewExpression;
         const [arg] = newExpression.arguments;
         return (
@@ -61,7 +61,7 @@ export class Rule extends Lint.Rules.AbstractRule {
       `NewExpression[typeArguments.length>0] > Identifier[name="Notification"]`
     ) as ts.Identifier[];
     identifiers.push(
-      ...notificationIdentifiers.filter(identifier => {
+      ...notificationIdentifiers.filter((identifier) => {
         const newExpression = identifier.parent as ts.NewExpression;
         const [kind, value] = newExpression.arguments;
         return (
@@ -74,7 +74,7 @@ export class Rule extends Lint.Rules.AbstractRule {
     );
 
     return identifiers.map(
-      identifier =>
+      (identifier) =>
         new Lint.RuleFailure(
           sourceFile,
           identifier.getStart(),

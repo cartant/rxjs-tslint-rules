@@ -18,7 +18,7 @@ export class Rule extends Lint.Rules.TypedRule {
     requiresTypeInfo: true,
     ruleName: "rxjs-no-do",
     type: "functionality",
-    typescriptOnly: true
+    typescriptOnly: true,
   };
 
   public static FAILURE_STRING = "RxJS do/tap operator is forbidden";
@@ -39,7 +39,7 @@ class Walker extends UsedWalker {
 
     if (/^['"]rxjs\/operators?/.test(moduleSpecifier)) {
       if (tsutils.isNamedImports(node.importClause.namedBindings)) {
-        node.importClause.namedBindings.elements.forEach(binding => {
+        node.importClause.namedBindings.elements.forEach((binding) => {
           this.validateName(binding.propertyName || binding.name);
         });
       }
@@ -52,7 +52,7 @@ class Walker extends UsedWalker {
 
   protected onSourceFileEnd(): void {
     if (this.usedOperators["do"]) {
-      this.usedOperators["do"].forEach(node =>
+      this.usedOperators["do"].forEach((node) =>
         this.addFailureAtNode(node, Rule.FAILURE_STRING)
       );
     }

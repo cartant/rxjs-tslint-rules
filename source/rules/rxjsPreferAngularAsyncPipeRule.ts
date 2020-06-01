@@ -19,7 +19,7 @@ export class Rule extends Lint.Rules.TypedRule {
     requiresTypeInfo: true,
     ruleName: "rxjs-prefer-angular-async-pipe",
     type: "style",
-    typescriptOnly: true
+    typescriptOnly: true,
   };
 
   public static FAILURE_STRING = "Prefer async pipe over subscribe";
@@ -35,12 +35,12 @@ export class Rule extends Lint.Rules.TypedRule {
       sourceFile,
       `ClassDeclaration:has(Decorator[expression.expression.name="Component"])`
     );
-    classDeclarations.forEach(classDeclaration => {
+    classDeclarations.forEach((classDeclaration) => {
       const propertyAccessExpressions = tsquery(
         classDeclaration,
         `CallExpression PropertyAccessExpression[name.name="subscribe"]`
       );
-      propertyAccessExpressions.forEach(node => {
+      propertyAccessExpressions.forEach((node) => {
         const propertyAccessExpression = node as ts.PropertyAccessExpression;
         const type = typeChecker.getTypeAtLocation(
           propertyAccessExpression.expression

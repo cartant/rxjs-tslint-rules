@@ -19,7 +19,7 @@ export class Rule extends Lint.Rules.TypedRule {
     requiresTypeInfo: true,
     ruleName: "rxjs-no-ignored-subscription",
     type: "functionality",
-    typescriptOnly: true
+    typescriptOnly: true,
   };
 
   public static FAILURE_STRING = "Ignoring returned subscriptions is forbidden";
@@ -35,7 +35,7 @@ export class Rule extends Lint.Rules.TypedRule {
       sourceFile,
       `CallExpression[expression.name.text="subscribe"]`
     );
-    callExpressions.forEach(node => {
+    callExpressions.forEach((node) => {
       const callExpression = node as ts.CallExpression;
       if (tsutils.isPropertyAccessExpression(callExpression.expression)) {
         if (!tsutils.isExpressionStatement(callExpression.parent)) {

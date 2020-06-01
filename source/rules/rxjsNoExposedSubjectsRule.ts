@@ -18,16 +18,16 @@ export class Rule extends Lint.Rules.TypedRule {
     description: "Disallows exposed subjects.",
     options: {
       properties: {
-        allowProtected: { type: "boolean" }
+        allowProtected: { type: "boolean" },
       },
-      type: "object"
+      type: "object",
     },
     optionsDescription: Lint.Utils.dedent`
       An optional object with optional \`allowProtected\` property - which defaults to \`false\`.`,
     requiresTypeInfo: true,
     ruleName: "rxjs-no-exposed-subjects",
     type: "functionality",
-    typescriptOnly: true
+    typescriptOnly: true,
   };
 
   public applyWithProgram(
@@ -56,7 +56,7 @@ class RxjsNoExposedSubjects extends Lint.ProgramAwareRuleWalker {
   }
 
   protected visitConstructorDeclaration(node: ts.ConstructorDeclaration): void {
-    node.parameters.forEach(param => this.validateNode(param));
+    node.parameters.forEach((param) => this.validateNode(param));
     super.visitConstructorDeclaration(node);
   }
 

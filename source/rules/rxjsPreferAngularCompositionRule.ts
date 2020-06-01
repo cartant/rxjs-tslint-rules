@@ -19,7 +19,7 @@ export class Rule extends Lint.Rules.TypedRule {
     requiresTypeInfo: true,
     ruleName: "rxjs-prefer-angular-composition",
     type: "style",
-    typescriptOnly: true
+    typescriptOnly: true,
   };
 
   public static FAILURE_STRING_NOT_COMPOSED = "Subscription not composed";
@@ -42,13 +42,13 @@ export class Rule extends Lint.Rules.TypedRule {
       sourceFile,
       `ClassDeclaration:has(Decorator[expression.expression.name="Component"])`
     ) as ts.ClassDeclaration[];
-    classDeclarations.forEach(classDeclaration => {
+    classDeclarations.forEach((classDeclaration) => {
       const subscriptions = new Set<string>();
       const callExpressions = tsquery(
         classDeclaration,
         `CallExpression[expression.name.text="subscribe"]`
       ) as ts.CallExpression[];
-      callExpressions.forEach(callExpression => {
+      callExpressions.forEach((callExpression) => {
         const { expression } = callExpression;
         if (ts.isPropertyAccessExpression(expression)) {
           const { expression: object, name: property } = expression;
@@ -93,7 +93,7 @@ export class Rule extends Lint.Rules.TypedRule {
       }
       const [methodDeclaration] = methodDeclarations;
 
-      subscriptions.forEach(subscription => {
+      subscriptions.forEach((subscription) => {
         const propertyDeclarations = tsquery(
           classDeclaration,
           `PropertyDeclaration[name.text="${subscription}"]`
@@ -214,7 +214,7 @@ function isVariableComposed(
       block,
       `CallExpression[expression.name.text="add"] > Identifier[text="${text}"]`
     )
-      .map(identifier => identifier.parent)
+      .map((identifier) => identifier.parent)
       .filter((callExpression: ts.CallExpression) => {
         if (callExpression.end < identifier.pos) {
           return false;

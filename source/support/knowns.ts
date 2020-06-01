@@ -26,9 +26,9 @@ function read(dir: string): { [key: string]: string } {
     // left in-place.
     const names = fs.readdirSync(path.join(peer.dir, dir));
     return names
-      .filter(name => /^[a-z]\w+\.js$/.test(name))
-      .map(name => name.replace(/\.js/, ""))
-      .filter(name => !prototypeMethods[name])
+      .filter((name) => /^[a-z]\w+\.js$/.test(name))
+      .map((name) => name.replace(/\.js/, ""))
+      .filter((name) => !prototypeMethods[name])
       .reduce((acc, name) => ({ ...acc, [name]: name }), {});
   } catch (error) {
     peer.warn(dir);
@@ -39,7 +39,7 @@ export const knownObservables = read("add/observable");
 export const knownOperators = { ...read("add/operator"), ...aliasOperators };
 export const knownPipeableOperators = {
   ...read("operators"),
-  ...aliasOperators
+  ...aliasOperators,
 };
 export const knownPrototypeMethods = { forEach: true, ...prototypeMethods };
 export const knownStaticMethods = { create: true };

@@ -24,9 +24,9 @@ export class Rule extends Lint.Rules.TypedRule {
       properties: {
         allowElsewhere: { type: "boolean" },
         allowUnused: { type: "boolean" },
-        file: { type: "string" }
+        file: { type: "string" },
       },
-      type: "object"
+      type: "object",
     },
     optionsDescription: Lint.Utils.dedent`
       An optional object with the property \`file\`.
@@ -38,7 +38,7 @@ export class Rule extends Lint.Rules.TypedRule {
     requiresTypeInfo: true,
     ruleName: "rxjs-add",
     type: "functionality",
-    typescriptOnly: true
+    typescriptOnly: true,
   };
 
   public static FAILURE_STRING = "RxJS add import is missing";
@@ -97,29 +97,29 @@ class Walker extends UsedWalker {
                   disabledIntervals: [],
                   ruleArguments: [],
                   ruleName: this.getRuleName(),
-                  ruleSeverity: "error"
+                  ruleSeverity: "error",
                 },
                 program
               );
               sourceFileWalker.walk(sourceFile);
 
-              Object.keys(sourceFileWalker.usedObservables).forEach(key => {
-                sourceFileWalker.usedObservables[key].forEach(node => {
+              Object.keys(sourceFileWalker.usedObservables).forEach((key) => {
+                sourceFileWalker.usedObservables[key].forEach((node) => {
                   UsedWalker.add(usedObservables, key, node);
                 });
               });
 
-              Object.keys(sourceFileWalker.usedOperators).forEach(key => {
-                sourceFileWalker.usedOperators[key].forEach(node => {
+              Object.keys(sourceFileWalker.usedOperators).forEach((key) => {
+                sourceFileWalker.usedOperators[key].forEach((node) => {
                   UsedWalker.add(usedOperators, key, node);
                 });
               });
             }
           }
 
-          Object.keys(addedObservables).forEach(key => {
+          Object.keys(addedObservables).forEach((key) => {
             if (!usedObservables[key]) {
-              addedObservables[key].forEach(node =>
+              addedObservables[key].forEach((node) =>
                 this.addFailureAtNode(
                   tsutils.isImportDeclaration(node)
                     ? node.moduleSpecifier
@@ -130,9 +130,9 @@ class Walker extends UsedWalker {
             }
           });
 
-          Object.keys(addedOperators).forEach(key => {
+          Object.keys(addedOperators).forEach((key) => {
             if (!usedOperators[key]) {
-              addedOperators[key].forEach(node =>
+              addedOperators[key].forEach((node) =>
                 this.addFailureAtNode(
                   tsutils.isImportDeclaration(node)
                     ? node.moduleSpecifier
@@ -145,8 +145,8 @@ class Walker extends UsedWalker {
         }
       } else {
         if (!options.allowElsewhere) {
-          Object.keys(this.addedObservables).forEach(key => {
-            this.addedObservables[key].forEach(node =>
+          Object.keys(this.addedObservables).forEach((key) => {
+            this.addedObservables[key].forEach((node) =>
               this.addFailureAtNode(
                 tsutils.isImportDeclaration(node) ? node.moduleSpecifier : node,
                 `Patched observables are forbidden outside of ${options.file}: ${key}`
@@ -154,8 +154,8 @@ class Walker extends UsedWalker {
             );
           });
 
-          Object.keys(this.addedOperators).forEach(key => {
-            this.addedOperators[key].forEach(node =>
+          Object.keys(this.addedOperators).forEach((key) => {
+            this.addedOperators[key].forEach((node) =>
               this.addFailureAtNode(
                 tsutils.isImportDeclaration(node) ? node.moduleSpecifier : node,
                 `Patched operators are forbidden outside of ${options.file}: ${key}`
@@ -166,17 +166,17 @@ class Walker extends UsedWalker {
       }
     }
 
-    Object.keys(this.usedObservables).forEach(key => {
+    Object.keys(this.usedObservables).forEach((key) => {
       if (!addedObservables[key]) {
-        this.usedObservables[key].forEach(node =>
+        this.usedObservables[key].forEach((node) =>
           this.addFailureAtNode(node, `${failure}: ${key}`)
         );
       }
     });
 
-    Object.keys(this.usedOperators).forEach(key => {
+    Object.keys(this.usedOperators).forEach((key) => {
       if (!addedOperators[key]) {
-        this.usedOperators[key].forEach(node =>
+        this.usedOperators[key].forEach((node) =>
           this.addFailureAtNode(node, `${failure}: ${key}`)
         );
       }
@@ -202,7 +202,7 @@ class Walker extends UsedWalker {
           return sourceFile;
         }
         if (!Walker.isCaseSensitive) {
-          const found = program.getSourceFiles().find(file => {
+          const found = program.getSourceFiles().find((file) => {
             return file["path"].toLowerCase() === resolvedFile.toLowerCase();
           });
           if (found) {
@@ -243,7 +243,7 @@ class Walker extends UsedWalker {
           disabledIntervals: [],
           ruleArguments: [],
           ruleName: this.getRuleName(),
-          ruleSeverity: "error"
+          ruleSeverity: "error",
         },
         program
       );

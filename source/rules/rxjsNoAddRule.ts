@@ -19,17 +19,17 @@ export class Rule extends Lint.Rules.AbstractRule {
         allowObservables: {
           oneOf: [
             { type: "boolean" },
-            { type: "array", items: { type: "string" } }
-          ]
+            { type: "array", items: { type: "string" } },
+          ],
         },
         allowOperators: {
           oneOf: [
             { type: "boolean" },
-            { type: "array", items: { type: "string" } }
-          ]
-        }
+            { type: "array", items: { type: "string" } },
+          ],
+        },
       },
-      type: "object"
+      type: "object",
     },
     optionsDescription: Lint.Utils.dedent`
             An optional object with optional \`allowObservables\` and \`allowOperators\` properties.
@@ -38,7 +38,7 @@ export class Rule extends Lint.Rules.AbstractRule {
     requiresTypeInfo: false,
     ruleName: "rxjs-no-add",
     type: "functionality",
-    typescriptOnly: false
+    typescriptOnly: false,
   };
 
   public static FAILURE_STRING = "RxJS add import is forbidden";

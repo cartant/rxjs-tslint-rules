@@ -19,23 +19,23 @@ export class Rule extends Lint.Rules.TypedRule {
         allow: {
           oneOf: [
             { type: "string" },
-            { type: "array", items: { type: "string" } }
-          ]
+            { type: "array", items: { type: "string" } },
+          ],
         },
         disallow: {
           oneOf: [
             { type: "string" },
-            { type: "array", items: { type: "string" } }
-          ]
+            { type: "array", items: { type: "string" } },
+          ],
         },
         observable: {
           oneOf: [
             { type: "string" },
-            { type: "array", items: { type: "string" } }
-          ]
-        }
+            { type: "array", items: { type: "string" } },
+          ],
+        },
       },
-      type: "object"
+      type: "object",
     },
     optionsDescription: Lint.Utils.dedent`
       An optional object with optional \`allow\`, \`disallow\` and \`observable\` properties.
@@ -46,7 +46,7 @@ export class Rule extends Lint.Rules.TypedRule {
     requiresTypeInfo: true,
     ruleName: "rxjs-no-unsafe-switchmap",
     type: "functionality",
-    typescriptOnly: true
+    typescriptOnly: true,
   };
 
   public static FAILURE_STRING =
@@ -72,7 +72,7 @@ export class Walker extends Lint.ProgramAwareRuleWalker {
     "put",
     "remove",
     "set",
-    "update"
+    "update",
   ];
   public static DEFAULT_OBSERVABLE = String.raw`action(s|\$)?`;
 
@@ -85,7 +85,9 @@ export class Walker extends Lint.ProgramAwareRuleWalker {
       return new RegExp(value, flags);
     }
     const words = value as string[];
-    const joined = words.map(word => String.raw`(\b|_)${word}(\b|_)`).join("|");
+    const joined = words
+      .map((word) => String.raw`(\b|_)${word}(\b|_)`)
+      .join("|");
     return new RegExp(`(${joined})`, flags);
   }
 
@@ -160,12 +162,12 @@ export class Walker extends Lint.ProgramAwareRuleWalker {
   }
 
   private shouldDisallow(args: ts.NodeArray<ts.Expression>): boolean {
-    const names = args.map(arg => decamelize(arg.getText()));
+    const names = args.map((arg) => decamelize(arg.getText()));
     if (this.allowRegExp) {
-      return !names.every(name => this.allowRegExp.test(name));
+      return !names.every((name) => this.allowRegExp.test(name));
     }
     if (this.disallowRegExp) {
-      return names.some(name => this.disallowRegExp.test(name));
+      return names.some((name) => this.disallowRegExp.test(name));
     }
     return false;
   }
@@ -201,7 +203,7 @@ export class Walker extends Lint.ProgramAwareRuleWalker {
   }
 
   private walkPipedOperators(node: ts.CallExpression): void {
-    node.arguments.forEach(arg => {
+    node.arguments.forEach((arg) => {
       if (tsutils.isCallExpression(arg)) {
         const { expression } = arg;
         if (
@@ -215,7 +217,7 @@ export class Walker extends Lint.ProgramAwareRuleWalker {
   }
 
   private walkPipedTypes(node: ts.CallExpression): void {
-    node.arguments.forEach(arg => {
+    node.arguments.forEach((arg) => {
       if (tsutils.isCallExpression(arg)) {
         const { expression } = arg;
         if (

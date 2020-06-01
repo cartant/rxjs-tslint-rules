@@ -19,7 +19,7 @@ export class Rule extends Lint.Rules.TypedRule {
     requiresTypeInfo: true,
     ruleName: "rxjs-no-topromise",
     type: "functionality",
-    typescriptOnly: true
+    typescriptOnly: true,
   };
 
   public static FAILURE_STRING = "toPromise is forbidden";
@@ -35,7 +35,7 @@ export class Rule extends Lint.Rules.TypedRule {
       sourceFile,
       `PropertyAccessExpression[name.name="toPromise"]`
     ) as ts.PropertyAccessExpression[];
-    propertyAccessExpressions.forEach(propertyAccessExpression => {
+    propertyAccessExpressions.forEach((propertyAccessExpression) => {
       const type = typeChecker.getTypeAtLocation(
         propertyAccessExpression.expression
       );

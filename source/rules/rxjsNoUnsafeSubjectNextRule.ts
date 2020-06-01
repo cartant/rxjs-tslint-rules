@@ -19,7 +19,7 @@ export class Rule extends Lint.Rules.TypedRule {
     requiresTypeInfo: true,
     ruleName: "rxjs-no-unsafe-subject-next",
     type: "functionality",
-    typescriptOnly: true
+    typescriptOnly: true,
   };
 
   public static FAILURE_STRING = "Unsafe optional next calls are forbidden";
@@ -35,7 +35,7 @@ export class Rule extends Lint.Rules.TypedRule {
       sourceFile,
       `CallExpression[expression.name.text="next"]`
     );
-    callExpressions.forEach(node => {
+    callExpressions.forEach((node) => {
       const callExpression = node as ts.CallExpression;
       const { arguments: args } = callExpression;
       if (args.length === 0) {
@@ -55,7 +55,7 @@ export class Rule extends Lint.Rules.TypedRule {
             }
             if (
               isUnionType(typeArg) &&
-              typeArg.types.some(t =>
+              typeArg.types.some((t) =>
                 tsutils.isTypeFlagSet(t, ts.TypeFlags.Void)
               )
             ) {

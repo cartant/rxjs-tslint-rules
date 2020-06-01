@@ -21,7 +21,7 @@ if (fixturesDir) {
     peerDir = path.dirname(entry);
     const root = peerDir.replace(
       /node_modules[\/\\]rxjs[\/\\](.*)$/,
-      match => match
+      (match) => match
     );
     const pack = require(path.join(root, "package.json"));
     peerVersion = pack.version;

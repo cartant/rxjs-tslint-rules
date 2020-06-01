@@ -15,9 +15,9 @@ export class Rule extends Lint.Rules.AbstractRule {
     description: "Disallows using the `shareReplay` operator.",
     options: {
       properties: {
-        allowConfig: { type: "boolean" }
+        allowConfig: { type: "boolean" },
       },
-      type: "object"
+      type: "object",
     },
     optionsDescription: Lint.Utils.dedent`
       An optional object with an optional \`allowConfig\` property.
@@ -26,14 +26,14 @@ export class Rule extends Lint.Rules.AbstractRule {
     requiresTypeInfo: false,
     ruleName: "rxjs-no-sharereplay",
     type: "functionality",
-    typescriptOnly: false
+    typescriptOnly: false,
   };
 
   public static FAILURE_STRING = "shareReplay is forbidden";
 
   public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
     const {
-      ruleArguments: [options]
+      ruleArguments: [options],
     } = this.getOptions();
     const allowConfig =
       options && options.hasOwnProperty("allowConfig")
@@ -45,7 +45,7 @@ export class Rule extends Lint.Rules.AbstractRule {
       sourceFile,
       `CallExpression Identifier[name="shareReplay"]`
     );
-    callIdentifiers.forEach(identifier => {
+    callIdentifiers.forEach((identifier) => {
       let fail = true;
       if (allowConfig) {
         const callExpression = identifier.parent as ts.CallExpression;

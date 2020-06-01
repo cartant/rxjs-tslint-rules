@@ -17,11 +17,11 @@ export class Rule extends Lint.Rules.TypedRule {
         observable: {
           oneOf: [
             { type: "string" },
-            { type: "array", items: { type: "string" } }
-          ]
-        }
+            { type: "array", items: { type: "string" } },
+          ],
+        },
       },
-      type: "object"
+      type: "object",
     },
     optionsDescription: Lint.Utils.dedent`
       An optional object with an optional \`observable\` property.
@@ -29,7 +29,7 @@ export class Rule extends Lint.Rules.TypedRule {
     requiresTypeInfo: true,
     ruleName: "rxjs-no-unsafe-catch",
     type: "functionality",
-    typescriptOnly: true
+    typescriptOnly: true,
   };
 
   public static FAILURE_STRING =
@@ -144,7 +144,7 @@ export class Walker extends Lint.ProgramAwareRuleWalker {
   }
 
   private walkPipedOperators(node: ts.CallExpression): void {
-    node.arguments.forEach(arg => {
+    node.arguments.forEach((arg) => {
       if (tsutils.isCallExpression(arg)) {
         const { arguments: args, expression } = arg;
         if (
@@ -159,7 +159,7 @@ export class Walker extends Lint.ProgramAwareRuleWalker {
   }
 
   private walkPipedTypes(node: ts.CallExpression): void {
-    node.arguments.forEach(arg => {
+    node.arguments.forEach((arg) => {
       if (tsutils.isCallExpression(arg)) {
         const { expression } = arg;
         if (

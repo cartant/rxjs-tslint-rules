@@ -14,7 +14,7 @@ export class Rule extends Lint.Rules.TypedRule {
   public static metadata: Lint.IRuleMetadata = {
     description: "Disallows the use of banned observables.",
     options: {
-      type: "object"
+      type: "object",
     },
     optionsDescription: Lint.Utils.dedent`
       An object containing keys that are names of observable factory functions
@@ -22,7 +22,7 @@ export class Rule extends Lint.Rules.TypedRule {
     requiresTypeInfo: true,
     ruleName: "rxjs-ban-observables",
     type: "functionality",
-    typescriptOnly: true
+    typescriptOnly: true,
   };
 
   public static FAILURE_STRING = "RxJS observable is banned";
@@ -53,7 +53,7 @@ class Walker extends UsedWalker {
         if (value !== false) {
           this._bans.push({
             explanation: typeof value === "string" ? value : "",
-            regExp: new RegExp(`^${key}$`)
+            regExp: new RegExp(`^${key}$`),
           });
         }
       });
@@ -65,7 +65,7 @@ class Walker extends UsedWalker {
 
     if (/^['"]rxjs['"]/.test(moduleSpecifier)) {
       if (tsutils.isNamedImports(node.importClause.namedBindings)) {
-        node.importClause.namedBindings.elements.forEach(binding => {
+        node.importClause.namedBindings.elements.forEach((binding) => {
           this.validateNode(binding.propertyName || binding.name);
         });
       }
@@ -88,7 +88,7 @@ class Walker extends UsedWalker {
     Object.entries(this.usedObservables).forEach(([key, value]) => {
       const failure = this.getFailure(key);
       if (failure) {
-        value.forEach(node => this.addFailureAtNode(node, failure));
+        value.forEach((node) => this.addFailureAtNode(node, failure));
       }
     });
   }

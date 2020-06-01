@@ -17,7 +17,7 @@ export class Rule extends Lint.Rules.TypedRule {
     requiresTypeInfo: true,
     ruleName: "rxjs-no-ignored-takewhile-value",
     type: "functionality",
-    typescriptOnly: true
+    typescriptOnly: true,
   };
 
   public static FAILURE_STRING = "Ignoring the takeWhile value is forbidden";
@@ -32,7 +32,7 @@ export class Rule extends Lint.Rules.TypedRule {
       sourceFile,
       `CallExpression[expression.text="takeWhile"]`
     ) as ts.CallExpression[];
-    callExpressions.forEach(callExpression => {
+    callExpressions.forEach((callExpression) => {
       let fail = false;
 
       const [arg] = callExpression.arguments;

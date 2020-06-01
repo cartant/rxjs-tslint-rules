@@ -22,7 +22,7 @@ export class Rule extends Lint.Rules.TypedRule {
     requiresTypeInfo: true,
     ruleName: "rxjs-no-unused-add",
     type: "maintainability",
-    typescriptOnly: true
+    typescriptOnly: true,
   };
 
   public static FAILURE_STRING = "RxJS add import is unused";
@@ -39,9 +39,9 @@ export class Rule extends Lint.Rules.TypedRule {
 
 class Walker extends UsedWalker {
   protected onSourceFileEnd(): void {
-    Object.keys(this.addedObservables).forEach(key => {
+    Object.keys(this.addedObservables).forEach((key) => {
       if (!this.usedObservables[key]) {
-        this.addedObservables[key].forEach(node =>
+        this.addedObservables[key].forEach((node) =>
           this.addFailureAtNode(
             tsutils.isImportDeclaration(node) ? node.moduleSpecifier : node,
             `${Rule.FAILURE_STRING}: ${key}`
@@ -50,9 +50,9 @@ class Walker extends UsedWalker {
       }
     });
 
-    Object.keys(this.addedOperators).forEach(key => {
+    Object.keys(this.addedOperators).forEach((key) => {
       if (!this.usedOperators[key]) {
-        this.addedOperators[key].forEach(node =>
+        this.addedOperators[key].forEach((node) =>
           this.addFailureAtNode(
             tsutils.isImportDeclaration(node) ? node.moduleSpecifier : node,
             `${Rule.FAILURE_STRING}: ${key}`

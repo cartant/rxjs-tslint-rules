@@ -18,7 +18,7 @@ export class Rule extends Lint.Rules.AbstractRule {
     requiresTypeInfo: false,
     ruleName: "rxjs-no-ignored-replay-buffer",
     type: "functionality",
-    typescriptOnly: false
+    typescriptOnly: false,
   };
 
   public static FAILURE_STRING = "Ignoring the buffer size is forbidden";
@@ -30,7 +30,7 @@ export class Rule extends Lint.Rules.AbstractRule {
       sourceFile,
       `NewExpression > Identifier[name="ReplaySubject"]`
     );
-    newIdentifiers.forEach(identifier => {
+    newIdentifiers.forEach((identifier) => {
       const newExpression = identifier.parent as ts.NewExpression;
       if (!newExpression.arguments || newExpression.arguments.length === 0) {
         failures.push(
@@ -49,7 +49,7 @@ export class Rule extends Lint.Rules.AbstractRule {
       sourceFile,
       `NewExpression PropertyAccessExpression Identifier[name="ReplaySubject"]`
     );
-    nestedNewIdentitiers.forEach(identifier => {
+    nestedNewIdentitiers.forEach((identifier) => {
       const newExpression = identifier.parent.parent as ts.NewExpression;
       if (!newExpression.arguments || newExpression.arguments.length === 0) {
         failures.push(
@@ -68,7 +68,7 @@ export class Rule extends Lint.Rules.AbstractRule {
       sourceFile,
       `CallExpression Identifier[name=/(publishReplay|shareReplay)/]`
     );
-    callIdentifiers.forEach(identifier => {
+    callIdentifiers.forEach((identifier) => {
       const callExpression = identifier.parent as ts.CallExpression;
       if (callExpression.arguments.length === 0) {
         failures.push(

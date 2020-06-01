@@ -10,7 +10,7 @@ import {
   knownObservables,
   knownOperators,
   knownPrototypeMethods,
-  knownStaticMethods
+  knownStaticMethods,
 } from "./knowns";
 import { couldBeType, isReferenceType } from "./util";
 

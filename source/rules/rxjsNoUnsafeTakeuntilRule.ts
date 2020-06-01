@@ -15,9 +15,9 @@ export class Rule extends Lint.Rules.TypedRule {
     options: {
       properties: {
         alias: { type: "array", items: { type: "string" } },
-        allow: { type: "array", items: { type: "string" } }
+        allow: { type: "array", items: { type: "string" } },
       },
-      type: "object"
+      type: "object",
     },
     optionsDescription: Lint.Utils.dedent`
       An optional object with optional \`alias\` and \`allow\` properties.
@@ -26,7 +26,7 @@ export class Rule extends Lint.Rules.TypedRule {
     requiresTypeInfo: true,
     ruleName: "rxjs-no-unsafe-takeuntil",
     type: "functionality",
-    typescriptOnly: true
+    typescriptOnly: true,
   };
 
   public static FAILURE_STRING =
@@ -64,7 +64,7 @@ class Walker extends Lint.ProgramAwareRuleWalker {
     "skipLast",
     "takeLast",
     "throwIfEmpty",
-    "toArray"
+    "toArray",
   ];
   private match = /^takeUntil$/;
 
@@ -145,7 +145,7 @@ class Walker extends Lint.ProgramAwareRuleWalker {
     const some = (args: {
       some(callback: (arg: ts.Expression) => boolean): boolean;
     }) =>
-      args.some(arg => {
+      args.some((arg) => {
         if (
           tsutils.isCallExpression(arg) &&
           tsutils.isIdentifier(arg.expression) &&
