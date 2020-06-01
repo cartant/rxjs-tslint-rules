@@ -10,7 +10,7 @@ const d = of("d");
 @Component({
   selector: "correct-component"
 })
-class CorrectComponent implements OnDestroy {
+class CorrectComponent {
   someMethod() {
     a.pipe(
       switchMap(_ => b),
@@ -24,7 +24,6 @@ class CorrectComponent implements OnDestroy {
 })
 class NoTakeUntilComponent {
   someMethod() {
-    const { destroy } = this;
     a.pipe(
       switchMap(_ => b)
     ).subscribe();

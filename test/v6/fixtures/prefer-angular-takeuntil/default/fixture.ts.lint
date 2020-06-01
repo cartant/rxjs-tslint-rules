@@ -67,7 +67,6 @@ class NoTakeUntilComponent {
 class NoSubjectComponent implements OnDestroy {
       ~~~~~~~~~~~~~~~~~~                      [prefer-takeuntil-no-subject % ('d')]
   someMethod() {
-    const { destroy } = this;
     a.pipe(
       switchMap(_ => b),
       takeUntil(d)

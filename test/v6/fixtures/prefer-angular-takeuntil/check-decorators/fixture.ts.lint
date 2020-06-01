@@ -45,7 +45,7 @@ class CorrectService implements OnDestroy {
   private destroy = new Subject<void>();
   someMethod() {
     a.pipe(
-      switchMap(_ => b)
+      switchMap(_ => b),
       takeUntil(this.destroy)
     ).subscribe();
   }
@@ -74,7 +74,7 @@ class CorrectPipe implements OnDestroy {
   private destroy = new Subject<void>();
   someMethod() {
     a.pipe(
-      switchMap(_ => b)
+      switchMap(_ => b),
       takeUntil(this.destroy)
     ).subscribe();
   }
@@ -105,7 +105,7 @@ class CorrectDirective implements OnDestroy {
   private destroy = new Subject<void>();
   someMethod() {
     a.pipe(
-      switchMap(_ => b)
+      switchMap(_ => b),
       takeUntil(this.destroy)
     ).subscribe();
   }
