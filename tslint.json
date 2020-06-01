@@ -6,6 +6,7 @@
   ],
   "rules": {
     "deprecation": { "severity": "off" },
+    "trailing-comma": { "severity": "off" },
     "typedef": {
       "options": [
         "parameter",
