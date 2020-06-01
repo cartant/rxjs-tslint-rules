@@ -2,6 +2,7 @@
   "compilerOptions": {
     "declaration": false,
     "downlevelIteration": true,
+    "esModuleInterop": true,
     "importHelpers": true,
     "lib": ["dom", "es2017"],
     "module": "commonjs",
