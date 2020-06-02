@@ -1,3 +1,10 @@
+<a name="4.33.1"></a>
+## [4.33.0](https://github.com/cartant/rxjs-tslint-rules/compare/v4.33.0...v4.33.1) (2020-06-02)
+
+## Fixed
+
+* Fix `rxjs-no-unsafe-takewhile` deprecation message. ([ca4ed82](https://github.com/cartant/rxjs-tslint-rules/commit/ca4ed82))
+
 <a name="4.33.0"></a>
 ## [4.33.0](https://github.com/cartant/rxjs-tslint-rules/compare/v4.32.0...v4.33.0) (2020-05-26)
 
