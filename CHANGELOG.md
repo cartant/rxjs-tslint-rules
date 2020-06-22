@@ -1,5 +1,12 @@
+<a name="4.33.2"></a>
+## [4.33.2](https://github.com/cartant/rxjs-tslint-rules/compare/v4.33.1...v4.33.2) (2020-06-22)
+
+## Changes
+
+* Added `rxjs-report-usage`.
+
 <a name="4.33.1"></a>
-## [4.33.0](https://github.com/cartant/rxjs-tslint-rules/compare/v4.33.0...v4.33.1) (2020-06-02)
+## [4.33.1](https://github.com/cartant/rxjs-tslint-rules/compare/v4.33.0...v4.33.1) (2020-06-02)
 
 ## Fixed
 
