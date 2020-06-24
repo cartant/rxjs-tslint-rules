@@ -1,3 +1,10 @@
+<a name="4.33.3"></a>
+## [4.33.3](https://github.com/cartant/rxjs-tslint-rules/compare/v4.33.2...v4.33.3) (2020-06-24)
+
+## Changes
+
+* Don't distribute `yarn.lock` file.
+
 <a name="4.33.2"></a>
 ## [4.33.2](https://github.com/cartant/rxjs-tslint-rules/compare/v4.33.1...v4.33.2) (2020-06-22)
 
