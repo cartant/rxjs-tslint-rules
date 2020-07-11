@@ -56,6 +56,9 @@ export class Rule extends Lint.Rules.TypedRule {
       }
       if (ts.isArrowFunction(arg) || ts.isFunctionExpression(arg)) {
         const [parameter] = arg.parameters;
+        if (!parameter) {
+          return;
+        }
         if (parameter.type) {
           if (parameter.type.kind === ts.SyntaxKind.AnyKeyword) {
             if (allowExplicitAny) {
