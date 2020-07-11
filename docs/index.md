@@ -35,6 +35,7 @@ The package includes the following rules (none of which are enabled by default):
 | `rxjs-no-ignored-subscribe` | Disallows the calling of subscribe without specifying arguments. | None |
 | `rxjs-no-ignored-subscription` | Disallows ignoring the subscription returned by subscribe. | None |
 | `rxjs-no-ignored-takewhile-value` | Disallows the ignoring of the `takeWhile` value. | None |
+| `rxjs-no-implicit-any-catch` | Like the [`no-implicit-any-catch` rule](https://github.com/typescript-eslint/typescript-eslint/pull/2202) in `@typescript-eslint/eslint-plugin`, but for the `catchError` operator instead of `catch` clauses. | |
 | `rxjs-no-index` | Disallows importation from `rxjs/index`, etc. - for the reason, see [this issue](https://github.com/ReactiveX/rxjs/issues/4230). | None |
 | `rxjs-no-internal` | Disallows importation from `rxjs/internal`. | None |
 | `rxjs-no-nested-subscribe` | Disallows the calling of `subscribe` within a `subscribe` callback. | None |
