@@ -1,0 +1,27 @@
+import { throwError } from "rxjs";
+import { catchError } from "rxjs/operators";
+
+throwError("Kaboom!").pipe(
+  catchError((error: unknown) => console.error(error))
+);
+throwError("Kaboom!").pipe(
+  catchError(function (error: unknown) { console.error(error); })
+);
+
+throwError("Kaboom!").pipe(
+  catchError((error) => console.error(error))
+              ~~~~~ [implicitAny]
+);
+throwError("Kaboom!").pipe(
+  catchError(function (error) { console.error(error); })
+                       ~~~~~ [implicitAny]
+);
+
+throwError("Kaboom!").pipe(
+  catchError((error: any) => console.error(error))
+);
+throwError("Kaboom!").pipe(
+  catchError(function (error: any) { console.error(error); })
+);
+
+[implicitAny]: Implicit any in catchError
