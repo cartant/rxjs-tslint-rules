@@ -29,6 +29,7 @@ export class Rule extends Lint.Rules.TypedRule {
 
   public static EXPLICIT_ANY = "Explicit any in catchError";
   public static IMPLICIT_ANY = "Implicit any in catchError";
+  public static NARROWED = "Error type must be unknown or any";
 
   public applyWithProgram(
     sourceFile: ts.SourceFile,
@@ -56,10 +57,10 @@ export class Rule extends Lint.Rules.TypedRule {
       if (ts.isArrowFunction(arg) || ts.isFunctionExpression(arg)) {
         const [parameter] = arg.parameters;
         if (parameter.type) {
-          if (
-            parameter.type.kind === ts.SyntaxKind.AnyKeyword &&
-            !allowExplicitAny
-          ) {
+          if (parameter.type.kind === ts.SyntaxKind.AnyKeyword) {
+            if (allowExplicitAny) {
+              return;
+            }
             failures.push(
               new Lint.RuleFailure(
                 sourceFile,
@@ -68,6 +69,16 @@ export class Rule extends Lint.Rules.TypedRule {
                 Rule.EXPLICIT_ANY,
                 this.ruleName,
                 Lint.Replacement.replaceNode(parameter.type, "unknown")
+              )
+            );
+          } else if (parameter.type.kind !== ts.SyntaxKind.UnknownKeyword) {
+            failures.push(
+              new Lint.RuleFailure(
+                sourceFile,
+                parameter.getStart(),
+                parameter.getStart() + parameter.getWidth(),
+                Rule.NARROWED,
+                this.ruleName
               )
             );
           }
