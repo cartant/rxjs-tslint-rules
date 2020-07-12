@@ -1,3 +1,10 @@
+<a name="4.34.0"></a>
+## [4.34.0](https://github.com/cartant/rxjs-tslint-rules/compare/v4.33.3...v4.34.0) (2020-07-12)
+
+## Features
+
+* Add `rxjs-no-implicit-any-catch` rule. ([dfe3371](https://github.com/cartant/rxjs-tslint-rules/commit/dfe3371))
+
 <a name="4.33.3"></a>
 ## [4.33.3](https://github.com/cartant/rxjs-tslint-rules/compare/v4.33.2...v4.33.3) (2020-06-24)
 
