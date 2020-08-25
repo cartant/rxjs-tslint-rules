@@ -1,3 +1,10 @@
+<a name="4.34.1"></a>
+## [4.34.0](https://github.com/cartant/rxjs-tslint-rules/compare/v4.34.0...v4.34.1) (2020-08-25)
+
+## Changes
+
+* Relax `rxjs-throw-error` rule to allow `DOMException`. ([d653cf0](https://github.com/cartant/rxjs-tslint-rules/commit/d653cf0))
+
 <a name="4.34.0"></a>
 ## [4.34.0](https://github.com/cartant/rxjs-tslint-rules/compare/v4.33.3...v4.34.0) (2020-07-12)
 
