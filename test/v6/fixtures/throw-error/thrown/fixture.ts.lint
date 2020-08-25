@@ -1,5 +1,6 @@
 const a = () => { throw "error"; };
                         ~~~~~~~                 [throw-error]
 const b = () => { throw new Error("error"); };
+const c = () => { throw new DOMException("error"); };
 
 [throw-error]: Passing non-Error values is forbidden

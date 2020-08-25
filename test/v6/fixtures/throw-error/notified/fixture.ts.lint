@@ -3,6 +3,7 @@ import { throwError } from "rxjs";
 const ob1 = throwError("Boom!");
                        ~~~~~~~              [throw-error]
 const ob2 = throwError(new Error("Boom!"));
+const ob3 = throwError(new DOMException("Boom!"));
 
 // There will be no signature for callback and
 // that should not effect and internal error.
