@@ -25,7 +25,7 @@ if (fixturesDir) {
     );
     const pack = require(path.join(root, "package.json"));
     peerVersion = pack.version;
-  } catch (error) {
+  } catch (error: unknown) {
     warn();
   }
 }

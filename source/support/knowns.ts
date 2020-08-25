@@ -30,7 +30,7 @@ function read(dir: string): { [key: string]: string } {
       .map((name) => name.replace(/\.js/, ""))
       .filter((name) => !prototypeMethods[name])
       .reduce((acc, name) => ({ ...acc, [name]: name }), {});
-  } catch (error) {
+  } catch (error: unknown) {
     peer.warn(dir);
   }
 }
