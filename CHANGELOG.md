@@ -1,5 +1,12 @@
+<a name="4.34.2"></a>
+## [4.34.2](https://github.com/cartant/rxjs-tslint-rules/compare/v4.34.1...v4.34.2) (2020-09-08)
+
+## Changes
+
+* Widen TypeScript and RxJS peer ranges. ([c115605](https://github.com/cartant/rxjs-tslint-rules/commit/c115605))
+
 <a name="4.34.1"></a>
-## [4.34.0](https://github.com/cartant/rxjs-tslint-rules/compare/v4.34.0...v4.34.1) (2020-08-25)
+## [4.34.1](https://github.com/cartant/rxjs-tslint-rules/compare/v4.34.0...v4.34.1) (2020-08-25)
 
 ## Changes
 
