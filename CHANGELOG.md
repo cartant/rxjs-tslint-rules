@@ -1,3 +1,10 @@
+<a name="4.34.3"></a>
+## [4.34.3](https://github.com/cartant/rxjs-tslint-rules/compare/v4.34.2...v4.34.3) (2020-09-08)
+
+## Changes
+
+* Remove RxJS peer dependency. ([6fa538b](https://github.com/cartant/rxjs-tslint-rules/commit/6fa538b))
+
 <a name="4.34.2"></a>
 ## [4.34.2](https://github.com/cartant/rxjs-tslint-rules/compare/v4.34.1...v4.34.2) (2020-09-08)
 
