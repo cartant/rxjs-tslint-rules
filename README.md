@@ -1,7 +1,3 @@
-If you've arrived here looking for the TSLint rules that automatically convert RxJS version 5 code to version 6, you can find those rules here: [`rxjs-tslint`](https://github.com/ReactiveX/rxjs-tslint).
-
-That said, if you've not already done so, you might want to checkout the rules in this package, too. Using them, you can avoid potential problems and questionable practices.
-
 # rxjs-tslint-rules
 
 [![GitHub License](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/cartant/rxjs-tslint-rules/blob/master/LICENSE)
@@ -11,6 +7,12 @@ That said, if you've not already done so, you might want to checkout the rules i
 [![dependency status](https://img.shields.io/david/cartant/rxjs-tslint-rules.svg)](https://david-dm.org/cartant/rxjs-tslint-rules)
 [![devDependency Status](https://img.shields.io/david/dev/cartant/rxjs-tslint-rules.svg)](https://david-dm.org/cartant/rxjs-tslint-rules#info=devDependencies)
 [![peerDependency Status](https://img.shields.io/david/peer/cartant/rxjs-tslint-rules.svg)](https://david-dm.org/cartant/rxjs-tslint-rules#info=peerDependencies)
+
+TSLint [is deprecated](https://github.com/palantir/tslint#tslint). All of the rules in this package - with the exception of the RxJS-version-5-only rules - have equivalent ESLint rules in the [`eslint-plugin-rxjs`](https://github.com/cartant/eslint-plugin-rxjs) and [`eslint-plugin-rxjs-angular`](https://github.com/cartant/eslint-plugin-rxjs-angular) packages.
+
+If you've arrived here looking for the TSLint rules that automatically convert RxJS version 5 code to version 6, you can find those rules here: [`rxjs-tslint`](https://github.com/ReactiveX/rxjs-tslint).
+
+That said, if you've not already done so, you might want to checkout the rules in this package, too. Using them, you can avoid potential problems and questionable practices.
 
 ### What is it?
 
