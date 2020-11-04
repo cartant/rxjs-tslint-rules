@@ -1,6 +1,6 @@
 import { Component, OnDestroy } from "@angular/core";
 import { of, Subject } from "rxjs";
-import { switchMap, takeUntil } from "rxjs/operators";
+import { map, switchMap, takeUntil } from "rxjs/operators";
 
 const a = of("a");
 const b = of("b");
@@ -16,6 +16,24 @@ class CorrectComponent implements OnDestroy {
     a.pipe(
       switchMap(_ => b),
       takeUntil(this.destroy)
+    ).subscribe();
+  }
+  ngOnDestroy() {
+    this.destroy.next();
+    this.destroy.complete();
+  }
+}
+
+@Component({
+  selector: "correct-component-not-last"
+})
+class CorrectComponentNotLast implements OnDestroy {
+  private destroy = new Subject<void>();
+  someMethod() {
+    a.pipe(
+      switchMap(_ => b),
+      takeUntil(this.destroy),
+      map(value => value)
     ).subscribe();
   }
   ngOnDestroy() {
