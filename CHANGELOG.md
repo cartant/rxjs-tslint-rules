@@ -1,3 +1,10 @@
+<a name="4.34.4"></a>
+## [4.34.4](https://github.com/cartant/rxjs-tslint-rules/compare/v4.34.3...v4.34.4) (2020-11-05)
+
+## Fixes
+
+* `rxjs-prefer-angular-takeuntil` no longer effects failures if `takeUntil` is not the last operator. ([0fba606](https://github.com/cartant/rxjs-tslint-rules/commit/0fba606)
+
 <a name="4.34.3"></a>
 ## [4.34.3](https://github.com/cartant/rxjs-tslint-rules/compare/v4.34.2...v4.34.3) (2020-09-08)
 
@@ -43,7 +50,7 @@
 <a name="4.33.1"></a>
 ## [4.33.1](https://github.com/cartant/rxjs-tslint-rules/compare/v4.33.0...v4.33.1) (2020-06-02)
 
-## Fixed
+## Fixes
 
 * Fix `rxjs-no-unsafe-takewhile` deprecation message. ([ca4ed82](https://github.com/cartant/rxjs-tslint-rules/commit/ca4ed82))
 
