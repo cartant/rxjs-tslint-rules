@@ -181,7 +181,7 @@ export class Rule extends Lint.Rules.TypedRule {
       pipedOperators.forEach((pipedOperator) => {
         if (tsutils.isCallExpression(pipedOperator)) {
           const { found, name } = this.checkOperator(options, pipedOperator);
-          takeUntilFound = found;
+          takeUntilFound = takeUntilFound || found;
           if (name) {
             addDestroySubjectName(name);
           }
