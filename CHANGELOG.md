@@ -1,3 +1,10 @@
+<a name="4.34.5"></a>
+## [4.34.5](https://github.com/cartant/rxjs-tslint-rules/compare/v4.34.4...v4.34.5) (2020-11-05)
+
+## Fixes
+
+* `rxjs-no-ignored-subscription` should not effect failures for `Subscriber` instances passed to `subscribe`. ([a821e82](https://github.com/cartant/rxjs-tslint-rules/commit/a821e82)
+
 <a name="4.34.4"></a>
 ## [4.34.4](https://github.com/cartant/rxjs-tslint-rules/compare/v4.34.3...v4.34.4) (2020-11-05)
 
