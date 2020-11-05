@@ -1,4 +1,4 @@
-import { of, Subscription } from "rxjs";
+import { of, Subscriber, Subscription } from "rxjs";
 
 of(42).subscribe();
        ~~~~~~~~~                            [no-ignored-subscription]
@@ -8,5 +8,8 @@ let b: Subscription;
 b = of(42).subscribe();
 const c = [of(42).subscribe()];
 const d = { subscription: of(42).subscribe() };
+
+const subscriber = new Subscriber<number>();
+of(42).subscribe(subscriber);
 
 [no-ignored-subscription]: Ignoring returned subscriptions is forbidden

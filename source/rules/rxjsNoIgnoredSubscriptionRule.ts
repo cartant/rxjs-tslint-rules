@@ -46,6 +46,15 @@ export class Rule extends Lint.Rules.TypedRule {
           propertyAccessExpression.expression
         );
         if (couldBeType(type, "Observable")) {
+          if (
+            callExpression.arguments.length === 1 &&
+            couldBeType(
+              typeChecker.getTypeAtLocation(callExpression.arguments[0]),
+              "Subscriber"
+            )
+          ) {
+            return;
+          }
           const { name } = callExpression.expression;
           failures.push(
             new Lint.RuleFailure(
