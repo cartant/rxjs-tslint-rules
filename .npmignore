@@ -1,9 +1,0 @@
-/.circleci
-/build
-/fixtures
-/node_modules
-/scripts
-/source
-/temp
-/ts*.json
-yarn.lock
