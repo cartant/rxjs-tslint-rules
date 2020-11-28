@@ -1,3 +1,10 @@
+<a name="4.34.7"></a>
+## [4.34.7](https://github.com/cartant/rxjs-tslint-rules/compare/v4.34.6...v4.34.7) (2020-11-28)
+
+## Fixes
+
+* Add `index.js` to `files` in `package.json`. ([b1e1c2e](https://github.com/cartant/rxjs-tslint-rules/commit/b1e1c2e)
+
 <a name="4.34.6"></a>
 ## [4.34.6](https://github.com/cartant/rxjs-tslint-rules/compare/v4.34.5...v4.34.6) (2020-11-28)
 
