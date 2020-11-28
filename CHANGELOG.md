@@ -1,3 +1,10 @@
+<a name="4.34.6"></a>
+## [4.34.6](https://github.com/cartant/rxjs-tslint-rules/compare/v4.34.5...v4.34.6) (2020-11-28)
+
+## Changes
+
+* Use `files` in `package.json` instead of `.npmignore`. ([3b0c971](https://github.com/cartant/rxjs-tslint-rules/commit/3b0c971)
+
 <a name="4.34.5"></a>
 ## [4.34.5](https://github.com/cartant/rxjs-tslint-rules/compare/v4.34.4...v4.34.5) (2020-11-05)
 
