@@ -23,7 +23,7 @@
     "@types/resolve": "^1.14.0",
     "@types/semver": "^7.0.0",
     "chai": "^4.0.0",
-    "husky": "^4.0.0",
+    "husky": "^6.0.0",
     "lint-staged": "^10.0.9",
     "mocha": "^8.0.0",
     "prettier": "~2.2.0",
@@ -38,11 +38,6 @@
     "index.js"
   ],
   "homepage": "https://github.com/cartant/rxjs-tslint-rules",
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
-  },
   "keywords": [
     "lint",
     "rules",
@@ -73,6 +68,7 @@
     "dist:build": "yarn run dist:clean && tsc -p tsconfig-dist.json",
     "dist:clean": "rimraf dist",
     "lint": "tslint --project tsconfig.json \"source/**/*.ts\"",
+    "prepare": "husky install",
     "prepublishOnly": "yarn run test && yarn run dist",
     "prettier": "prettier --write \"./source/**/*.{js,json,ts}\"",
     "prettier:ci": "prettier --check \"./source/**/*.{js,json,ts}\"",
