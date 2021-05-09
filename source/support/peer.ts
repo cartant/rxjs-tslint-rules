@@ -38,7 +38,7 @@ export const version = peerVersion;
 export const v5 = peerVersion && semver.satisfies(peerVersion, "^5.0.0");
 export const v5NotSupportedMessage =
   "This rule is v6-only. The rule might work with v5, but it has not been tested and is not supported.";
-export const v6 = peerVersion && semver.satisfies(peerVersion, "^6.0.0-rc.0");
+export const v6 = peerVersion && semver.satisfies(peerVersion, ">=6.0.0");
 export const v6NotNeededMessage = "Rule not needed for v6.";
 export const v6OnlyMessage = "This rule is v6-only.";
 
