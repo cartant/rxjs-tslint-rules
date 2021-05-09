@@ -1,0 +1,14 @@
+import { Subject } from "rxjs";
+
+class EventEmitter<T> extends Subject<T> {}
+
+class Something {
+    public a: EventEmitter<any>;
+    protected b: EventEmitter<any>;
+    public c: Subject<any>;
+           ~                            [no-exposed % ("c")]
+    protected d: Subject<any>;
+              ~                         [no-exposed % ("d")]
+}
+
+[no-exposed]: Subject '%s' must be private.

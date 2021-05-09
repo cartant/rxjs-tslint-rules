@@ -1,0 +1,13 @@
+{
+  "defaultSeverity": "error",
+  "jsRules": {},
+  "rules": {
+    "rxjs-no-unsafe-scope": {
+      "options": [{
+        "allowProperties": true
+      }],
+      "severity": "error"
+    }
+  },
+  "rulesDirectory": "../../../../../build/rules"
+}

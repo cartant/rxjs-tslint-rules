@@ -1,0 +1,52 @@
+import { of } from "rxjs";
+import {
+    count,
+    defaultIfEmpty,
+    endWith,
+    every,
+    finalize,
+    isEmpty,
+    last,
+    max,
+    min,
+    publish,
+    publishBehavior,
+    publishLast,
+    publishReplay,
+    reduce,
+    share,
+    shareReplay,
+    skipLast,
+    takeLast,
+    takeUntil,
+    throwIfEmpty,
+    toArray
+} from "rxjs/operators";
+
+const a = of("a");
+const b = of("b");
+
+let r: Observable<any>;
+
+r = a.pipe(takeUntil(b), count()).subscribe();
+r = a.pipe(takeUntil(b), defaultIfEmpty('empty')).subscribe();
+r = a.pipe(takeUntil(b), endWith("z")).subscribe();
+r = a.pipe(takeUntil(b), every(value => value !== "z")).subscribe();
+r = a.pipe(takeUntil(b), finalize(() => {})).subscribe();
+r = a.pipe(takeUntil(b), isEmpty()).subscribe();
+r = a.pipe(takeUntil(b), last()).subscribe();
+r = a.pipe(takeUntil(b), max()).subscribe();
+r = a.pipe(takeUntil(b), min()).subscribe();
+r = a.pipe(takeUntil(b), publish()).subscribe();
+r = a.pipe(takeUntil(b), publishBehavior("x")).subscribe();
+r = a.pipe(takeUntil(b), publishLast()).subscribe();
+r = a.pipe(takeUntil(b), publishReplay(1)).subscribe();
+r = a.pipe(takeUntil(b), reduce((acc, value) => acc + value, "")).subscribe();
+r = a.pipe(takeUntil(b), share()).subscribe();
+r = a.pipe(takeUntil(b), shareReplay(1)).subscribe();
+r = a.pipe(takeUntil(b), skipLast(1)).subscribe();
+r = a.pipe(takeUntil(b), takeLast(1)).subscribe();
+r = a.pipe(takeUntil(b), throwIfEmpty()).subscribe();
+r = a.pipe(takeUntil(b), toArray()).subscribe();
+
+[no-unsafe-takeuntil]: Applying operators after takeUntil is forbidden

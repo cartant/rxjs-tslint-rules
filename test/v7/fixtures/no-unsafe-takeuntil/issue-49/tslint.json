@@ -1,0 +1,8 @@
+{
+  "defaultSeverity": "error",
+  "jsRules": {},
+  "rules": {
+    "rxjs-no-unsafe-takeuntil": { "severity": "error" }
+  },
+  "rulesDirectory": "../../../../../build/rules"
+}

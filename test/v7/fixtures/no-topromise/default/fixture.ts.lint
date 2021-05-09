@@ -1,0 +1,21 @@
+import { of, Subject } from "rxjs";
+
+const a = of("a");
+a.subscribe(value => console.log(value));
+
+const b = of("b");
+b.toPromise().then(value => console.log(value));
+  ~~~~~~~~~                                       [no-topromise]
+
+const c = new Subject<string>();
+c.toPromise().then(value => console.log(value));
+  ~~~~~~~~~                                       [no-topromise]
+
+const d = {
+  toPromise() {
+    return Promise.resolve("d");
+  }
+};
+d.toPromise().then(value => console.log(value));
+
+[no-topromise]: toPromise is forbidden

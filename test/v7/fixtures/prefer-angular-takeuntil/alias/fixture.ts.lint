@@ -1,0 +1,47 @@
+import { Component, OnDestroy } from "@angular/core";
+import { of, Subject } from "rxjs";
+import { switchMap, takeUntil } from "rxjs/operators";
+
+const a = of("a");
+const b = of("b");
+const c = of("c");
+const d = of("d");
+
+const someAlias = takeUntil;
+
+@Component({
+  selector: "component-with-alias"
+})
+class CorrectComponent implements OnDestroy {
+  private destroy = new Subject<void>();
+  someMethod() {
+    a.pipe(
+      switchMap(_ => b),
+      someAlias(this.destroy)
+    ).subscribe();
+  }
+  ngOnDestroy() {
+    this.destroy.next();
+    this.destroy.complete();
+  }
+}
+
+@Component({
+  selector: "component-without-alias"
+})
+class NoTakeUntilComponent {
+  private destroy = new Subject<void>();
+  someMethod() {
+    const { destroy } = this;
+    a.pipe(
+      switchMap(_ => b)
+    ).subscribe();
+      ~~~~~~~~~                               [prefer-takeuntil]
+  }
+  ngOnDestroy() {
+    this.destroy.next();
+    this.destroy.complete();
+  }
+}
+
+[prefer-takeuntil]: Subscribing without takeUntil is forbidden

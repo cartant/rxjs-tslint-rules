@@ -1,0 +1,18 @@
+import { of } from "rxjs";
+         ~~                         [just]
+
+function foo(): void {
+    function of(): void {}
+    of();
+}
+
+function bar(of: Function): void {
+    of();
+}
+
+function baz(): void {
+    const of = () => {};
+    of();
+}
+
+[just]: Use just alias

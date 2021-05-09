@@ -1,0 +1,103 @@
+import { of } from "rxjs";
+import { tap } from "rxjs/operators";
+
+const source = of(42);
+
+source.subscribe();
+source.subscribe(
+    function (value) { console.log(value); }
+);
+source.subscribe(
+    function (value) { console.log(value); },
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~    [prefer-observer]
+    function (error) { console.log(error); }
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~    [prefer-observer]
+);
+source.subscribe(
+    function (value) { console.log(value); },
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~    [prefer-observer]
+    function (error) { console.log(error); },
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~    [prefer-observer]
+    function () { console.log("complete"); }
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~    [prefer-observer]
+);
+source.subscribe(
+    function (value) { console.log(value); },
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~    [prefer-observer]
+    undefined,
+    ~~~~~~~~~                                   [prefer-observer]
+    function () { console.log("complete"); }
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~    [prefer-observer]
+);
+source.subscribe(
+    undefined,
+    ~~~~~~~~~                                   [prefer-observer]
+    function (error) { console.log(error); }
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~    [prefer-observer]
+);
+source.subscribe(
+    undefined,
+    ~~~~~~~~~                                   [prefer-observer]
+    function (error) { console.log(error); },
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~    [prefer-observer]
+    function () { console.log("complete"); }
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~    [prefer-observer]
+);
+source.subscribe(
+    undefined,
+    ~~~~~~~~~                                   [prefer-observer]
+    undefined,
+    ~~~~~~~~~                                   [prefer-observer]
+    function () { console.log("complete"); }
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~    [prefer-observer]
+);
+
+source.pipe(tap(
+    function (value) { console.log(value); }
+)).subscribe();
+source.pipe(tap(
+    function (value) { console.log(value); },
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~    [prefer-observer]
+    function (error) { console.log(error); }
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~    [prefer-observer]
+)).subscribe();
+source.pipe(tap(
+    function (value) { console.log(value); },
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~    [prefer-observer]
+    function (error) { console.log(error); },
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~    [prefer-observer]
+    function () { console.log("complete"); }
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~    [prefer-observer]
+)).subscribe();
+source.pipe(tap(
+    function (value) { console.log(value); },
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~    [prefer-observer]
+    undefined,
+    ~~~~~~~~~                                   [prefer-observer]
+    function () { console.log("complete"); }
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~    [prefer-observer]
+)).subscribe();
+source.pipe(tap(
+    undefined,
+    ~~~~~~~~~                                   [prefer-observer]
+    function (error) { console.log(error); }
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~    [prefer-observer]
+)).subscribe();
+source.pipe(tap(
+    undefined,
+    ~~~~~~~~~                                   [prefer-observer]
+    function (error) { console.log(error); },
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~    [prefer-observer]
+    function () { console.log("complete"); }
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~    [prefer-observer]
+)).subscribe();
+source.pipe(tap(
+    undefined,
+    ~~~~~~~~~                                   [prefer-observer]
+    undefined,
+    ~~~~~~~~~                                   [prefer-observer]
+    function () { console.log("complete"); }
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~    [prefer-observer]
+)).subscribe();
+
+[prefer-observer]: Prefer an observer over callbacks

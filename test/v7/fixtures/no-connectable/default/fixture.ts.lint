@@ -1,0 +1,22 @@
+import { of, Subject } from "rxjs";
+import { multicast, publish, publishBehavior, publishLast, publishReplay } from "rxjs/operators";
+
+const a = of(42).pipe(publish());
+                      ~~~~~~~                                               [no-connectable]
+const b = of(42).pipe(publishBehavior(1));
+                      ~~~~~~~~~~~~~~~                                       [no-connectable]
+const c = of(42).pipe(publishLast());
+                      ~~~~~~~~~~~                                           [no-connectable]
+const d = of(42).pipe(publishReplay(1));
+                      ~~~~~~~~~~~~~                                         [no-connectable]
+const e = of(42).pipe(multicast(new Subject<number>()));
+                      ~~~~~~~~~                                             [no-connectable]
+const f = of(42).pipe(multicast(() => new Subject<number>()));
+                      ~~~~~~~~~                                             [no-connectable]
+
+const g = of(42).pipe(publish(p => p));
+const h = of(42).pipe(publishReplay(1, undefined, p => p));
+const i = of(42).pipe(multicast(new Subject<number>(), p => p));
+const j = of(42).pipe(multicast(() => new Subject<number>(), p => p));
+
+[no-connectable]: Connectable observables are forbidden

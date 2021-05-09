@@ -1,0 +1,16 @@
+{
+  "defaultSeverity": "error",
+  "jsRules": {},
+  "rules": {
+    "rxjs-suffix-subjects": {
+      "options": [{
+        "parameters": true,
+        "properties": true,
+        "variables": true,
+        "suffix": "sbjt"
+      }],
+      "severity": "error"
+    }
+  },
+  "rulesDirectory": "../../../../../build/rules"
+}

@@ -1,0 +1,45 @@
+import { of } from "rxjs";
+import { map, tap } from "rxjs/operators";
+
+export class Demo {
+  val: number
+
+  doOkay_ReadWriteInTap () {
+    this.val = 10
+    return of(123, 456).pipe(tap(val => {
+      console.log(this.val)
+      this.val = val
+    }))
+  }
+
+  doOkay_ReadInMap () {
+    this.val = 10
+    return of(123, 456).pipe(map(val => {
+      console.log(this.val)
+                  ~~~~                      [no-unsafe-scope]
+      return this.val
+             ~~~~                           [no-unsafe-scope]
+    }))
+  }
+
+  doNotOkay_WriteInMap () {
+    this.val = 10
+    return of(123, 456).pipe(map(val => {
+      this.val = val
+      ~~~~                                  [no-unsafe-scope]
+    }))
+  }
+
+  doOkay_WriteInMapViaMethod () {
+    this.val = 10
+    return of(123, 456).pipe(map(val => {
+      this.writeWithMethod(val)
+    }))
+  }
+
+  writeWithMethod (val: number) {
+    this.val = val
+  }
+}
+
+[no-unsafe-scope]: Unsafe scopes are forbidden

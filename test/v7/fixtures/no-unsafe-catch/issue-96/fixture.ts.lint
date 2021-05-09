@@ -1,0 +1,22 @@
+import { Observable } from "rxjs";
+import { catchError, map } from "rxjs/operators";
+
+class SomeComponent {
+
+  actions$: Observable<Action>;
+
+  @Effect()
+  initialiseAppointments$ = this.actions$.pipe(
+    ofType(AppointmentsActions.Type.Initialise),
+    this.getAppointmentSessionParametersFromURL(),
+    this.updateAppointmentSessionIfDeprecated(),
+    map(
+      (appointmentSession: AppointmentSession) =>
+        new AppointmentsActions.InitialiseSuccess(appointmentSession)
+    ),
+    catchError(() => of(new AppointmentsActions.InitialiseError())),
+    ~~~~~~~~~~                                                        [no-unsafe-catch]
+  );
+}
+
+[no-unsafe-catch]: Unsafe catch usage in effects and epics is forbidden

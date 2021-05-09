@@ -1,0 +1,131 @@
+import { Component, OnDestroy } from "@angular/core";
+import { of, Subject } from "rxjs";
+import { switchMap, takeUntil } from "rxjs/operators";
+
+const a = of("a");
+const b = of("b");
+const c = of("c");
+const d = of("d");
+
+// COMPONENTS
+
+@Component({
+  selector: "correct-component"
+})
+class CorrectComponent implements OnDestroy {
+  private destroy = new Subject<void>();
+  someMethod() {
+    a.pipe(
+      switchMap(_ => b),
+      takeUntil(this.destroy)
+    ).subscribe();
+  }
+  ngOnDestroy() {
+    this.destroy.next();
+    this.destroy.complete();
+  }
+}
+
+@Component({
+  selector: "no-next-component"
+})
+class NoTakeUntilComponent {
+  someMethod() {
+    a.pipe(
+      switchMap(_ => b)
+    ).subscribe();
+      ~~~~~~~~~                               [prefer-takeuntil]
+  }
+}
+
+// SERVICES
+
+@Injectable()
+class CorrectService implements OnDestroy {
+  private destroy = new Subject<void>();
+  someMethod() {
+    a.pipe(
+      switchMap(_ => b),
+      takeUntil(this.destroy)
+    ).subscribe();
+  }
+  ngOnDestroy() {
+    this.destroy.next();
+    this.destroy.complete();
+  }
+}
+
+@Injectable()
+class NoTakeUntilService {
+  someMethod() {
+    a.pipe(
+      switchMap(_ => b)
+    ).subscribe();
+      ~~~~~~~~~                               [prefer-takeuntil]
+  }
+}
+
+// PIPES
+
+@Pipe({
+  name: 'controlByName',
+})
+class CorrectPipe implements OnDestroy {
+  private destroy = new Subject<void>();
+  someMethod() {
+    a.pipe(
+      switchMap(_ => b),
+      takeUntil(this.destroy)
+    ).subscribe();
+  }
+  ngOnDestroy() {
+    this.destroy.next();
+    this.destroy.complete();
+  }
+}
+
+@Pipe({
+  name: 'controlByName',
+})
+class NoTakeUntilPipe {
+  someMethod() {
+    a.pipe(
+      switchMap(_ => b)
+    ).subscribe();
+      ~~~~~~~~~                               [prefer-takeuntil]
+  }
+}
+
+// DIRECTIVES
+
+@Directive({
+ selector: 'my-directive'
+})
+class CorrectDirective implements OnDestroy {
+  private destroy = new Subject<void>();
+  someMethod() {
+    a.pipe(
+      switchMap(_ => b),
+      takeUntil(this.destroy)
+    ).subscribe();
+  }
+  ngOnDestroy() {
+    this.destroy.next();
+    this.destroy.complete();
+  }
+}
+
+
+@Directive({
+ selector: 'my-directive'
+})
+class NoTakeUntilDirective {
+  someMethod() {
+    a.pipe(
+      switchMap(_ => b)
+    ).subscribe();
+      ~~~~~~~~~                               [prefer-takeuntil]
+  }
+}
+
+[prefer-takeuntil]: Subscribing without takeUntil is forbidden

@@ -1,0 +1,13 @@
+{
+  "defaultSeverity": "error",
+  "jsRules": {},
+  "rules": {
+    "rxjs-no-implicit-any-catch": {
+      "options": [{
+        "allowExplicitAny": true
+      }],
+      "severity": "error"
+    }
+  },
+  "rulesDirectory": "../../../../../build/rules"
+}

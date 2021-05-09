@@ -1,0 +1,28 @@
+import { of } from "rxjs";
+import { tap } from "rxjs/operators";
+
+const source = of(42);
+
+source.subscribe(
+    value => console.log(value)
+);
+
+source.subscribe({
+    next(value) { console.log(value); }
+});
+source.subscribe({
+    next: value => console.log(value)
+});
+
+source.pipe(tap(
+    value => console.log(value)
+)).subscribe();
+
+source.pipe(tap({
+    next(value) { console.log(value); }
+})).subscribe();
+source.pipe(tap({
+    next: value => console.log(value)
+})).subscribe();
+
+[prefer-observer]: Prefer an observer over callbacks

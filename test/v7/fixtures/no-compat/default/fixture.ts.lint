@@ -1,0 +1,27 @@
+import { Observable } from "rxjs";
+import { ajax } from "rxjs/ajax";
+import { fromFetch } from "rxjs/fetch";
+import { concatMap } from "rxjs/operators";
+import { TestScheduler } from "rxjs/testing";
+import { webSocket } from "rxjs/webSocket";
+import * from "rxjs-prefixed-package";
+
+import * as Rx from "rxjs/Rx";
+                    ~~~~~~~~~                       [no-compat]
+import { Observable } from "rxjs/Observable";
+                           ~~~~~~~~~~~~~~~~~        [no-compat]
+import { Subject } from "rxjs/Subject";
+                        ~~~~~~~~~~~~~~              [no-compat]
+import { merge } from "rxjs/observable/merge";
+                      ~~~~~~~~~~~~~~~~~~~~~~~       [no-compat]
+import { mergeMap } from "rxjs/operator/mergeMap";
+                         ~~~~~~~~~~~~~~~~~~~~~~~~   [no-compat]
+import { asap } from "rxjs/scheduler/asap";
+                     ~~~~~~~~~~~~~~~~~~~~~          [no-compat]
+
+import "rxjs/add/observable/merge";
+       ~~~~~~~~~~~~~~~~~~~~~~~~~~~                  [no-compat]
+import "rxjs/add/operator/mergeMap";
+       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~                 [no-compat]
+
+[no-compat]: 'rxjs-compat' dependent import locations are forbidden

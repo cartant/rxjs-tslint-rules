@@ -72,7 +72,7 @@
     "prepublishOnly": "yarn run test && yarn run dist",
     "prettier": "prettier --write \"./source/**/*.{js,json,ts}\"",
     "prettier:ci": "prettier --check \"./source/**/*.{js,json,ts}\"",
-    "test": "yarn run lint && yarn run test:build && yarn run test:mocha && yarn run test:tslint-v5 && yarn run test:tslint-v6 && yarn run test:tslint-v6-compat",
+    "test": "yarn run lint && yarn run test:build && yarn run test:mocha && yarn run test:tslint-v5 && yarn run test:tslint-v6 && yarn run test:tslint-v6-compat && yarn run test:tslint-v7",
     "test:build": "yarn run test:clean && tsc -p tsconfig.json",
     "test:clean": "rimraf build",
     "test:debug": "tslint --test \"./test/v6/fixtures/no-implicit-any-catch/**/tslint.json\"",
@@ -80,7 +80,8 @@
     "test:mocha": "mocha \"./build/**/*-spec.js\"",
     "test:tslint-v5": "yarn --cwd ./test/v5 install && yarn --cwd ./test/v5 upgrade && tslint --test \"./test/v5/fixtures/**/tslint.json\"",
     "test:tslint-v6": "yarn --cwd ./test/v6 install && yarn --cwd ./test/v6 upgrade && tslint --test \"./test/v6/fixtures/**/tslint.json\"",
-    "test:tslint-v6-compat": "yarn --cwd ./test/v6-compat install && yarn --cwd ./test/v6-compat upgrade && tslint --test \"./test/v6-compat/fixtures/**/tslint.json\""
+    "test:tslint-v6-compat": "yarn --cwd ./test/v6-compat install && yarn --cwd ./test/v6-compat upgrade && tslint --test \"./test/v6-compat/fixtures/**/tslint.json\"",
+    "test:tslint-v7": "yarn --cwd ./test/v7 install && yarn --cwd ./test/v7 upgrade && tslint --test \"./test/v7/fixtures/**/tslint.json\""
   },
   "version": "4.34.7"
 }

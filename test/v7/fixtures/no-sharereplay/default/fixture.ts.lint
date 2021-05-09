@@ -1,0 +1,17 @@
+import { of } from "rxjs";
+import { publishReplay, shareReplay } from "rxjs/operators";
+
+const a = of(42).pipe(publishReplay(1));
+const b = of(42).pipe(publishReplay());
+
+const c = of(42).pipe(shareReplay(1));
+                      ~~~~~~~~~~~                           [no-sharereplay]
+const d = of(42).pipe(shareReplay());
+                      ~~~~~~~~~~~                           [no-sharereplay]
+
+const c = of(42).pipe(shareReplay({ refCount: true }));
+                      ~~~~~~~~~~~                           [no-sharereplay]
+const c = of(42).pipe(shareReplay({ refCount: false }));
+                      ~~~~~~~~~~~                           [no-sharereplay]
+
+[no-sharereplay]: shareReplay is forbidden

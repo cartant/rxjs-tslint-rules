@@ -1,0 +1,24 @@
+import { of } from "rxjs";
+import { tap } from "rxjs/operators";
+
+const nextArrow = (value: number) => { console.log(value); };
+function nextNamed(value: number): void { console.log(value); }
+const nextNonArrow = nextNamed;
+
+const source = of(42);
+
+source.subscribe(nextArrow);
+                 ~~~~~~~~~          [prefer-observer]
+source.subscribe(nextNamed);
+                 ~~~~~~~~~          [prefer-observer]
+source.subscribe(nextNonArrow);
+                 ~~~~~~~~~~~~       [prefer-observer]
+
+source.pipe(tap(nextArrow));
+                ~~~~~~~~~           [prefer-observer]
+source.pipe(tap(nextNamed));
+                ~~~~~~~~~           [prefer-observer]
+source.pipe(tap(nextNonArrow));
+                ~~~~~~~~~~~~        [prefer-observer]
+
+[prefer-observer]: Prefer an observer over callbacks

@@ -1,0 +1,9 @@
+import { of } from "rxjs";
+
+of("a").subscribe(async () => {
+                  ~~~~~             [no-async-subscribe]
+    return await "a";
+});
+of("b").subscribe(() => {});
+
+[no-async-subscribe]: Passing async functions to subscribe is forbidden

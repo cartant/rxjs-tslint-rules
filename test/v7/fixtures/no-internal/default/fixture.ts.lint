@@ -1,0 +1,7 @@
+import { Observable } from "rxjs";
+import { concat } from "rxjs/internal/observable/concat";
+                       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~    [no-internal]
+import { map } from "rxjs/internal/operators/map";
+                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~           [no-internal]
+
+[no-internal]: RxJS imports from internal are forbidden

@@ -1,0 +1,37 @@
+import { EMPTY, Observable, of } from "rxjs";
+import { switchMap, tap } from "rxjs/operators";
+
+function ofType<T>(type: string, ...moreTypes: string[]): (source: Observable<T>) => Observable<T> {
+    return source => source;
+}
+
+const actions = of({});
+const that = { actions };
+
+const Actions = {
+    types: {
+        GET_SOMETHING: "GET_SOMETHING",
+        PUT_SOMETHING: "PUT_SOMETHING",
+        GetSomething: GET_SOMETHING,
+        PutSomething: PUT_SOMETHING
+    }
+};
+
+const pipedSymbolGetEffect = actions.pipe(ofType(Actions.types.GET_SOMETHING), tap(() => {}), switchMap(() => EMPTY));
+const pipedSymbolPutEffect = actions.pipe(ofType(Actions.types.PUT_SOMETHING), tap(() => {}), switchMap(() => EMPTY));
+                                                                                              ~~~~~~~~~                             [no-unsafe-switchmap]
+
+const pipedSymbolGetEffect = that.actions.pipe(ofType(Actions.types.GET_SOMETHING), tap(() => {}), switchMap(() => EMPTY));
+const pipedSymbolPutEffect = that.actions.pipe(ofType(Actions.types.PUT_SOMETHING), tap(() => {}), switchMap(() => EMPTY));
+                                                                                                   ~~~~~~~~~                        [no-unsafe-switchmap]
+
+
+const pipedOfTypeCamelCaseGetEffect = actions.pipe(ofType(Actions.types.GetSomething), tap(() => {}), switchMap(() => EMPTY));
+const pipedOfTypeCamelCasePutEffect = actions.pipe(ofType(Actions.types.PutSomething), tap(() => {}), switchMap(() => EMPTY));
+                                                                                                      ~~~~~~~~~                     [no-unsafe-switchmap]
+
+const pipedOfTypeCamelCaseGetEffect = that.actions.pipe(ofType(Actions.types.GetSomething), tap(() => {}), switchMap(() => EMPTY));
+const pipedOfTypeCamelCasePutEffect = that.actions.pipe(ofType(Actions.types.PutSomething), tap(() => {}), switchMap(() => EMPTY));
+                                                                                                           ~~~~~~~~~                [no-unsafe-switchmap]
+
+[no-unsafe-switchmap]: Unsafe switchMap usage in effects and epics is forbidden

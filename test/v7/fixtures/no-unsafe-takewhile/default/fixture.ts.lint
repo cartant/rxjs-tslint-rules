@@ -1,0 +1,53 @@
+import { Observable } from "rxjs";
+import { takeWhile } from "rxjs/operators";
+import { THOUSAND } from "./constants";
+import { Vertical } from "./enums";
+
+enum Horizontal {
+    Left = 1,
+    Right
+}
+
+const HUNDRED = 100;
+let alive = true;
+
+class Something {
+    private _alive = true;
+    constructor(private _source: Observable<string>) {
+
+        _source.pipe(
+            takeWhile(value => value === Horizontal.Left.toString())
+        ).subscribe();
+
+        _source.pipe(
+            takeWhile(value => value === Vertical.Up.toString())
+        ).subscribe();
+
+        _source.pipe(
+            takeWhile(value => value === HUNDRED.toString())
+        ).subscribe();
+
+        _source.pipe(
+            takeWhile(value => value === THOUSAND.toString())
+        ).subscribe();
+
+        _source.pipe(
+            takeWhile(() => alive)
+                            ~~~~~                                       [no-unsafe-takewhile]
+        ).subscribe();
+
+        _source.pipe(
+            takeWhile(() => this._alive)
+                            ~~~~                                        [no-unsafe-takewhile]
+        ).subscribe();
+
+        _source.pipe(
+            takeWhile(() => this.alive())
+        ).subscribe();
+    }
+    alive(): boolean {
+        return this._alive;
+    }
+}
+
+[no-unsafe-takewhile]: Outer scopes are forbidden in takeWhile

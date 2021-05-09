@@ -1,0 +1,68 @@
+import { Observable, Subject } from 'rxjs';
+
+class Mock {
+
+  private a = new Subject<void>();
+  private readonly b = new Subject<void>();
+  private c: number;
+
+  public d = new Subject<void>();
+         ~                                      [no-exposed % ("d")]
+  protected e = new Subject<void>();
+  f = new Subject<any>();
+  ~                                             [no-exposed % ("f")]
+  public readonly g = new Subject<void>();
+                  ~                             [no-exposed % ("g")]
+  readonly h = new Subject<void>();
+           ~                                    [no-exposed % ("h")]
+
+  constructor(
+    public i: Subject<any>,
+           ~                                    [no-exposed % ("i")]
+    protected j: Subject<any>,
+    private k: Subject<any>,
+    l: Subject<any>,
+    ~                                           [no-exposed % ("l")]
+    m: Observable<any>,
+  ) {}
+
+  get n(): Subject<any> {
+      ~                                         [no-exposed % ("n")]
+    return this._submitSubject$;
+  }
+
+  set n(a: Subject<any>) {
+      ~                                         [no-exposed % ("n")]
+    this._submitSubject$ = set$;
+  }
+
+  get o(): number {
+    return this.age;
+  }
+
+  set o(newNum: number) {
+    this._age = newNum;
+  }
+
+  public p(): Subject<any> {
+         ~                                      [no-exposed % ("p")]
+    return new Subject<any>();
+  }
+
+  q(): Subject<any> {
+  ~                                             [no-exposed % ("q")]
+    return new Subject<any>();
+  }
+
+  private r(): Subject<any> {
+    return new Subject<any>();
+  }
+}
+
+const variable = new Subject<void>();
+
+function foo(a$: Subject<any>): Subject<any> {
+  return a$;
+}
+
+[no-exposed]: Subject '%s' must be private or protected.

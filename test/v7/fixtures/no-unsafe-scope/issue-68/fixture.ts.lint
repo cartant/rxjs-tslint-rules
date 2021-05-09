@@ -1,0 +1,23 @@
+import { of } from "rxjs";
+import { concatMap } from "rxjs/operators";
+
+class MyClass {
+    private static STATIC_VAL = "bob";
+    private static readonly STATIC_RO_VAL = "bob";
+
+    static_val_notOk () {
+        return of(null).pipe(
+            concatMap(() => {
+                console.log(MyClass.STATIC_VAL);
+                            ~~~~~~~                 [no-unsafe-scope]
+                return of(null);
+            }),
+            concatMap(() => {
+                console.log(MyClass.STATIC_RO_VAL);
+                return of(null);
+            })
+        );
+    }
+}
+
+[no-unsafe-scope]: Unsafe scopes are forbidden

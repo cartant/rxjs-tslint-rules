@@ -1,0 +1,14 @@
+import { of } from "rxjs";
+import { concatMap } from "rxjs/operators";
+
+instanceof_notOk() {
+    return of(1).pipe(
+        concatMap((val: any) => {
+            return of(val instanceof Array)
+        })
+    );
+}
+
+instanceof_ok(val: any) {
+    return of(val instanceof Array);
+}

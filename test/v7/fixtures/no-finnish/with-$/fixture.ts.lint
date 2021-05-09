@@ -1,0 +1,49 @@
+import { Observable, of } from "rxjs";
+
+const someObservable$ = of(0);
+      ~~~~~~~~~~~~~~~                                                                       [no-finnish]
+
+const someEmptyObject = {};
+const someObject = { ...someEmptyObject, someKey$: someObservable$ };
+                                         ~~~~~~~~                                           [no-finnish]
+const { someKey$ } = someObject;
+        ~~~~~~~~                                                                            [no-finnish]
+const { someKey$: someRenamedKey$ } = someObject;
+                  ~~~~~~~~~~~~~~~                                                           [no-finnish]
+
+const someArray = [someObservable$];
+const [someElement$] = someArray;
+       ~~~~~~~~~~~~                                                                         [no-finnish]
+someArray.forEach(function (element$: Observable<any>): void {});
+                            ~~~~~~~~                                                        [no-finnish]
+someArray.forEach((element$: Observable<any>) => {});
+                   ~~~~~~~~                                                                 [no-finnish]
+
+function someFunction$(someParam$: Observable<any>): Observable<any> { return someParam; }
+         ~~~~~~~~~~~~~                                                                      [no-finnish]
+                       ~~~~~~~~~~                                                           [no-finnish]
+
+class SomeClass {
+    someProperty$: Observable<any>;
+    ~~~~~~~~~~~~~                                                                           [no-finnish]
+    constructor (someParam$: Observable<any>) {}
+                 ~~~~~~~~~~                                                                 [no-finnish]
+    get someGetter$(): Observable<any> { throw new Error("Some error."); }
+        ~~~~~~~~~~~                                                                         [no-finnish]
+    set someSetter$(someParam$: Observable<any>) {}
+        ~~~~~~~~~~~                                                                         [no-finnish]
+                    ~~~~~~~~~~                                                              [no-finnish]
+    someMethod$(someParam$: Observable<any>): Observable<any> { return someParam; }
+    ~~~~~~~~~~~                                                                             [no-finnish]
+                ~~~~~~~~~~                                                                  [no-finnish]
+}
+
+interface SomeInterface {
+    someProperty$: Observable<any>;
+    ~~~~~~~~~~~~~                                                                           [no-finnish]
+    someMethod$(someParam$: Observable<any>): Observable<any>;
+    ~~~~~~~~~~~                                                                             [no-finnish]
+                ~~~~~~~~~~                                                                  [no-finnish]
+}
+
+[no-finnish]: Finnish notation is forbidden

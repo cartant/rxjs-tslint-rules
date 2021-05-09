@@ -1,0 +1,34 @@
+import { BehaviorSubject, from, of, Notification } from "rxjs";
+import { scan } from "rxjs/operators";
+
+const a = of(42, 54);
+const b = a.pipe(
+    scan<number, string>((acc, value) => `${acc},${value}`, "")
+    ~~~~                                                            [no-explicit-generics]
+);
+const c = a.pipe(
+    scan((acc: string, value: number) => `${acc},${value}`, "")
+);
+const c2 = a.pipe(
+    scan((acc, value): string => `${acc},${value}`, "")
+);
+
+const d = new BehaviorSubject<number>(42);
+              ~~~~~~~~~~~~~~~                                       [no-explicit-generics]
+const e = new BehaviorSubject(42);
+
+const f = from<number>([42, 54]);
+          ~~~~                                                      [no-explicit-generics]
+const g = from([42, 54]);
+
+const h = of<number>(42, 54);
+          ~~                                                        [no-explicit-generics]
+const i = of(42, 54);
+
+const j = new Notification<number>("N", 42);
+              ~~~~~~~~~~~~                                          [no-explicit-generics]
+const k = new Notification("N", 42);
+const l = new Notification<number>("E", undefined, "Kaboom!");
+const m = new Notification<number>("C");
+
+[no-explicit-generics]: Explicit generic type arguments are forbidden

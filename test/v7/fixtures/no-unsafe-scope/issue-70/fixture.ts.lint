@@ -1,0 +1,14 @@
+import { of } from 'rxjs'
+import { concatMap } from 'rxjs/operators'
+import importedFunc from './func'
+
+function localFunc (s: any) {
+  return of(null)
+}
+
+const defaultExportTemplateLiterals_notOk = of(null).pipe(
+  concatMap(() => importedFunc`bob`),
+  concatMap(() => localFunc`bob`)
+)
+
+[no-unsafe-scope]: Unsafe scopes are forbidden

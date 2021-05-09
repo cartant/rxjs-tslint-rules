@@ -1,0 +1,31 @@
+import { ReplaySubject, Subject } from "rxjs";
+
+const a = new Subject<number>();
+a.next(42);
+a.next();
+  ~~~~                                    [no-unsafe-subject-next]
+
+const b = new Subject<void>();
+b.next();
+
+const c = new ReplaySubject<number>();
+c.next(42);
+c.next();
+  ~~~~                                    [no-unsafe-subject-next]
+
+const d = new Subject<number | void>();
+d.next(42);
+d.next();
+
+const e = new Subject<any>();
+e.next(42);
+e.next();
+
+const f = new Subject<unknown>();
+f.next(42);
+f.next();
+
+const g = new Subject<void>();
+g.next();
+
+[no-unsafe-subject-next]: Unsafe optional next calls are forbidden

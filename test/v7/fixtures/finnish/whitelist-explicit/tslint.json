@@ -1,0 +1,20 @@
+{
+  "defaultSeverity": "error",
+  "jsRules": {},
+  "rules": {
+    "rxjs-finnish": {
+      "options": [{
+        "names": {
+          "^finnish$": true,
+          "^foreign$": false
+        },
+        "types": {
+          "^EventEmitter$": false,
+          "^SomeSubject$": true
+        }
+      }],
+      "severity": "error"
+    }
+  },
+  "rulesDirectory": "../../../../../build/rules"
+}

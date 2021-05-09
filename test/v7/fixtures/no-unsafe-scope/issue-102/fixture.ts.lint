@@ -1,0 +1,9 @@
+import { Observable, of } from "rxjs";
+import { map } from "rxjs/operators";
+import * as thing from "./thing";
+
+const result = from(thing.value).pipe(
+  map((value: thing.Value) => value)
+);
+
+[no-unsafe-scope]: Unsafe scopes are forbidden

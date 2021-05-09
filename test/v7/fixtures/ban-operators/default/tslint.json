@@ -1,0 +1,14 @@
+{
+  "defaultSeverity": "error",
+  "jsRules": {},
+  "rules": {
+    "rxjs-ban-operators": {
+      "options": [{
+        "concat": true,
+        "merge": true
+      }],
+      "severity": "error"
+    }
+  },
+  "rulesDirectory": "../../../../../build/rules"
+}

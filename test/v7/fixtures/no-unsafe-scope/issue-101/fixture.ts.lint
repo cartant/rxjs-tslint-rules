@@ -1,0 +1,9 @@
+import { Observable, of } from "rxjs";
+import { map } from "rxjs/operators";
+
+of(1).pipe(map(value => {
+  console.log(value);
+  return value;
+})).subscribe();
+
+[no-unsafe-scope]: Unsafe scopes are forbidden

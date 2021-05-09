@@ -1,0 +1,30 @@
+import { NEVER, Observable, of, Subscription, throwError } from "rxjs";
+import { catchError, map, takeUntil } from "rxjs/operators";
+
+const userland = <T>(selector: (t: T) => T) => map(selector);
+
+class Something {
+    someObservable = NEVER;
+    constructor() {
+        const ob = of(1).pipe(
+            map(Something.map),
+            userland(Something.map),
+            takeUntil(this.someObservable),
+            catchError(Something.catchError)
+        ).subscribe(
+            Something.next,
+            Something.error,
+            Something.complete
+        );
+        const subscription = new Subscription(Something.tearDown);
+        subscription.add(Something.tearDown);
+    }
+    static catchError(error: any): Observable<never> { return throwError(error); }
+    static complete(): void {}
+    static error(error: any): void {}
+    static map<T>(t: T): T { return t; }
+    static next<T>(t: T): void {}
+    static tearDown(): void {}
+}
+
+[no-unbound-methods]: Unbound methods are forbidden

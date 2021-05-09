@@ -1,0 +1,49 @@
+import { Observable, of } from "rxjs";
+import { map, tap } from "rxjs/operators";
+
+let outer: any;
+
+of(1).pipe(tap(value => outer = value)).subscribe();
+                        ~~~~~                                                           [no-unsafe-scope]
+of(1).subscribe(value => outer = value);
+                         ~~~~~                                                          [no-unsafe-scope]
+
+function piped(outer: number): Observable<number> {
+    return of(1).pipe(map(value => outer + value));
+                                   ~~~~~                                                [no-unsafe-scope]
+}
+
+let outerArray = [];
+
+of([]).pipe(
+    map(array => array.slice())
+).subscribe();
+
+of([]).pipe(
+    map(array => outerArray.slice())
+                 ~~~~~~~~~~                                                             [no-unsafe-scope]
+).subscribe();
+
+of([]).pipe(
+    map(array => array.length)
+).subscribe();
+
+of([]).pipe(
+    map(array => outerArray.length)
+                 ~~~~~~~~~~                                                             [no-unsafe-scope]
+).subscribe();
+
+class User {
+    value: string;
+    constructor(private name: string, private service: { bar(): string }) {
+        of("Hello").pipe(map(value => `${value}, ${this.foo()}.`)).subscribe();
+                                                   ~~~~                                 [no-unsafe-scope]
+        of("Hello").pipe(map(value => `${value}, ${this.service.bar()}.`)).subscribe();
+                                                   ~~~~                                 [no-unsafe-scope]
+        of("Hello").subscribe(value => this.value = value);
+                                       ~~~~                                             [no-unsafe-scope]
+    }
+    foo(): string { return "foo"; }
+}
+
+[no-unsafe-scope]: Unsafe scopes are forbidden

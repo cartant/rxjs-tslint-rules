@@ -1,0 +1,31 @@
+import { EMPTY, Observable, of } from "rxjs";
+import { catchError, switchMap, tap } from "rxjs/operators";
+
+function ofType<T>(type: string, ...moreTypes: string[]): (source: Observable<T>) => Observable<T> {
+    return source => source;
+}
+
+type Actions = Observable<any>;
+const actions = of({});
+const that = { actions };
+
+const safePipedOfTypeEffect = actions.pipe(
+    ofType("DO_SOMETHING"),
+    tap(() => {}),
+    switchMap(() => EMPTY),
+    catchError((error, caught) => caught)
+);
+
+const safePipedOfTypeEffect = that.actions.pipe(
+    ofType("DO_SOMETHING"),
+    tap(() => {}),
+    switchMap(() => EMPTY),
+    catchError((error, caught) => caught)
+);
+
+const safePipedOfTypeEpic = (action$: Actions) => action$.pipe(
+    ofType("DO_SOMETHING"),
+    tap(() => {}),
+    switchMap(() => EMPTY),
+    catchError((error, caught) => caught)
+);

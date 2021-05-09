@@ -1,0 +1,12 @@
+import { of } from "rxjs";
+
+class SomeClass {
+  value: string;
+  someMethod() {
+    of("foo").subscribe(value => this.value = value);
+  }
+}
+
+function someFunction() {
+  of("foo").subscribe(value => this.value = value);
+}

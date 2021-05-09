@@ -1,0 +1,31 @@
+import { throwError } from "rxjs";
+import { catchError } from "rxjs/operators";
+
+throwError("Kaboom!").pipe(
+  catchError(() => console.error("Whoops!"))
+);
+throwError("Kaboom!").pipe(
+  catchError(function () { console.error("Whoops!"); })
+);
+
+throwError("Kaboom!").pipe(
+  catchError((error: unknown) => console.error(error))
+);
+throwError("Kaboom!").pipe(
+  catchError(function (error: unknown) { console.error(error); })
+);
+
+throwError("Kaboom!").pipe(
+  catchError((error: unknown) => console.error(error))
+);
+throwError("Kaboom!").pipe(
+  catchError(function (error: unknown) { console.error(error); })
+);
+
+throwError("Kaboom!").pipe(
+  catchError((error: unknown) => console.error(error))
+);
+throwError("Kaboom!").pipe(
+  catchError(function (error: unknown) { console.error(error); })
+);
+

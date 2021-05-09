@@ -1,0 +1,10 @@
+import { Observable } from "rxjs/index";
+                           ~~~~~~~~~~~~                     [no-index]
+import { map } from "rxjs/operators/index";
+                    ~~~~~~~~~~~~~~~~~~~~~~                  [no-index]
+import { TestScheduler } from "rxjs/testing/index";
+                              ~~~~~~~~~~~~~~~~~~~~          [no-index]
+import { WebSocketSubject } from "rxjs/webSocket/index";
+                                 ~~~~~~~~~~~~~~~~~~~~~~     [no-index]
+
+[no-index]: RxJS imports from index are forbidden - see https://github.com/ReactiveX/rxjs/issues/4230

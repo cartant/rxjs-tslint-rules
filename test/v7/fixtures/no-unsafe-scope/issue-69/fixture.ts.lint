@@ -1,0 +1,38 @@
+import { of } from "rxjs";
+import { concatMap } from "rxjs/operators";
+
+function destruct_param_notOk ({ id }: { id: string }) {
+    return of(null).pipe(
+        concatMap(() => {
+            return of(id);
+        })
+    );
+}
+
+function destruct_param_alias_notOk ({ id: alias }: { id: string }) {
+    return of(null).pipe(
+        concatMap(() => {
+            return of(alias);
+        })
+    );
+}
+
+function destruct_statement_ok (options: { id: string }) {
+    const { id } = options
+    return of(null).pipe(
+        concatMap(() => {
+            return of(id);
+        })
+    );
+}
+
+function destruct_statement_alias_ok (options: { id: string }) {
+    const { id: alias } = options
+    return of(null).pipe(
+        concatMap(() => {
+            return of(alias);
+        })
+    );
+}
+
+[no-unsafe-scope]: Unsafe scopes are forbidden

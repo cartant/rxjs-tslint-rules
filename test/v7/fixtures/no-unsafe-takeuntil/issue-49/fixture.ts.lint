@@ -1,0 +1,25 @@
+import { fromEventPattern, NEVER } from "rxjs";
+import { map, startWith, takeUntil } from "rxjs/operators";
+
+type MediaQueryList = any;
+type Query = any;
+
+class MyClass {
+  private _destroy = NEVER;
+  private _registerQuery(query: string): Query {
+    const mql: MediaQueryList = null;
+    const queryObservable = fromEventPattern<MediaQueryList>(
+      (listener: Function) => {},
+      (listener: Function) => {}
+    ).pipe(
+      takeUntil(this._destroy),
+      ~~~~~~~~~                                                 [no-unsafe-takeuntil]
+      startWith(mql),
+      map((nextMql: MediaQueryList) => ({}))
+    );
+    const output = { observable: queryObservable, mql: mql };
+    return output;
+  }
+}
+
+[no-unsafe-takeuntil]: Applying operators after takeUntil is forbidden

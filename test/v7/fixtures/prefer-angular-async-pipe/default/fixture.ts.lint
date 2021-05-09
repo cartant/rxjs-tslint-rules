@@ -1,0 +1,24 @@
+import { Component, OnInit } from "@angular/core";
+import { of } from "rxjs";
+
+@Component({
+    selector: "piped-component",
+    template: "<span>{{ value | async }}</span>"
+})
+export class PipedComponent {
+    value = of("foo");
+}
+
+@Component({
+    selector: "not-piped-component",
+    template: "<span>{{ value }}</span>"
+})
+export class NotPipedComponent implements OnInit {
+    value: string;
+    ngOnInit() {
+        of("foo").subscribe(value => this.value = value);
+                  ~~~~~~~~~                     [prefer-async-pipe]
+    }
+}
+
+[prefer-async-pipe]: Prefer async pipe over subscribe

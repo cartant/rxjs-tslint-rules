@@ -1,0 +1,170 @@
+import { Component, OnDestroy } from "@angular/core";
+import { of, Subject } from "rxjs";
+import { map, switchMap, takeUntil } from "rxjs/operators";
+
+const a = of("a");
+const b = of("b");
+const c = of("c");
+const d = of("d");
+
+@Component({
+  selector: "correct-component"
+})
+class CorrectComponent implements OnDestroy {
+  private destroy = new Subject<void>();
+  someMethod() {
+    a.pipe(
+      switchMap(_ => b),
+      takeUntil(this.destroy)
+    ).subscribe();
+  }
+  ngOnDestroy() {
+    this.destroy.next();
+    this.destroy.complete();
+  }
+}
+
+@Component({
+  selector: "correct-component-not-last"
+})
+class CorrectComponentNotLast implements OnDestroy {
+  private destroy = new Subject<void>();
+  someMethod() {
+    a.pipe(
+      switchMap(_ => b),
+      takeUntil(this.destroy),
+      map(value => value)
+    ).subscribe();
+  }
+  ngOnDestroy() {
+    this.destroy.next();
+    this.destroy.complete();
+  }
+}
+
+@Component({
+  selector: "destructured-component"
+})
+class DestructuredComponent implements OnDestroy {
+  private destroy = new Subject<void>();
+  someMethod() {
+    const { destroy } = this;
+    a.pipe(
+      switchMap(_ => b),
+      takeUntil(destroy)
+    ).subscribe();
+  }
+  ngOnDestroy() {
+    const { destroy } = this;
+    destroy.next();
+    destroy.complete();
+  }
+}
+
+@Component({
+  selector: "no-takeuntil-component"
+})
+class NoTakeUntilComponent {
+  private destroy = new Subject<void>();
+  someMethod() {
+    const { destroy } = this;
+    a.pipe(
+      switchMap(_ => b)
+    ).subscribe();
+      ~~~~~~~~~                               [prefer-takeuntil]
+  }
+  ngOnDestroy() {
+    this.destroy.next();
+    this.destroy.complete();
+  }
+}
+
+@Component({
+  selector: "no-subject-component"
+})
+class NoSubjectComponent implements OnDestroy {
+      ~~~~~~~~~~~~~~~~~~                      [prefer-takeuntil-no-subject % ('d')]
+  someMethod() {
+    a.pipe(
+      switchMap(_ => b),
+      takeUntil(d)
+    ).subscribe();
+  }
+  ngOnDestroy() {
+  ~~~~~~~~~~~                                 [prefer-takeuntil-no-next % ('d')]
+  ~~~~~~~~~~~                                 [prefer-takeuntil-no-complete % ('d')]
+  }
+}
+
+@Component({
+  selector: "secondary-takeuntil-component"
+})
+class SecondaryTakeUntilComponent implements OnDestroy {
+  private destroy = new Subject<void>();
+  someMethod() {
+    a.pipe(
+      takeUntil(c),
+      switchMap(_ => b),
+      takeUntil(this.destroy)
+    ).subscribe();
+  }
+  ngOnDestroy() {
+    this.destroy.next();
+    this.destroy.complete();
+  }
+}
+
+@Component({
+  selector: "no-destroy-component"
+})
+class NoDestroyComponent {
+      ~~~~~~~~~~~~~~~~~~                      [prefer-takeuntil-no-destroy]
+  private destroy = new Subject<void>();
+  someMethod() {
+    const { destroy } = this;
+    a.pipe(
+      switchMap(_ => b),
+      takeUntil(destroy)
+    ).subscribe();
+  }
+}
+
+@Component({
+  selector: "no-next-component"
+})
+class NoNextComponent implements OnDestroy {
+  private destroy = new Subject<void>();
+  someMethod() {
+    a.pipe(
+      switchMap(_ => b),
+      takeUntil(this.destroy)
+    ).subscribe();
+  }
+  ngOnDestroy() {
+  ~~~~~~~~~~~                                 [prefer-takeuntil-no-next % ('destroy')]
+    this.destroy.complete();
+  }
+}
+
+@Component({
+  selector: "no-complete-component"
+})
+class NoCompleteComponent implements OnDestroy {
+  private destroy = new Subject<void>();
+  someMethod() {
+    a.pipe(
+      switchMap(_ => b),
+      takeUntil(this.destroy)
+    ).subscribe();
+  }
+  ngOnDestroy() {
+  ~~~~~~~~~~~                                 [prefer-takeuntil-no-complete % ('destroy')]
+    this.destroy.next();
+  }
+}
+
+[prefer-takeuntil]: Subscribing without takeUntil is forbidden
+[prefer-takeuntil-no-subject]: Subject '%s' not a class property
+[prefer-takeuntil-no-destroy]: ngOnDestroy not implemented
+[prefer-takeuntil-no-next]: '%s.next()' not called
+[prefer-takeuntil-no-complete]: '%s.complete()' not called

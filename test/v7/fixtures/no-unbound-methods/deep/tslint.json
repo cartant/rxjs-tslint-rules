@@ -1,0 +1,8 @@
+{
+  "defaultSeverity": "error",
+  "jsRules": {},
+  "rules": {
+    "rxjs-no-unbound-methods": { "severity": "error" }
+  },
+  "rulesDirectory": "../../../../../build/rules"
+}

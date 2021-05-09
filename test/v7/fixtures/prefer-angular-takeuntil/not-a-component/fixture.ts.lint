@@ -1,0 +1,50 @@
+import { of } from "rxjs";
+import { switchMap, takeUntil } from "rxjs/operators";
+
+const a = of("a");
+const b = of("b");
+const c = of("c");
+const d = of("d");
+
+class SomeClass {
+  someMethod() {
+    a.pipe(switchMap(_ => b)).subscribe();
+    a.pipe(switchMap(_ => b), takeUntil(d)).subscribe();
+  }
+}
+
+class SomeFunction {
+  a.pipe(switchMap(_ => b)).subscribe();
+  a.pipe(switchMap(_ => b), takeUntil(d)).subscribe();
+}
+
+@Injectable()
+class NoTakeUntilService {
+  someMethod() {
+    a.pipe(
+      switchMap(_ => b)
+    ).subscribe();
+  }
+}
+
+@Pipe({
+  name: 'controlByName',
+})
+class NoTakeUntilPipe {
+  someMethod() {
+    a.pipe(
+      switchMap(_ => b)
+    ).subscribe();
+  }
+}
+
+@Directive({
+  selector: 'my-directive'
+})
+class NoTakeUntilDirective {
+  someMethod() {
+    a.pipe(
+      switchMap(_ => b)
+    ).subscribe();
+  }
+}

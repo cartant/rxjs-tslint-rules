@@ -1,0 +1,42 @@
+import { Observable, of } from "rxjs";
+
+const someObservable = of(0);
+      ~~~~~~~~~~~~~~                                                                        [finnish % ("someObservable")]
+
+const someEmptyObject = {};
+const someObject = { ...someEmptyObject, someKey: someObservable };
+                                         ~~~~~~~                                            [finnish % ("someKey")]
+const { someKey } = someObject;
+        ~~~~~~~                                                                             [finnish % ("someKey")]
+const { someKey: someRenamedKey } = someObject;
+                 ~~~~~~~~~~~~~~                                                             [finnish % ("someRenamedKey")]
+
+const someArray = [someObservable];
+const [someElement] = someArray;
+       ~~~~~~~~~~~                                                                          [finnish % ("someElement")]
+someArray.forEach(function (element: Observable<any>): void {});
+someArray.forEach((element: Observable<any>) => {});
+
+function someFunction(someParam: Observable<any>): Observable<any> { return someParam; }
+         ~~~~~~~~~~~~                                                                       [finnish % ("someFunction")]
+
+class SomeClass {
+    someProperty: Observable<any>;
+    ~~~~~~~~~~~~                                                                            [finnish % ("someProperty")]
+    constructor (someParam: Observable<any>) {}
+    get someGetter(): Observable<any> { throw new Error("Some error."); }
+        ~~~~~~~~~~                                                                          [finnish % ("someGetter")]
+    set someSetter(someParam: Observable<any>) {}
+        ~~~~~~~~~~                                                                          [finnish % ("someSetter")]
+    someMethod(someParam: Observable<any>): Observable<any> { return someParam; }
+    ~~~~~~~~~~                                                                              [finnish % ("someMethod")]
+}
+
+interface SomeInterface {
+    someProperty: Observable<any>;
+    ~~~~~~~~~~~~                                                                            [finnish % ("someProperty")]
+    someMethod(someParam: Observable<any>): Observable<any>;
+    ~~~~~~~~~~                                                                              [finnish % ("someMethod")]
+}
+
+[finnish]: Finnish notation required for %s

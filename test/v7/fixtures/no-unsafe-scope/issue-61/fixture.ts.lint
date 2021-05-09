@@ -1,0 +1,43 @@
+/*  1 */ import { Inject, Injectable, LOCALE_ID } from '@angular/core';
+/*  2 */ import { Actions, Effect, ofType } from '@ngrx/effects';
+/*  3 */ import { Action } from '@ngrx/store';
+/*  4 */ import { Observable, of } from 'rxjs';
+/*  5 */ import { catchError, map, switchMap } from 'rxjs/operators';
+/*  6 */
+/*  7 */ import { CmLocale } from 'app/cm-common';
+/*  8 */
+/*  9 */ import { CmApiLabelService } from '../service';
+/* 10 */ import * as featureActions from './actions';
+/* 11 */
+/* 12 */ @Injectable()
+/* 13 */ export class AppStoreEffects {
+/* 14 */   constructor(
+/* 15 */     @Inject(LOCALE_ID) private localeId: CmLocale,
+/* 16 */     private actions$: Actions,
+/* 17 */     private labelService: CmApiLabelService,
+/* 18 */   ) {}
+/* 19 */
+/* 20 */   @Effect()
+/* 21 */   loadRequestEffect$: Observable<Action> = this.actions$.pipe(
+/* 22 */     ofType<featureActions.LoadRequestAction>(
+/* 23 */       featureActions.ActionTypes.LOAD_REQUEST,
+/* 24 */     ),
+/* 25 */     switchMap(({ payload: { applyLabelIdAsPrefix, labelId, localeId } }) =>
+/* 26 */       this.labelService.getLabels(labelId, localeId || this.localeId).pipe(
+                                                                ~~~~                    [Unsafe scopes are forbidden]
+/* 27 */         map(
+/* 28 */           (labels) =>
+/* 29 */             new featureActions.LoadSuccessAction({
+/* 30 */               labels,
+/* 31 */               prefix: applyLabelIdAsPrefix ? labelId : undefined,
+/* 32 */             }),
+/* 33 */         ),
+/* 34 */         catchError((error) =>
+/* 35 */           of(new featureActions.LoadFailureAction({ error })),
+/* 36 */         ),
+/* 37 */       ),
+/* 38 */     ),
+/* 39 */   );
+/* 40 */ }
+
+[no-unsafe-scope]: Unsafe scopes are forbidden

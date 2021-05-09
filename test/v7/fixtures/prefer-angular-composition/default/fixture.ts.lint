@@ -1,0 +1,101 @@
+import { Component, OnDestroy, OnInit } from "@angular/core";
+import { of, Subscription } from "rxjs";
+
+@Component({
+  selector: "composed-component",
+  template: "<span>{{ value }}</span>"
+})
+export class ComposedComponent implements OnInit, OnDestroy {
+  value: string;
+  private subscription = new Subscription();
+  ngOnInit() {
+    this.subscription.add(of("foo").subscribe(value => this.value = value));
+  }
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
+  }
+}
+
+@Component({
+  selector: "variable-composed-component",
+  template: "<span>{{ value }}</span>"
+})
+export class VariableComposedComponent implements OnInit, OnDestroy {
+  value: string;
+  private subscription = new Subscription();
+  ngOnInit() {
+    let subscription = of("foo").subscribe(value => this.value = value);
+    this.subscription.add(subscription);1
+    subscription = of("bar").subscribe(value => this.value = value);
+    this.subscription.add(subscription);
+  }
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
+  }
+}
+
+@Component({
+  selector: "destructured-composed-component",
+  template: "<span>{{ value }}</span>"
+})
+export class DestructuredComposedComponent implements OnInit, OnDestroy {
+  value: string;
+  private subscription = new Subscription();
+  ngOnInit() {
+    const { subscription } = this;
+    subscription.add(of("foo").subscribe(value => this.value = value));
+  }
+  ngOnDestroy() {
+    const { subscription } = this;
+    subscription.unsubscribe();
+  }
+}
+
+@Component({
+  selector: "not-composed-component",
+  template: "<span>{{ value }}</span>"
+})
+export class NotComposedComponent implements OnInit, OnDestroy {
+  value: string;
+  ngOnInit() {
+    of("foo").subscribe(value => this.value = value);
+              ~~~~~~~~~                                                     [prefer-composition-not-composed]
+    const subscription = of("bar").subscribe(value => this.value = value);
+                                   ~~~~~~~~~                                [prefer-composition-not-composed]
+
+  }
+  ngOnDestroy() {
+  }
+}
+
+@Component({
+  selector: "not-unsubscribed-component",
+  template: "<span>{{ value }}</span>"
+})
+export class NotUnsubscribedComponent implements OnInit, OnDestroy {
+  value: string;
+  private subscription = new Subscription();
+          ~~~~~~~~~~~~                                                      [prefer-composition-not-unsubscribed]
+  ngOnInit() {
+    this.subscription.add(of("foo").subscribe(value => this.value = value));
+  }
+  ngOnDestroy() {
+  }
+}
+
+@Component({
+  selector: "not-destroyed-component",
+  template: "<span>{{ value }}</span>"
+})
+export class NotDestroyedComponent implements OnInit {
+             ~~~~~~~~~~~~~~~~~~~~~                                          [prefer-composition-not-implemented]
+  value: string;
+  private subscription = new Subscription();
+  ngOnInit() {
+    this.subscription.add(of("foo").subscribe(value => this.value = value));
+  }
+}
+
+[prefer-composition-not-composed]: Subscription not composed
+[prefer-composition-not-unsubscribed]: Composed subscription not unsubscribed
+[prefer-composition-not-implemented]: ngOnDestroy not implemented
