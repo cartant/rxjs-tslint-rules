@@ -83,5 +83,5 @@
     "test:tslint-v6-compat": "yarn --cwd ./test/v6-compat install && yarn --cwd ./test/v6-compat upgrade && tslint --test \"./test/v6-compat/fixtures/**/tslint.json\"",
     "test:tslint-v7": "yarn --cwd ./test/v7 install && yarn --cwd ./test/v7 upgrade && tslint --test \"./test/v7/fixtures/**/tslint.json\""
   },
-  "version": "4.34.7"
+  "version": "4.34.8"
 }
