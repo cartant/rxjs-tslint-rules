@@ -1,3 +1,10 @@
+<a name="4.34.8"></a>
+## [4.34.8](https://github.com/cartant/rxjs-tslint-rules/compare/v4.34.7...v4.34.8) (2021-05-09)
+
+## Fixes
+
+* Support RxJS v7. ([238e3f4](https://github.com/cartant/rxjs-tslint-rules/commit/238e3f4)
+
 <a name="4.34.7"></a>
 ## [4.34.7](https://github.com/cartant/rxjs-tslint-rules/compare/v4.34.6...v4.34.7) (2020-11-28)
 
