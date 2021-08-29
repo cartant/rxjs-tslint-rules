@@ -52,7 +52,8 @@ export class Rule extends Lint.Rules.TypedRule {
     );
     classDeclarations.forEach((node) => {
       const classDeclaration = node as ts.ClassDeclaration;
-      const heritageClauses = classDeclaration.heritageClauses as ts.NodeArray<ts.HeritageClause>;
+      const heritageClauses =
+        classDeclaration.heritageClauses as ts.NodeArray<ts.HeritageClause>;
       heritageClauses.forEach((heritageClause) => {
         if (heritageClause.token === ts.SyntaxKind.ExtendsKeyword) {
           heritageClause.types.forEach((heritageType) => {

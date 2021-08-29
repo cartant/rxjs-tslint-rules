@@ -9,7 +9,8 @@ import * as tsutils from "tsutils";
 import * as ts from "typescript";
 import { couldBeType } from "../support/util";
 
-const defaultNamesRegExp = /^(canActivate|canActivateChild|canDeactivate|canLoad|intercept|resolve|validate)$/;
+const defaultNamesRegExp =
+  /^(canActivate|canActivateChild|canDeactivate|canLoad|intercept|resolve|validate)$/;
 const defaultTypesRegExp = /^EventEmitter$/;
 
 export class Rule extends Lint.Rules.TypedRule {

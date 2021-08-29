@@ -45,7 +45,8 @@ export class Rule extends Lint.Rules.TypedRule {
           callExpression.arguments.forEach((arg) => {
             const innerPropertyAccessExpressions = tsquery(arg, subscribeQuery);
             innerPropertyAccessExpressions.forEach((node) => {
-              const innerPropertyAccessExpression = node as ts.PropertyAccessExpression;
+              const innerPropertyAccessExpression =
+                node as ts.PropertyAccessExpression;
               if (innerPropertyAccessExpression !== propertyAccessExpression) {
                 const type = typeChecker.getTypeAtLocation(
                   innerPropertyAccessExpression.expression
